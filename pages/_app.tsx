@@ -1,6 +1,21 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import "../src/styles/global.css";
+import "../src/styles/components.css";
+import React             from "react";
+import type { AppProps } from "next/app";
+import { EmotionCache } from "@emotion/react";
+import PageProvider     from "../src/components/theme/PageProvider";
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+
+export interface CacheAppProps extends AppProps {
+    emotionCache?: EmotionCache;
 }
+
+const App: React.FC<CacheAppProps> = ({ Component, pageProps, emotionCache }) => {
+    return (
+        <PageProvider emotionCache={ emotionCache }>
+            <Component { ...pageProps }/>
+        </PageProvider>
+    );
+}
+
+export default App;
