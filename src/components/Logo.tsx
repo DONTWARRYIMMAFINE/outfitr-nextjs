@@ -1,13 +1,13 @@
-import { Box }       from "@mui/material";
-import React         from "react";
-import MainTitleText from "./text/MainTitleText";
+import { Box, Typography } from "@mui/material";
+import React               from "react";
+import LogoText            from "./text/logo/LogoText";
 
 
 const Logo: React.FC = () => {
     return (
-        <Box display={ "flex" }>
-            <MainTitleText>Outfitr</MainTitleText>
-            <MainTitleText color={ "primary" }>.</MainTitleText>
+        <Box display={"flex"}>
+            <Typography variant={"logo"}>Outfitr</Typography>
+            <Typography variant={"logo"} color={"primary"}>.</Typography>
         </Box>
     )
 }

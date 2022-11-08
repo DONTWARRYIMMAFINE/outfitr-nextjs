@@ -1,5 +1,7 @@
+import React                           from "react";
 import { createTheme, ThemeOptions }   from "@mui/material/styles";
 import { Open_Sans, Playfair_Display } from "@next/font/google";
+import { pxToRem }                     from "../../utility/pxToRem";
 
 
 export const openSans = Open_Sans({
@@ -14,18 +16,61 @@ export const playfairDisplay = Playfair_Display({
     fallback: ["Helvetica", "Arial", "sans-serif"],
 });
 
+declare module "@mui/material/styles" {
+    interface TypographyVariants {
+        logo: React.CSSProperties;
+        description: React.CSSProperties;
+    }
+    interface TypographyVariantsOptions {
+        logo?: React.CSSProperties;
+        description?: React.CSSProperties;
+    }
+}
+
+declare module "@mui/material/Typography" {
+    interface TypographyPropsVariantOverrides {
+        logo: true;
+        description: true;
+    }
+}
+
 const baseTheme = createTheme({
     palette: {
         primary: {
             main: "#2cb9b0"
         },
     },
-    typography: {
+    typography: (palette) => ({
         fontFamily: [
             openSans.style.fontFamily,
             playfairDisplay.style.fontFamily
         ].join(","),
-    },
+        logo: {
+            fontFamily: playfairDisplay.style.fontFamily,
+            fontWeight: 700,
+            fontSize: "xxx-large",
+            color: palette.text.primary,
+        },
+        title1: {
+            fontFamily: playfairDisplay.style.fontFamily,
+            fontWeight: 700,
+            fontSize: "xxx-large",
+            color: palette.text.primary,
+        },
+        subtitle2: {
+            fontFamily: openSans.style.fontFamily,
+            fontWeight: 600,
+            fontSize: "large",
+            color: palette.text.primary,
+        },
+        description: {
+            fontFamily: openSans.style.fontFamily,
+            fontWeight: 400,
+            fontSize: "medium",
+            color: palette.text.primary,
+            opacity: 0.7
+        }
+    }),
     shape: {
         borderRadius: 60
     },

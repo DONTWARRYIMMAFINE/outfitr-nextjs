@@ -1,7 +1,7 @@
 import React                       from "react";
 import { LinkBaseProps, useTheme } from "@mui/material";
 import NextLink   from "next/link";
-import MediumText from "./text/MediumText";
+import MediumText from "./text/medium/MediumText";
 
 
 export interface LinkProps extends LinkBaseProps {
