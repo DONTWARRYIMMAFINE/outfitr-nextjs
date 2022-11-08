@@ -12,11 +12,11 @@ import SmallText                    from "../text/small/SmallText";
 
 
 const Footer: React.FC = () => {
-    const { palette, shape, spacing } = useTheme();
+    const { shape, spacing } = useTheme();
 
     return (
-        <Box bgcolor={palette.background.paper} sx={{ borderTopLeftRadius: shape.borderRadius, borderTopRightRadius: shape.borderRadius }} component={"footer"}>
-            <Container maxWidth={"xl"}>
+        <Box bgcolor={"background.paper"} sx={{ borderTopLeftRadius: shape.borderRadius, borderTopRightRadius: shape.borderRadius }} component={"footer"}>
+            <Container>
                 <Box display={"flex"} justifyContent={"space-between"} alignItems={"flex-start"} py={spacing(3)}>
                     <Box>
                         <Logo/>

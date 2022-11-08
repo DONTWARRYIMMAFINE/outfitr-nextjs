@@ -6,23 +6,23 @@ import ThemeSwitch                              from "../ThemeSwitch";
 
 
 const Header: React.FC = () => {
-    const { palette, shape, spacing } = useTheme();
+    const { shape, spacing } = useTheme();
 
     return (
-        <Box bgcolor={ palette.background.paper } sx={ { borderBottomLeftRadius: shape.borderRadius, borderBottomRightRadius: shape.borderRadius } } component={ "header" }>
-            <Container maxWidth={ "xl" }>
+        <Box bgcolor={ "background.paper" } sx={ { borderBottomLeftRadius: shape.borderRadius, borderBottomRightRadius: shape.borderRadius } } component={ "header" }>
+            <Container>
                 <Box display={ "flex" } justifyContent={ "space-between" } alignItems={ "center" } py={ spacing(2) }>
                     <Logo/>
                     {/*<MainNavigation/>*/ }
                     <ThemeSwitch/>
                     <Box display={ "flex" } alignItems={ "center" }>
-                        <IconButton sx={ { color: palette.text.primary, bgcolor: palette.background.default, marginX: spacing(1) } }>
+                        <IconButton sx={ { marginX: spacing(1) } }>
                             <AccessAlarmsIcon/>
                         </IconButton>
-                        <IconButton sx={ { color: palette.text.primary, bgcolor: palette.background.default, marginX: spacing(1) } }>
+                        <IconButton sx={ { marginX: spacing(1) } }>
                             <AccessAlarmsIcon/>
                         </IconButton>
-                        <IconButton sx={ { color: palette.text.primary, bgcolor: palette.background.default, marginX: spacing(1) } }>
+                        <IconButton sx={ { marginX: spacing(1) } }>
                             <AccessAlarmsIcon/>
                         </IconButton>
                     </Box>

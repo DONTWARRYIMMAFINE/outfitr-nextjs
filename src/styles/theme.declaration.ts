@@ -1,6 +1,15 @@
-import React                   from "react";
+import { CSSProperties }       from "react";
 import { PaletteColorOptions } from "@mui/material";
 
+import { Theme as MuiTheme } from '@mui/material/styles';
+
+
+declare module "@mui/material/styles" {
+    interface Theme {
+        vars: Omit<MuiTheme,
+            'typography' | 'mixins' | 'breakpoints' | 'direction' | 'transitions'>;
+    }
+}
 
 declare module "@mui/material/styles" {
     interface CustomPalette {
@@ -22,17 +31,17 @@ declare module "@mui/material/Button" {
 
 declare module "@mui/material/styles" {
     interface TypographyVariants {
-        logo: React.CSSProperties;
-        description: React.CSSProperties;
-        button1: React.CSSProperties;
-        button2: React.CSSProperties;
+        logo: CSSProperties;
+        description: CSSProperties;
+        button1: CSSProperties;
+        button2: CSSProperties;
     }
 
     interface TypographyVariantsOptions {
-        logo?: React.CSSProperties;
-        description?: React.CSSProperties;
-        button1: React.CSSProperties;
-        button2: React.CSSProperties;
+        logo?: CSSProperties;
+        description?: CSSProperties;
+        button1: CSSProperties;
+        button2: CSSProperties;
     }
 }
 
@@ -48,5 +57,6 @@ declare module "@mui/material/Typography" {
 declare module "@mui/material/Button" {
     interface ButtonPropsVariantOverrides {
         regular: true;
+        transparent: true;
     }
 }

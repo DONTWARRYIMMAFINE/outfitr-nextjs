@@ -1,8 +1,6 @@
-import { PaletteColorOptions }         from "@mui/material";
-import React                           from "react";
-import { createTheme, ThemeOptions }   from "@mui/material/styles";
+import { experimental_extendTheme }    from "@mui/material";
 import { Open_Sans, Playfair_Display } from "@next/font/google";
-import { pxToRem }                     from "../../utility/pxToRem";
+import { pxToRem }                     from "../utility/pxToRem";
 
 
 export const openSans = Open_Sans({
@@ -17,17 +15,40 @@ export const playfairDisplay = Playfair_Display({
     fallback: ["Helvetica", "Arial", "sans-serif"],
 });
 
-export const baseThemeOptions: ThemeOptions = {
-    palette: {
-        primary: {
-            main: "#2cb9b0"
+const theme = experimental_extendTheme({
+    colorSchemes: {
+        light: {
+            palette: {
+                primary: {
+                    main: "#2cb9b0",
+                    light: "#74eee5"
+                },
+                text: {
+                    primary: "#0c0d34",
+                    secondary: "#fdfbf8",
+                },
+                background: {
+                    default: "#f6f6f6",
+                    paper: "#fdfdfd"
+                },
+            },
         },
-        white: {
-            main: "#fdfbf8"
+        dark: {
+            palette: {
+                primary: {
+                    main: "#2cb9b0",
+                    light: "#74eee5"
+                },
+                text: {
+                    primary: "#fdfbf8",
+                    secondary: "#0c0d34",
+                },
+                background: {
+                    default: "#1f1f1f",
+                    paper: "#2a2a2a",
+                },
+            },
         },
-        black: {
-            main: "#0c0d34"
-        }
     },
     typography: (palette) => ({
         fontFamily: [
@@ -38,25 +59,21 @@ export const baseThemeOptions: ThemeOptions = {
             fontFamily: playfairDisplay.style.fontFamily,
             fontWeight: 700,
             fontSize: "xxx-large",
-            color: palette.text.primary,
         },
         title1: {
             fontFamily: playfairDisplay.style.fontFamily,
             fontWeight: 700,
             fontSize: "xxx-large",
-            color: palette.text.primary,
         },
         subtitle2: {
             fontFamily: openSans.style.fontFamily,
             fontWeight: 600,
             fontSize: "large",
-            color: palette.text.primary,
         },
         description: {
             fontFamily: openSans.style.fontFamily,
             fontWeight: 400,
             fontSize: "medium",
-            color: palette.text.primary,
             opacity: 0.7
         },
         button1: {
@@ -69,12 +86,18 @@ export const baseThemeOptions: ThemeOptions = {
             fontFamily: openSans.style.fontFamily,
             fontWeight: 600,
             fontSize: "medium",
-            color: palette.text.primary,
+            color: palette.primary.main,
         }
     }),
     components: {
+        MuiContainer: {
+            defaultProps: {
+                maxWidth: "xl",
+                sx: { flex: 1 }
+            },
+        },
         MuiCssBaseline: {
-            styleOverrides: () => ({
+            styleOverrides: {
                 html: {
                     height: "100%"
                 },
@@ -86,61 +109,40 @@ export const baseThemeOptions: ThemeOptions = {
                     flexDirection: "column",
                     minHeight: "100%"
                 }
-            }),
+            },
         },
         MuiButton: {
             variants: [
                 {
                     props: { variant: "regular" },
-                    style: {
+                    style: ({ theme }) => ({
                         textTransform: "none",
                         paddingTop: pxToRem(10),
                         paddingBottom: pxToRem(10),
                         paddingLeft: pxToRem(25),
                         paddingRight: pxToRem(25),
-                        color: "white.main",
-                        backgroundColor: "primary.main",
+                        backgroundColor: theme.palette.primary.main,
                         ":hover": {
-                            backgroundColor: "primary.light",
+                            backgroundColor: theme.palette.primary.light,
                         }
-                    },
+                    }),
                 },
-                // {
-                //     props: { variant: "primary", color: "secondary" },
-                //     style: {
-                //         border: `4px dashed ${red[500]}`,
-                //     },
-                // },
-            ]
+                {
+                    props: { variant: "transparent" },
+                    style: ({ theme }) => ({
+                        textTransform: "none",
+                        paddingTop: pxToRem(10),
+                        paddingBottom: pxToRem(10),
+                        paddingLeft: pxToRem(25),
+                        paddingRight: pxToRem(25),
+                    }),
+                },
+            ],
         }
     },
     shape: {
         borderRadius: 60
     },
-    transitions: {
-        easing: {
-            // This is the most common easing curve.
-            easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
-            // Objects enter the screen at full velocity from off-screen and
-            // slowly decelerate to a resting point.
-            easeOut: "cubic-bezier(0.0, 0, 0.2, 1)",
-            // Objects leave the screen at full velocity. They do not decelerate when off-screen.
-            easeIn: "cubic-bezier(0.4, 0, 1, 1)",
-            // The sharp curve is used by objects that may return to the screen at any time.
-            sharp: "cubic-bezier(0.4, 0, 0.6, 1)",
-        },
-        duration: {
-            shortest: 50,
-            shorter: 100,
-            short: 150,
-            // most basic recommended timing
-            standard: 200,
-            // this is to be used in complex animations
-            complex: 250,
-            // recommended when something is entering screen
-            enteringScreen: 225,
-            // recommended when something is leaving screen
-            leavingScreen: 195,
-        },
-    },
-}
+});
+
+export default theme;

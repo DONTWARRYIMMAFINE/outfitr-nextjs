@@ -1,4 +1,5 @@
 import "../src/styles/components.css";
+import type {}           from "@mui/material/themeCssVarsAugmentation";
 import React             from "react";
 import type { AppProps } from "next/app";
 import { EmotionCache }  from "@emotion/react";
