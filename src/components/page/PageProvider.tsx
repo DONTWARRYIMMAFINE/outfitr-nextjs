@@ -1,10 +1,12 @@
-import Head                                        from "next/head";
+import { Box }                                     from "@mui/material";
 import React                                       from "react";
+import Head                                        from "next/head";
 import { CacheProvider, EmotionCache }             from "@emotion/react";
 import { ThemeProvider as PreferredThemeProvider } from "next-themes";
 import createEmotionCache                          from "../../utility/createEmotionCache";
-import Header                                      from "../Header";
-import MuiThemeProvider                            from "./MuiThemeProvider";
+import Footer                                      from "./Footer";
+import Header                                      from "./Header";
+import MuiThemeProvider                            from "../theme/MuiThemeProvider";
 
 
 const clientSideEmotionCache = createEmotionCache();
@@ -17,14 +19,17 @@ export interface PageProviderProps {
 const PageProvider: React.FC<PageProviderProps> = ({ emotionCache = clientSideEmotionCache, children }) => {
     return (
         <PreferredThemeProvider>
-            <CacheProvider value={emotionCache}>
+            <CacheProvider value={ emotionCache }>
                 <Head>
                     <title>Outfitr</title>
-                    <meta name="viewport" content="initial-scale=1, width=device-width" />
+                    <meta name="viewport" content="initial-scale=1, width=device-width"/>
                 </Head>
                 <MuiThemeProvider>
                     <Header/>
-                    {children}
+                    <Box flex={1}>
+                        { children }
+                    </Box>
+                    <Footer/>
                 </MuiThemeProvider>
             </CacheProvider>
         </PreferredThemeProvider>
