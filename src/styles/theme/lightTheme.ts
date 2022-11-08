@@ -1,20 +1,21 @@
-import { createTheme, ThemeOptions } from "@mui/material/styles";
-import baseTheme                     from "./baseTheme";
+import { createTheme }      from "@mui/material/styles";
+import { baseThemeOptions } from "./baseTheme";
+
 
 const lightTheme = createTheme({
-    ...baseTheme,
+    ...baseThemeOptions,
     palette: {
-        ...baseTheme.palette,
         mode: "light",
         text: {
             primary: "#0c0d34",
             secondary: "#fdfbf8",
         },
         background: {
-            default: "#fafafa",
+            default: "#f6f6f6",
             paper: "#fdfdfd"
         },
+        ...baseThemeOptions.palette
     },
-} as ThemeOptions);
+});
 
 export default lightTheme;

@@ -1,11 +1,10 @@
-import { createTheme, ThemeOptions } from "@mui/material/styles";
-import baseTheme                     from "./baseTheme";
+import { createTheme }      from "@mui/material/styles";
+import { baseThemeOptions } from "./baseTheme";
 
 
 const darkTheme = createTheme({
-    ...baseTheme,
+    ...baseThemeOptions,
     palette: {
-        ...baseTheme.palette,
         mode: "dark",
         text: {
             primary: "#fdfbf8",
@@ -15,7 +14,8 @@ const darkTheme = createTheme({
             default: "#1f1f1f",
             paper: "#2a2a2a",
         },
+        ...baseThemeOptions.palette
     },
-} as ThemeOptions);
+});
 
 export default darkTheme;

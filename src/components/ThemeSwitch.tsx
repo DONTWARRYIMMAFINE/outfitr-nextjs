@@ -7,15 +7,15 @@ import LightModeIcon                            from "@mui/icons-material/LightM
 
 
 const ThemeSwitch: React.FC<SwitchProps> = ({ ...rest }) => {
-    const { resolvedTheme, setTheme } = useNextTheme();
+    const { setTheme } = useNextTheme();
     const { palette, shape } = useMuiTheme();
 
     return (
         <Switch
             icon={ <LightModeIcon sx={ { color: palette.text.secondary, bgcolor: palette.text.primary, width: 32, height: 32, padding: 1 / 2, borderRadius: shape.borderRadius } }/> }
             checkedIcon={ <DarkModeIcon sx={ { color: palette.text.secondary, bgcolor: palette.text.primary, width: 32, height: 32, padding: 1 / 2, borderRadius: shape.borderRadius } }/> }
-            onClick={ () => setTheme(resolvedTheme === "light" ? "dark" : "light") }
-            defaultChecked={resolvedTheme === "dark"}
+            onClick={ () => setTheme(palette.mode === "light" ? "dark" : "light") }
+            checked={ palette.mode == "dark" }
             { ...rest }
         />
     )

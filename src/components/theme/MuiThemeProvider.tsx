@@ -13,14 +13,14 @@ const MuiThemeProvider: React.FC<MuiThemeProviderProps> = ({ children }) => {
     const [currentTheme, setCurrentTheme] = useState(darkTheme);
 
     useEffect(() => {
-        resolvedTheme === "light"
+        resolvedTheme === "dark"
             ? setCurrentTheme(lightTheme)
             : setCurrentTheme(darkTheme);
     }, [resolvedTheme]);
 
     return (
         <ThemeProvider theme={ currentTheme }>
-            <CssBaseline/>
+            <CssBaseline enableColorScheme/>
             { children }
         </ThemeProvider>
     );
