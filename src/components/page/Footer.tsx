@@ -12,10 +12,10 @@ import SmallText                    from "../text/small/SmallText";
 
 
 const Footer: React.FC = () => {
-    const { shape, spacing } = useTheme();
+    const { spacing } = useTheme();
 
     return (
-        <Box bgcolor={"background.paper"} sx={{ borderTopLeftRadius: shape.borderRadius, borderTopRightRadius: shape.borderRadius }} component={"footer"}>
+        <Box component={"footer"}>
             <Container>
                 <Box display={"flex"} justifyContent={"space-between"} alignItems={"flex-start"} py={spacing(3)}>
                     <Box>

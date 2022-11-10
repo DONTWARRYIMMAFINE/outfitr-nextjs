@@ -87,6 +87,11 @@ const theme = experimental_extendTheme({
             fontWeight: 600,
             fontSize: "medium",
             color: palette.primary.main,
+        },
+        navigation: {
+            fontFamily: openSans.style.fontFamily,
+            fontWeight: 400,
+            fontSize: "medium",
         }
     }),
     components: {
@@ -97,21 +102,43 @@ const theme = experimental_extendTheme({
             },
         },
         MuiCssBaseline: {
-            styleOverrides: {
+            styleOverrides: (theme) => ({
                 html: {
                     height: "100%"
                 },
                 body: {
                     height: "100%"
                 },
+                ul: {
+                    listStyle: "none"
+                },
+                li: {
+                    listStyle: "none"
+                },
+                header: {
+                    backgroundColor: theme.palette.background.paper,
+                    borderBottomLeftRadius: theme.shape.borderRadius,
+                    borderBottomRightRadius: theme.shape.borderRadius
+                },
+                footer: {
+                    backgroundColor: theme.palette.background.paper,
+                    borderTopLeftRadius: theme.shape.borderRadius,
+                    borderTopRightRadius: theme.shape.borderRadius
+                },
                 "#__next": {
                     display: "flex",
                     flexDirection: "column",
                     minHeight: "100%"
                 }
-            },
+            }),
         },
         MuiButton: {
+            defaultProps: {
+                sx: {
+                    marginY: pxToRem(5),
+                    marginX: pxToRem(10)
+                }
+            },
             variants: [
                 {
                     props: { variant: "regular" },
@@ -138,10 +165,90 @@ const theme = experimental_extendTheme({
                     }),
                 },
             ],
+        },
+        MuiLink: {
+            defaultProps: {
+                marginY: pxToRem(5),
+                marginX: pxToRem(10)
+            },
+            variants: [
+                {
+                    props: { variant: "navigation" },
+                    style: ({ theme }) => ({
+                        textTransform: "none",
+                        textDecoration: "none",
+                        position: "relative",
+                        paddingBottom: pxToRem(10),
+                        color: theme.palette.text.primary,
+                        transition: theme.transitions.create(["all"]),
+                        ":hover": {
+                            color: theme.palette.primary.main,
+                            ":after": {
+                                transform: "scaleX(1)"
+                            }
+                        },
+                        ":after": {
+                            content: '""',
+                            position: "absolute",
+                            width: "100%",
+                            height: "2px",
+                            bottom: 0,
+                            left: 0,
+                            transform: "scaleX(0)",
+                            backgroundColor: theme.palette.primary.main,
+                            transition: theme.transitions.create(["all"]),
+                        },
+                    }),
+                },
+                {
+                    props: { variant: "navigation", type: "selected" },
+                    style: ({ theme }) => ({
+                        textTransform: "none",
+                        textDecoration: "none",
+                        position: "relative",
+                        paddingBottom: pxToRem(10),
+                        color: theme.palette.primary.main,
+                        transition: theme.transitions.create(["all"]),
+                        ":hover": {
+                            ":after": {
+                                transform: "scaleX(1)"
+                            }
+                        },
+                        ":after": {
+                            content: '""',
+                            position: "absolute",
+                            width: "100%",
+                            height: "2px",
+                            bottom: 0,
+                            left: 0,
+                            transform: "scaleX(0)",
+                            backgroundColor: theme.palette.primary.main,
+                            transition: theme.transitions.create(["all"]),
+                        },
+                    }),
+                }
+            ]
         }
     },
     shape: {
         borderRadius: 60
+    },
+    transitions: {
+        easing: {
+            easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
+            easeOut: "cubic-bezier(0.0, 0, 0.2, 1)",
+            easeIn: "cubic-bezier(0.4, 0, 1, 1)",
+            sharp: "cubic-bezier(0.4, 0, 0.6, 1)",
+        },
+        duration: {
+            shortest: 50,
+            shorter: 100,
+            short: 150,
+            standard: 200,
+            complex: 250,
+            enteringScreen: 225,
+            leavingScreen: 195,
+        },
     },
 });
 

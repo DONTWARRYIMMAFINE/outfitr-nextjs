@@ -2,18 +2,19 @@ import React                                    from "react";
 import { Box, Container, IconButton, useTheme } from "@mui/material";
 import Logo                                     from "../Logo";
 import AccessAlarmsIcon                         from '@mui/icons-material/AccessAlarms';
+import MainNavigation                           from "../MainNavigation";
 import ThemeSwitch                              from "../ThemeSwitch";
 
 
 const Header: React.FC = () => {
-    const { shape, spacing } = useTheme();
+    const { spacing } = useTheme();
 
     return (
-        <Box bgcolor={ "background.paper" } sx={ { borderBottomLeftRadius: shape.borderRadius, borderBottomRightRadius: shape.borderRadius } } component={ "header" }>
+        <Box component={ "header" }>
             <Container>
-                <Box display={ "flex" } justifyContent={ "space-between" } alignItems={ "center" } py={ spacing(2) }>
+                <Box display={ "flex" } justifyContent={ "space-between" } alignItems={ "center" } py={ 2 }>
                     <Logo/>
-                    {/*<MainNavigation/>*/ }
+                    <MainNavigation/>
                     <ThemeSwitch/>
                     <Box display={ "flex" } alignItems={ "center" }>
                         <IconButton sx={ { marginX: spacing(1) } }>

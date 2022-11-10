@@ -1,5 +1,6 @@
 import React                                  from "react";
 import { Box, Button, Container, Typography } from "@mui/material";
+import Link                                   from "../src/components/Link";
 
 
 const HomePage: React.FC = () => {
@@ -15,6 +16,12 @@ const HomePage: React.FC = () => {
                 <Button variant={ "transparent" }>
                     <Typography variant={ "button2" }>Find your outfit</Typography>
                 </Button>
+                <Link href={ "/categories" } variant={ "navigation" } type={ "selected" }>
+                    Link component
+                </Link>
+                <Link href={ "/categories" } variant={ "navigation" }>
+                    Link component
+                </Link>
             </Box>
         </Container>
     </>);

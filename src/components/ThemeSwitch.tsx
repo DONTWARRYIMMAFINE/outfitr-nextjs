@@ -1,9 +1,8 @@
-import React, { useEffect }                                     from "react";
-import { SwitchProps, useColorScheme, useTheme as useMuiTheme } from "@mui/material";
-import { useTheme as useNextTheme }                             from "next-themes";
-import Switch                                   from "./Switch";
-import DarkModeIcon                             from "@mui/icons-material/DarkMode";
-import LightModeIcon                            from "@mui/icons-material/LightMode";
+import React, { useEffect }            from "react";
+import { SwitchProps, useColorScheme } from "@mui/material";
+import Switch                          from "./Switch";
+import DarkModeIcon                    from "@mui/icons-material/DarkMode";
+import LightModeIcon                   from "@mui/icons-material/LightMode";
 
 
 const ThemeSwitch: React.FC<SwitchProps> = ({ ...rest }) => {
