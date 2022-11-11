@@ -1,33 +1,5 @@
-import { CSSProperties }       from "react";
-import { PaletteColorOptions } from "@mui/material";
+import { CSSProperties } from "react";
 
-import { Theme as MuiTheme } from "@mui/material/styles";
-
-
-declare module "@mui/material/styles" {
-    interface Theme {
-        vars: Omit<MuiTheme,
-            "typography" | "mixins" | "breakpoints" | "direction" | "transitions">;
-    }
-}
-
-declare module "@mui/material/styles" {
-    interface CustomPalette {
-        white?: PaletteColorOptions;
-        black?: PaletteColorOptions;
-    }
-
-    interface Palette extends CustomPalette {}
-
-    interface PaletteOptions extends CustomPalette {}
-}
-
-declare module "@mui/material/styles" {
-    interface ButtonPropsColorOverrides {
-        white: true;
-        black: true;
-    }
-}
 
 declare module "@mui/material/styles" {
     interface TypographyVariants {
@@ -67,5 +39,11 @@ declare module "@mui/material/Button" {
 declare module "@mui/material/Link" {
     interface LinkPropsVariantOverrides {
         navigation: true;
+    }
+}
+
+declare module "@mui/material/Switch" {
+    interface SwitchPropsVariantOverrides {
+        ios: true;
     }
 }

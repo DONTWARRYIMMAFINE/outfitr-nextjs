@@ -1,6 +1,6 @@
-import { Box, useTheme } from "@mui/material";
-import React             from "react";
-import Link              from "./Link";
+import { Box } from "@mui/material";
+import React   from "react";
+import Link    from "./Link";
 
 
 export interface Navigation {
@@ -33,14 +33,12 @@ export const navigation: Navigation[] = [
 ]
 
 const MainNavigation: React.FC = () => {
-    const { spacing } = useTheme();
-
     return (
         <Box component={ "nav" }>
             <Box display={ "flex" } component={ "ul" }>
                 { navigation.map(({ name, href, chosen }, index) => {
                     return (
-                        <Box key={ index } component={ "li" } px={ spacing(2) } py={ spacing(2) }>
+                        <Box key={ index } component={ "li" } px={ 2 }>
                             <Link variant={ "navigation" } type={ chosen ? "selected" : undefined } href={ href }>
                                 { name }
                             </Link>

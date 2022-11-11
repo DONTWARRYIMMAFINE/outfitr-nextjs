@@ -1,6 +1,6 @@
-import { experimental_extendTheme }    from "@mui/material";
+import { ThemeOptions }                from "@mui/material/styles";
 import { Open_Sans, Playfair_Display } from "@next/font/google";
-import { pxToRem }                     from "../utility/pxToRem";
+import { pxToRem }                     from "../../utility/pxToRem";
 
 
 export const openSans = Open_Sans({
@@ -15,39 +15,11 @@ export const playfairDisplay = Playfair_Display({
     fallback: ["Helvetica", "Arial", "sans-serif"],
 });
 
-const theme = experimental_extendTheme({
-    colorSchemes: {
-        light: {
-            palette: {
-                primary: {
-                    main: "#2cb9b0",
-                    light: "#74eee5"
-                },
-                text: {
-                    primary: "#0c0d34",
-                    secondary: "#fdfbf8",
-                },
-                background: {
-                    default: "#f6f6f6",
-                    paper: "#fdfdfd"
-                },
-            },
-        },
-        dark: {
-            palette: {
-                primary: {
-                    main: "#2cb9b0",
-                    light: "#74eee5"
-                },
-                text: {
-                    primary: "#fdfbf8",
-                    secondary: "#0c0d34",
-                },
-                background: {
-                    default: "#1f1f1f",
-                    paper: "#2a2a2a",
-                },
-            },
+export const baseThemeOptions: ThemeOptions = {
+    palette: {
+        primary: {
+            main: "#2cb9b0",
+            contrastText: "#fdfbf8"
         },
     },
     typography: (palette) => ({
@@ -80,7 +52,7 @@ const theme = experimental_extendTheme({
             fontFamily: openSans.style.fontFamily,
             fontWeight: 600,
             fontSize: "medium",
-            color: palette.text.secondary,
+            color: palette.primary.contrastText,
         },
         button2: {
             fontFamily: openSans.style.fontFamily,
@@ -115,17 +87,17 @@ const theme = experimental_extendTheme({
                 li: {
                     listStyle: "none"
                 },
-                // header: {
-                //     backgroundColor: theme.palette.background.paper,
-                //     borderBottomLeftRadius: theme.shape.borderRadius,
-                //     borderBottomRightRadius: theme.shape.borderRadius
-                // },
+                header: {
+                    backgroundColor: theme.palette.background.paper,
+                    borderBottomLeftRadius: theme.shape.borderRadius,
+                    borderBottomRightRadius: theme.shape.borderRadius
+                },
                 footer: {
                     backgroundColor: theme.palette.background.paper,
                     borderTopLeftRadius: theme.shape.borderRadius,
                     borderTopRightRadius: theme.shape.borderRadius
                 },
-                "#__next": {
+                "#data-nextjs-scroll-focus-boundary": {
                     display: "flex",
                     flexDirection: "column",
                     minHeight: "100%"
@@ -228,7 +200,7 @@ const theme = experimental_extendTheme({
                     }),
                 }
             ]
-        }
+        },
     },
     shape: {
         borderRadius: 60
@@ -250,6 +222,4 @@ const theme = experimental_extendTheme({
             leavingScreen: 195,
         },
     },
-});
-
-export default theme;
+}
