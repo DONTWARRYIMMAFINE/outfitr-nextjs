@@ -9,10 +9,14 @@ const darkTheme = createTheme({
         text: {
             primary: "#fdfbf8",
             secondary: "#0c0d34",
+            placeholder: "#d0cdc9",
         },
         background: {
-            default: "#1f1f1f",
-            paper: "#2a2a2a",
+            body: "#1f1f1f",
+            header: "#2a2a2a",
+            footer: "#2a2a2a",
+            component: "#3f3f3f",
+            missing: "#d9d9d9"
         },
         ...baseThemeOptions.palette
     },

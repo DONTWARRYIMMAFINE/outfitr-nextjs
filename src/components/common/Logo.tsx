@@ -1,6 +1,5 @@
 import { Box, Typography } from "@mui/material";
 import React               from "react";
-import LogoText            from "./text/logo/LogoText";
 
 
 const Logo: React.FC = () => {

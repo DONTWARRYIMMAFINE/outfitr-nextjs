@@ -1,6 +1,6 @@
-import { ThemeOptions }                from "@mui/material/styles";
+import { ThemeOptions }   from "@mui/material/styles";
 import { Open_Sans, Playfair_Display } from "@next/font/google";
-import { pxToRem }                     from "../../utility/pxToRem";
+import { pxToRem }                     from "../utility/pxToRem";
 
 
 export const openSans = Open_Sans({
@@ -37,31 +37,30 @@ export const baseThemeOptions: ThemeOptions = {
             fontWeight: 700,
             fontSize: "xxx-large",
         },
+        subtitle1: {
+            fontWeight: 400,
+            fontSize: "x-large",
+        },
         subtitle2: {
-            fontFamily: openSans.style.fontFamily,
             fontWeight: 600,
             fontSize: "large",
         },
         description: {
-            fontFamily: openSans.style.fontFamily,
             fontWeight: 400,
             fontSize: "medium",
             opacity: 0.7
         },
         button1: {
-            fontFamily: openSans.style.fontFamily,
             fontWeight: 600,
             fontSize: "medium",
             color: palette.primary.contrastText,
         },
         button2: {
-            fontFamily: openSans.style.fontFamily,
             fontWeight: 600,
             fontSize: "medium",
             color: palette.primary.main,
         },
         navigation: {
-            fontFamily: openSans.style.fontFamily,
             fontWeight: 400,
             fontSize: "medium",
         }
@@ -79,38 +78,37 @@ export const baseThemeOptions: ThemeOptions = {
                     height: "100%"
                 },
                 body: {
-                    height: "100%"
+                    display: "flex",
+                    flexDirection: "column",
+                    minHeight: "100%",
+                    backgroundColor: theme.palette.background.body,
+                },
+                "div[data-nextjs-scroll-focus-boundary]": {
+                    flex: 1
                 },
                 ul: {
-                    listStyle: "none"
+                    listStyle: "none",
+                    padding: 0,
+                    margin: 0
                 },
                 li: {
-                    listStyle: "none"
+                    listStyle: "none",
+                    padding: 0,
+                    margin: 8
                 },
                 header: {
-                    backgroundColor: theme.palette.background.paper,
+                    backgroundColor: theme.palette.background.header,
                     borderBottomLeftRadius: theme.shape.borderRadius,
                     borderBottomRightRadius: theme.shape.borderRadius
                 },
                 footer: {
-                    backgroundColor: theme.palette.background.paper,
+                    backgroundColor: theme.palette.background.footer,
                     borderTopLeftRadius: theme.shape.borderRadius,
                     borderTopRightRadius: theme.shape.borderRadius
                 },
-                "#data-nextjs-scroll-focus-boundary": {
-                    display: "flex",
-                    flexDirection: "column",
-                    minHeight: "100%"
-                }
             }),
         },
         MuiButton: {
-            defaultProps: {
-                sx: {
-                    marginY: pxToRem(5),
-                    marginX: pxToRem(10)
-                }
-            },
             variants: [
                 {
                     props: { variant: "regular" },
@@ -140,6 +138,8 @@ export const baseThemeOptions: ThemeOptions = {
         },
         MuiLink: {
             defaultProps: {
+                textTransform: "none",
+                underline: "none",
                 marginY: pxToRem(5),
                 marginX: pxToRem(10)
             },
@@ -198,9 +198,78 @@ export const baseThemeOptions: ThemeOptions = {
                             transition: theme.transitions.create(["all"]),
                         },
                     }),
+                },
+            ]
+        },
+        MuiSwitch: {
+            styleOverrides: {
+                root: ({ ownerState }) => ({
+                    ...(ownerState.size === "small") && {
+                        padding: 1,
+                    },
+                    ...(ownerState.size === "medium") && {
+                        padding: 6,
+                        height: 46,
+                        width: 66,
+                    }
+                }),
+                track: ({ theme }) => ({
+                    borderRadius: theme.shape.borderRadius,
+                    backgroundColor: theme.palette.background.component,
+                    opacity: 1
+                }),
+                thumb: ({ ownerState }) => ({
+                    boxShadow: "none",
+                    ...(ownerState.size === "medium") && {
+                        height: 24,
+                        width: 24,
+                    }
+                }),
+                switchBase: ({ ownerState }) => ({
+                    ...(ownerState.size === "medium") && {
+                        padding: "11px",
+                    }
+                }),
+            },
+            variants: [
+                {
+                    props: { variant: "mode" },
+                    style: ({ theme }) => ({
+                        '& .MuiSwitch-switchBase': {
+                            '&.Mui-checked': {
+                                '& + .MuiSwitch-track': {
+                                    backgroundColor: theme.palette.background.component,
+                                    opacity: 1
+                                },
+                            },
+
+                        },
+                    })
                 }
             ]
         },
+        MuiIconButton: {
+            styleOverrides: {
+                root: ({ theme }) => ({
+                    color: theme.palette.text.primary,
+                    backgroundColor: theme.palette.background.component,
+                }),
+            }
+        },
+        MuiTextField: {
+            variants: [
+                {
+                    props: { variant: "outlined" },
+                    style: ({ theme }) => ({
+                        backgroundColor: theme.palette.background.header,
+                        borderRadius: theme.shape.borderRadius,
+                        label: {
+                            color: theme.palette.text.placeholder,
+                        }
+                    })
+                }
+            ]
+        }
     },
     shape: {
         borderRadius: 60
@@ -213,11 +282,11 @@ export const baseThemeOptions: ThemeOptions = {
             sharp: "cubic-bezier(0.4, 0, 0.6, 1)",
         },
         duration: {
-            shortest: 50,
-            shorter: 100,
-            short: 150,
-            standard: 200,
-            complex: 250,
+            shortest: 100,
+            shorter: 200,
+            short: 300,
+            standard: 350,
+            complex: 450,
             enteringScreen: 225,
             leavingScreen: 195,
         },

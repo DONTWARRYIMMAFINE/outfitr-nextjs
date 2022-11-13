@@ -1,8 +1,9 @@
 "use client";
 
-import React                                  from "react";
+import React                                          from "react";
 import { Box, Button, Container, Switch, Typography } from "@mui/material";
-import Link                                   from "../src/components/Link";
+import Link                                           from "../src/components/common/Link";
+import Subscription                                   from "../src/components/page/subscription/Subscription";
 
 
 const HomePage: React.FC = () => {
@@ -19,14 +20,16 @@ const HomePage: React.FC = () => {
                     <Typography variant={ "button2" }>Find your outfit</Typography>
                 </Button>
                 <Switch/>
+                <Switch size={"small"}/>
                 <Link href={ "/categories" } variant={ "navigation" } type={ "selected" }>
-                   Link component
-
+                    Link component
                 </Link>
-                {/*<Link href={ "/categories" } variant={ "navigation" }>*/ }
-                {/*    Link component*/ }
-                {/*</Link>*/ }
+
+                <Button variant={ "transparent" } href={"/categories"} component={Link}>
+                    <Typography variant={ "button2" }>Find your outfit</Typography>
+                </Button>
             </Box>
+            <Subscription/>
         </Container>
     </>);
 }

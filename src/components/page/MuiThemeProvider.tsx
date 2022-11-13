@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useTheme }                   from "next-themes";
-import { ThemeProvider }              from "@mui/material";
-import lightTheme                     from "../../styles/theme/lightTheme";
-import darkTheme                      from "../../styles/theme/darkTheme";
+import { ThemeProvider } from "@mui/material";
+import lightTheme        from "../../styles/lightTheme";
+import darkTheme         from "../../styles/darkTheme";
 
 
 export interface MuiThemeProviderProps {
