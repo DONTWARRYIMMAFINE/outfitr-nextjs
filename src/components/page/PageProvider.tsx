@@ -2,9 +2,9 @@ import createCache                                 from "@emotion/cache";
 import { CacheProvider }                           from "@emotion/react";
 import React                                       from "react";
 import { ThemeProvider as PreferredThemeProvider } from "next-themes";
-import { CssBaseline }                             from "@mui/material";
-import Footer                                      from "./Footer";
-import Header                                      from "./header/Header";
+import { CssBaseline } from "@mui/material";
+import Footer          from "./footer/Footer";
+import Header          from "./header/Header";
 import MuiThemeProvider                            from "./MuiThemeProvider";
 
 

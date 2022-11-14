@@ -1,45 +1,45 @@
 import { Box } from "@mui/material";
-import React from "react";
-import Link  from "../../common/Link";
+import React   from "react";
+import Link    from "../../common/Link";
 
 
 interface Navigation {
     name: string;
     href: string;
-    chosen: boolean;
+    selected: boolean;
 }
 
 const navigation: Navigation[] = [
     {
         name: "Home",
         href: "/",
-        chosen: true
+        selected: true
     },
     {
         name: "Outfits",
         href: "/category",
-        chosen: false
+        selected: false
     },
     {
         name: "About",
         href: "/about",
-        chosen: false
+        selected: false
     },
     {
         name: "Contact Us",
         href: "/contact",
-        chosen: false
+        selected: false
     }
 ]
 
 const MainNavigation: React.FC = () => {
     return (
         <Box component={ "nav" }>
-            <Box display={ "flex" } component={ "ul" } justifyContent={"center"}>
-                { navigation.map(({ name, href, chosen }, index) => {
+            <Box display={ "flex" } component={ "ul" } justifyContent={ "center" }>
+                { navigation.map(({ name, href, selected }, index) => {
                     return (
-                        <Box key={ index } component={ "li" }>
-                            <Link variant={ "navigation" } type={ chosen ? "selected" : undefined } href={ href }>
+                        <Box key={ index } component={ "li" } marginX={ 2 }>
+                            <Link variant={ "navigation" } selected={ selected } href={ href } showUnderline>
                                 { name }
                             </Link>
                         </Box>

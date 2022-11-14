@@ -9,6 +9,7 @@ const ModeSwitch: React.FC<SwitchProps> = ({ ...rest }) => {
 
     return (
         <Switch
+            variant={"mode"}
             icon={ <LightMode sx={ { opacity: 1, color: "text.primary", bgcolor: "text.secondary", padding: 1 / 3, borderRadius: "50%" } }/> }
             checkedIcon={ <DarkMode sx={ { opacity: 1, color: "text.secondary", bgcolor: "text.primary", padding: 1 / 3, borderRadius: "50%" } }/> }
             onClick={ () => setTheme(resolvedTheme === "light" ? "dark" : "light") }

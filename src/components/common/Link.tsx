@@ -48,6 +48,8 @@ export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComp
 );
 
 export type LinkProps = {
+    selected?: boolean;
+    showUnderline?: boolean;
     activeClassName?: string;
     as?: NextLinkProps["as"];
     href: NextLinkProps["href"];

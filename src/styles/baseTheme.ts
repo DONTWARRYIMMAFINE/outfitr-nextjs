@@ -1,4 +1,4 @@
-import { ThemeOptions }   from "@mui/material/styles";
+import { ThemeOptions }                from "@mui/material/styles";
 import { Open_Sans, Playfair_Display } from "@next/font/google";
 import { pxToRem }                     from "../utility/pxToRem";
 
@@ -19,6 +19,7 @@ export const baseThemeOptions: ThemeOptions = {
     palette: {
         primary: {
             main: "#2cb9b0",
+            light: "rgba(44,185,176,0.9)",
             contrastText: "#fdfbf8"
         },
     },
@@ -44,6 +45,14 @@ export const baseThemeOptions: ThemeOptions = {
         subtitle2: {
             fontWeight: 600,
             fontSize: "large",
+        },
+        lightSmall: {
+            fontWeight: 300,
+            fontSize: "0.9rem",
+        },
+        normalSmall: {
+            fontWeight: 400,
+            fontSize: "0.9rem",
         },
         description: {
             fontWeight: 400,
@@ -94,7 +103,7 @@ export const baseThemeOptions: ThemeOptions = {
                 li: {
                     listStyle: "none",
                     padding: 0,
-                    margin: 8
+                    margin: 0
                 },
                 header: {
                     backgroundColor: theme.palette.background.header,
@@ -137,21 +146,19 @@ export const baseThemeOptions: ThemeOptions = {
             ],
         },
         MuiLink: {
-            defaultProps: {
-                textTransform: "none",
-                underline: "none",
-                marginY: pxToRem(5),
-                marginX: pxToRem(10)
-            },
-            variants: [
-                {
-                    props: { variant: "navigation" },
-                    style: ({ theme }) => ({
-                        textTransform: "none",
-                        textDecoration: "none",
-                        position: "relative",
+            styleOverrides: {
+                root: ({ ownerState, theme }) => ({
+                    underline: "none",
+                    textTransform: "none",
+                    textDecoration: "none",
+                    position: "relative",
+                    color: theme.palette.text.primary,
+                    transition: theme.transitions.create(["all"]),
+                    ":hover": {
+                        color: theme.palette.primary.main,
+                    },
+                    ...(ownerState.showUnderline) && {
                         paddingBottom: pxToRem(10),
-                        color: theme.palette.text.primary,
                         transition: theme.transitions.create(["all"]),
                         ":hover": {
                             color: theme.palette.primary.main,
@@ -170,36 +177,12 @@ export const baseThemeOptions: ThemeOptions = {
                             backgroundColor: theme.palette.primary.main,
                             transition: theme.transitions.create(["all"]),
                         },
-                    }),
-                },
-                {
-                    props: { variant: "navigation", type: "selected" },
-                    style: ({ theme }) => ({
-                        textTransform: "none",
-                        textDecoration: "none",
-                        position: "relative",
-                        paddingBottom: pxToRem(10),
+                    },
+                    ...(ownerState.selected) && {
                         color: theme.palette.primary.main,
-                        transition: theme.transitions.create(["all"]),
-                        ":hover": {
-                            ":after": {
-                                transform: "scaleX(1)"
-                            }
-                        },
-                        ":after": {
-                            content: '""',
-                            position: "absolute",
-                            width: "100%",
-                            height: "2px",
-                            bottom: 0,
-                            left: 0,
-                            transform: "scaleX(0)",
-                            backgroundColor: theme.palette.primary.main,
-                            transition: theme.transitions.create(["all"]),
-                        },
-                    }),
-                },
-            ]
+                    }
+                })
+            },
         },
         MuiSwitch: {
             styleOverrides: {
@@ -251,10 +234,41 @@ export const baseThemeOptions: ThemeOptions = {
         MuiIconButton: {
             styleOverrides: {
                 root: ({ theme }) => ({
+                    fontSize: 24,
+                    padding: 12,
                     color: theme.palette.text.primary,
                     backgroundColor: theme.palette.background.component,
+                    position: 'relative',
+                    zIndex: 0,
+                    ':after': {
+                        content: '""',
+                        display: 'block',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        zIndex: -1,
+                        backgroundColor: theme.palette.primary.light,
+                        borderRadius: theme.shape.borderRadius,
+                        transition: theme.transitions.create(["all"], {
+                            easing: theme.transitions.easing.poof,
+                            duration: theme.transitions.duration.complex
+                        }),
+                        transform: 'scale(0)',
+                    },
+                    ':not(:first-of-type)': {
+                        marginLeft: '0.5rem',
+                    },
+                    ':hover, :focus': {
+                        color: theme.palette.primary.contrastText,
+                        ':after': {
+                            transform: 'scale(1)',
+                        },
+                    },
                 }),
-            }
+
+            },
         },
         MuiTextField: {
             variants: [
@@ -267,8 +281,8 @@ export const baseThemeOptions: ThemeOptions = {
                             color: theme.palette.text.placeholder,
                         }
                     })
-                }
-            ]
+                },
+            ],
         }
     },
     shape: {
@@ -280,6 +294,7 @@ export const baseThemeOptions: ThemeOptions = {
             easeOut: "cubic-bezier(0.0, 0, 0.2, 1)",
             easeIn: "cubic-bezier(0.4, 0, 1, 1)",
             sharp: "cubic-bezier(0.4, 0, 0.6, 1)",
+            poof: "cubic-bezier(0.47, 1.64, 0.41, 0.8)"
         },
         duration: {
             shortest: 100,
