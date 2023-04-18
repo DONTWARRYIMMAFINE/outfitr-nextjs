@@ -1,14 +1,15 @@
-import { Box, Typography } from "@mui/material";
-import React               from "react";
+"use client";
 
+import { Box, Text } from "@/components/ui";
+import { FC } from "react";
 
-const Logo: React.FC = () => {
-    return (
-        <Box display={"flex"}>
-            <Typography variant={"logo"}>Outfitr</Typography>
-            <Typography variant={"logo"} color={"primary"}>.</Typography>
-        </Box>
-    )
-}
+const Logo: FC = () => {
+  return (
+    <Box display={"flex"}>
+      <Text variant={"logo"}>Outfitr</Text>
+      <Text variant={"logo"} color={"primary"}>.</Text>
+    </Box>
+  );
+};
 
 export default Logo;
