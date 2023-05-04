@@ -1,42 +1,39 @@
 "use client";
 
-import { useMeQuery, UserFragment } from "@/lib/graphql/schema.generated";
-import { createContext, FC, ReactNode, useState } from "react";
-
-type UserValueType = UserFragment | undefined | null;
-
-type SessionContextType = {
-  user: UserValueType;
-  setUser: (user: UserValueType) => void;
-};
-
-export const SessionContext = createContext<SessionContextType>(null!);
+import { useMeQuery } from "@/lib/graphql/schema.generated";
+import { loggedInUser } from "@/store/user.store";
+import { useReactiveVar } from "@apollo/client";
+import { usePathname, useRouter } from "next/navigation";
+import { FC, ReactNode, useEffect } from "react";
 
 export interface SessionProviderProps {
-  children: ReactNode;
+  protectedRoutes?: string[];
+  children?: ReactNode;
 }
 
-const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<UserValueType>(undefined);
-  const { loading } = useMeQuery({
-    fetchPolicy: "network-only",
-    onCompleted: (data) => {
-      setUser(data.me);
-    },
-    onError: () => {
-      setUser(null);
-    },
+const SessionProvider: FC<SessionProviderProps> = ({ protectedRoutes, children }) => {
+  const { refetch, client } = useMeQuery({
+    onCompleted: data => loggedInUser(data.me),
+    onError: _ => loggedInUser(null),
   });
+  const router = useRouter();
+  const pathName = usePathname();
+  const user = useReactiveVar(loggedInUser);
 
-  if (loading) {
-    return <></>;
-  }
+  useEffect(() => {
+    if (protectedRoutes?.includes(pathName)) {
+      refetch();
+    }
+  }, [refetch, protectedRoutes]);
 
-  return (
-    <SessionContext.Provider value={{ user, setUser }}>
-      {children}
-    </SessionContext.Provider>
-  );
+  useEffect(() => {
+    if (!user && protectedRoutes?.includes(pathName)) {
+      router.push("/login");
+      client.resetStore();
+    }
+  }, [user, router, pathName, protectedRoutes, client]);
+
+  return <>{children}</>;
 };
 
 export default SessionProvider;

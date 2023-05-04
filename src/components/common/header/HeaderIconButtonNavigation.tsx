@@ -1,8 +1,8 @@
 "use client";
 
 import { Box, Button, CartIcon, IconButton, List, ListItem, ProfileIcon, Text, WishlistIcon } from "@/components/ui";
-import { useUser } from "@/hooks/useUser";
-import { useLogoutMutation, useMeQuery } from "@/lib/graphql/schema.generated";
+import { useLogoutMutation } from "@/lib/graphql/schema.generated";
+import { loggedInUser } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
 import { FC, ReactNode } from "react";
 
@@ -18,12 +18,13 @@ const navigation: HeaderIconButtonNavigationItem[] = [
 ];
 
 const HeaderIconButtonNavigation: FC = () => {
-  const { user } = useUser();
+  const user = useReactiveVar(loggedInUser);
   const [logoutMutation] = useLogoutMutation();
 
   const onLogout = async () => {
     await logoutMutation();
     localStorage.removeItem("token");
+    loggedInUser(null);
   };
 
   return (

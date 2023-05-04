@@ -1,12 +1,5 @@
 query Me {
   me {
-    id
-    fullName
-    permissions {
-      id
-      action
-      subject
-      conditions
-    }
+    ...User
   }
 }

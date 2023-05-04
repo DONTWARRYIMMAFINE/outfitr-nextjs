@@ -3,27 +3,29 @@
 import { Box, Button, IconTextField, ProfileIcon } from "@/components/ui";
 import { LoginMutationVariables, useLoginMutation } from "@/lib/graphql/schema.generated";
 import { SignInSchema } from "@/lib/schema/signin.schema";
+import { loggedInUser } from "@/store/user.store";
 import { Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
+import toast from "react-hot-toast";
 
 interface LogInFormProps {}
 
 const LogInForm: FC<LogInFormProps> = ({}) => {
   const router = useRouter();
-  const [loginMutation] = useLoginMutation();
+  const [loginMutation, { error }] = useLoginMutation();
 
   const onSubmit = async (values: LoginMutationVariables["input"]) => {
-    try {
-      const { data } = await loginMutation({
-        variables: { input: values },
-      });
-
-      localStorage.setItem("token", data?.login.accessToken!);
-      await router.push("/");
-    } catch (error) {
-      alert(JSON.stringify(error, null, 2));
-    }
+    await loginMutation({
+      variables: { input: values },
+      onCompleted: ({ login }) => {
+        loggedInUser(login.user);
+        localStorage.setItem("token", login.accessToken);
+        router.push("/");
+        toast.success(`Hello back, ${login.user.fullName}`);
+      },
+      onError: error => toast.error(error.message),
+    });
   };
 
   return (
@@ -41,7 +43,7 @@ const LogInForm: FC<LogInFormProps> = ({}) => {
             placeholder={"Enter Your Email"}
             value={values.email}
             onChange={handleChange}
-            error={touched.email && Boolean(errors.email)}
+            error={touched.email && (Boolean(errors.email) || !!error)}
             helperText={touched.email && errors.email}
             variant={"outlined"}
             iconStart={<ProfileIcon />}
@@ -55,7 +57,7 @@ const LogInForm: FC<LogInFormProps> = ({}) => {
             placeholder={"Enter your password"}
             value={values.password}
             onChange={handleChange}
-            error={touched.password && Boolean(errors.password)}
+            error={touched.password && (Boolean(errors.password) || !!error)}
             helperText={touched.password && errors.password}
             variant={"outlined"}
             iconStart={<ProfileIcon />}

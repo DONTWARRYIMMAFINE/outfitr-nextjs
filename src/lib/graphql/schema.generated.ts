@@ -5827,7 +5827,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', accessToken: string, refreshToken: string } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', accessToken: string, user: { __typename?: 'User', id: string, fullName: string, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } } };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -5867,10 +5867,12 @@ export const LoginDocument = gql`
     mutation Login($input: LoginInput!) {
   login(input: $input) {
     accessToken
-    refreshToken
+    user {
+      ...User
+    }
   }
 }
-    `;
+    ${UserFragmentDoc}`;
 export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
 
 /**
@@ -5968,17 +5970,10 @@ export type CountriesQueryResult = Apollo.QueryResult<CountriesQuery, CountriesQ
 export const MeDocument = gql`
     query Me {
   me {
-    id
-    fullName
-    permissions {
-      id
-      action
-      subject
-      conditions
-    }
+    ...User
   }
 }
-    `;
+    ${UserFragmentDoc}`;
 
 /**
  * __useMeQuery__

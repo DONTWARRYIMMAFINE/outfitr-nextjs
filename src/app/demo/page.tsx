@@ -1,11 +1,10 @@
 import CountryListClient from "@/components/common/country/CountryListClient";
-import CountryListServer from "@/components/common/country/CountryListServer";
 import Logo from "@/components/common/Logo";
 import NewsSubscribe from "@/components/common/news-subscribe/NewsSubscribe";
 import { Box, Button, Link, Switch, Text } from "@/components/ui";
 import ContentContainer from "@/components/ui/ContentContainer";
 import TextField from "@/components/ui/TextField";
-import React, { FC, Suspense } from "react";
+import React, { FC } from "react";
 
 const DemoPage: FC = () => {
   return (<>
@@ -41,11 +40,7 @@ const DemoPage: FC = () => {
       <Button variant={"transparent"} href={"/categories"}>
         <Text variant={"button"} color={"primary"}>Link button</Text>
       </Button>
-      <CountryListClient/>
-      {/*<Suspense fallback={<div>loading...</div>}>*/}
-      {/*  /!* @ts-expect-error Server Component *!/*/}
-      {/*  <CountryListServer/>*/}
-      {/*</Suspense>*/}
+      <CountryListClient />
     </ContentContainer>
     <NewsSubscribe />
   </>);

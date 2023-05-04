@@ -28,12 +28,6 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-// const logoutLink = onError(({graphQLErrors}) => {
-//   if (graphQLErrors?.length && (graphQLErrors[0].extensions?.response as any).statusCode === 401) {
-//     authenticated(false);
-//   }
-// })
-
 const httpLink = new HttpLink({
   uri: `${API_URL}/graphql`,
   credentials: "include",
@@ -45,7 +39,7 @@ export const getClient = () => {
   if (!client || typeof window === "undefined") {
     client = new ApolloClient({
       ssrMode: typeof window === "undefined",
-      link: from([authLink, httpLink]),
+      link: from([errorLink, authLink, httpLink]),
       cache: new InMemoryCache(),
       defaultOptions: {
         watchQuery: {

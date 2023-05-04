@@ -1,7 +1,5 @@
 import { Hamburger, Logo, ModeSwitch } from "@/components/common";
 import { AppBar, Box, Container, Divider, Hidden, Toolbar } from "@/components/ui";
-import authenticated from "@/constants/authenticated";
-import { useReactiveVar } from "@apollo/client";
 import { FC } from "react";
 import Navigation from "./HeaderIconButtonNavigation";
 import HeaderRoutes from "./HeaderRoutes";
