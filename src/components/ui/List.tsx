@@ -14,8 +14,8 @@ const List = forwardRef<HTMLUListElement, ListProps>((
   {
     children,
     sx,
-    justifyContent = "center",
-    alignItems = "center",
+    justifyContent = "flex-start",
+    alignItems = "flex-start",
     direction = "row",
     ...props
   },
@@ -29,6 +29,7 @@ const List = forwardRef<HTMLUListElement, ListProps>((
         justifyContent,
         alignItems,
         flexDirection: direction,
+        gap: 2,
         ...sx,
       }}
       disablePadding

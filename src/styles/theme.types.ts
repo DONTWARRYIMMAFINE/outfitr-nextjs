@@ -4,6 +4,7 @@ import { CSSProperties } from "react";
 
 declare module "@mui/material/styles" {
   interface TypographyVariants {
+    advertising: CSSProperties;
     logo: CSSProperties;
     p: CSSProperties;
     small: CSSProperties;
@@ -11,6 +12,7 @@ declare module "@mui/material/styles" {
   }
 
   interface TypographyVariantsOptions {
+    advertising: CSSProperties;
     logo: CSSProperties;
     p: CSSProperties;
     small: CSSProperties;
@@ -23,6 +25,7 @@ declare module "@mui/material/styles" {
     footer: string;
     component: string;
     missing: string;
+    textField: string;
   }
 
   interface TypeBackground {
@@ -32,12 +35,11 @@ declare module "@mui/material/styles" {
     drawer: string;
     component: string;
     missing: string;
+    textField: string;
   }
 
   interface TypeText {
     placeholder: string;
-    primary70: string;
-    primary50: string;
   }
 
   interface Easing {
@@ -47,16 +49,11 @@ declare module "@mui/material/styles" {
 
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
+    advertising: true;
     logo: true;
     p: true;
     small: true;
     nav: true;
-  }
-}
-
-declare module "@mui/material/TextField" {
-  interface TextFieldPropsVariantOverrides {
-    flat: true;
   }
 }
 

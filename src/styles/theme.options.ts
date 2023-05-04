@@ -4,13 +4,13 @@ import { Open_Sans, Playfair_Display } from "next/font/google";
 export const openSans = Open_Sans({
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["cyrillic", "latin"],
-  fallback: ["Helvetica", "Arial", "sans-serif"],
+  fallback: ["sans-serif"],
 });
 
 export const playfairDisplay = Playfair_Display({
   weight: ["700"],
   subsets: ["cyrillic", "latin"],
-  fallback: ["Helvetica", "Arial", "sans-serif"],
+  fallback: ["sans-serif"],
 });
 
 export const themeOptions: ThemeOptions = {
@@ -27,6 +27,13 @@ export const themeOptions: ThemeOptions = {
       openSans.style.fontFamily,
       playfairDisplay.style.fontFamily,
     ].join(","),
+    advertising: {
+      fontFamily: playfairDisplay.style.fontFamily,
+      fontWeight: 700,
+      fontSize: 148,
+      lineHeight: 1,
+      color: palette.primary.contrastText,
+    },
     logo: {
       fontFamily: playfairDisplay.style.fontFamily,
       fontWeight: 700,
@@ -38,31 +45,29 @@ export const themeOptions: ThemeOptions = {
       fontSize: 48,
     },
     h2: {
-      fontWeight: 700,
+      fontWeight: 400,
       fontSize: 27,
     },
     h3: {
-      fontWeight: 700,
-      fontSize: 21,
-      color: palette.text.primary70,
+      fontWeight: 400,
+      fontSize: 24,
     },
     h4: {
-      fontWeight: 700,
-      fontSize: 19,
+      fontWeight: 400,
+      fontSize: 21,
     },
     p: {
       fontWeight: 400,
       fontSize: 18,
-      color: palette.text.primary70,
     },
     small: {
       fontWeight: 400,
       fontSize: 15,
-      color: palette.text.primary50,
     },
     button: {
       fontWeight: 600,
-      fontSize: "medium",
+      fontSize: 16,
+      textTransform: "none",
       color: palette.primary.contrastText,
     },
     nav: {
@@ -149,20 +154,6 @@ export const themeOptions: ThemeOptions = {
                 },
               },
 
-            },
-          }),
-        },
-      ],
-    },
-    MuiTextField: {
-      variants: [
-        {
-          props: { variant: "outlined" },
-          style: ({ theme }) => ({
-            backgroundColor: theme.palette.background.header,
-            borderRadius: theme.shape.borderRadius,
-            label: {
-              color: theme.palette.text.placeholder,
             },
           }),
         },

@@ -1,5 +1,5 @@
 import { Box, Link, List, ListItem } from "@/components/ui";
-import React from "react";
+import { FC } from "react";
 
 interface Navigation {
   name: string;
@@ -28,25 +28,28 @@ const navigation: Navigation[] = [
     href: "/contact",
     selected: false,
   },
+  {
+    name: "demo",
+    href: "/demo",
+    selected: false,
+  },
 ];
 
 export interface HeaderRoutesProps {
   direction?: "column" | "row";
 }
 
-const HeaderRoutes: React.FC<HeaderRoutesProps> = ({ direction }) => {
+const HeaderRoutes: FC<HeaderRoutesProps> = ({ direction }) => {
   return (
     <Box component={"nav"}>
       <List direction={direction}>
-        {navigation.map(({ name, href, selected }, index) => {
-          return (
-            <ListItem key={index}>
-              <Link variant={"navigation"} selected={selected} href={href} noWrap showUnderline>
-                {name}
-              </Link>
-            </ListItem>
-          );
-        })}
+        {navigation.map(({ name, href, selected }, index) => (
+          <ListItem key={index}>
+            <Link selected={selected} href={href} noWrap showUnderline>
+              {name}
+            </Link>
+          </ListItem>
+        ))}
       </List>
     </Box>
   );

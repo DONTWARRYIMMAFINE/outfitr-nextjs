@@ -14,15 +14,13 @@ export interface InfoColumnProps {
 const FooterInfoColumn: FC<InfoColumnProps> = ({ title, links }) => {
   return (
     <Box display={"flex"} flexDirection={"column"}>
-      <ListItem>
-        <Text paddingRight={2} variant={"h4"} component={"h4"}>
+      <List direction={"column"} alignItems={"flex-start"} sx={{ marginTop: 1 }}>
+        <Text variant={"h4"} component={"h4"}>
           {title}
         </Text>
-      </ListItem>
-      <List direction={"column"}>
         {links.map(({ href, name }, index) => (
           <ListItem key={index}>
-            <Link variant={"small"} href={href} marginTop={0.175}>
+            <Link variant={"small"} href={href}>
               {name}
             </Link>
           </ListItem>

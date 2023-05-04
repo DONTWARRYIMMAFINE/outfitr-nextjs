@@ -1,16 +1,13 @@
-"use client";
-
-import Copyright from "@/components/common/layout/footer/Copyright";
-import TINSection from "@/components/common/layout/footer/TINSection";
-import { Box, Container, Hidden } from "@/components/ui";
+import { Logo } from "@/components/common";
+import { Box, Container, Grid, Text } from "@/components/ui";
 import { FC } from "react";
-import Logo from "../../Logo";
+import Copyright from "./Copyright";
 import FooterInfoColumn, { InfoColumnProps } from "./FooterInfoColumn";
 import FooterSocialLinks from "./FooterSocialLinks";
 
 const columns: InfoColumnProps[] = [
   {
-    title: "My Account",
+    title: "Account",
     links: [
       {
         href: "/signIn",
@@ -27,7 +24,7 @@ const columns: InfoColumnProps[] = [
     ],
   },
   {
-    title: "My outfits",
+    title: "Outfits",
     links: [
       {
         href: "/cart",
@@ -75,28 +72,37 @@ const Footer: FC = () => {
   return (
     <Box component={"footer"} paddingY={4} sx={{ mt: "auto" }}>
       <Container>
-        <Logo />
-        <Box display={"flex"}>
-          <Box flexGrow={1} flexBasis={"35%"}>
-            <FooterSocialLinks />
-            <TINSection />
-          </Box>
-          <Hidden mdDown>
-            <Box display={"flex"} flexGrow={1} flexShrink={0} justifyContent={"space-between"} alignItems={"flex-start"} paddingLeft={2}>
-              {columns.map((column, index) => (
-                <FooterInfoColumn key={index} {...column} />
-              ))}
-            </Box>
-          </Hidden>
-        </Box>
-        <Hidden mdUp>
-          <Box display={"flex"} flex={1} justifyContent={"space-between"} alignItems={"flex-start"}>
-            {columns.map((column, index) => (
-              <FooterInfoColumn key={index} {...column} />
-            ))}
-          </Box>
-        </Hidden>
-        <Copyright />
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Logo />
+          </Grid>
+          <Grid container item xs={12} columnSpacing={4}>
+            <Grid container item md={6} xs={12} spacing={2}>
+              <Grid item xs={12}>
+                <FooterSocialLinks />
+              </Grid>
+              <Grid item xs={12}>
+                <Text variant={"small"} paragraph>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque dolor doloremque ea facilis harum itaque minus sapiente. Architecto ducimus quibusdam quidem sint
+                  totam. Atque illo iure reiciendis, reprehenderit totam ut!
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, at corporis debitis doloremque dolores explicabo ipsa laborum laudantium libero mollitia nulla omnis provident quis quo reiciendis sed tempore tenetur voluptatibus?
+                </Text>
+              </Grid>
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <Grid container item xs={12}>
+                {columns.map((column, index) => (
+                  <Grid key={index} item xs={3} gap={2}>
+                    <FooterInfoColumn {...column} />
+                  </Grid>
+                ))}
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Copyright />
+          </Grid>
+        </Grid>
       </Container>
     </Box>
   );

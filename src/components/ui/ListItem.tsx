@@ -5,10 +5,9 @@ import { styled } from "@mui/material/styles";
 import { ElementType, FC, forwardRef } from "react";
 
 const StyledListItem: FC<MuiListItemProps> = styled(MuiListItem)<MuiListItemProps>(({ theme }) => ({
-  padding: theme.spacing(1.5, 2, 1.5, 0),
-  ":last-of-type": {
-    padding: theme.spacing(1.5, 0, 1.5, 0),
-  },
+  width: "auto",
+  padding: 0,
+  margin: 0,
 }));
 
 interface ListItemProps extends MuiListItemProps<"li", { component?: ElementType }> {}

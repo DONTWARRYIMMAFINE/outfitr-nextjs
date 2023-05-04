@@ -1,5 +1,3 @@
-"use client";
-
 import { Box, Text } from "@/components/ui";
 import { FC } from "react";
 

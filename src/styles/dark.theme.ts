@@ -14,10 +14,12 @@ const darkTheme = createTheme(merge({
     background: {
       body: "#1F1F1F",
       header: "#2A2A2A",
+      container: "#2A2A2A",
       footer: "#2A2A2A",
       drawer: "#1F1F1F",
       component: "#3F3F3F",
       missing: "#D9D9D9",
+      textField: "#242424",
     },
   },
 }, themeOptions));

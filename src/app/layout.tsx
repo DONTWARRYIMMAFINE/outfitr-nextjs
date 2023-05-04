@@ -1,7 +1,16 @@
 import { Providers } from "@/components";
 import Footer from "@/components/common/layout/footer/Footer";
 import Header from "@/components/common/layout/header/Header";
+import { Metadata } from "next";
 import { FC, ReactNode } from "react";
+
+export const metadata: Metadata = {
+  title: "Outfitr",
+  applicationName: "Outfitr",
+  description: "Outfitr official style provider",
+  keywords: "outfitr, clothing, fashion, style, apparel, outfits, trends, online shopping, women's wear, men's wear",
+  icons: "/favicon.png"
+};
 
 export interface RootLayoutProps {
   children?: ReactNode;
@@ -9,12 +18,7 @@ export interface RootLayoutProps {
 
 const RootLayout: FC<RootLayoutProps> = ({ children }) => {
   return (
-    <html lang="en">
-    <head>
-      <title>Outfitr</title>
-      <meta name="description" content="Outfitr official style provider" />
-      <link rel="icon" href="/favicon.ico" />
-    </head>
+    <html>
     <body>
     <Providers>
       <Header />

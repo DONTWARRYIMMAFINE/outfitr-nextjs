@@ -1,20 +1,15 @@
 "use client";
 
-import { CloseRounded, Copyright, Facebook, FavoriteBorderOutlined, Instagram, MenuRounded, PersonOutlineOutlined, Telegram, Twitter } from "@mui/icons-material";
-import { ShoppingCartIcon } from "lucide-react";
-
-const Icons = {
-  Wishlist: FavoriteBorderOutlined,
-  Cart: ShoppingCartIcon,
-  Profile: PersonOutlineOutlined,
-  Hamburger: MenuRounded,
-  Close: CloseRounded,
-  Instagram: Instagram,
-  VK: Instagram,
-  Telegram: Telegram,
-  Facebook: Facebook,
-  Twitter: Twitter,
-  Copyright: Copyright,
-};
-
-export default Icons;
+export {
+  LightMode as LightModeIcon,
+  DarkMode as DarkModeIcon,
+  CloseRounded as CloseIcon,
+  Facebook as FacebookIcon,
+  FavoriteBorderOutlined as WishlistIcon,
+  MenuRounded as HamburgerIcon,
+  PersonOutlineOutlined as ProfileIcon,
+  Instagram as InstagramIcon,
+  Telegram as TelegramIcon,
+  Twitter as TwitterIcon,
+  ShoppingCartOutlined as CartIcon,
+} from "@mui/icons-material";

@@ -1,0 +1,13 @@
+export { default as About } from "./about/About";
+export { default as Header } from "./layout/header/Header";
+export { default as Footer } from "./layout/footer/Footer";
+export { default as NewsSubscribe } from "./news-subscribe/NewsSubscribe";
+export { default as Onboarding } from "./onboarding/Onboarding";
+export { default as BackgroundText } from "./BackgroundText";
+export { default as Dot } from "./Dot";
+export { default as DotSeparated } from "./DotSeparated";
+export { default as Grid2x1 } from "./Grid2x1";
+export { default as Hamburger } from "./Hamburger";
+export { default as Logo } from "./Logo";
+export { default as ModeSwitch } from "./ModeSwitch";
+export { default as Welcome } from "./Welcome";

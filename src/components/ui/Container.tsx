@@ -5,11 +5,11 @@ import { FC } from "react";
 
 interface ContainerProps extends MuiContainerProps {}
 
-const Container: FC<ContainerProps> = ({ children, ...props }) => {
+const Container: FC<ContainerProps> = ({ children, sx, ...props }) => {
   return (
     <MuiContainer
       maxWidth={"xl"}
-      sx={{ flex: 1 }}
+      sx={{ flex: 1, ...sx }}
       {...props}
     >
       {children}

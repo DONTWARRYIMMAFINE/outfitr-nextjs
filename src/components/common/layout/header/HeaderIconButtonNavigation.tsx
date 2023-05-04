@@ -1,6 +1,4 @@
-"use client";
-
-import { Box, IconButton, Icons, List, ListItem } from "@/components/ui";
+import { Box, CartIcon, IconButton, List, ListItem, ProfileIcon, WishlistIcon } from "@/components/ui";
 import { FC, ReactNode } from "react";
 
 interface HeaderIconButtonNavigationItem {
@@ -9,9 +7,9 @@ interface HeaderIconButtonNavigationItem {
 }
 
 const navigation: HeaderIconButtonNavigationItem[] = [
-  { icon: <Icons.Wishlist />, href: "/wishlist" },
-  { icon: <Icons.Cart />, href: "/cart" },
-  { icon: <Icons.Profile />, href: "/account" },
+  { icon: <WishlistIcon />, href: "/wishlist" },
+  { icon: <CartIcon />, href: "/cart" },
+  { icon: <ProfileIcon />, href: "/account" },
 ];
 
 const HeaderIconButtonNavigation: FC = () => {

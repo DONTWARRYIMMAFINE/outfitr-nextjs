@@ -9,17 +9,17 @@ const lightTheme = createTheme(merge({
     text: {
       primary: "#0C0D34",
       secondary: "#FDFBF8",
-      primary70: "#0C0D34B3",
-      primary50: "#0C0D3480",
       placeholder: "#B9B9B9",
     },
     background: {
       body: "#FDFDFD",
       header: "#F2F2F2",
+      container: "#F2F2F2",
       footer: "#F2F2F2",
       drawer: "#F2F2F2",
       component: "#EAEAEA",
       missing: "#D9D9D9",
+      textField: "#F8F8F8",
     },
   },
 }, themeOptions));

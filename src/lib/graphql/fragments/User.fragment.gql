@@ -1,0 +1,9 @@
+fragment UserWithIdAndPermissions on User {
+  id
+  permissions {
+    id
+    action
+    subject
+    conditions
+  }
+}

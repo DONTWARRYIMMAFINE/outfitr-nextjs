@@ -1,8 +1,9 @@
 "use client";
 
-import { Button as MuiButton, ButtonProps as MuiButtonProps } from "@mui/material";
+import { Text } from "@/components/ui/index";
+import { LoadingButton, LoadingButtonProps } from "@mui/lab";
 import { styled } from "@mui/material/styles";
-import { FC } from "react";
+import React, { FC } from "react";
 
 declare module "@mui/material/Button" {
   export interface ButtonPropsVariantOverrides {
@@ -12,10 +13,9 @@ declare module "@mui/material/Button" {
   }
 }
 
-export interface ButtonProps extends MuiButtonProps {}
-
-const Button: FC<ButtonProps> = styled(MuiButton)<ButtonProps>(({ theme, variant }) => ({
-  padding: theme.spacing(1.5, 3),
+const StyledButton: FC<LoadingButtonProps> = styled(LoadingButton)<LoadingButtonProps>(({ theme, variant }) => ({
+  padding: theme.spacing(1.5, 8),
+  zIndex: 1,
   textTransform: "none",
   ...(variant === "primary" && {
     backgroundColor: theme.palette.primary.main,
@@ -29,6 +29,14 @@ const Button: FC<ButtonProps> = styled(MuiButton)<ButtonProps>(({ theme, variant
   ...(variant === "drawer" && {
     backgroundColor: theme.palette.primary.main,
   }),
-})) as typeof MuiButton;
+}));
+
+const Button: FC<LoadingButtonProps> = ({ children, loading, color, fullWidth = false, ...props }) => {
+  return (
+    <StyledButton loading={loading} fullWidth={fullWidth} {...props}>
+      <Text variant={"button"} color={loading ? "transparent" : color} noWrap>{children}</Text>
+    </StyledButton>
+  );
+};
 
 export default Button;
