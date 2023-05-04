@@ -1,23 +1,29 @@
 "use client";
 
 import { Box, Button, IconTextField, ProfileIcon } from "@/components/ui";
+import authenticated from "@/constants/authenticated";
 import { LoginMutationVariables, useLoginMutation } from "@/lib/graphql/schema.generated";
 import { SignInSchema } from "@/lib/schema/signin.schema";
 import { Formik } from "formik";
+import { useRouter } from "next/navigation";
 import { FC } from "react";
 
 interface LogInFormProps {}
 
 const LogInForm: FC<LogInFormProps> = ({}) => {
+  const router = useRouter();
   const [loginMutation] = useLoginMutation();
 
-  const onSubmit = async (values: LoginMutationVariables) => {
+  const onSubmit = async (values: LoginMutationVariables["input"]) => {
     try {
       const { data } = await loginMutation({
-        variables: values,
+        variables: { input: values },
       });
 
-      alert(JSON.stringify(data, null, 2));
+      localStorage.setItem("token", data?.login.accessToken!);
+      console.log(data?.login.accessToken);
+      authenticated(true);
+      await router.push("/");
     } catch (error) {
       alert(JSON.stringify(error, null, 2));
     }
@@ -27,7 +33,7 @@ const LogInForm: FC<LogInFormProps> = ({}) => {
     <Formik
       initialValues={{ email: "", password: "" }}
       validationSchema={SignInSchema}
-      onSubmit={values => onSubmit({ input: values })}
+      onSubmit={onSubmit}
     >
       {({ handleSubmit, isValid, values, handleChange, touched, errors }) => (
         <Box display={"flex"} flexDirection={"column"} alignItems={"center"} width={"100%"} gap={4}>

@@ -1,8 +1,8 @@
+import authenticated from "@/constants/authenticated";
 import { API_URL } from "@/constants/urls";
 import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
-import { getSession } from "next-auth/react";
 import { useMemo } from "react";
 
 let client: ApolloClient<NormalizedCacheObject> | null = null;
@@ -18,18 +18,23 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   }
 });
 
-// const authLink = setContext(async (_, { headers }: { headers: Headers }) => {
-//   const session = await getSession();
-//   const modifiedHeader = {
-//     headers: {
-//       ...headers,
-//       authorization: session?.accessToken
-//         ? `Bearer ${session.accessToken}`
-//         : "",
-//     },
-//   };
-//   return modifiedHeader;
-// });
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem('token');
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    }
+  }
+});
+
+const logoutLink = onError(({graphQLErrors}) => {
+  if (graphQLErrors?.length && (graphQLErrors[0].extensions?.response as any).statusCode === 401) {
+    authenticated(false);
+  }
+})
 
 const httpLink = new HttpLink({
   uri: `${API_URL}/graphql`,
@@ -42,7 +47,7 @@ export const getClient = () => {
   if (!client || typeof window === "undefined") {
     client = new ApolloClient({
       ssrMode: typeof window === "undefined",
-      link: from([errorLink, httpLink]),
+      link: from([logoutLink, authLink, httpLink]),
       cache: new InMemoryCache(),
       defaultOptions: {
         watchQuery: {
@@ -55,7 +60,3 @@ export const getClient = () => {
 
   return client;
 };
-
-export function useApollo() {
-  return useMemo(() => getClient(), []);
-}

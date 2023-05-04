@@ -1,6 +1,6 @@
 export { default as About } from "./about/About";
-export { default as Header } from "./layout/header/Header";
-export { default as Footer } from "./layout/footer/Footer";
+export { default as Header } from "@/components/common/header/Header";
+export { default as Footer } from "@/components/common/footer/Footer";
 export { default as NewsSubscribe } from "./news-subscribe/NewsSubscribe";
 export { default as Onboarding } from "./onboarding/Onboarding";
 export { default as BackgroundText } from "./BackgroundText";

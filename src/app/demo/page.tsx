@@ -42,10 +42,10 @@ const DemoPage: FC = () => {
         <Text variant={"button"} color={"primary"}>Link button</Text>
       </Button>
       <CountryListClient/>
-      <Suspense fallback={<div>loading...</div>}>
-        {/* @ts-expect-error Server Component */}
-        <CountryListServer/>
-      </Suspense>
+      {/*<Suspense fallback={<div>loading...</div>}>*/}
+      {/*  /!* @ts-expect-error Server Component *!/*/}
+      {/*  <CountryListServer/>*/}
+      {/*</Suspense>*/}
     </ContentContainer>
     <NewsSubscribe />
   </>);

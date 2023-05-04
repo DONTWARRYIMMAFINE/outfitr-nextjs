@@ -1,12 +1,12 @@
 "use client";
 
 import { ThemeProvider } from "@/components";
+import SessionProvider from "@/components/SessionProvider";
 import { createEmotionCache } from "@/lib/createEmotionCache";
-import { getClient, useApollo } from "@/lib/graphql/apollo-client";
+import { getClient } from "@/lib/graphql/apollo-client";
 import { ApolloProvider } from "@apollo/client";
 import { CacheProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
-import { SessionProvider } from "next-auth/react";
 import { ThemeProvider as NextThemeProvider } from "next-themes";
 import { FC, ReactNode } from "react";
 
@@ -24,11 +24,11 @@ const PageProvider: FC<PageProviderProps> = ({ children }) => {
       <NextThemeProvider enableSystem enableColorScheme>
         <ThemeProvider>
           <CssBaseline enableColorScheme />
-          <SessionProvider>
-            <ApolloProvider client={client}>
+          <ApolloProvider client={client}>
+            <SessionProvider excludedRoutes={["/login", "signup"]}>
               {children}
-            </ApolloProvider>
-          </SessionProvider>
+            </SessionProvider>
+          </ApolloProvider>
         </ThemeProvider>
       </NextThemeProvider>
     </CacheProvider>
