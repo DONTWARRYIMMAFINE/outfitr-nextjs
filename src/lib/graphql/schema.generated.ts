@@ -5820,7 +5820,7 @@ export type WishlistMinAggregate = {
 
 export type FullCountryFragment = { __typename?: 'Country', id: string, code: string, name: string };
 
-export type UserWithIdAndPermissionsFragment = { __typename?: 'User', id: string, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> };
+export type UserFragment = { __typename?: 'User', id: string, fullName: string, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> };
 
 export type LoginMutationVariables = Exact<{
   input: LoginInput;
@@ -5851,9 +5851,10 @@ export const FullCountryFragmentDoc = gql`
   name
 }
     `;
-export const UserWithIdAndPermissionsFragmentDoc = gql`
-    fragment UserWithIdAndPermissions on User {
+export const UserFragmentDoc = gql`
+    fragment User on User {
   id
+  fullName
   permissions {
     id
     action

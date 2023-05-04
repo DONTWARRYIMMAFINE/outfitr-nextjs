@@ -1,7 +1,6 @@
 "use client";
 
 import { Box, Button, IconTextField, ProfileIcon } from "@/components/ui";
-import authenticated from "@/constants/authenticated";
 import { LoginMutationVariables, useLoginMutation } from "@/lib/graphql/schema.generated";
 import { SignInSchema } from "@/lib/schema/signin.schema";
 import { Formik } from "formik";
@@ -21,8 +20,6 @@ const LogInForm: FC<LogInFormProps> = ({}) => {
       });
 
       localStorage.setItem("token", data?.login.accessToken!);
-      console.log(data?.login.accessToken);
-      authenticated(true);
       await router.push("/");
     } catch (error) {
       alert(JSON.stringify(error, null, 2));
@@ -33,7 +30,7 @@ const LogInForm: FC<LogInFormProps> = ({}) => {
     <Formik
       initialValues={{ email: "", password: "" }}
       validationSchema={SignInSchema}
-      onSubmit={onSubmit}
+      onSubmit={values => onSubmit(values)}
     >
       {({ handleSubmit, isValid, values, handleChange, touched, errors }) => (
         <Box display={"flex"} flexDirection={"column"} alignItems={"center"} width={"100%"} gap={4}>

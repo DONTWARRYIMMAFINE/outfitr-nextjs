@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Button, CartIcon, IconButton, List, ListItem, ProfileIcon, Text, WishlistIcon } from "@/components/ui";
-import authenticated from "@/constants/authenticated";
+import { useUser } from "@/hooks/useUser";
 import { useLogoutMutation, useMeQuery } from "@/lib/graphql/schema.generated";
 import { useReactiveVar } from "@apollo/client";
 import { FC, ReactNode } from "react";
@@ -18,15 +18,12 @@ const navigation: HeaderIconButtonNavigationItem[] = [
 ];
 
 const HeaderIconButtonNavigation: FC = () => {
-  const isAuthenticated = useReactiveVar(authenticated);
-  const { data, refetch, client } = useMeQuery();
+  const { user } = useUser();
   const [logoutMutation] = useLogoutMutation();
-  const user = data?.me;
 
   const onLogout = async () => {
     await logoutMutation();
     localStorage.removeItem("token");
-    authenticated(false);
   };
 
   return (
@@ -41,9 +38,9 @@ const HeaderIconButtonNavigation: FC = () => {
             </ListItem>
           );
         })}
-        {isAuthenticated ?
+        {user ?
           (<Box display={"flex"}>
-            <Text>{user?.fullName}</Text>
+            <Text>{user.fullName}</Text>
             <Button variant={"primary"} onClick={() => onLogout()}>Logout</Button>
           </Box>) :
           (<Button variant={"primary"} href={"/login"}>Login</Button>)

@@ -25,7 +25,7 @@ const PageProvider: FC<PageProviderProps> = ({ children }) => {
         <ThemeProvider>
           <CssBaseline enableColorScheme />
           <ApolloProvider client={client}>
-            <SessionProvider excludedRoutes={["/login", "signup"]}>
+            <SessionProvider>
               {children}
             </SessionProvider>
           </ApolloProvider>

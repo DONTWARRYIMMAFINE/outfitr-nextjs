@@ -1,5 +1,6 @@
-fragment UserWithIdAndPermissions on User {
+fragment User on User {
   id
+  fullName
   permissions {
     id
     action

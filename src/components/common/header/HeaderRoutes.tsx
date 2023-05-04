@@ -1,37 +1,34 @@
+"use client";
+
 import { Box, Link, List, ListItem } from "@/components/ui";
+import { usePathname } from "next/navigation";
 import { FC } from "react";
 
 interface Navigation {
   name: string;
   href: string;
-  selected: boolean;
 }
 
 const navigation: Navigation[] = [
   {
     name: "Home",
     href: "/",
-    selected: true,
   },
   {
     name: "Outfits",
     href: "/category",
-    selected: false,
   },
   {
     name: "About",
     href: "/about",
-    selected: false,
   },
   {
     name: "Contact Us",
     href: "/contact",
-    selected: false,
   },
   {
     name: "demo",
     href: "/demo",
-    selected: false,
   },
 ];
 
@@ -40,12 +37,14 @@ export interface HeaderRoutesProps {
 }
 
 const HeaderRoutes: FC<HeaderRoutesProps> = ({ direction }) => {
+  const activePathname = usePathname();
+
   return (
     <Box component={"nav"}>
       <List direction={direction}>
-        {navigation.map(({ name, href, selected }, index) => (
+        {navigation.map(({ name, href }, index) => (
           <ListItem key={index}>
-            <Link selected={selected} href={href} noWrap showUnderline>
+            <Link selected={activePathname === href} href={href} noWrap showUnderline>
               {name}
             </Link>
           </ListItem>
