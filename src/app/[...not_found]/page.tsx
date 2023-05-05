@@ -37,7 +37,7 @@ const Block2: FC = () => {
       <Text variant={"h1"} component={"h2"}>The page you've requested for is not available.</Text>
       <Text variant={"h4"} opacity={0.7} paragraph>Sorry, we are having a problem executing your request. You may be visiting us from an old bookmark or using a broken link,
         Please click on the link below for more information.</Text>
-      <Box display={"flex"} justifyContent={{ md: "flex-start", xs: "center" }} gap={2}>
+      <Box display={"flex"} justifyContent={{ md: "flex-start", xs: "center" }} gap={1}>
         <Button variant={"primary"} href={"/"}>Go Home</Button>
         <Button variant={"transparent"} color={"primary"} href={"/contact"}>Contact Us</Button>
       </Box>

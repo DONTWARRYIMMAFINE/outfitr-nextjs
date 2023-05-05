@@ -14,7 +14,7 @@ declare module "@mui/material/Button" {
 }
 
 const StyledButton: FC<LoadingButtonProps> = styled(LoadingButton)<LoadingButtonProps>(({ theme, variant }) => ({
-  padding: theme.spacing(1.5, 8),
+  padding: theme.spacing(1.5, 4),
   zIndex: 1,
   textTransform: "none",
   ...(variant === "primary" && {

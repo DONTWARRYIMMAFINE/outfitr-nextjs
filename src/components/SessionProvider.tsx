@@ -12,19 +12,20 @@ export interface SessionProviderProps {
 }
 
 const SessionProvider: FC<SessionProviderProps> = ({ protectedRoutes, children }) => {
-  const { refetch, client } = useMeQuery({
-    onCompleted: data => loggedInUser(data.me),
-    onError: _ => loggedInUser(null),
-  });
   const router = useRouter();
   const pathName = usePathname();
+  const { client } = useMeQuery({
+    onCompleted: data => {
+      console.log("data", data);
+      loggedInUser(data.me);
+    },
+    onError: error => {
+      console.log("error", error);
+      loggedInUser(null);
+    },
+  });
   const user = useReactiveVar(loggedInUser);
-
-  useEffect(() => {
-    if (protectedRoutes?.includes(pathName)) {
-      refetch();
-    }
-  }, [refetch, protectedRoutes]);
+  console.log("user", user);
 
   useEffect(() => {
     if (!user && protectedRoutes?.includes(pathName)) {
@@ -33,7 +34,7 @@ const SessionProvider: FC<SessionProviderProps> = ({ protectedRoutes, children }
     }
   }, [user, router, pathName, protectedRoutes, client]);
 
-  return <>{children}</>;
+  return <>{!protectedRoutes?.includes(pathName) ? (children) : (user && children)}</>;
 };
 
 export default SessionProvider;

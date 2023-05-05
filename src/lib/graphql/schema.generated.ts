@@ -2289,7 +2289,6 @@ export type Mutation = {
   emptyCart: Cart;
   login: LoginResponse;
   logout: Scalars['Boolean'];
-  reissueAccessToken: AccessTokenResponse;
   releaseWarehouseItemsInWarehouse: Warehouse;
   removeCartItemsFromCart: Cart;
   removeMediaFromProduct: Product;
@@ -4221,6 +4220,7 @@ export type Query = {
   productVariant?: Maybe<ProductVariant>;
   productVariants: ProductVariantConnection;
   products: ProductConnection;
+  reissueAccessToken: AccessTokenResponse;
   role?: Maybe<Role>;
   roles: RoleConnection;
   size?: Maybe<Size>;
@@ -5844,6 +5844,11 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, fullName: string, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } | null };
 
+export type ReissueAccessTokenQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ReissueAccessTokenQuery = { __typename?: 'Query', reissueAccessToken: { __typename?: 'AccessTokenResponse', accessToken: string } };
+
 export const FullCountryFragmentDoc = gql`
     fragment FullCountry on Country {
   id
@@ -6001,3 +6006,37 @@ export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const ReissueAccessTokenDocument = gql`
+    query ReissueAccessToken {
+  reissueAccessToken {
+    accessToken
+  }
+}
+    `;
+
+/**
+ * __useReissueAccessTokenQuery__
+ *
+ * To run a query within a React component, call `useReissueAccessTokenQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReissueAccessTokenQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useReissueAccessTokenQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useReissueAccessTokenQuery(baseOptions?: Apollo.QueryHookOptions<ReissueAccessTokenQuery, ReissueAccessTokenQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ReissueAccessTokenQuery, ReissueAccessTokenQueryVariables>(ReissueAccessTokenDocument, options);
+      }
+export function useReissueAccessTokenLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ReissueAccessTokenQuery, ReissueAccessTokenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ReissueAccessTokenQuery, ReissueAccessTokenQueryVariables>(ReissueAccessTokenDocument, options);
+        }
+export type ReissueAccessTokenQueryHookResult = ReturnType<typeof useReissueAccessTokenQuery>;
+export type ReissueAccessTokenLazyQueryHookResult = ReturnType<typeof useReissueAccessTokenLazyQuery>;
+export type ReissueAccessTokenQueryResult = Apollo.QueryResult<ReissueAccessTokenQuery, ReissueAccessTokenQueryVariables>;

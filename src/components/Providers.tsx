@@ -22,19 +22,19 @@ const PageProvider: FC<PageProviderProps> = ({ children }) => {
   const client = getClient();
 
   return (
-    <ApolloProvider client={client}>
-      <SessionProvider protectedRoutes={protectedRoutes}>
-        <CacheProvider value={muiCache}>
-          <NextThemeProvider enableSystem enableColorScheme>
-            <ThemeProvider>
-              <CssBaseline enableColorScheme />
-              <Toaster />
+    <CacheProvider value={muiCache}>
+      <NextThemeProvider enableSystem enableColorScheme>
+        <ThemeProvider>
+          <CssBaseline enableColorScheme />
+          <Toaster />
+          <ApolloProvider client={client}>
+            <SessionProvider protectedRoutes={protectedRoutes}>
               {children}
-            </ThemeProvider>
-          </NextThemeProvider>
-        </CacheProvider>
-      </SessionProvider>
-    </ApolloProvider>
+            </SessionProvider>
+          </ApolloProvider>
+        </ThemeProvider>
+      </NextThemeProvider>
+    </CacheProvider>
   );
 };
 
