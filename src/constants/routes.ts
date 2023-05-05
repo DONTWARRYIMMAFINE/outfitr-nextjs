@@ -14,10 +14,9 @@ export type RouteKey =
 export type RouteValue = {
   title: string;
   href: string;
-  protected?: boolean;
 }
 
-export const Route: Record<RouteKey, RouteValue> = {
+export const Routes: Record<RouteKey, RouteValue> = {
   Demo: {
     title: "Demo",
     href: "/demo",
@@ -49,25 +48,19 @@ export const Route: Record<RouteKey, RouteValue> = {
   Profile: {
     title: "Profile",
     href: "/profile",
-    protected: true,
   },
   Wishlist: {
     title: "Wishlist",
     href: "/wishlist",
-    protected: true,
   },
   Cart: {
     title: "Cart",
     href: "/cart",
-    protected: true,
   },
   Checkout: {
     title: "Checkout",
     href: "/checkout",
-    protected: true,
   },
 };
 
-export const protectedRoutes = Object.values(Route)
-  .filter(value => value.protected)
-  .map(value => value.href);
+export const customerProtectedRoutes = [Routes.Wishlist.href, Routes.Cart.href, Routes.Profile.href];

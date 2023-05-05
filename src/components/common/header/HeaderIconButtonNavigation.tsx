@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Button, CartIcon, IconButton, List, ListItem, ProfileIcon, Text, WishlistIcon } from "@/components/ui";
+import { Routes } from "@/constants/routes";
 import { useLogoutMutation } from "@/lib/graphql/schema.generated";
 import { loggedInUser } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
@@ -12,17 +13,17 @@ interface HeaderIconButtonNavigationItem {
 }
 
 const navigation: HeaderIconButtonNavigationItem[] = [
-  { icon: <WishlistIcon />, href: "/wishlist" },
-  { icon: <CartIcon />, href: "/cart" },
-  { icon: <ProfileIcon />, href: "/account" },
+  { icon: <WishlistIcon />, href: Routes.Wishlist.href },
+  { icon: <CartIcon />, href: Routes.Cart.href },
+  { icon: <ProfileIcon />, href: Routes.Profile.href },
 ];
 
 const HeaderIconButtonNavigation: FC = () => {
   const user = useReactiveVar(loggedInUser);
-  const [logoutMutation] = useLogoutMutation();
+  const [logoutMutation, { client }] = useLogoutMutation();
 
   const onLogout = async () => {
-    await logoutMutation();
+    await Promise.all([logoutMutation(), client.resetStore()]);
     localStorage.removeItem("token");
     loggedInUser(null);
   };

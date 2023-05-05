@@ -1,11 +1,11 @@
 "use client";
 
 import { Box, Link, List, ListItem } from "@/components/ui";
-import { Route, RouteValue } from "@/constants/route";
+import { Routes, RouteValue } from "@/constants/routes";
 import { usePathname } from "next/navigation";
 import { FC } from "react";
 
-const navigation: RouteValue[] = [Route.Home, Route.Category, Route.About, Route.Contact, Route.Demo];
+const navigation: RouteValue[] = [Routes.Home, Routes.Category, Routes.About, Routes.Contact, Routes.Demo];
 
 export interface HeaderRoutesProps {
   direction?: "column" | "row";

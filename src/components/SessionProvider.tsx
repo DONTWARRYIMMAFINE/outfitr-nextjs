@@ -1,40 +1,56 @@
 "use client";
 
-import { useMeQuery } from "@/lib/graphql/schema.generated";
+import { Routes } from "@/constants/routes";
+import { Roles, useMeQuery, UserFragment } from "@/lib/graphql/schema.generated";
 import { loggedInUser } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
 import { usePathname, useRouter } from "next/navigation";
-import { FC, ReactNode, useEffect } from "react";
+import { FC, ReactNode, useEffect, useMemo, useState } from "react";
+
+export interface ProtectedRoute {
+  role: Roles;
+  routes: string[];
+}
 
 export interface SessionProviderProps {
-  protectedRoutes?: string[];
+  protectedRoutes: ProtectedRoute[];
   children?: ReactNode;
 }
+
+const checkUserRole = (user: UserFragment | null | undefined, pathName: string, protectRoutes: ProtectedRoute[]): boolean => {
+  const isPublic = !protectRoutes.flatMap(protectedRoute => protectedRoute.routes).includes(pathName);
+
+  if (isPublic) {
+    return true;
+  }
+
+  const targetRole = protectRoutes
+    .filter(protectedRoute => protectedRoute.routes.includes(pathName))
+    .map(protectedRoute => protectedRoute.role);
+
+  return !!user?.roles.map(role => role.code).includes(targetRole[0]);
+};
 
 const SessionProvider: FC<SessionProviderProps> = ({ protectedRoutes, children }) => {
   const router = useRouter();
   const pathName = usePathname();
-  const { client } = useMeQuery({
-    onCompleted: data => {
-      console.log("data", data);
-      loggedInUser(data.me);
-    },
-    onError: error => {
-      console.log("error", error);
-      loggedInUser(null);
-    },
+  const { data, client, loading } = useMeQuery({
+    onCompleted: data => loggedInUser(data.me),
+    onError: _ => loggedInUser(null),
   });
-  const user = useReactiveVar(loggedInUser);
-  console.log("user", user);
 
   useEffect(() => {
-    if (!user && protectedRoutes?.includes(pathName)) {
-      router.push("/login");
+    if (!loading && !checkUserRole(data?.me, pathName!, protectedRoutes)) {
+      router.push(Routes.Login.href);
       client.resetStore();
     }
-  }, [user, router, pathName, protectedRoutes, client]);
+  }, [loading, router, client, pathName, protectedRoutes]);
 
-  return <>{!protectedRoutes?.includes(pathName) ? (children) : (user && children)}</>;
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
+  return <>{checkUserRole(data?.me, pathName!, protectedRoutes) && children}</>;
 };
 
 export default SessionProvider;

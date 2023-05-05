@@ -22,6 +22,7 @@ const LogInForm: FC<LogInFormProps> = ({}) => {
         loggedInUser(login.user);
         localStorage.setItem("token", login.accessToken);
         router.push("/");
+
         toast.success(`Hello back, ${login.user.fullName}`);
       },
       onError: error => toast.error(error.message),

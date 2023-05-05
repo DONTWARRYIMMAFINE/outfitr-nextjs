@@ -1,10 +1,10 @@
 fragment User on User {
   id
   fullName
+  roles {
+    ...Role
+  }
   permissions {
-    id
-    action
-    subject
-    conditions
+    ...Permission
   }
 }

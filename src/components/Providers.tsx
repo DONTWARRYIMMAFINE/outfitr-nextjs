@@ -2,9 +2,10 @@
 
 import { ThemeProvider } from "@/components";
 import SessionProvider from "@/components/SessionProvider";
-import { protectedRoutes } from "@/constants/route";
+import { customerProtectedRoutes } from "@/constants/routes";
 import { createEmotionCache } from "@/lib/createEmotionCache";
 import { getClient } from "@/lib/graphql/apollo-client";
+import { Roles } from "@/lib/graphql/schema.generated";
 import { ApolloProvider } from "@apollo/client";
 import { CacheProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
@@ -28,7 +29,7 @@ const PageProvider: FC<PageProviderProps> = ({ children }) => {
           <CssBaseline enableColorScheme />
           <Toaster />
           <ApolloProvider client={client}>
-            <SessionProvider protectedRoutes={protectedRoutes}>
+            <SessionProvider protectedRoutes={[{ role: Roles.Customer, routes: customerProtectedRoutes }]}>
               {children}
             </SessionProvider>
           </ApolloProvider>

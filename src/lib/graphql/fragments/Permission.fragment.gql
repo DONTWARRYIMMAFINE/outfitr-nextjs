@@ -1,0 +1,6 @@
+fragment Permission on Permission {
+  id
+  action
+  subject
+  conditions
+}

@@ -5173,6 +5173,7 @@ export type User = {
   lastName?: Maybe<Scalars['String']>;
   permissions: Array<Permission>;
   phone?: Maybe<Scalars['String']>;
+  roles: Array<Role>;
   userAddresses: Array<UserAddress>;
   wishlist: Wishlist;
 };
@@ -5181,6 +5182,12 @@ export type User = {
 export type UserBrandsArgs = {
   filter?: BrandFilter;
   sorting?: Array<BrandSort>;
+};
+
+
+export type UserRolesArgs = {
+  filter?: RoleFilter;
+  sorting?: Array<RoleSort>;
 };
 
 
@@ -5379,6 +5386,7 @@ export type UserFilter = {
   lastName?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<UserFilter>>;
   phone?: InputMaybe<StringFieldComparison>;
+  roles?: InputMaybe<UserFilterRoleFilter>;
   updatedAt?: InputMaybe<DateFieldComparison>;
   userAddresses?: InputMaybe<UserFilterUserAddressFilter>;
   wishlist?: InputMaybe<UserFilterWishlistFilter>;
@@ -5426,6 +5434,16 @@ export type UserFilterMediaFilter = {
   publicId?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
   url?: InputMaybe<StringFieldComparison>;
+};
+
+export type UserFilterRoleFilter = {
+  and?: InputMaybe<Array<UserFilterRoleFilter>>;
+  code?: InputMaybe<RolesFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<UserFilterRoleFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type UserFilterUserAddressFilter = {
@@ -5820,14 +5838,18 @@ export type WishlistMinAggregate = {
 
 export type FullCountryFragment = { __typename?: 'Country', id: string, code: string, name: string };
 
-export type UserFragment = { __typename?: 'User', id: string, fullName: string, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> };
+export type PermissionFragment = { __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null };
+
+export type RoleFragment = { __typename?: 'Role', id: string, code: Roles, name: string };
+
+export type UserFragment = { __typename?: 'User', id: string, fullName: string, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> };
 
 export type LoginMutationVariables = Exact<{
   input: LoginInput;
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', accessToken: string, user: { __typename?: 'User', id: string, fullName: string, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', accessToken: string, user: { __typename?: 'User', id: string, fullName: string, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } } };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -5842,7 +5864,7 @@ export type CountriesQuery = { __typename?: 'Query', countries: { __typename?: '
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, fullName: string, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } | null };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, fullName: string, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } | null };
 
 export type ReissueAccessTokenQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5856,18 +5878,34 @@ export const FullCountryFragmentDoc = gql`
   name
 }
     `;
+export const RoleFragmentDoc = gql`
+    fragment Role on Role {
+  id
+  code
+  name
+}
+    `;
+export const PermissionFragmentDoc = gql`
+    fragment Permission on Permission {
+  id
+  action
+  subject
+  conditions
+}
+    `;
 export const UserFragmentDoc = gql`
     fragment User on User {
   id
   fullName
+  roles {
+    ...Role
+  }
   permissions {
-    id
-    action
-    subject
-    conditions
+    ...Permission
   }
 }
-    `;
+    ${RoleFragmentDoc}
+${PermissionFragmentDoc}`;
 export const LoginDocument = gql`
     mutation Login($input: LoginInput!) {
   login(input: $input) {
