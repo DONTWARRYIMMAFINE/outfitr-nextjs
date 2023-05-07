@@ -1,7 +1,7 @@
 "use client";
 
 import { Logo } from "@/components/common";
-import { Box, CloseIcon, Divider, HamburgerIcon, IconButton } from "@/components/ui";
+import { Box, Divider, IconButton, Icons } from "@/components/ui";
 import { BoxProps, Drawer, DrawerProps, useTheme } from "@mui/material";
 import { FC, useState } from "react";
 
@@ -25,7 +25,7 @@ const Hamburger: FC<HamburgerProps> = ({ children, anchor = "right", ...props })
   return (
     <Box {...props}>
       <IconButton onClick={() => toggleDrawer(anchor, true)}>
-        <HamburgerIcon />
+        <Icons.Hamburger />
       </IconButton>
       <Drawer
         anchor={anchor}
@@ -36,7 +36,7 @@ const Hamburger: FC<HamburgerProps> = ({ children, anchor = "right", ...props })
           <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
             <Logo />
             <IconButton onClick={() => toggleDrawer(anchor, false)}>
-              <CloseIcon />
+              <Icons.Close />
             </IconButton>
           </Box>
           <Divider />

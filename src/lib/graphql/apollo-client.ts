@@ -1,9 +1,11 @@
+import { LOCAL_STORAGE_TOKEN } from "@/constants/token";
 import { API_URL } from "@/constants/urls";
-import { LogoutDocument, ReissueAccessTokenDocument } from "@/lib/graphql/schema.generated";
-import { loggedInUser } from "@/store/user.store";
-import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject } from "@apollo/client";
+import { ReissueAccessTokenDocument, ReissueAccessTokenMutation, ReissueAccessTokenMutationResult } from "@/lib/graphql/schema.generated";
+import { isTokenExpired } from "@/lib/utils/isTokenExpired";
+import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject, Observable } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
+import { RetryLink } from "@apollo/client/link/retry";
 
 let client: ApolloClient<NormalizedCacheObject> | null = null;
 
@@ -18,38 +20,75 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   }
 });
 
-const accessLink = setContext((_, { headers, ...context }) => {
+const retryLink = new RetryLink({
+  delay: {
+    initial: 100,
+    max: 500,
+    jitter: true,
+  },
+  attempts: {
+    max: 3,
+    retryIf: error => Boolean(error),
+  },
+});
+
+const accessLink = setContext((req, { headers }) => {
   // get the authentication token from local storage if it exists
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem(LOCAL_STORAGE_TOKEN);
+
   // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : "",
     },
-    ...context,
   };
 });
 
-const refreshLink = onError(({ graphQLErrors }) => {
-  if (graphQLErrors?.length && (graphQLErrors[0].extensions?.response as any)?.statusCode === 401) {
-    console.log("[ERROR DETECTED]");
-    const client = getClient();
-    client.query({ query: ReissueAccessTokenDocument })
-      .then(({ data, error }) => {
-        if (data && !error) {
-          console.log("[ACCESS TOKEN REISSUED]");
-          const token = data?.reissueAccessToken.accessToken;
-          localStorage.setItem("token", token);
-        } else {
-          console.log("[FAIL]");
-          client.mutate({ mutation: LogoutDocument }).then(() => {
-            console.log("[CLEARED DATA]");
-            localStorage.removeItem("token");
-            loggedInUser(null);
-          });
-        }
-      }).catch(err => console.log("err", err));
+const reissueToken = () => {
+  const client = getClient();
+  return client.mutate<
+    ReissueAccessTokenMutation,
+    ReissueAccessTokenMutationResult
+  >({ mutation: ReissueAccessTokenDocument })
+    .then(({ data, errors }) => {
+      if (!errors && data) {
+        const token = data.reissueAccessToken.accessToken;
+        localStorage.setItem(LOCAL_STORAGE_TOKEN, token);
+      }
+    });
+};
+
+const refreshLink = onError(({ graphQLErrors, operation, forward }) => {
+  if (graphQLErrors) {
+    for (const err of graphQLErrors) {
+      switch (err.extensions.code) {
+        case "UNAUTHENTICATED":
+          const token = localStorage.getItem(LOCAL_STORAGE_TOKEN);
+
+          if (token && isTokenExpired(token)) {
+            return new Observable(observer => {
+              reissueToken()
+                .then(() => {
+                  const subscriber = {
+                    next: observer.next.bind(observer),
+                    error: observer.error.bind(observer),
+                    complete: observer.complete.bind(observer),
+                  };
+
+                  // Retry last failed request
+                  forward(operation).subscribe(subscriber);
+                })
+                .catch(error => {
+                  console.log("error", error);
+
+                  // No refresh or client token available, we force user to login
+                  observer.error(error);
+                });
+            });
+          }
+      }
+    }
   }
 });
 
@@ -66,7 +105,7 @@ export const getClient = () => {
   if (!client || typeof window === "undefined") {
     client = new ApolloClient({
       ssrMode: typeof window === "undefined",
-      link: from([errorLink, accessLink, authLink, httpLink]),
+      link: from([errorLink, retryLink, authLink, httpLink]),
       cache: new InMemoryCache(),
       defaultOptions: {
         watchQuery: {

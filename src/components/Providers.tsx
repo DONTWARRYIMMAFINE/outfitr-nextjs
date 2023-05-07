@@ -1,8 +1,9 @@
 "use client";
 
 import { ThemeProvider } from "@/components";
+import RoutesGuard from "@/components/RoutesGuard";
 import SessionProvider from "@/components/SessionProvider";
-import { customerProtectedRoutes } from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 import { createEmotionCache } from "@/lib/createEmotionCache";
 import { getClient } from "@/lib/graphql/apollo-client";
 import { Roles } from "@/lib/graphql/schema.generated";
@@ -29,8 +30,10 @@ const PageProvider: FC<PageProviderProps> = ({ children }) => {
           <CssBaseline enableColorScheme />
           <Toaster />
           <ApolloProvider client={client}>
-            <SessionProvider protectedRoutes={[{ role: Roles.Customer, routes: customerProtectedRoutes }]}>
-              {children}
+            <SessionProvider>
+              <RoutesGuard protectedRoutes={[{ role: Roles.Customer, route: Routes.Cart.href }]}>
+                {children}
+              </RoutesGuard>
             </SessionProvider>
           </ApolloProvider>
         </ThemeProvider>

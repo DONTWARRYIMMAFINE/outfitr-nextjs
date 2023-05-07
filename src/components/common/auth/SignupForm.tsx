@@ -1,7 +1,9 @@
 "use client";
 
 import { Box, Button, IconTextField, ProfileIcon } from "@/components/ui";
-import { LoginMutationVariables, useLoginMutation } from "@/lib/graphql/schema.generated";
+import { Routes } from "@/constants/routes";
+import { LOCAL_STORAGE_TOKEN } from "@/constants/token";
+import { SignupMutationVariables, useSignupMutation } from "@/lib/graphql/schema.generated";
 import { SignInSchema } from "@/lib/schema/signin.schema";
 import { loggedInUser } from "@/store/user.store";
 import { Formik } from "formik";
@@ -9,21 +11,25 @@ import { useRouter } from "next/navigation";
 import { FC } from "react";
 import toast from "react-hot-toast";
 
-interface LogInFormProps {}
+interface SignupFormProps {
+  redirectUrl?: string;
+}
 
-const LogInForm: FC<LogInFormProps> = ({}) => {
+const SignupForm: FC<SignupFormProps> = ({ redirectUrl = Routes.Home.href }) => {
   const router = useRouter();
-  const [loginMutation, { error }] = useLoginMutation();
+  const [signupMutation, { error }] = useSignupMutation();
 
-  const onSubmit = async (values: LoginMutationVariables["input"]) => {
-    await loginMutation({
+  const onSubmit = async (values: SignupMutationVariables["input"]) => {
+    await signupMutation({
       variables: { input: values },
-      onCompleted: ({ login }) => {
-        loggedInUser(login.user);
-        localStorage.setItem("token", login.accessToken);
-        router.push("/");
+      onCompleted: ({ signup }) => {
+        const { accessToken, user } = signup;
 
-        toast.success(`Hello back, ${login.user.fullName}`);
+        loggedInUser(user);
+        localStorage.setItem(LOCAL_STORAGE_TOKEN, accessToken);
+        router.push(redirectUrl);
+
+        toast.success(`Hi, ${user.fullName}`);
       },
       onError: error => toast.error(error.message),
     });
@@ -31,7 +37,14 @@ const LogInForm: FC<LogInFormProps> = ({}) => {
 
   return (
     <Formik
-      initialValues={{ email: "", password: "" }}
+      initialValues={{
+        email: "",
+        phone: "",
+        firstName: "",
+        lastName: "",
+        password: "",
+        passwordConfirmation: "",
+    }}
       validationSchema={SignInSchema}
       onSubmit={values => onSubmit(values)}
     >
@@ -71,4 +84,4 @@ const LogInForm: FC<LogInFormProps> = ({}) => {
   );
 };
 
-export default LogInForm;
+export default SignupForm;

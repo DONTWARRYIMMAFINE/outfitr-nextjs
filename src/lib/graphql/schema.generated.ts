@@ -2289,6 +2289,7 @@ export type Mutation = {
   emptyCart: Cart;
   login: LoginResponse;
   logout: Scalars['Boolean'];
+  reissueAccessToken: AccessTokenResponse;
   releaseWarehouseItemsInWarehouse: Warehouse;
   removeCartItemsFromCart: Cart;
   removeMediaFromProduct: Product;
@@ -4220,7 +4221,6 @@ export type Query = {
   productVariant?: Maybe<ProductVariant>;
   productVariants: ProductVariantConnection;
   products: ProductConnection;
-  reissueAccessToken: AccessTokenResponse;
   role?: Maybe<Role>;
   roles: RoleConnection;
   size?: Maybe<Size>;
@@ -4716,9 +4716,9 @@ export type SignupInput = {
 
 export type SignupResponse = {
   __typename?: 'SignupResponse';
-  accessToken?: Maybe<Scalars['String']>;
-  refreshToken?: Maybe<Scalars['String']>;
-  user?: Maybe<User>;
+  accessToken: Scalars['String'];
+  refreshToken: Scalars['String'];
+  user: User;
 };
 
 export type Size = {
@@ -5856,6 +5856,18 @@ export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type LogoutMutation = { __typename?: 'Mutation', logout: boolean };
 
+export type ReissueAccessTokenMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ReissueAccessTokenMutation = { __typename?: 'Mutation', reissueAccessToken: { __typename?: 'AccessTokenResponse', accessToken: string } };
+
+export type SignupMutationVariables = Exact<{
+  input: SignupInput;
+}>;
+
+
+export type SignupMutation = { __typename?: 'Mutation', signup: { __typename?: 'SignupResponse', accessToken: string, user: { __typename?: 'User', id: string, fullName: string, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } } };
+
 export type CountriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5865,11 +5877,6 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, fullName: string, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } | null };
-
-export type ReissueAccessTokenQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ReissueAccessTokenQuery = { __typename?: 'Query', reissueAccessToken: { __typename?: 'AccessTokenResponse', accessToken: string } };
 
 export const FullCountryFragmentDoc = gql`
     fragment FullCountry on Country {
@@ -5972,6 +5979,74 @@ export function useLogoutMutation(baseOptions?: Apollo.MutationHookOptions<Logou
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
 export type LogoutMutationResult = Apollo.MutationResult<LogoutMutation>;
 export type LogoutMutationOptions = Apollo.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
+export const ReissueAccessTokenDocument = gql`
+    mutation ReissueAccessToken {
+  reissueAccessToken {
+    accessToken
+  }
+}
+    `;
+export type ReissueAccessTokenMutationFn = Apollo.MutationFunction<ReissueAccessTokenMutation, ReissueAccessTokenMutationVariables>;
+
+/**
+ * __useReissueAccessTokenMutation__
+ *
+ * To run a mutation, you first call `useReissueAccessTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReissueAccessTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [reissueAccessTokenMutation, { data, loading, error }] = useReissueAccessTokenMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useReissueAccessTokenMutation(baseOptions?: Apollo.MutationHookOptions<ReissueAccessTokenMutation, ReissueAccessTokenMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ReissueAccessTokenMutation, ReissueAccessTokenMutationVariables>(ReissueAccessTokenDocument, options);
+      }
+export type ReissueAccessTokenMutationHookResult = ReturnType<typeof useReissueAccessTokenMutation>;
+export type ReissueAccessTokenMutationResult = Apollo.MutationResult<ReissueAccessTokenMutation>;
+export type ReissueAccessTokenMutationOptions = Apollo.BaseMutationOptions<ReissueAccessTokenMutation, ReissueAccessTokenMutationVariables>;
+export const SignupDocument = gql`
+    mutation Signup($input: SignupInput!) {
+  signup(input: $input) {
+    accessToken
+    user {
+      ...User
+    }
+  }
+}
+    ${UserFragmentDoc}`;
+export type SignupMutationFn = Apollo.MutationFunction<SignupMutation, SignupMutationVariables>;
+
+/**
+ * __useSignupMutation__
+ *
+ * To run a mutation, you first call `useSignupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [signupMutation, { data, loading, error }] = useSignupMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSignupMutation(baseOptions?: Apollo.MutationHookOptions<SignupMutation, SignupMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SignupMutation, SignupMutationVariables>(SignupDocument, options);
+      }
+export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
+export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
+export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
 export const CountriesDocument = gql`
     query Countries {
   countries {
@@ -6044,37 +6119,3 @@ export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
-export const ReissueAccessTokenDocument = gql`
-    query ReissueAccessToken {
-  reissueAccessToken {
-    accessToken
-  }
-}
-    `;
-
-/**
- * __useReissueAccessTokenQuery__
- *
- * To run a query within a React component, call `useReissueAccessTokenQuery` and pass it any options that fit your needs.
- * When your component renders, `useReissueAccessTokenQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useReissueAccessTokenQuery({
- *   variables: {
- *   },
- * });
- */
-export function useReissueAccessTokenQuery(baseOptions?: Apollo.QueryHookOptions<ReissueAccessTokenQuery, ReissueAccessTokenQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ReissueAccessTokenQuery, ReissueAccessTokenQueryVariables>(ReissueAccessTokenDocument, options);
-      }
-export function useReissueAccessTokenLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ReissueAccessTokenQuery, ReissueAccessTokenQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ReissueAccessTokenQuery, ReissueAccessTokenQueryVariables>(ReissueAccessTokenDocument, options);
-        }
-export type ReissueAccessTokenQueryHookResult = ReturnType<typeof useReissueAccessTokenQuery>;
-export type ReissueAccessTokenLazyQueryHookResult = ReturnType<typeof useReissueAccessTokenLazyQuery>;
-export type ReissueAccessTokenQueryResult = Apollo.QueryResult<ReissueAccessTokenQuery, ReissueAccessTokenQueryVariables>;

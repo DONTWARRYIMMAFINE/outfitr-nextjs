@@ -7,7 +7,7 @@ export { default as Divider } from "./Divider";
 export { default as Grid } from "./Grid";
 export { default as Hidden } from "./Hidden";
 export { default as IconButton } from "./IconButton";
-export * from "./Icons";
+export { default as Icons } from "./Icons";
 export { default as IconTextField } from "./IconTextField";
 export { default as Link } from "./Link";
 export { default as List } from "./List";

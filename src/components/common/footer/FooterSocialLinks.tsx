@@ -1,4 +1,6 @@
-import { FacebookIcon, IconButton, InstagramIcon, List, ListItem, TelegramIcon, TwitterIcon } from "@/components/ui";
+"use client";
+
+import { IconButton, Icons, List, ListItem } from "@/components/ui";
 import { FC, ReactNode } from "react";
 
 interface Navigation {
@@ -7,11 +9,11 @@ interface Navigation {
 }
 
 const navigation: Navigation[] = [
-  { icon: <InstagramIcon />, href: "https://www.instagram.com/" },
-  { icon: <InstagramIcon />, href: "https://vk.com/" },
-  { icon: <TelegramIcon />, href: "https://web.telegram.org/" },
-  { icon: <FacebookIcon />, href: "https://www.facebook.com/" },
-  { icon: <TwitterIcon />, href: "https://twitter.com/" },
+  { icon: <Icons.Instagram />, href: "https://www.instagram.com/" },
+  { icon: <Icons.Instagram />, href: "https://vk.com/" },
+  { icon: <Icons.Telegram />, href: "https://web.telegram.org/" },
+  { icon: <Icons.Facebook />, href: "https://www.facebook.com/" },
+  { icon: <Icons.Twitter />, href: "https://twitter.com/" },
 ];
 
 const FooterSocialLinks: FC = () => {

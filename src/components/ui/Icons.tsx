@@ -1,15 +1,40 @@
 "use client";
 
-export {
-  LightMode as LightModeIcon,
-  DarkMode as DarkModeIcon,
-  CloseRounded as CloseIcon,
-  Facebook as FacebookIcon,
-  FavoriteBorderOutlined as WishlistIcon,
-  MenuRounded as HamburgerIcon,
-  PersonOutlineOutlined as ProfileIcon,
-  Instagram as InstagramIcon,
-  Telegram as TelegramIcon,
-  Twitter as TwitterIcon,
-  ShoppingCartOutlined as CartIcon,
+import {
+  CloseRounded,
+  DarkMode,
+  EmailOutlined,
+  Facebook,
+  FavoriteBorderOutlined,
+  Instagram,
+  KeyOutlined,
+  LightMode,
+  MenuRounded,
+  PersonOutlineOutlined,
+  ShoppingCartOutlined,
+  Telegram,
+  Twitter,
+  VisibilityOffOutlined,
+  VisibilityOutlined,
 } from "@mui/icons-material";
+
+const Icons = {
+  LightMode: LightMode,
+  DarkMode: DarkMode,
+  Wishlist: FavoriteBorderOutlined,
+  Cart: ShoppingCartOutlined,
+  Profile: PersonOutlineOutlined,
+  Hamburger: MenuRounded,
+  Close: CloseRounded,
+  Facebook: Facebook,
+  Instagram: Instagram,
+  Telegram: Telegram,
+  Twitter: Twitter,
+  Email: EmailOutlined,
+  Key: KeyOutlined,
+  Visibility: VisibilityOutlined,
+  VisibilityOff: VisibilityOffOutlined,
+};
+
+export default Icons;
+
