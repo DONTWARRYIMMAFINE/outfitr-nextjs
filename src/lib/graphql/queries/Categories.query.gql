@@ -1,0 +1,9 @@
+query Categories {
+  categories {
+    edges {
+      node {
+        ...Category
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+query CategoryTree {
+  categoryTree {
+    ...Category
+    children {
+      ...Category
+      children {
+        ...Category
+      }
+    }
+  }
+}
