@@ -1,4 +1,4 @@
-import LoginForm from "@/components/common/auth/LoginForm";
+import LoginForm from "@/components/common/forms/LoginForm";
 import { Box, Link, Text } from "@/components/ui";
 import { Metadata } from "next";
 import { FC } from "react";
@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   title: "Outfitr | Log In",
 };
 
-interface SignInPageProps {}
+interface LogInPageProps {}
 
-const SignInPage: FC<SignInPageProps> = ({}) => {
+const LogInPage: FC<LogInPageProps> = ({}) => {
   return (
-    <ContentContainer maxWidth={"sm"} pageTitle={"Log In"}>
+    <ContentContainer maxWidth={"sm"} pageTitle={"Login"}>
       <Box display={"flex"} flexDirection={"column"} alignItems={"center"} gap={4}>
         <Text variant={"h1"} component={"h2"}>Welcome back</Text>
         <Text variant={"p"} textAlign={"center"} opacity={0.7} paragraph>Use your credentials below and login to your account</Text>
@@ -26,4 +26,4 @@ const SignInPage: FC<SignInPageProps> = ({}) => {
   );
 };
 
-export default SignInPage;
+export default LogInPage;

@@ -31,9 +31,9 @@ const StyledButton: FC<LoadingButtonProps> = styled(LoadingButton)<LoadingButton
   }),
 }));
 
-const Button: FC<LoadingButtonProps> = ({ children, loading, color, fullWidth = false, ...props }) => {
+const Button: FC<LoadingButtonProps> = ({ children, loading, color, ...props }) => {
   return (
-    <StyledButton loading={loading} fullWidth={fullWidth} {...props}>
+    <StyledButton loading={loading} {...props}>
       <Text variant={"button"} color={loading ? "transparent" : color} noWrap>{children}</Text>
     </StyledButton>
   );

@@ -39,6 +39,7 @@ declare module "@mui/material/styles" {
   }
 
   interface TypeText {
+    reversed: string;
     placeholder: string;
   }
 

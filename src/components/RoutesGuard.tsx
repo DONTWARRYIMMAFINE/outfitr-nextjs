@@ -52,7 +52,7 @@ const isAllowed = (user: UserFragment | null | undefined, pathName: string, prot
   return !!user?.roles.map(role => role.code).includes(targetRole);
 };
 
-const RoutesGuard: FC<RoutesGuardProps> = ({ protectedRoutes, redirectUrl = Routes.Login.href, children }) => {
+const RoutesGuard: FC<RoutesGuardProps> = ({ protectedRoutes, redirectUrl = Routes.LogIn.href, children }) => {
   const pathName = usePathname();
   const router = useRouter();
   const user = useReactiveVar(loggedInUser);

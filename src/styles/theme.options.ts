@@ -18,7 +18,7 @@ export const themeOptions: ThemeOptions = {
     contrastThreshold: 4.5,
     primary: {
       main: "#2CB9B0",
-      light: "rgba(44,185,176,0.9)",
+      light: "rgba(44,185,176,0.7)",
       contrastText: "#FDFBF8",
     },
   },

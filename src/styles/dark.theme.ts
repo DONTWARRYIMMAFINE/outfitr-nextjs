@@ -8,7 +8,8 @@ const darkTheme = createTheme(merge({
     mode: "dark",
     text: {
       primary: "#FDFBF8",
-      secondary: "#0C0D34",
+      secondary: "#F2F2F2",
+      reversed: "#0C0D34",
       placeholder: "#D0CDC9",
     },
     background: {

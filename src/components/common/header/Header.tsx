@@ -1,8 +1,8 @@
 import { Hamburger, Logo, ModeSwitch } from "@/components/common";
 import { AppBar, Box, Container, Divider, Hidden, Toolbar } from "@/components/ui";
 import { FC } from "react";
-import Navigation from "./HeaderIconButtonNavigation";
-import HeaderRoutes from "./HeaderRoutes";
+import LinkNavigation from "./LinkNavigation";
+import Navigation from "./Navigation";
 
 const Header: FC = () => {
   return (
@@ -11,7 +11,7 @@ const Header: FC = () => {
         <Toolbar sx={{ width: "100%" }}>
           <Logo />
           <Hidden mdDown>
-            <HeaderRoutes />
+            <LinkNavigation />
           </Hidden>
           <Box display={"flex"} alignItems={"center"}>
             <ModeSwitch sx={{ marginRight: { md: 2, xs: 1 } }} />
@@ -20,8 +20,8 @@ const Header: FC = () => {
             </Hidden>
             <Hidden mdUp>
               <Hamburger sx={{ marginLeft: { md: 2, xs: 1 } }}>
-                <HeaderRoutes direction={"column"} />
-                <Divider sx={{ marginY: 2 }} />
+                <LinkNavigation direction={"column"} />
+                <Divider />
                 <Navigation />
               </Hamburger>
             </Hidden>

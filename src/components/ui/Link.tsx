@@ -64,6 +64,7 @@ const StyledMuiLink: FC<CustomMuiLinkProps> = styled(MuiLink)<CustomMuiLinkProps
   color: theme.palette.text.primary,
   position: "relative",
   transition: theme.transitions.create(["all"]),
+  cursor: "pointer",
   ":hover": {
     color: theme.palette.primary.main,
   },
@@ -95,7 +96,7 @@ const StyledMuiLink: FC<CustomMuiLinkProps> = styled(MuiLink)<CustomMuiLinkProps
 export type LinkProps = {
   activeClassName?: string;
   as?: NextLinkProps["as"];
-  href: NextLinkProps["href"];
+  href?: NextLinkProps["href"];
   linkAs?: NextLinkProps["as"]; // Useful when the as prop is shallow by styled().
   noLinkStyle?: boolean;
 } & Omit<NextLinkComposedProps, "to" | "linkAs" | "href"> &
@@ -120,7 +121,7 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(props, ref) 
   } = props;
 
   const routerPathname = usePathname();
-  const pathname = typeof href === "string" ? href : href.pathname;
+  const pathname = typeof href === "string" ? href : href?.pathname;
   const className = clsx(classNameProps, {
     [activeClassName]: routerPathname === pathname && activeClassName,
   });
@@ -128,7 +129,7 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(props, ref) 
   const isExternal =
     typeof href === "string" && (href.indexOf("http") === 0 || href.indexOf("mailto:") === 0);
 
-  if (isExternal) {
+  if (isExternal || !href) {
     if (noLinkStyle) {
       return <Anchor className={className} href={href} ref={ref} {...other} />;
     }

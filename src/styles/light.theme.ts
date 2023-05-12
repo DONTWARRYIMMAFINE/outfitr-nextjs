@@ -8,7 +8,8 @@ const lightTheme = createTheme(merge({
     mode: "light",
     text: {
       primary: "#0C0D34",
-      secondary: "#FDFBF8",
+      secondary: "#0C0D34",
+      reversed: "#FDFBF8",
       placeholder: "#B9B9B9",
     },
     background: {

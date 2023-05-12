@@ -1,12 +1,15 @@
 export type RouteKey =
   | "Demo"
   | "Home"
-  | "Category"
+  | "Catalog"
   | "About"
   | "Contact"
-  | "Signup"
-  | "Login"
+  | "SignUp"
+  | "LogIn"
   | "Profile"
+  | "Orders"
+  | "Addresses"
+  | "LogOut"
   | "Wishlist"
   | "Cart"
   | "Checkout";
@@ -25,9 +28,9 @@ export const Routes: Record<RouteKey, RouteValue> = {
     title: "Home",
     href: "/",
   },
-  Category: {
+  Catalog: {
     title: "Outfits",
-    href: "/category/root",
+    href: "/category",
   },
   About: {
     title: "About",
@@ -37,17 +40,29 @@ export const Routes: Record<RouteKey, RouteValue> = {
     title: "Contact",
     href: "/contact",
   },
-  Signup: {
+  SignUp: {
     title: "Sign Up",
-    href: "/signup",
+    href: "/sign-up",
   },
-  Login: {
+  LogIn: {
     title: "Log In",
-    href: "/login",
+    href: "/log-in",
   },
   Profile: {
     title: "Profile",
     href: "/profile",
+  },
+  Orders: {
+    title: "My Orders",
+    href: "/profile/orders",
+  },
+  Addresses: {
+    title: "My Addresses",
+    href: "/profile/addresses",
+  },
+  LogOut: {
+    title: "Log Out",
+    href: "/log-out",
   },
   Wishlist: {
     title: "Wishlist",
@@ -64,3 +79,27 @@ export const Routes: Record<RouteKey, RouteValue> = {
 };
 
 export const customerProtectedRoutes = [Routes.Wishlist.href, Routes.Cart.href, Routes.Profile.href];
+
+interface NavigationRoute {
+  title: string;
+  href: string;
+}
+
+export const mainRoutes: RouteValue[] = [
+  Routes.Home,
+  Routes.Catalog,
+  Routes.Contact,
+  Routes.About,
+]
+
+export const guestMenuRoutes: RouteValue[] = [
+  Routes.LogIn,
+  Routes.SignUp
+];
+
+export const userMenuRoutes: NavigationRoute[] = [
+  Routes.Profile,
+  Routes.Orders,
+  Routes.Addresses,
+  Routes.LogOut,
+];

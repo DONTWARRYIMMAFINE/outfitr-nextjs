@@ -11,11 +11,13 @@ import {
   LightMode,
   MenuRounded,
   PersonOutlineOutlined,
+  Person,
   ShoppingCartOutlined,
   Telegram,
   Twitter,
   VisibilityOffOutlined,
   VisibilityOutlined,
+  PhoneOutlined, BadgeOutlined,
 } from "@mui/icons-material";
 
 const Icons = {
@@ -23,7 +25,8 @@ const Icons = {
   DarkMode: DarkMode,
   Wishlist: FavoriteBorderOutlined,
   Cart: ShoppingCartOutlined,
-  Profile: PersonOutlineOutlined,
+  Person: PersonOutlineOutlined,
+  PersonLoggedIn: Person,
   Hamburger: MenuRounded,
   Close: CloseRounded,
   Facebook: Facebook,
@@ -31,6 +34,8 @@ const Icons = {
   Telegram: Telegram,
   Twitter: Twitter,
   Email: EmailOutlined,
+  Phone: PhoneOutlined,
+  Credentials: BadgeOutlined,
   Key: KeyOutlined,
   Visibility: VisibilityOutlined,
   VisibilityOff: VisibilityOffOutlined,

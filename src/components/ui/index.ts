@@ -1,4 +1,5 @@
 export { default as AppBar } from "./AppBar";
+export { default as Avatar } from "./Avatar";
 export { default as Box } from "./Box";
 export { default as Button } from "./Button";
 export { default as Container } from "./Container";
@@ -12,6 +13,8 @@ export { default as IconTextField } from "./IconTextField";
 export { default as Link } from "./Link";
 export { default as List } from "./List";
 export { default as ListItem } from "./ListItem";
+export { default as Menu } from "./Menu";
+export { default as MenuItem } from "./MenuItem";
 export { default as Switch } from "./Switch";
 export { default as Text } from "./Text";
 export { default as TextField } from "./TextField";

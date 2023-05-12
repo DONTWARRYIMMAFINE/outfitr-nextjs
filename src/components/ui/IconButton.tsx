@@ -8,7 +8,7 @@ interface IconButtonProps extends MuiIconButtonProps {
   href?: string;
 }
 
-const IconButton: FC<IconButtonProps> = styled(MuiIconButton)<IconButtonProps>(({ theme }) => ({
+const StyledIconButton: FC<IconButtonProps> = styled(MuiIconButton)<IconButtonProps>(({ theme }) => ({
   zIndex: 0,
   position: "relative",
   color: theme.palette.text.primary,
@@ -39,5 +39,9 @@ const IconButton: FC<IconButtonProps> = styled(MuiIconButton)<IconButtonProps>((
     },
   },
 }));
+
+const IconButton: FC<IconButtonProps> = ({ children, ...props }) => {
+  return <StyledIconButton {...props}>{children}</StyledIconButton>;
+};
 
 export default IconButton;

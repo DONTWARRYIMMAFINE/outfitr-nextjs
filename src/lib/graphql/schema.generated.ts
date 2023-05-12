@@ -1450,6 +1450,7 @@ export type CreateUserInput = {
   firstName: Scalars['String'];
   lastName: Scalars['String'];
   password: Scalars['String'];
+  phone?: InputMaybe<Scalars['String']>;
 };
 
 export type CreateWarehouseInput = {
@@ -2090,6 +2091,7 @@ export type LoginInput = {
   firstName?: InputMaybe<Scalars['String']>;
   lastName?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
 };
 
 export type LoginResponse = {
@@ -2236,6 +2238,7 @@ export type Mutation = {
   addWarehouseItemsToWarehouse: Warehouse;
   cancelOrder: Order;
   cancelReservationForWarehouseItemsInWarehouse: Warehouse;
+  confirmEmail: EmailAddressConfirmation;
   createCheckoutSession: CreateSessionResponse;
   createOneAddress: Address;
   createOneBrand: Brand;
@@ -2650,6 +2653,7 @@ export type MutationRestoreOneUserArgs = {
 
 
 export type MutationSignupArgs = {
+  file?: InputMaybe<Scalars['Upload']>;
   input: SignupInput;
 };
 
@@ -4186,6 +4190,7 @@ export type Query = {
   carts: CartConnection;
   categories: CategoryConnection;
   category?: Maybe<Category>;
+  categoryTree: Array<Category>;
   cities: CityConnection;
   city?: Maybe<City>;
   color?: Maybe<Color>;
@@ -4712,6 +4717,7 @@ export type SignupInput = {
   lastName?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
   passwordConfirmation: Scalars['String'];
+  phone?: InputMaybe<Scalars['String']>;
 };
 
 export type SignupResponse = {
@@ -5144,6 +5150,7 @@ export type UpdateUserInput = {
   email?: InputMaybe<Scalars['String']>;
   firstName?: InputMaybe<Scalars['String']>;
   lastName?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateWarehouseInput = {
@@ -5836,20 +5843,22 @@ export type WishlistMinAggregate = {
   userId?: Maybe<Scalars['ID']>;
 };
 
+export type CategoryFragment = { __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null };
+
 export type FullCountryFragment = { __typename?: 'Country', id: string, code: string, name: string };
 
 export type PermissionFragment = { __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null };
 
 export type RoleFragment = { __typename?: 'Role', id: string, code: Roles, name: string };
 
-export type UserFragment = { __typename?: 'User', id: string, fullName: string, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> };
+export type UserFragment = { __typename?: 'User', id: string, fullName: string, phone?: string | null, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> };
 
 export type LoginMutationVariables = Exact<{
   input: LoginInput;
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', accessToken: string, user: { __typename?: 'User', id: string, fullName: string, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', accessToken: string, user: { __typename?: 'User', id: string, fullName: string, phone?: string | null, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } } };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -5863,10 +5872,21 @@ export type ReissueAccessTokenMutation = { __typename?: 'Mutation', reissueAcces
 
 export type SignupMutationVariables = Exact<{
   input: SignupInput;
+  file?: InputMaybe<Scalars['Upload']>;
 }>;
 
 
-export type SignupMutation = { __typename?: 'Mutation', signup: { __typename?: 'SignupResponse', accessToken: string, user: { __typename?: 'User', id: string, fullName: string, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } } };
+export type SignupMutation = { __typename?: 'Mutation', signup: { __typename?: 'SignupResponse', accessToken: string, refreshToken: string, user: { __typename?: 'User', id: string, fullName: string, phone?: string | null, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } } };
+
+export type CategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CategoriesQuery = { __typename?: 'Query', categories: { __typename?: 'CategoryConnection', edges: Array<{ __typename?: 'CategoryEdge', node: { __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null } }> } };
+
+export type CategoryTreeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CategoryTreeQuery = { __typename?: 'Query', categoryTree: Array<{ __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null, children?: Array<{ __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null, children?: Array<{ __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null }> | null }> | null }> };
 
 export type CountriesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5876,8 +5896,17 @@ export type CountriesQuery = { __typename?: 'Query', countries: { __typename?: '
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, fullName: string, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } | null };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, fullName: string, phone?: string | null, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } | null };
 
+export const CategoryFragmentDoc = gql`
+    fragment Category on Category {
+  id
+  code
+  name
+  description
+  parentId
+}
+    `;
 export const FullCountryFragmentDoc = gql`
     fragment FullCountry on Country {
   id
@@ -5904,6 +5933,10 @@ export const UserFragmentDoc = gql`
     fragment User on User {
   id
   fullName
+  phone
+  avatar {
+    url
+  }
   roles {
     ...Role
   }
@@ -6012,9 +6045,10 @@ export type ReissueAccessTokenMutationHookResult = ReturnType<typeof useReissueA
 export type ReissueAccessTokenMutationResult = Apollo.MutationResult<ReissueAccessTokenMutation>;
 export type ReissueAccessTokenMutationOptions = Apollo.BaseMutationOptions<ReissueAccessTokenMutation, ReissueAccessTokenMutationVariables>;
 export const SignupDocument = gql`
-    mutation Signup($input: SignupInput!) {
-  signup(input: $input) {
+    mutation Signup($input: SignupInput!, $file: Upload) {
+  signup(input: $input, file: $file) {
     accessToken
+    refreshToken
     user {
       ...User
     }
@@ -6037,6 +6071,7 @@ export type SignupMutationFn = Apollo.MutationFunction<SignupMutation, SignupMut
  * const [signupMutation, { data, loading, error }] = useSignupMutation({
  *   variables: {
  *      input: // value for 'input'
+ *      file: // value for 'file'
  *   },
  * });
  */
@@ -6047,6 +6082,84 @@ export function useSignupMutation(baseOptions?: Apollo.MutationHookOptions<Signu
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
 export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
+export const CategoriesDocument = gql`
+    query Categories {
+  categories {
+    edges {
+      node {
+        ...Category
+      }
+    }
+  }
+}
+    ${CategoryFragmentDoc}`;
+
+/**
+ * __useCategoriesQuery__
+ *
+ * To run a query within a React component, call `useCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCategoriesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<CategoriesQuery, CategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, options);
+      }
+export function useCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CategoriesQuery, CategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, options);
+        }
+export type CategoriesQueryHookResult = ReturnType<typeof useCategoriesQuery>;
+export type CategoriesLazyQueryHookResult = ReturnType<typeof useCategoriesLazyQuery>;
+export type CategoriesQueryResult = Apollo.QueryResult<CategoriesQuery, CategoriesQueryVariables>;
+export const CategoryTreeDocument = gql`
+    query CategoryTree {
+  categoryTree {
+    ...Category
+    children {
+      ...Category
+      children {
+        ...Category
+      }
+    }
+  }
+}
+    ${CategoryFragmentDoc}`;
+
+/**
+ * __useCategoryTreeQuery__
+ *
+ * To run a query within a React component, call `useCategoryTreeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCategoryTreeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCategoryTreeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCategoryTreeQuery(baseOptions?: Apollo.QueryHookOptions<CategoryTreeQuery, CategoryTreeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CategoryTreeQuery, CategoryTreeQueryVariables>(CategoryTreeDocument, options);
+      }
+export function useCategoryTreeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CategoryTreeQuery, CategoryTreeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CategoryTreeQuery, CategoryTreeQueryVariables>(CategoryTreeDocument, options);
+        }
+export type CategoryTreeQueryHookResult = ReturnType<typeof useCategoryTreeQuery>;
+export type CategoryTreeLazyQueryHookResult = ReturnType<typeof useCategoryTreeLazyQuery>;
+export type CategoryTreeQueryResult = Apollo.QueryResult<CategoryTreeQuery, CategoryTreeQueryVariables>;
 export const CountriesDocument = gql`
     query Countries {
   countries {

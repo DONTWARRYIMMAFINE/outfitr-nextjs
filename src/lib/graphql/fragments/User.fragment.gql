@@ -1,6 +1,10 @@
 fragment User on User {
   id
   fullName
+  phone
+  avatar {
+    url
+  }
   roles {
     ...Role
   }

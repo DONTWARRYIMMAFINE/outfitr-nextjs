@@ -2,10 +2,11 @@ import { LOCAL_STORAGE_TOKEN } from "@/constants/token";
 import { API_URL } from "@/constants/urls";
 import { ReissueAccessTokenDocument, ReissueAccessTokenMutation, ReissueAccessTokenMutationResult } from "@/lib/graphql/schema.generated";
 import { isTokenExpired } from "@/lib/utils/isTokenExpired";
-import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject, Observable } from "@apollo/client";
+import { ApolloClient, from, InMemoryCache, NormalizedCacheObject, Observable } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 import { RetryLink } from "@apollo/client/link/retry";
+import { createUploadLink } from "apollo-upload-client";
 
 let client: ApolloClient<NormalizedCacheObject> | null = null;
 
@@ -82,7 +83,7 @@ const refreshLink = onError(({ graphQLErrors, operation, forward }) => {
                 .catch(error => {
                   console.log("error", error);
 
-                  // No refresh or client token available, we force user to login
+                  // No refresh or client token available, we force user to log-in
                   observer.error(error);
                 });
             });
@@ -92,9 +93,18 @@ const refreshLink = onError(({ graphQLErrors, operation, forward }) => {
   }
 });
 
-const httpLink = new HttpLink({
+const abortController = new AbortController();
+
+const uploadLink = createUploadLink({
   uri: `${API_URL}/graphql`,
   credentials: "include",
+  headers: {
+    "Apollo-Require-Preflight": "true",
+  },
+  fetchOptions: {
+    signal: abortController.signal,
+  },
+  fetch,
 });
 
 const authLink = refreshLink.concat(accessLink);
@@ -105,7 +115,7 @@ export const getClient = () => {
   if (!client || typeof window === "undefined") {
     client = new ApolloClient({
       ssrMode: typeof window === "undefined",
-      link: from([errorLink, retryLink, authLink, httpLink]),
+      link: from([errorLink, retryLink, authLink, uploadLink]),
       cache: new InMemoryCache(),
       defaultOptions: {
         watchQuery: {

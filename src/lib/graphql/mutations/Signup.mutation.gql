@@ -1,6 +1,7 @@
-mutation Signup($input: SignupInput!) {
-  signup(input: $input) {
+mutation Signup($input: SignupInput!, $file: Upload) {
+  signup(input: $input, file: $file) {
     accessToken
+    refreshToken
     user {
       ...User
     }
