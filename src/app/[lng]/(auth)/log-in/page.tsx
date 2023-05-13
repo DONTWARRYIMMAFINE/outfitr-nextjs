@@ -2,7 +2,7 @@ import LoginForm from "@/components/common/forms/LoginForm";
 import { Box, Link, Text } from "@/components/ui";
 import { Metadata } from "next";
 import { FC } from "react";
-import ContentContainer from "../../../components/ui/ContentContainer";
+import ContentContainer from "@/components/ui/ContentContainer";
 
 export const metadata: Metadata = {
   title: "Outfitr | Log In",

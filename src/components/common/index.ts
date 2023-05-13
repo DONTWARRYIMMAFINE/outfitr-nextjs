@@ -1,8 +1,8 @@
 export { default as About } from "./about/About";
 export { default as Header } from "@/components/common/header/Header";
-export { default as Footer } from "@/components/common/footer/Footer";
-export { default as NewsSubscribe } from "./news-subscribe/NewsSubscribe";
-export { default as Onboarding } from "./onboarding/Onboarding";
+export { default as Footer } from "@/components/common/Footer";
+export { default as News } from "./News";
+export { default as Onboarding } from "./Onboarding";
 export { default as BackgroundText } from "./BackgroundText";
 export { default as Dot } from "./Dot";
 export { default as DotSeparated } from "./DotSeparated";

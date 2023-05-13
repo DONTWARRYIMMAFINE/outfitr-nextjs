@@ -1,13 +1,15 @@
 import { BackgroundText, Grid2x1 } from "@/components/common";
 import { Box, Button, Text } from "@/components/ui";
+import { TProps, TString } from "@/lib/types/params.type";
 import Image from "next/image";
-import { FC } from "react";
+import { FC, ReactElement } from "react";
+import { Trans } from "react-i18next/TransWithoutContext";
 
 interface Block1Props {
   image: string;
 }
 
-const Block1: FC<Block1Props> = ({ image }) => {
+const Block1 = ({ image }: Block1Props) => {
   return (
     <Box
       position={{ md: "relative", xs: "absolute" }}
@@ -30,10 +32,10 @@ const Block1: FC<Block1Props> = ({ image }) => {
 };
 
 interface Block2Props {
-  title: string;
-  description: string;
+  title: TString;
+  description: TString;
   button: {
-    text: string;
+    text: TString;
     href: string;
   };
 }
@@ -62,7 +64,7 @@ const Block2: FC<Block2Props> = ({ title, description, button }) => {
 };
 
 interface BackgroundProps {
-  advertising: string;
+  advertising: TString;
   reversed?: boolean;
 }
 
@@ -76,17 +78,17 @@ const Background: FC<BackgroundProps> = ({ advertising, reversed }) => {
 
 export interface OnboardingRowProps {
   image: string;
-  advertising: string;
-  title: string;
-  description: string;
+  advertising: TString;
+  title: TString;
+  description: TString;
   button: {
-    text: string;
+    text: TString;
     href: string;
   };
   reversed?: boolean;
 }
 
-const OnboardingRow: FC<OnboardingRowProps> = ({ image, advertising, title, description, button, reversed }) => {
+const OnboardingRow = ({ image, advertising, title, description, button, reversed }: OnboardingRowProps) => {
   return (
     <Grid2x1
       block1={<Block1 image={image} />}

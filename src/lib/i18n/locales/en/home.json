@@ -1,0 +1,45 @@
+{
+  "title": "Home",
+  "description": "Outfitr official style provider",
+  "welcome": {
+    "title": "Confused about your outfit? Find the best outfit here!",
+    "description": "Explore different categories. Find the best ideas.",
+    "button": {
+      "shopNow": "Shop Now"
+    }
+  },
+  "onboarding": [
+    {
+      "advertising": "Playful",
+      "title": "Hear it First, Wear it First",
+      "description": "Hating the clothes in your wardrobe? Explore hundreds of outfit ideas",
+      "button": {
+        "text": "Find your outfit"
+      }
+    },
+    {
+      "advertising": "Excentric",
+      "title": "Your Style, Your Way",
+      "description": "Create your individual & unique style and look amazing everyday",
+      "button": {
+        "text": "Shop now"
+      }
+    },
+    {
+      "advertising": "Funky",
+      "title": "Look Good, Feel Good",
+      "description": "Discover the latest trends in fashion and explore your personality",
+      "button": {
+        "text": "Explore new ideas"
+      }
+    },
+    {
+      "advertising": "Relaxed",
+      "title": "Find Your Outfits",
+      "description": "Confused about your outfit? Don’t worry! Find the best outfit here!",
+      "button": {
+        "text": "Find your style"
+      }
+    }
+  ]
+}

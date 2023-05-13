@@ -16,64 +16,79 @@ export type RouteKey =
 
 export type RouteValue = {
   title: string;
+  i18nKey: string;
   href: string;
 }
 
 export const Routes: Record<RouteKey, RouteValue> = {
   Demo: {
     title: "Demo",
+    i18nKey: "demo",
     href: "/demo",
   },
   Home: {
     title: "Home",
+    i18nKey: "home",
     href: "/",
   },
   Catalog: {
     title: "Outfits",
+    i18nKey: "catalog",
     href: "/category",
   },
   About: {
     title: "About",
+    i18nKey: "about",
     href: "/about",
   },
   Contact: {
     title: "Contact",
+    i18nKey: "contact",
     href: "/contact",
   },
   SignUp: {
     title: "Sign Up",
+    i18nKey: "signUp",
     href: "/sign-up",
   },
   LogIn: {
     title: "Log In",
+    i18nKey: "logIn",
     href: "/log-in",
   },
   Profile: {
     title: "Profile",
+    i18nKey: "profile",
     href: "/profile",
   },
   Orders: {
     title: "My Orders",
+    i18nKey: "orders",
     href: "/profile/orders",
   },
   Addresses: {
     title: "My Addresses",
+    i18nKey: "addresses",
     href: "/profile/addresses",
   },
   LogOut: {
     title: "Log Out",
+    i18nKey: "logOut",
     href: "/log-out",
   },
   Wishlist: {
     title: "Wishlist",
+    i18nKey: "wishlist",
     href: "/wishlist",
   },
   Cart: {
     title: "Cart",
+    i18nKey: "cart",
     href: "/cart",
   },
   Checkout: {
     title: "Checkout",
+    i18nKey: "checkout",
     href: "/checkout",
   },
 };

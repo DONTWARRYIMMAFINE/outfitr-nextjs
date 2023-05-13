@@ -1,6 +1,7 @@
 import { Logo } from "@/components/common";
+import LanguageSelector from "@/components/common/LanguageSelector";
 import { Box, Container, Grid, Text } from "@/components/ui";
-import { FC } from "react";
+import { useTranslation } from "@/lib/i18n";
 import Copyright from "./Copyright";
 import FooterInfoColumn, { InfoColumnProps } from "./FooterInfoColumn";
 import FooterSocialLinks from "./FooterSocialLinks";
@@ -68,7 +69,12 @@ const columns: InfoColumnProps[] = [
   },
 ];
 
-const Footer: FC = () => {
+interface FooterProps {
+  lng: string;
+  pathname?: string;
+}
+
+const Footer = ({ lng, pathname }: FooterProps) => {
   return (
     <Box component={"footer"} paddingY={4} sx={{ mt: "auto" }}>
       <Container>
@@ -85,7 +91,8 @@ const Footer: FC = () => {
                 <Text variant={"small"} paragraph>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque dolor doloremque ea facilis harum itaque minus sapiente. Architecto ducimus quibusdam quidem sint
                   totam. Atque illo iure reiciendis, reprehenderit totam ut!
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, at corporis debitis doloremque dolores explicabo ipsa laborum laudantium libero mollitia nulla omnis provident quis quo reiciendis sed tempore tenetur voluptatibus?
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, at corporis debitis doloremque dolores explicabo ipsa laborum laudantium libero mollitia nulla omnis
+                  provident quis quo reiciendis sed tempore tenetur voluptatibus?
                 </Text>
               </Grid>
             </Grid>
@@ -99,8 +106,14 @@ const Footer: FC = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Copyright />
+          <Grid container item xs={12}>
+            <Grid item xs={6}>
+              {/* @ts-expect-error Server Component */}
+              <Copyright lng={lng} />
+            </Grid>
+            <Grid item xs={6}>
+              <LanguageSelector lng={lng} />
+            </Grid>
           </Grid>
         </Grid>
       </Container>

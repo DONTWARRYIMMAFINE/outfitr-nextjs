@@ -1,6 +1,6 @@
 import CountryListClient from "@/components/common/country/CountryListClient";
 import Logo from "@/components/common/Logo";
-import NewsSubscribe from "@/components/common/news-subscribe/NewsSubscribe";
+import News from "@/components/common/News";
 import { Box, Button, Link, Switch, Text } from "@/components/ui";
 import ContentContainer from "@/components/ui/ContentContainer";
 import TextField from "@/components/ui/TextField";
@@ -42,7 +42,7 @@ const DemoPage: FC = () => {
       </Button>
       <CountryListClient />
     </ContentContainer>
-    <NewsSubscribe />
+    <News />
   </>);
 };
 

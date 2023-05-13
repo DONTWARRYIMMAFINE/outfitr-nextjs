@@ -1,10 +1,11 @@
 import { Box, Button, Text } from "@/components/ui";
+import { TProps } from "@/lib/types/params.type";
 import Image from "next/image";
-import { FC } from "react";
+import { Trans } from "react-i18next/TransWithoutContext";
 
-interface WelcomeProps {}
+interface WelcomeProps extends TProps {}
 
-const Welcome: FC<WelcomeProps> = ({}) => {
+const Welcome = ({ t }: WelcomeProps) => {
   return (
     <Box
       display={"flex"}
@@ -28,16 +29,13 @@ const Welcome: FC<WelcomeProps> = ({}) => {
           padding={{ md: 8, xs: 2 }}
         >
           <Text variant={"h1"} component={"h3"}>
-            Confused about your outfit?<br />
-            Find the best outfit here!
+            <Trans i18nKey={"welcome.title"} t={t} />
           </Text>
-          <Box>
-            <Text variant={"h4"} paragraph>
-              Explore different categories. Find the best ideas.
-            </Text>
-          </Box>
+          <Text variant={"h4"} paragraph>
+            <Trans i18nKey={"welcome.description"} t={t} />
+          </Text>
           <Button variant={"primary"} href="#">
-            Shop Now
+            <Trans i18nKey={"welcome.button.shopNow"} t={t} />
           </Button>
         </Box>
       </Box>
