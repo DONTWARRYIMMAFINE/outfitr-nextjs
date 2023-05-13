@@ -19,7 +19,7 @@ export function middleware(req: NextRequest) {
   // Try to get locale from Cookie
   let lng: string | null = acceptLanguage.get(req.cookies.get(cookieName)?.value);
 
-  // Try to get locale from Header
+  // Try to get locale from Index
   if (!lng) {
     lng = acceptLanguage.get(req.headers.get("Accept-Language"));
   }

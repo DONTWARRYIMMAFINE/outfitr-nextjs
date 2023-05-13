@@ -4,7 +4,8 @@ import { Routes } from "@/constants/routes";
 import { Roles, UserFragment } from "@/lib/graphql/schema.generated";
 import { loggedInUser } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next-intl/client";
+import { useRouter } from "next/navigation";
 import { FC, PropsWithChildren, useEffect } from "react";
 
 export interface ProtectedRoute {
@@ -29,8 +30,6 @@ const isAllowed = (user: UserFragment | null | undefined, pathName: string, prot
   if (!user) {
     return false;
   }
-
-  console.log("user", user);
 
   // Allow all routes for Admin user
   const isAdmin = user.roles.map(role => role.code).includes(Roles.Admin);

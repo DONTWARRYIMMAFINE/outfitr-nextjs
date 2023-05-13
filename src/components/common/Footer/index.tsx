@@ -111,7 +111,7 @@ const Footer = ({ lng, pathname }: FooterProps) => {
               {/* @ts-expect-error Server Component */}
               <Copyright lng={lng} />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6} display={"flex"} justifyContent={"flex-end"}>
               <LanguageSelector lng={lng} />
             </Grid>
           </Grid>

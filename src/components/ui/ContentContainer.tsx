@@ -1,12 +1,12 @@
 import { Box, Text } from "@/components/ui";
 import { Container } from "@/components/ui/index";
+import { TString } from "@/lib/types/params.type";
 import { ContainerProps } from "@mui/material";
-import { FC, ReactNode } from "react";
+import { FC, PropsWithChildren, ReactNode } from "react";
 
-interface ContainerContainerProps extends ContainerProps {
-  pageTitle?: string;
+interface ContainerContainerProps extends ContainerProps, PropsWithChildren {
+  pageTitle?: TString;
   disableBottomPadding?: boolean;
-  children: ReactNode;
 }
 
 const ContentContainer: FC<ContainerContainerProps> = ({ pageTitle, disableBottomPadding, children, ...props }) => {

@@ -1,11 +1,9 @@
 {
-  "title": "Home",
-  "description": "Outfitr official style provider",
   "welcome": {
-    "title": "Confused about your outfit? Find the best outfit here!",
+    "title": "Confused about your outfit?<br/>Find the best outfit here!",
     "description": "Explore different categories. Find the best ideas.",
     "button": {
-      "shopNow": "Shop Now"
+      "text": "Shop Now"
     }
   },
   "onboarding": [

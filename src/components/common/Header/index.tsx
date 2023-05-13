@@ -18,13 +18,13 @@ const Header = ({ lng }: HeaderProps) => {
           <Box display={"flex"} alignItems={"center"}>
             <ModeSwitch sx={{ marginRight: { md: 2, xs: 1 } }} />
             <Hidden mdDown>
-              <Navigation />
+              <Navigation lng={lng} />
             </Hidden>
             <Hidden mdUp>
               <Hamburger sx={{ marginLeft: { md: 2, xs: 1 } }}>
                 <LinkNavigation direction={"column"} lng={lng} />
                 <Divider />
-                <Navigation />
+                <Navigation lng={lng} />
               </Hamburger>
             </Hidden>
           </Box>

@@ -1,9 +1,9 @@
 {
   "news": {
-    "title": "Join Our<br />\n        Newsletter",
+    "title": "Join Our<br />Newsletter",
     "description": "Receive exclusive deals, discounts and many offers.",
     "button": {
-      "subscribe": "Subscribe"
+      "text": "Subscribe"
     }
   }
 }

@@ -1,11 +1,15 @@
 import { Box, Button, Text } from "@/components/ui";
-import { TProps } from "@/lib/types/params.type";
+import { I18NS } from "@/constants/I18NS";
+import { useTranslation } from "@/lib/i18n";
+import { LngProps } from "@/lib/types/params.type";
 import Image from "next/image";
 import { Trans } from "react-i18next/TransWithoutContext";
 
-interface WelcomeProps extends TProps {}
+interface WelcomeProps extends LngProps {}
 
-const Welcome = ({ t }: WelcomeProps) => {
+const Welcome = async ({ lng }: WelcomeProps) => {
+  const { t } = await useTranslation(lng, I18NS.HOME);
+
   return (
     <Box
       display={"flex"}
@@ -29,13 +33,13 @@ const Welcome = ({ t }: WelcomeProps) => {
           padding={{ md: 8, xs: 2 }}
         >
           <Text variant={"h1"} component={"h3"}>
-            <Trans i18nKey={"welcome.title"} t={t} />
+            <Trans i18nKey={"welcome.title"} t={t} components={{ br: <br /> }} />
           </Text>
           <Text variant={"h4"} paragraph>
             <Trans i18nKey={"welcome.description"} t={t} />
           </Text>
           <Button variant={"primary"} href="#">
-            <Trans i18nKey={"welcome.button.shopNow"} t={t} />
+            <Trans i18nKey={"welcome.button.text"} t={t} />
           </Button>
         </Box>
       </Box>

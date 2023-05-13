@@ -1,7 +1,7 @@
 "use client";
 
-import GuestNavigation from "@/components/common/header/GuestNavigation";
-import UserNavigation from "@/components/common/header/UserNavigation";
+import GuestNavigation from "@/components/common/Header/GuestNavigation";
+import UserNavigation from "@/components/common/Header/UserNavigation";
 import { Box, Link, List, ListItem } from "@/components/ui";
 import { guestMenuRoutes, Routes, userMenuRoutes } from "@/constants/routes";
 import { loggedInUser } from "@/store/user.store";

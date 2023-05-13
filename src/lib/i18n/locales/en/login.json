@@ -1,0 +1,31 @@
+{
+  "page": {
+    "title": "Log In"
+  },
+  "content": {
+    "title": "Welcome back",
+    "description": "Use your credentials below and login to your account",
+    "form": {
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter Your Email"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password"
+      },
+      "button": {
+        "login": {
+          "text": "Sign In"
+        },
+        "signup": {
+          "text": "Sign Up"
+        }
+      }
+    },
+    "forgotPassword": {
+      "question": "Can't log in to your account?",
+      "link": "Recover password"
+    }
+  }
+}

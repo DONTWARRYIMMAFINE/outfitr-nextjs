@@ -2,6 +2,7 @@
 
 import SecureIconTextField from "@/components/SecureIconTextField";
 import { Box, Button, Icons, IconTextField } from "@/components/ui";
+import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
 import { LOCAL_STORAGE_TOKEN } from "@/constants/token";
 import { LoginMutationVariables, useLoginMutation } from "@/lib/graphql/schema.generated";
@@ -10,14 +11,15 @@ import { SignInSchema } from "@/lib/validation/signin.schema";
 import { loggedInUser } from "@/store/user.store";
 import { Formik } from "formik";
 import { useRouter } from "next/navigation";
-import { FC } from "react";
 import toast from "react-hot-toast";
+import { WithTranslation, withTranslation } from "react-i18next";
+import { Trans } from "react-i18next/TransWithoutContext";
 
-interface LoginFormProps {
+interface LoginFormProps extends WithTranslation {
   redirectUrl?: string;
 }
 
-const LoginForm: FC<LoginFormProps> = ({}) => {
+const LoginForm = ({ t, redirectUrl }: LoginFormProps) => {
   const router = useRouter();
   const [loginMutation, { error }] = useLoginMutation();
 
@@ -48,9 +50,9 @@ const LoginForm: FC<LoginFormProps> = ({}) => {
           <IconTextField
             id={"email"}
             name={"email"}
-            label={"Email"}
             type={"email"}
-            placeholder={"Enter Your Email"}
+            label={t("content.form.email.label")}
+            placeholder={t("content.form.email.placeholder")!}
             value={values.email}
             onChange={handleChange}
             error={touched.email && (Boolean(errors.email) || !!error)}
@@ -63,8 +65,8 @@ const LoginForm: FC<LoginFormProps> = ({}) => {
           <SecureIconTextField
             id={"password"}
             name={"password"}
-            label={"Password"}
-            placeholder={"Enter your password"}
+            label={t("content.form.password.label")}
+            placeholder={t("content.form.password.placeholder")!}
             value={values.password}
             onChange={handleChange}
             error={touched.password && (Boolean(errors.password) || !!error)}
@@ -75,8 +77,12 @@ const LoginForm: FC<LoginFormProps> = ({}) => {
             fullWidth
           />
           <Box display={"flex"} gap={2}>
-            <Button disabled={!isValid} variant={"primary"} onClick={() => handleSubmit()}>Sign In</Button>
-            <Button href={Routes.SignUp.href} variant={"transparent"}>Sign Up</Button>
+            <Button disabled={!isValid} variant={"primary"} onClick={() => handleSubmit()}>
+              <Trans i18nKey={"content.form.button.login.text"} t={t} />
+            </Button>
+            <Button href={Routes.SignUp.href} variant={"transparent"}>
+              <Trans i18nKey={"content.form.button.signup.text"} t={t} />
+            </Button>
           </Box>
         </Box>
       )}
@@ -84,4 +90,4 @@ const LoginForm: FC<LoginFormProps> = ({}) => {
   );
 };
 
-export default LoginForm;
+export default withTranslation(I18NS.LOGIN)(LoginForm);

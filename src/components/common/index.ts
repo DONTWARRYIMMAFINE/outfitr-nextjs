@@ -1,5 +1,5 @@
 export { default as About } from "./about/About";
-export { default as Header } from "@/components/common/header/Header";
+export { default as Header } from "@/components/common/Header";
 export { default as Footer } from "@/components/common/Footer";
 export { default as News } from "./News";
 export { default as Onboarding } from "./Onboarding";

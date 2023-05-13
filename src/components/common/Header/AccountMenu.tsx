@@ -1,14 +1,17 @@
 "use client";
 
-import GuestNavigation from "@/components/common/header/GuestNavigation";
-import UserNavigation from "@/components/common/header/UserNavigation";
+import GuestNavigation from "@/components/common/Header/GuestNavigation";
+import UserNavigation from "@/components/common/Header/UserNavigation";
 import { IconButton, Icons, Menu } from "@/components/ui";
 import { guestMenuRoutes, userMenuRoutes } from "@/constants/routes";
+import { LngProps } from "@/lib/types/params.type";
 import { loggedInUser } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
 import { MouseEvent, useState } from "react";
 
-const AccountMenu = () => {
+export interface AccountMenu extends LngProps {}
+
+const AccountMenu = ({ lng }: AccountMenu) => {
   const user = useReactiveVar((loggedInUser));
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
@@ -34,7 +37,10 @@ const AccountMenu = () => {
       transformOrigin={{ horizontal: "right", vertical: "top" }}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
-      {user ? <UserNavigation routes={userMenuRoutes} /> : <GuestNavigation routes={guestMenuRoutes} />}
+      {user ?
+        <UserNavigation routes={userMenuRoutes} /> :
+        <GuestNavigation routes={guestMenuRoutes} lng={lng} />
+      }
     </Menu>
   </>);
 };

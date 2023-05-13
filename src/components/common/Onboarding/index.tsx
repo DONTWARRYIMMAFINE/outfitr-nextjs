@@ -1,6 +1,8 @@
-import OnboardingRow, { OnboardingRowProps } from "@/components/common/Onboarding/OnboardingRow";
+import OnboardingRow from "@/components/common/Onboarding/OnboardingRow";
 import { Box } from "@/components/ui";
-import { TProps } from "@/lib/types/params.type";
+import { I18NS } from "@/constants/I18NS";
+import { useTranslation } from "@/lib/i18n";
+import { LngProps } from "@/lib/types/params.type";
 import { Trans } from "react-i18next/TransWithoutContext";
 
 const onboardingRows = [
@@ -36,6 +38,7 @@ const onboardingRows = [
   },
   {
     image: "",
+    advertising: "onboarding.3.advertising",
     title: "onboarding.3.title",
     description: "onboarding.3.description",
     button: {
@@ -45,9 +48,11 @@ const onboardingRows = [
   },
 ];
 
-interface OnboardingProps extends TProps {}
+interface OnboardingProps extends LngProps {}
 
-const Onboarding = ({ t }: OnboardingProps) => {
+const Onboarding = async ({ lng }: OnboardingProps) => {
+  const { t } = await useTranslation(lng, I18NS.HOME);
+
   return (
     <Box display={"flex"} flexDirection={"column"} gap={{ md: 8, sm: 6, xs: 4 }}>
       {onboardingRows.map(({ image, advertising, title, description, button }, index) => (
@@ -57,7 +62,7 @@ const Onboarding = ({ t }: OnboardingProps) => {
           advertising={<Trans i18nKey={advertising} t={t} />}
           title={<Trans i18nKey={title} t={t} />}
           description={<Trans i18nKey={description} t={t} />}
-          button={{...button, text: <Trans i18nKey={button.text} t={t} />}}
+          button={{ ...button, text: <Trans i18nKey={button.text} t={t} /> }}
           reversed={index % 2 !== 0}
         />
       ))}

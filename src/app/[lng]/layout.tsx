@@ -15,7 +15,7 @@ const RootLayout = async ({ params, children }: RootLayoutProps) => {
   return (
     <html lang={params.lng} dir={dir(params.lng)}>
     <body>
-    <Providers>
+    <Providers lng={params.lng}>
       <Header lng={params.lng} />
       <main>
         {children}

@@ -1,13 +1,13 @@
 "use client";
 
-import AccountMenu from "@/components/common/header/AccountMenu";
+import AccountMenu from "@/components/common/Header/AccountMenu";
 import { Box, IconButton, Icons, List, ListItem } from "@/components/ui";
 import { Routes } from "@/constants/routes";
-import { FC } from "react";
+import { LngProps } from "@/lib/types/params.type";
 
-interface DesktopNavigationProps {}
+interface DesktopNavigationProps extends LngProps {}
 
-const DesktopNavigation: FC<DesktopNavigationProps> = ({}) => {
+const DesktopNavigation = ({ lng }: DesktopNavigationProps) => {
   return (
     <Box component={"nav"}>
       <List>
@@ -21,7 +21,7 @@ const DesktopNavigation: FC<DesktopNavigationProps> = ({}) => {
             <Icons.Cart />
           </IconButton>
         </ListItem>
-        <AccountMenu />
+        <AccountMenu lng={lng} />
       </List>
     </Box>
   );

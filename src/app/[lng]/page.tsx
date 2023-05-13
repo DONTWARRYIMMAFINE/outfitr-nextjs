@@ -1,6 +1,5 @@
-import { Onboarding, Welcome } from "@/components/common";
+import { News, Onboarding, Welcome } from "@/components/common";
 import { Container, ContentContainer } from "@/components/ui";
-import { useTranslation } from "@/lib/i18n";
 import { LngParamsProps } from "@/lib/types/params.type";
 import React from "react";
 
@@ -11,15 +10,19 @@ export const metadata = {
 interface HomePageProps extends LngParamsProps {}
 
 const HomePage = async ({ params }: HomePageProps) => {
-  const { t } = await useTranslation(params.lng, "home");
+  const { lng } = params;
 
   return (<>
     <Container>
-      <Welcome t={t} />
+      {/* @ts-expect-error Server Component */}
+      <Welcome lng={lng} />
     </Container>
     <ContentContainer disableBottomPadding>
-      <Onboarding t={t}/>
+      {/* @ts-expect-error Server Component */}
+      <Onboarding lng={lng} />
     </ContentContainer>
+    {/* @ts-expect-error Server Component */}
+    <News lng={lng} />
   </>);
 };
 

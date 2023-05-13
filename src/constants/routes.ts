@@ -48,12 +48,12 @@ export const Routes: Record<RouteKey, RouteValue> = {
   },
   SignUp: {
     title: "Sign Up",
-    i18nKey: "signUp",
+    i18nKey: "signup",
     href: "/sign-up",
   },
   LogIn: {
     title: "Log In",
-    i18nKey: "logIn",
+    i18nKey: "login",
     href: "/log-in",
   },
   Profile: {
@@ -73,7 +73,7 @@ export const Routes: Record<RouteKey, RouteValue> = {
   },
   LogOut: {
     title: "Log Out",
-    i18nKey: "logOut",
+    i18nKey: "logout",
     href: "/log-out",
   },
   Wishlist: {
