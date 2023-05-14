@@ -3,8 +3,7 @@
 import { ResetPasswordSchema } from "@/components/common/forms/schema/reset-password.schema";
 import SecureIconTextField from "@/components/SecureIconTextField";
 import { Box, Button, Icons } from "@/components/ui";
-import WithTranslateFormErrors from "@/lib/hooks/withTranslationFormError";
-import { Form, Formik } from "formik";
+import { Formik } from "formik";
 import { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
 
@@ -23,41 +22,39 @@ const ResetPasswordForm: FC<ResetPasswordFormProps> = ({ onSubmit, t }) => {
       onSubmit={onSubmit}
     >
       {({ handleSubmit, isValid, values, handleChange, touched, setFieldTouched, errors }) => (
-        <WithTranslateFormErrors errors={errors} touched={touched} setFieldTouched={setFieldTouched}>
-          <Box display={"flex"} flexDirection={"column"} component={"form"} gap={4}>
-            <SecureIconTextField
-              id={"password"}
-              name={"password"}
-              label={t("password.label")}
-              placeholder={t("password.placeholder")!}
-              value={values.password}
-              onChange={handleChange}
-              error={touched.password && Boolean(errors.password)}
-              helperText={touched.password && errors.password}
-              variant={"outlined"}
-              iconStart={<Icons.Key />}
-              required
-              fullWidth
-            />
-            <SecureIconTextField
-              id={"passwordConfirmation"}
-              name={"passwordConfirmation"}
-              label={t("passwordConfirmation.label")}
-              placeholder={t("passwordConfirmation.placeholder")!}
-              value={values.passwordConfirmation}
-              onChange={handleChange}
-              error={touched.passwordConfirmation && Boolean(errors.passwordConfirmation)}
-              helperText={touched.passwordConfirmation && errors.passwordConfirmation}
-              variant={"outlined"}
-              iconStart={<Icons.Key />}
-              required
-              fullWidth
-            />
-            <Button disabled={!isValid} variant={"primary"} onClick={() => handleSubmit()}>
-              {t("button.reset")}
-            </Button>
-          </Box>
-        </WithTranslateFormErrors>
+        <Box display={"flex"} flexDirection={"column"} component={"form"} gap={4}>
+          <SecureIconTextField
+            id={"password"}
+            name={"password"}
+            label={t("password.label")}
+            placeholder={t("password.placeholder")!}
+            value={values.password}
+            onChange={handleChange}
+            error={touched.password && Boolean(errors.password)}
+            helperText={touched.password && errors.password}
+            variant={"outlined"}
+            iconStart={<Icons.Key />}
+            required
+            fullWidth
+          />
+          <SecureIconTextField
+            id={"passwordConfirmation"}
+            name={"passwordConfirmation"}
+            label={t("passwordConfirmation.label")}
+            placeholder={t("passwordConfirmation.placeholder")!}
+            value={values.passwordConfirmation}
+            onChange={handleChange}
+            error={touched.passwordConfirmation && Boolean(errors.passwordConfirmation)}
+            helperText={touched.passwordConfirmation && errors.passwordConfirmation}
+            variant={"outlined"}
+            iconStart={<Icons.Key />}
+            required
+            fullWidth
+          />
+          <Button disabled={!isValid} variant={"primary"} onClick={() => handleSubmit()}>
+            {t("button.reset")}
+          </Button>
+        </Box>
       )}
     </Formik>
   );

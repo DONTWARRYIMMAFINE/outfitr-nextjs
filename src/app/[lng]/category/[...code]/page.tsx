@@ -1,5 +1,4 @@
-import Test from "@/components/common/category/Test";
-import { ContentContainer } from "@/components/ui";
+import { ContentContainer, Text } from "@/components/ui";
 import { Metadata } from "next";
 import { FC } from "react";
 
@@ -13,7 +12,7 @@ const CatalogPage: FC<CatalogPageProps> = ({}) => {
 
   return (
     <ContentContainer pageTitle={"Catalog Page"}>
-      <Test />
+      <Text>Catalog</Text>
     </ContentContainer>
   );
 };

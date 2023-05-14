@@ -7,8 +7,9 @@
   "signup": "Зарегистрироваться",
   "logout": "Выйти",
   "profile": {
-    "settings": "Профиль",
+    "main": "Профиль",
     "orders": "Мои Заказы",
-    "addresses": "Мои Адреса"
+    "addresses": "Мои Адреса",
+    "settings": "Настройки"
   }
 }

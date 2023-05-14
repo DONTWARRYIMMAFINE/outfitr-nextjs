@@ -18,7 +18,7 @@ const UserNavigation: FC<UserNavigationProps> = ({ routes, redirectUrl = Routes.
 
   return (
     <Box display={"flex"} gap={2}>
-      <Avatar src={user?.avatar?.url}/>
+      <Avatar src={user?.avatar?.url} />
       <Box display={"flex"} flexDirection={"column"} gap={2}>
         <Text variant={"p"} fontWeight={700}>{user?.fullName}</Text>
         <List direction={"column"}>
@@ -32,7 +32,7 @@ const UserNavigation: FC<UserNavigationProps> = ({ routes, redirectUrl = Routes.
             }
             return (
               <ListItem key={index}>
-                <Link href={route.href}>
+                <Link href={{ pathname: route.href, query: route.query }}>
                   {t(route.i18nKey)}
                 </Link>
               </ListItem>

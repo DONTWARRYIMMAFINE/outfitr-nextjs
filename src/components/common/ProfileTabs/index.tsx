@@ -2,8 +2,9 @@
 
 import { Box, Tab, TabPanel, Tabs, Text } from "@/components/ui";
 import { tabs } from "@/constants/routes";
-import { indexOf, join } from "lodash";
-import { notFound, useRouter } from "next/navigation";
+import { indexOf } from "lodash";
+import { useRouter } from "next-intl/client";
+import { notFound, useSearchParams } from "next/navigation";
 import { SyntheticEvent } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
 import SettingsTab from "./SettingsTab";
@@ -15,12 +16,12 @@ function allyProps(index: number) {
   };
 }
 
-export interface ProfileTabs extends WithTranslation {
-  tab: string;
-}
+export interface ProfileTabs extends WithTranslation {}
 
-const ProfileTabs = ({ tab, t }: ProfileTabs) => {
-  const value = indexOf(tabs, tab);
+const ProfileTabs = ({ t }: ProfileTabs) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const value = indexOf(tabs, searchParams.get("tab") || "");
 
   // Throw 404 error
   if (value === -1) {
@@ -28,10 +29,10 @@ const ProfileTabs = ({ tab, t }: ProfileTabs) => {
     return null;
   }
 
-  const router = useRouter();
-
-  const handleChange = (event: SyntheticEvent, newValue: number) => {
-    router.push("/" + join(["profile", tabs[newValue]], "/"), {});
+  const handleChange = async (event: SyntheticEvent, newValue: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("tab", tabs[newValue]);
+    router.replace(`/profile?${params.toString()}`);
   };
 
   return (

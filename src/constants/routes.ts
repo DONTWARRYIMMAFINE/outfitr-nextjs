@@ -9,6 +9,7 @@ export type RouteKey =
   | "Profile"
   | "Orders"
   | "Addresses"
+  | "Settings"
   | "LogOut"
   | "Wishlist"
   | "Cart"
@@ -18,6 +19,7 @@ export type RouteValue = {
   title: string;
   i18nKey: string;
   href: string;
+  query?: any;
 }
 
 export const tabs = ["", "orders", "addresses", "settings"];
@@ -60,18 +62,26 @@ export const Routes: Record<RouteKey, RouteValue> = {
   },
   Profile: {
     title: "Profile",
-    i18nKey: "profile.settings",
+    i18nKey: "profile.main",
     href: "/profile",
   },
   Orders: {
     title: "My Orders",
     i18nKey: "profile.orders",
-    href: "/profile/orders",
+    href: "/profile",
+    query: { tab: "orders" }
   },
   Addresses: {
     title: "My Addresses",
     i18nKey: "profile.addresses",
-    href: "/profile/addresses",
+    href: "/profile",
+    query: { tab: "addresses" }
+  },
+  Settings: {
+    title: "Settings",
+    i18nKey: "profile.settings",
+    href: "/profile",
+    query: { tab: "settings" }
   },
   LogOut: {
     title: "Log Out",
@@ -118,5 +128,6 @@ export const userMenuRoutes: RouteValue[] = [
   Routes.Profile,
   Routes.Orders,
   Routes.Addresses,
+  Routes.Settings,
   Routes.LogOut,
 ];

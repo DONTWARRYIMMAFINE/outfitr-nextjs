@@ -8,8 +8,9 @@
   "signup": "Sign Up",
   "logout": "Log Out",
   "profile": {
-    "settings": "Profile",
+    "main": "Profile",
     "orders": "My Orders",
-    "addresses": "My Addresses"
+    "addresses": "My Addresses",
+    "settings": "Settings"
   }
 }

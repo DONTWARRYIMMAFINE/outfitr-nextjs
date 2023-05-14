@@ -4,7 +4,9 @@ import { Link as MuiLink, LinkProps as MuiLinkProps } from "@mui/material";
 import { CustomMuiLinkProps } from "@mui/material/Link";
 import { styled } from "@mui/material/styles";
 import clsx from "clsx";
-import NextLink, { LinkProps as NextLinkProps } from "next/link";
+import { LinkProps as NextLinkProps } from "next/link";
+import NextLink from "next-intl/link";
+
 import { usePathname } from "next/navigation";
 import { AnchorHTMLAttributes, ElementType, FC, forwardRef } from "react";
 
@@ -39,7 +41,7 @@ const NextLinkComposed = forwardRef<HTMLAnchorElement, NextLinkComposedProps>(
         scroll={scroll}
         shallow={shallow}
         passHref
-        locale={locale}
+        locale={locale as string | undefined}
         legacyBehavior={legacyBehavior}
       >
         <Anchor ref={ref} {...other} />
