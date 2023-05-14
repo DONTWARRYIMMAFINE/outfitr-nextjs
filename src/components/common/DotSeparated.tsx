@@ -1,10 +1,9 @@
 import { Dot } from "@/components/common";
 import { Box, Hidden, Text } from "@/components/ui";
-import { TString } from "@/lib/types/params.type";
 import { FC } from "react";
 
 export interface DotSeparatedProps {
-  sentences: TString[];
+  sentences: string[];
 }
 
 const DotSeparated: FC<DotSeparatedProps> = ({ sentences }) => {

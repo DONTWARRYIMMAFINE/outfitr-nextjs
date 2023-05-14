@@ -2,12 +2,11 @@
 
 import SecureIconTextField from "@/components/SecureIconTextField";
 import { Box, Button, Icons, IconTextField } from "@/components/ui";
-import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
 import { LOCAL_STORAGE_TOKEN } from "@/constants/token";
 import { LoginMutationVariables, useLoginMutation } from "@/lib/graphql/schema.generated";
 import { omitEmptyFields } from "@/lib/utils/form.utils";
-import { SignInSchema } from "@/lib/validation/signin.schema";
+import { LogInSchema } from "@/components/common/forms/schema/logInSchema";
 import { loggedInUser } from "@/store/user.store";
 import { Formik } from "formik";
 import { useRouter } from "next/navigation";
@@ -42,7 +41,7 @@ const LoginForm = ({ t, redirectUrl }: LoginFormProps) => {
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
-      validationSchema={SignInSchema}
+      validationSchema={LogInSchema}
       onSubmit={values => onSubmit(values)}
     >
       {({ handleSubmit, isValid, values, handleChange, touched, errors }) => (
@@ -90,4 +89,4 @@ const LoginForm = ({ t, redirectUrl }: LoginFormProps) => {
   );
 };
 
-export default withTranslation(I18NS.LOGIN)(LoginForm);
+export default withTranslation("login")(LoginForm);

@@ -20,7 +20,7 @@ const LogInPage = async ({ params }: LogInPageProps) => {
   return (
     <ContentContainer
       maxWidth={"sm"}
-      pageTitle={<Trans i18nKey={"page.title"} t={t} />}
+      pageTitle={t("page.title")}
     >
       <Box display={"flex"} flexDirection={"column"} alignItems={"center"} gap={4}>
         <Text variant={"h1"} component={"h2"} textAlign={"center"}>

@@ -16,6 +16,7 @@ const Menu: FC<MenuProps> = ({ sx, transformOrigin, children, ...props }) => {
           filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
           mt: 3,
           paddingX: 3,
+          paddingY: 2,
           borderRadius: 0.25,
           bgcolor: "background.drawer",
           "& .MuiAvatar-root": {

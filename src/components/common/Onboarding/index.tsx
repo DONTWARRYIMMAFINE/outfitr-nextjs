@@ -3,7 +3,6 @@ import { Box } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { useTranslation } from "@/lib/i18n";
 import { LngProps } from "@/lib/types/params.type";
-import { Trans } from "react-i18next/TransWithoutContext";
 
 const onboardingRows = [
   {
@@ -59,10 +58,10 @@ const Onboarding = async ({ lng }: OnboardingProps) => {
         <OnboardingRow
           key={index}
           image={image}
-          advertising={<Trans i18nKey={advertising} t={t} />}
-          title={<Trans i18nKey={title} t={t} />}
-          description={<Trans i18nKey={description} t={t} />}
-          button={{ ...button, text: <Trans i18nKey={button.text} t={t} /> }}
+          advertising={t(advertising)}
+          title={t(title)}
+          description={t(description)}
+          button={{ ...button, text: t(button.text) }}
           reversed={index % 2 !== 0}
         />
       ))}

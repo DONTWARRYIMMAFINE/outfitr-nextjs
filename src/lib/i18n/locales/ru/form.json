@@ -1,0 +1,22 @@
+{
+  "password": {
+    "label": "Пароль",
+    "placeholder": "Введите пароль",
+    "errors": {
+      "min": "Password must be at least {{min}} characters",
+      "max": "Password must be less than {{max}} characters",
+      "required": "Пароль не может быть пустым"
+    }
+  },
+  "passwordConfirmation": {
+    "label": "Подтверждение пароля",
+    "placeholder": "Повторите пароль",
+    "errors": {
+      "oneOf": "Пароли не совпадают",
+      "required": "Подтверждение пароля не может быть пустым"
+    }
+  },
+  "button": {
+    "reset": "Сбросить"
+  }
+}

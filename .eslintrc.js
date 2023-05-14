@@ -22,7 +22,7 @@ module.exports = {
       files: ["*.ts"],
       processor: "@graphql-eslint/graphql",
       parserOptions: {
-        schema: "./src/lib/graphql/validation.graphql",
+        schema: "./src/lib/graphql/schema.graphql",
       },
     },
     {
@@ -33,7 +33,7 @@ module.exports = {
         "@graphql-eslint/known-type-names": "error",
       },
       parserOptions: {
-        schema: "./src/lib/graphql/validation.graphql",
+        schema: "./src/lib/graphql/schema.graphql",
       },
     },
   ],

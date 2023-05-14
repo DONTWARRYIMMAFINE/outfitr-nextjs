@@ -20,6 +20,8 @@ export type RouteValue = {
   href: string;
 }
 
+export const tabs = ["", "orders", "addresses", "settings"];
+
 export const Routes: Record<RouteKey, RouteValue> = {
   Demo: {
     title: "Demo",
@@ -58,17 +60,17 @@ export const Routes: Record<RouteKey, RouteValue> = {
   },
   Profile: {
     title: "Profile",
-    i18nKey: "profile",
+    i18nKey: "profile.settings",
     href: "/profile",
   },
   Orders: {
     title: "My Orders",
-    i18nKey: "orders",
+    i18nKey: "profile.orders",
     href: "/profile/orders",
   },
   Addresses: {
     title: "My Addresses",
-    i18nKey: "addresses",
+    i18nKey: "profile.addresses",
     href: "/profile/addresses",
   },
   LogOut: {
@@ -112,7 +114,7 @@ export const guestMenuRoutes: RouteValue[] = [
   Routes.SignUp
 ];
 
-export const userMenuRoutes: NavigationRoute[] = [
+export const userMenuRoutes: RouteValue[] = [
   Routes.Profile,
   Routes.Orders,
   Routes.Addresses,

@@ -2,6 +2,7 @@ import { Logo } from "@/components/common";
 import LanguageSelector from "@/components/common/LanguageSelector";
 import { Box, Container, Grid, Text } from "@/components/ui";
 import { useTranslation } from "@/lib/i18n";
+import { LngProps } from "@/lib/types/params.type";
 import Copyright from "./Copyright";
 import FooterInfoColumn, { InfoColumnProps } from "./FooterInfoColumn";
 import FooterSocialLinks from "./FooterSocialLinks";
@@ -69,12 +70,11 @@ const columns: InfoColumnProps[] = [
   },
 ];
 
-interface FooterProps {
-  lng: string;
+interface FooterProps extends LngProps {
   pathname?: string;
 }
 
-const Footer = ({ lng, pathname }: FooterProps) => {
+const Footer = ({ lng }: FooterProps) => {
   return (
     <Box component={"footer"} paddingY={4} sx={{ mt: "auto" }}>
       <Container>

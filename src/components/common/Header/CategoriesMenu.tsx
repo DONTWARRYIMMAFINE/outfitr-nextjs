@@ -1,19 +1,16 @@
 "use client";
 
 import { Box, Link, List, ListItem, Menu } from "@/components/ui";
-import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
 import { useCategoryTreeQuery } from "@/lib/graphql/schema.generated";
-import { useTranslation } from "@/lib/i18n/client";
-import { LngProps } from "@/lib/types/params.type";
 import Image from "next/image";
 import { MouseEvent, useState } from "react";
+import { WithTranslation, withTranslation } from "react-i18next";
 import { Trans } from "react-i18next/TransWithoutContext";
 
-interface CategoriesMenuProps extends LngProps {}
+export interface CategoriesMenuProps extends WithTranslation {}
 
-const CategoriesMenu = ({ lng }: CategoriesMenuProps) => {
-  const { t } = useTranslation(lng, I18NS.NAVIGATION);
+const CategoriesMenu = ({ t }: CategoriesMenuProps) => {
   const { data, loading, error } = useCategoryTreeQuery();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
@@ -40,7 +37,6 @@ const CategoriesMenu = ({ lng }: CategoriesMenuProps) => {
       onClose={handleClose}
       transformOrigin={{ horizontal: "center", vertical: "top" }}
       anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
-      sx={{ paddingY: 2 }}
     >
       {!loading && !error &&
         <Box display={"flex"} gap={4} justifyContent={"space-between"}>
@@ -77,4 +73,4 @@ const CategoriesMenu = ({ lng }: CategoriesMenuProps) => {
   </>);
 };
 
-export default CategoriesMenu;
+export default withTranslation("navigation")(CategoriesMenu);

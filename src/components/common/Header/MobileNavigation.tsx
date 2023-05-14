@@ -23,7 +23,10 @@ const MobileNavigation = () => {
             {Routes.Cart.title}
           </Link>
         </ListItem>
-        {user ? <UserNavigation routes={userMenuRoutes} /> : <GuestNavigation routes={guestMenuRoutes} />}
+        {user ?
+          <UserNavigation routes={userMenuRoutes} /> :
+          <GuestNavigation routes={guestMenuRoutes}/>
+        }
       </List>
     </Box>
   );

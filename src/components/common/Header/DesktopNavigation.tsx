@@ -3,11 +3,8 @@
 import AccountMenu from "@/components/common/Header/AccountMenu";
 import { Box, IconButton, Icons, List, ListItem } from "@/components/ui";
 import { Routes } from "@/constants/routes";
-import { LngProps } from "@/lib/types/params.type";
 
-interface DesktopNavigationProps extends LngProps {}
-
-const DesktopNavigation = ({ lng }: DesktopNavigationProps) => {
+const DesktopNavigation = () => {
   return (
     <Box component={"nav"}>
       <List>
@@ -21,7 +18,7 @@ const DesktopNavigation = ({ lng }: DesktopNavigationProps) => {
             <Icons.Cart />
           </IconButton>
         </ListItem>
-        <AccountMenu lng={lng} />
+        <AccountMenu />
       </List>
     </Box>
   );

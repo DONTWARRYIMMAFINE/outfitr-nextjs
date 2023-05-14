@@ -1,30 +1,27 @@
 import { Hamburger, Logo, ModeSwitch } from "@/components/common";
 import { AppBar, Box, Container, Divider, Hidden, Toolbar } from "@/components/ui";
-import { LngProps } from "@/lib/types/params.type";
 import LinkNavigation from "./LinkNavigation";
 import Navigation from "./Navigation";
 
-export interface HeaderProps extends LngProps {}
-
-const Header = ({ lng }: HeaderProps) => {
+const Header = () => {
   return (
     <AppBar sx={{ minHeight: "10vh" }}>
       <Container sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <Toolbar sx={{ width: "100%" }}>
           <Logo />
           <Hidden mdDown>
-            <LinkNavigation lng={lng} />
+            <LinkNavigation />
           </Hidden>
           <Box display={"flex"} alignItems={"center"}>
             <ModeSwitch sx={{ marginRight: { md: 2, xs: 1 } }} />
             <Hidden mdDown>
-              <Navigation lng={lng} />
+              <Navigation />
             </Hidden>
             <Hidden mdUp>
               <Hamburger sx={{ marginLeft: { md: 2, xs: 1 } }}>
-                <LinkNavigation direction={"column"} lng={lng} />
+                <LinkNavigation direction={"column"} />
                 <Divider />
-                <Navigation lng={lng} />
+                <Navigation />
               </Hamburger>
             </Hidden>
           </Box>

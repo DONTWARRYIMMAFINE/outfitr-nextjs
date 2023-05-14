@@ -1,10 +1,9 @@
 import { Grid2x1 } from "@/components/common/index";
 import { Box, Button, Text, TextField } from "@/components/ui";
-import { I18NS } from "@/constants/I18NS";
 import { useTranslation } from "@/lib/i18n";
-import { LngProps, TString } from "@/lib/types/params.type";
+import { LngProps } from "@/lib/types/params.type";
 import Image from "next/image";
-import { FC } from "react";
+import { FC, ReactElement } from "react";
 import { Trans } from "react-i18next/TransWithoutContext";
 
 interface Block1Props {
@@ -25,10 +24,10 @@ const Block1: FC<Block1Props> = ({ image }) => {
 };
 
 interface Block2Props {
-  title: TString;
-  description: TString;
+  title: ReactElement;
+  description: string;
   button: {
-    text: TString;
+    text: string;
   };
 }
 
@@ -62,8 +61,8 @@ const News = async ({ lng }: NewsProps) => {
       block1={<Block1 image={"/news.jpg"} />}
       block2={<Block2
         title={<Trans i18nKey={"news.title"} t={t} components={{ br: <br /> }} />}
-        description={<Trans i18nKey={"news.description"} t={t} />}
-        button={{ text: <Trans i18nKey={"news.button.text"} t={t} /> }}
+        description={t("news.description")}
+        button={{ text: t("news.button.text") }}
       />}
     />
   );

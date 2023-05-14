@@ -1,0 +1,22 @@
+{
+  "password": {
+    "label": "Password",
+    "placeholder": "Enter your password",
+    "errors": {
+      "min": "Password must be at least {{min}} characters",
+      "max": "Password must be less than {{max}} characters",
+      "required": "Password is required"
+    }
+  },
+  "passwordConfirmation": {
+    "label": "Password Confirmation",
+    "placeholder": "Repeat your password",
+    "errors": {
+      "oneOf": "Passwords do not match",
+      "required": "Confirm password is required"
+    }
+  },
+  "button": {
+    "reset": "Reset"
+  }
+}

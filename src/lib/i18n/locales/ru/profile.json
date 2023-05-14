@@ -1,0 +1,33 @@
+{
+  "page": {
+    "title": "Профиль"
+  },
+  "tabs": {
+    "main": {
+      "title": "Основная",
+      "label": "Основная",
+      "description": "TODO"
+    },
+    "orders": {
+      "title": "Мои Заказы",
+      "label": "Заказы",
+      "description": "TODO"
+    },
+    "addresses": {
+      "title": "Мои Адреса",
+      "label": "Адреса",
+      "description": "TODO"
+    },
+    "settings": {
+      "title": "Настройки",
+      "label": "Настройки",
+      "description": "Here you can change your password"
+    },
+    "logout": {
+      "title": "Выход",
+      "label": "Выход",
+      "description": "TODO",
+      "button": "Выйти"
+    }
+  }
+}

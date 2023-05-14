@@ -1,11 +1,10 @@
 import { Box, Text } from "@/components/ui";
 import { Container } from "@/components/ui/index";
-import { TString } from "@/lib/types/params.type";
 import { ContainerProps } from "@mui/material";
-import { FC, PropsWithChildren, ReactNode } from "react";
+import { FC, PropsWithChildren } from "react";
 
 interface ContainerContainerProps extends ContainerProps, PropsWithChildren {
-  pageTitle?: TString;
+  pageTitle?: string | null | undefined;
   disableBottomPadding?: boolean;
 }
 

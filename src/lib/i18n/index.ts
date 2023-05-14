@@ -24,7 +24,7 @@ export async function useTranslation<
   const i18nextInstance = await initI18next(lng, Array.isArray(ns) ? ns as string[] : ns as string);
   return {
     // TODO: solve TKPrefix problem here...
-    t: i18nextInstance.getFixedT(lng, ns/*, options.keyPrefix*/),
+    t: i18nextInstance.getFixedT(lng, ns/* , options.keyPrefix */),
     i18n: i18nextInstance,
   };
 }

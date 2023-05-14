@@ -1,29 +1,32 @@
 import SignupForm from "@/components/common/forms/SignupForm";
 import { Box, Link, Text } from "@/components/ui";
-import { Routes } from "@/constants/routes";
-import { Metadata } from "next";
-import { FC } from "react";
 import ContentContainer from "@/components/ui/ContentContainer";
+import { Routes } from "@/constants/routes";
+import { useTranslation } from "@/lib/i18n";
+import { LngParamsProps } from "@/lib/types/params.type";
+import { Metadata } from "next";
+import { Trans } from "react-i18next/TransWithoutContext";
 
 export const metadata: Metadata = {
   title: "Outfitr | Sign Up",
 };
 
-interface SignUpPageProps {}
+interface SignUpPageProps extends LngParamsProps {}
 
-const SignUpPage: FC<SignUpPageProps> = ({}) => {
+const SignUpPage = async ({ params }: SignUpPageProps) => {
+  const { lng } = params;
+  const { t } = await useTranslation(lng, "signup");
+
   return (
-    <ContentContainer maxWidth={"sm"} pageTitle={"Sign Up"}>
+    <ContentContainer maxWidth={"sm"} pageTitle={t("page.title")}>
       <Box display={"flex"} flexDirection={"column"} alignItems={"center"} gap={4}>
-        <Text variant={"h1"} component={"h2"}>Welcome</Text>
-        <Text variant={"p"} textAlign={"center"} opacity={0.7} paragraph>Tell us about yourself</Text>
+        <Text variant={"h1"} component={"h2"} textAlign={"center"}>
+          {t("content.title")}
+        </Text>
+        <Text variant={"p"} textAlign={"center"} opacity={0.7} paragraph>
+          {t("content.description")}
+        </Text>
         <SignupForm />
-        <Box display={"flex"} gap={1}>
-          <Text variant={"small"} opacity={0.7}>Already have an account?</Text>
-          <Link href={Routes.LogIn.href} color={"primary"}>
-            <Text variant={"small"} color={"primary"}>Let Me In!</Text>
-          </Link>
-        </Box>
       </Box>
     </ContentContainer>
   );

@@ -1,9 +1,13 @@
-import { FC } from "react";
+"use client";
+
 import toast from "react-hot-toast";
+import { WithTranslation, withTranslation } from "react-i18next";
 import { FileUploadProps } from "react-mui-fileuploader/dist/types/index.types";
 import { default as MuiFileUpload } from "react-mui-fileuploader";
 
-const FileUpload: FC<FileUploadProps> = ({ children, onFilesChange, ...props }) => {
+export interface FileUpload extends FileUploadProps, WithTranslation {}
+
+const FileUpload = ({ children, onFilesChange, t, multiFile = true, ...props }: FileUpload) => {
   const onError = (err: string) => {
     toast.error(err);
   };
@@ -11,13 +15,13 @@ const FileUpload: FC<FileUploadProps> = ({ children, onFilesChange, ...props }) 
   return (
     <MuiFileUpload
       getBase64={false}
-      multiFile={true}
+      multiFile={multiFile}
       disabled={false}
-      header={"[Drag to drop]"}
-      leftLabel={"or"}
-      rightLabel={"to select files"}
-      buttonLabel={"click here"}
-      buttonRemoveLabel={"Remove all"}
+      header={t("component.fileUpload.header")!}
+      leftLabel={t("component.fileUpload.leftLabel")!}
+      rightLabel={t("component.fileUpload.rightLabel")!}
+      buttonLabel={t("component.fileUpload.buttonLabel")!}
+      buttonRemoveLabel={t("component.fileUpload.buttonRemoveLabel")!}
       maxFileSize={10}
       maxUploadFiles={0}
       acceptedType={"image/*"}
@@ -30,6 +34,7 @@ const FileUpload: FC<FileUploadProps> = ({ children, onFilesChange, ...props }) 
         variant: "outlined",
         sx: { p: 4, borderStyle: "dashed", bgcolor: "background.textField", height: "100%", width: "100%", overflow: "hidden" },
       }}
+      onContextReady={(context) => {}}
       {...props}
     >
       {children}
@@ -37,4 +42,4 @@ const FileUpload: FC<FileUploadProps> = ({ children, onFilesChange, ...props }) 
   );
 };
 
-export default FileUpload;
+export default withTranslation()(FileUpload);

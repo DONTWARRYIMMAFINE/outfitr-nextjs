@@ -5,5 +5,14 @@
     "button": {
       "text": "Subscribe"
     }
+  },
+  "component": {
+    "fileUpload": {
+      "header": "[Drag to drop]",
+      "leftLabel": "or",
+      "buttonLabel": "click here",
+      "rightLabel": "to select files",
+      "buttonRemoveLabel": "Remove all"
+    }
   }
 }

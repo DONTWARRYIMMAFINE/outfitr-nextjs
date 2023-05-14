@@ -11,16 +11,18 @@ export async function generateStaticParams() {
 
 export interface RootLayoutProps extends PropsWithChildren, LngParamsProps {}
 
-const RootLayout = async ({ params, children }: RootLayoutProps) => {
+const RootLayout = ({ params, children }: RootLayoutProps) => {
+  const {lng} = params;
+
   return (
-    <html lang={params.lng} dir={dir(params.lng)}>
+    <html lang={lng} dir={dir(lng)}>
     <body>
-    <Providers lng={params.lng}>
-      <Header lng={params.lng} />
+    <Providers lng={lng}>
+      <Header />
       <main>
         {children}
       </main>
-      <Footer lng={params.lng} />
+      <Footer lng={lng} />
     </Providers>
     </body>
     </html>

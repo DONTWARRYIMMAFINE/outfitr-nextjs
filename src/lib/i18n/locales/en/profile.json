@@ -1,0 +1,33 @@
+{
+  "page": {
+    "title": "Profile"
+  },
+  "tabs": {
+    "main": {
+      "title": "Main",
+      "label": "Main",
+      "description": "TODO"
+    },
+    "orders": {
+      "title": "My Orders",
+      "label": "Orders",
+      "description": "TODO"
+    },
+    "addresses": {
+      "title": "My Addresses",
+      "label": "Addresses",
+      "description": "TODO"
+    },
+    "settings": {
+      "title": "Settings",
+      "label": "Settings",
+      "description": "Here you can change your password"
+    },
+    "logout": {
+      "title": "Log Out",
+      "label": "Log Out",
+      "description": "TODO",
+      "button": "Log Out"
+    }
+  }
+}

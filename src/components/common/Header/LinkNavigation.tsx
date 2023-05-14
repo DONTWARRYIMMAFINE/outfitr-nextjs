@@ -7,17 +7,17 @@ import { Routes, RouteValue } from "@/constants/routes";
 import { useTranslation } from "@/lib/i18n/client";
 import { LngProps } from "@/lib/types/params.type";
 import { usePathname } from "next-intl/client";
+import { WithTranslation, withTranslation } from "react-i18next";
 import { Trans } from "react-i18next/TransWithoutContext";
 
 const navigation: RouteValue[] = [Routes.Home, Routes.Catalog, Routes.About, Routes.Contact, Routes.Demo];
 
-export interface HeaderRoutesProps extends LngProps {
+export interface HeaderRoutesProps extends WithTranslation {
   direction?: "column" | "row";
 }
 
-const LinkNavigation = ({ direction, lng }: HeaderRoutesProps) => {
+const LinkNavigation = ({ direction, t }: HeaderRoutesProps) => {
   const pathname = usePathname();
-  const { t } = useTranslation(lng, I18NS.NAVIGATION);
 
   return (
     <Box component={"nav"}>
@@ -25,7 +25,7 @@ const LinkNavigation = ({ direction, lng }: HeaderRoutesProps) => {
         {navigation.map(({ title, i18nKey, href }, index) => {
           if (title === Routes.Catalog.title) {
             return (
-              <CategoriesMenu key={index} lng={lng} />
+              <CategoriesMenu key={index} />
             );
           }
 
@@ -42,4 +42,4 @@ const LinkNavigation = ({ direction, lng }: HeaderRoutesProps) => {
   );
 };
 
-export default LinkNavigation;
+export default withTranslation("navigation")(LinkNavigation);

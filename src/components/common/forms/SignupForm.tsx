@@ -7,28 +7,26 @@ import { Routes } from "@/constants/routes";
 import { LOCAL_STORAGE_TOKEN } from "@/constants/token";
 import { SignupMutationVariables, useSignupMutation } from "@/lib/graphql/schema.generated";
 import { omitEmptyFields } from "@/lib/utils/form.utils";
-import { SignUpSchema } from "@/lib/validation/signup.schema";
+import { SignUpSchema } from "@/components/common/forms/schema/signup.schema";
 import { loggedInUser } from "@/store/user.store";
 import { Formik } from "formik";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, FC, useState } from "react";
+import { FC, useState } from "react";
 import toast from "react-hot-toast";
+import { WithTranslation, withTranslation } from "react-i18next";
+import { ExtendedFileProps } from "react-mui-fileuploader/dist/types/index.types";
 
-interface SignupFormProps {
+interface SignupFormProps extends WithTranslation {
   redirectUrl?: string;
 }
 
-const SignupForm: FC<SignupFormProps> = ({ redirectUrl = Routes.Home.href }) => {
+const SignupForm: FC<SignupFormProps> = ({ t, redirectUrl = Routes.Home.href }) => {
   const router = useRouter();
   const [signupMutation, { error }] = useSignupMutation();
-  const [file, setFile] = useState<File | null>(null);
-  
-  const onFileChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    const fileList = event.target.files;
+  const [file, setFile] = useState<ExtendedFileProps | null>(null);
 
-    if (fileList) {
-      setFile(fileList[0]);
-    }
+  const handleFilesChange = (files: ExtendedFileProps[]) => {
+    setFile([...files][0]);
   };
 
   const onSubmit = async (values: SignupMutationVariables["input"]) => {
@@ -41,7 +39,7 @@ const SignupForm: FC<SignupFormProps> = ({ redirectUrl = Routes.Home.href }) => 
         localStorage.setItem(LOCAL_STORAGE_TOKEN, accessToken);
         router.push(redirectUrl);
 
-        toast.success(`Hi, ${user.fullName}`);
+        toast.success(t("content.toast.success", { user: user.fullName }));
       },
       onError: error => toast.error(error.message),
     });
@@ -72,9 +70,9 @@ const SignupForm: FC<SignupFormProps> = ({ redirectUrl = Routes.Home.href }) => 
           <IconTextField
             id={"email"}
             name={"email"}
-            label={"Email"}
-            placeholder={"Enter Your Email"}
             type={"email"}
+            label={t("content.form.email.label")}
+            placeholder={t("content.form.email.placeholder")!}
             value={values.email}
             onChange={handleChange}
             error={touched.email && (Boolean(errors.email) || !!error)}
@@ -87,9 +85,9 @@ const SignupForm: FC<SignupFormProps> = ({ redirectUrl = Routes.Home.href }) => 
           <IconTextField
             id={"phone"}
             name={"phone"}
-            label={"Phone"}
-            placeholder={"Enter Your Phone"}
             type={"tel"}
+            label={t("content.form.phone.label")}
+            placeholder={t("content.form.phone.placeholder")!}
             value={values.phone}
             onChange={handleChange}
             error={touched.phone && Boolean(errors.phone)}
@@ -101,8 +99,8 @@ const SignupForm: FC<SignupFormProps> = ({ redirectUrl = Routes.Home.href }) => 
           <IconTextField
             id={"firstName"}
             name={"firstName"}
-            label={"First Name"}
-            placeholder={"Enter Your First Name"}
+            label={t("content.form.firstName.label")}
+            placeholder={t("content.form.firstName.placeholder")!}
             value={values.firstName}
             onChange={handleChange}
             error={touched.firstName && Boolean(errors.firstName)}
@@ -115,8 +113,8 @@ const SignupForm: FC<SignupFormProps> = ({ redirectUrl = Routes.Home.href }) => 
           <IconTextField
             id={"lastName"}
             name={"lastName"}
-            label={"Last Name"}
-            placeholder={"Enter Your Last Name"}
+            label={t("content.form.lastName.label")}
+            placeholder={t("content.form.lastName.placeholder")!}
             value={values.lastName}
             onChange={handleChange}
             error={touched.lastName && Boolean(errors.lastName)}
@@ -129,14 +127,14 @@ const SignupForm: FC<SignupFormProps> = ({ redirectUrl = Routes.Home.href }) => 
           <FileUpload
             multiFile={false}
             maxUploadFiles={1}
-            title={"Upload your avatar"}
-            onChange={onFileChangeHandler}
+            title={t("content.form.avatar.title")!}
+            onFilesChange={handleFilesChange}
           />
           <SecureIconTextField
             id={"password"}
             name={"password"}
-            label={"Password"}
-            placeholder={"Enter your password"}
+            label={t("content.form.password.label")}
+            placeholder={t("content.form.password.placeholder")!}
             value={values.password}
             onChange={handleChange}
             error={touched.password && (Boolean(errors.password) || !!error)}
@@ -149,8 +147,8 @@ const SignupForm: FC<SignupFormProps> = ({ redirectUrl = Routes.Home.href }) => 
           <SecureIconTextField
             id={"passwordConfirmation"}
             name={"passwordConfirmation"}
-            label={"Password Confirmation"}
-            placeholder={"Repeat your password"}
+            label={t("content.form.passwordConfirmation.label")}
+            placeholder={t("content.form.passwordConfirmation.placeholder")!}
             value={values.passwordConfirmation}
             onChange={handleChange}
             error={touched.passwordConfirmation && (Boolean(errors.passwordConfirmation) || !!error)}
@@ -161,8 +159,12 @@ const SignupForm: FC<SignupFormProps> = ({ redirectUrl = Routes.Home.href }) => 
             fullWidth
           />
           <Box display={"flex"} gap={2}>
-            <Button disabled={!isValid} variant={"primary"} onClick={() => handleSubmit()}>Sign Up</Button>
-            <Button href={Routes.LogIn.href} variant={"transparent"}>Log In</Button>
+            <Button disabled={!isValid} variant={"primary"} onClick={() => handleSubmit()}>
+              {t("content.form.button.signup.text")}
+            </Button>
+            <Button href={Routes.LogIn.href} variant={"transparent"}>
+              {t("content.form.button.login.text")}
+            </Button>
           </Box>
         </Box>
       )}
@@ -170,4 +172,4 @@ const SignupForm: FC<SignupFormProps> = ({ redirectUrl = Routes.Home.href }) => 
   );
 };
 
-export default SignupForm;
+export default withTranslation("signup")(SignupForm);

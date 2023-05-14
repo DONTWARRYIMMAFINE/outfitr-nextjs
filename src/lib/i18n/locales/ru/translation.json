@@ -5,5 +5,14 @@
     "button": {
       "text": "Подписаться"
     }
+  },
+  "component": {
+    "fileUpload": {
+      "header": "[Перетащите]",
+      "leftLabel": "или",
+      "buttonLabel": "нажмите здесь",
+      "rightLabel": "чтобы выбрать файлы",
+      "buttonRemoveLabel": "Удалить все"
+    }
   }
 }

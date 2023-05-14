@@ -1,6 +1,5 @@
 import { BackgroundText, Grid2x1 } from "@/components/common";
 import { Box, Button, Text } from "@/components/ui";
-import { TProps, TString } from "@/lib/types/params.type";
 import Image from "next/image";
 import { FC, ReactElement } from "react";
 import { Trans } from "react-i18next/TransWithoutContext";
@@ -32,10 +31,10 @@ const Block1 = ({ image }: Block1Props) => {
 };
 
 interface Block2Props {
-  title: TString;
-  description: TString;
+  title: string;
+  description: string;
   button: {
-    text: TString;
+    text: string;
     href: string;
   };
 }
@@ -64,7 +63,7 @@ const Block2: FC<Block2Props> = ({ title, description, button }) => {
 };
 
 interface BackgroundProps {
-  advertising: TString;
+  advertising: string;
   reversed?: boolean;
 }
 
@@ -78,11 +77,11 @@ const Background: FC<BackgroundProps> = ({ advertising, reversed }) => {
 
 export interface OnboardingRowProps {
   image: string;
-  advertising: TString;
-  title: TString;
-  description: TString;
+  advertising: string;
+  title: string;
+  description: string;
   button: {
-    text: TString;
+    text: string;
     href: string;
   };
   reversed?: boolean;

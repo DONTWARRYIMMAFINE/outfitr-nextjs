@@ -1,5 +1,7 @@
 {
-  "title": "About",
+  "page": {
+    "title": "About"
+  },
   "dotSeparated": [
     "More than  4000 users",
     "The most fashionable outfits",

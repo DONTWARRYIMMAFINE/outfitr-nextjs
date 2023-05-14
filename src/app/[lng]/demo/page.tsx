@@ -4,9 +4,14 @@ import News from "@/components/common/News";
 import { Box, Button, Link, Switch, Text } from "@/components/ui";
 import ContentContainer from "@/components/ui/ContentContainer";
 import TextField from "@/components/ui/TextField";
-import React, { FC } from "react";
+import { LngParamsProps } from "@/lib/types/params.type";
+import React from "react";
 
-const DemoPage: FC = () => {
+export interface DemoPageProps extends LngParamsProps {}
+
+const DemoPage = ({ params }: DemoPageProps) => {
+  const { lng } = params;
+
   return (<>
     <ContentContainer pageTitle={"Demo"} disableBottomPadding>
       <Logo />
@@ -42,7 +47,8 @@ const DemoPage: FC = () => {
       </Button>
       <CountryListClient />
     </ContentContainer>
-    <News />
+    {/* @ts-expect-error Server Component */}
+    <News lng={lng} />
   </>);
 };
 

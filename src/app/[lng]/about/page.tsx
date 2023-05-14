@@ -20,15 +20,15 @@ const AboutPage = async ({ params }: PageProps) => {
 
   return (<>
     <ContentContainer
-      pageTitle={<Trans i18nKey={"title"} t={t} />}
+      pageTitle={t("page.title")}
       disableBottomPadding
     >
       <About />
       <DotSeparated
         sentences={[
-          <Trans i18nKey={"dotSeparated.0"} t={t} />,
-          <Trans i18nKey={"dotSeparated.1"} t={t} />,
-          <Trans i18nKey={"dotSeparated.2"} t={t} />
+          t("dotSeparated.0"),
+          t("dotSeparated.1"),
+          t("dotSeparated.2"),
         ]}
       />
     </ContentContainer>

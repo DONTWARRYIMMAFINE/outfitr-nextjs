@@ -1,3 +1,49 @@
 {
-  "title": "Sign Up"
+  "page": {
+    "title": "Sign Up"
+  },
+  "content": {
+    "title": "Welcome",
+    "description": "Tell us about yourself",
+    "form": {
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter Your Email"
+      },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "Enter Your Phone"
+      },
+      "firstName": {
+        "label": "First Name",
+        "placeholder": "Enter Your First Name"
+      },
+      "lastName": {
+        "label": "Last Name",
+        "placeholder": "Enter Your Last Name"
+      },
+      "avatar": {
+        "title": "Upload your avatar"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password"
+      },
+      "passwordConfirmation": {
+        "label": "Password Confirmation",
+        "placeholder": "Repeat your password"
+      },
+      "button": {
+        "login": {
+          "text": "Sign In"
+        },
+        "signup": {
+          "text": "Sign Up"
+        }
+      }
+    },
+    "toast": {
+      "success": "Hi, {{user}}"
+    }
+  }
 }
