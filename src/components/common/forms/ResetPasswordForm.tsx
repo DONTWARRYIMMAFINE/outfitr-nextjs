@@ -8,7 +8,7 @@ import { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
 
 export interface ResetPasswordFormProps extends WithTranslation {
-  onSubmit: <T>(values: T) => void | Promise<void>;
+  onSubmit: (values: any) => void | Promise<void>;
 }
 
 const ResetPasswordForm: FC<ResetPasswordFormProps> = ({ onSubmit, t }) => {
@@ -21,7 +21,7 @@ const ResetPasswordForm: FC<ResetPasswordFormProps> = ({ onSubmit, t }) => {
       validationSchema={ResetPasswordSchema}
       onSubmit={onSubmit}
     >
-      {({ handleSubmit, isValid, values, handleChange, touched, setFieldTouched, errors }) => (
+      {({ handleSubmit, isValid, values, handleChange, touched, errors }) => (
         <Box display={"flex"} flexDirection={"column"} component={"form"} gap={4}>
           <SecureIconTextField
             id={"password"}
