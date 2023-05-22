@@ -1,0 +1,14 @@
+fragment ProductVariant on ProductVariant {
+  id
+  sku
+  price {
+    ...Price
+  }
+  color {
+    ...Color
+  }
+  size {
+    ...Size
+  }
+  stock
+}

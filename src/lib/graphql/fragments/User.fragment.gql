@@ -11,4 +11,7 @@ fragment User on User {
   permissions {
     ...Permission
   }
+  cart {
+    ...Cart
+  }
 }

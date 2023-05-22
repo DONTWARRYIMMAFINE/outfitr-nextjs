@@ -1,3 +1,4 @@
+import ColorList from "@/components/common/ColorList";
 import CountryListClient from "@/components/common/country/CountryListClient";
 import Logo from "@/components/common/Logo";
 import News from "@/components/common/News";
@@ -46,6 +47,7 @@ const DemoPage = ({ params }: DemoPageProps) => {
         <Text variant={"button"} color={"primary"}>Link button</Text>
       </Button>
       <CountryListClient />
+      <ColorList />
     </ContentContainer>
     {/* @ts-expect-error Server Component */}
     <News lng={lng} />

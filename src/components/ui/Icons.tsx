@@ -1,23 +1,30 @@
 "use client";
 
 import {
+  Add,
+  BadgeOutlined,
+  Check,
   CloseRounded,
   DarkMode,
   EmailOutlined,
-  Facebook,
+  ExpandMoreRounded,
+  Facebook, Favorite, FavoriteBorder,
   FavoriteBorderOutlined,
   Instagram,
   KeyOutlined,
   LightMode,
   MenuRounded,
-  PersonOutlineOutlined,
   Person,
+  PersonOutlineOutlined,
+  PhoneOutlined, Remove,
+  Search,
   ShoppingCartOutlined,
+  Sort,
+  Storefront,
   Telegram,
   Twitter,
   VisibilityOffOutlined,
   VisibilityOutlined,
-  PhoneOutlined, BadgeOutlined,
 } from "@mui/icons-material";
 
 const Icons = {
@@ -39,6 +46,15 @@ const Icons = {
   Key: KeyOutlined,
   Visibility: VisibilityOutlined,
   VisibilityOff: VisibilityOffOutlined,
+  Check: Check,
+  ExpandMore: ExpandMoreRounded,
+  Sort: Sort,
+  Search: Search,
+  Stock: Storefront,
+  Like: FavoriteBorder,
+  Unlike: Favorite,
+  Add: Add,
+  Remove: Remove
 };
 
 export default Icons;

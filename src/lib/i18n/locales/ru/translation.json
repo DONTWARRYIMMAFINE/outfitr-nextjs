@@ -6,6 +6,16 @@
       "text": "Подписаться"
     }
   },
+  "page": {
+    "product": {
+      "content": {
+        "description": "Описание",
+        "colors": "Цвета",
+        "sizes": "Размеры",
+        "stock": "На данный доступно"
+      }
+    }
+  },
   "component": {
     "fileUpload": {
       "header": "[Перетащите]",
@@ -13,6 +23,9 @@
       "buttonLabel": "нажмите здесь",
       "rightLabel": "чтобы выбрать файлы",
       "buttonRemoveLabel": "Удалить все"
+    },
+    "button": {
+      "addToCart": "В корзину"
     }
   }
 }

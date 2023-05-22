@@ -8,7 +8,9 @@ declare module "@mui/material/styles" {
     logo: CSSProperties;
     p: CSSProperties;
     small: CSSProperties;
+    tiny: CSSProperties;
     nav: CSSProperties;
+    price: CSSProperties;
   }
 
   interface TypographyVariantsOptions {
@@ -16,7 +18,9 @@ declare module "@mui/material/styles" {
     logo: CSSProperties;
     p: CSSProperties;
     small: CSSProperties;
+    tiny: CSSProperties;
     nav: CSSProperties;
+    price: CSSProperties;
   }
 
   interface TypeHeader {
@@ -54,7 +58,9 @@ declare module "@mui/material/Typography" {
     logo: true;
     p: true;
     small: true;
+    tiny: true;
     nav: true;
+    price: true;
   }
 }
 

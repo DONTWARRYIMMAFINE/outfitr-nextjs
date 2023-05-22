@@ -1,0 +1,11 @@
+fragment Comment on Comment {
+  id
+  description
+  rating
+  user {
+    fullName
+  }
+  media {
+    ...Media
+  }
+}

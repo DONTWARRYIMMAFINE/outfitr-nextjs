@@ -10,12 +10,12 @@ const DotSeparated: FC<DotSeparatedProps> = ({ sentences }) => {
   return (
     <Box display={"flex"} flexDirection={{ md: "row", xs: "column" }} gap={1}>
       <Hidden mdDown>
-        <Dot />
+        <Dot color={"primary.main"} />
       </Hidden>
       {sentences.map((sentence, i) => (
           <Box key={i} display={"flex"} flexGrow={1} justifyContent={{ md: "space-around", xs: "space-between" }} gap={1}>
             <Text variant={"p"} opacity={0.5}>{sentence}</Text>
-            <Dot />
+            <Dot color={"primary.main"} />
           </Box>
         ),
       )}

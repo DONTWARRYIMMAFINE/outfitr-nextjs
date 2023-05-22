@@ -1,0 +1,6 @@
+fragment Color on Color {
+  id
+  code
+  name
+  hex
+}

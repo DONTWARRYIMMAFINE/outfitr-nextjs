@@ -1,4 +1,4 @@
-import AboutRow, { AboutRowProps } from "@/components/common/about/AboutRow";
+import AboutRow, { AboutRowProps } from "./AboutRow";
 import { Box } from "@/components/ui";
 import { FC } from "react";
 

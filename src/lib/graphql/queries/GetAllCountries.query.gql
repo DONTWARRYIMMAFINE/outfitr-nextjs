@@ -1,9 +1,7 @@
 query Countries {
   countries {
-    edges {
-      node {
-        ...FullCountry
-      }
+    nodes {
+      ...FullCountry
     }
   }
 }

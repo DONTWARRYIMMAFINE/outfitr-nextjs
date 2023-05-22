@@ -1,0 +1,5 @@
+query BrandsTotalCount {
+  brands {
+    totalCount
+  }
+}

@@ -1,5 +1,6 @@
 export { default as AppBar } from "./AppBar";
 export { default as Avatar } from "./Avatar";
+export { default as Badge } from "./Badge";
 export { default as Box } from "./Box";
 export { default as Button } from "./Button";
 export { default as Container } from "./Container";
@@ -9,6 +10,7 @@ export { default as Grid } from "./Grid";
 export { default as Hidden } from "./Hidden";
 export { default as IconButton } from "./IconButton";
 export { default as Icons } from "./Icons";
+export { default as Image } from "./Image";
 export { default as IconTextField } from "./IconTextField";
 export { default as Link } from "./Link";
 export { default as List } from "./List";

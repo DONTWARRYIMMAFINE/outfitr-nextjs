@@ -1,0 +1,5 @@
+mutation AddCartItemsToCart($input: UpdateOneCartInputType!) {
+  addCartItemsToCart(input: $input) {
+    ...Cart
+  }
+}

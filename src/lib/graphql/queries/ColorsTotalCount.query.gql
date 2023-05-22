@@ -1,0 +1,5 @@
+query ColorsTotalCount {
+  colors {
+    totalCount
+  }
+}

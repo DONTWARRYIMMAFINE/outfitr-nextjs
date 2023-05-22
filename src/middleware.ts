@@ -6,7 +6,7 @@ acceptLanguage.languages(languages);
 
 export const config = {
   // Exclude all systems folders
-  matcher: ["/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|assets|public|favicon.ico|sw.js).*)"],
 };
 
 const cookieName = "i18next";

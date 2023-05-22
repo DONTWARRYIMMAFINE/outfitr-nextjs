@@ -1,0 +1,5 @@
+fragment Brand on Brand {
+  id
+  code
+  name
+}

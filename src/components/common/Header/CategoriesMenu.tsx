@@ -66,6 +66,7 @@ const CategoriesMenu = ({ t }: CategoriesMenuProps) => {
               alt={""}
               style={{ objectFit: "contain" }}
               fill
+              priority
             />
           </Box>
         </Box>}

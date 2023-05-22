@@ -1,0 +1,5 @@
+query CommentsTotalCount {
+  comments {
+    totalCount
+  }
+}

@@ -1,0 +1,7 @@
+query Sizes($filter: SizeFilter, $paging: OffsetPaging, $sorting: [SizeSort!]) {
+  sizes(filter: $filter, paging: $paging, sorting: $sorting) {
+    nodes {
+      ...Size
+    }
+  }
+}

@@ -1,4 +1,4 @@
-export { default as About } from "./about/About";
+export { default as About } from "@/components/common/About";
 export { default as Header } from "@/components/common/Header";
 export { default as Footer } from "@/components/common/Footer";
 export { default as News } from "./News";

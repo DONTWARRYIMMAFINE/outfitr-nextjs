@@ -1,7 +1,6 @@
 import { Logo } from "@/components/common";
 import LanguageSelector from "@/components/common/LanguageSelector";
 import { Box, Container, Grid, Text } from "@/components/ui";
-import { useTranslation } from "@/lib/i18n";
 import { LngProps } from "@/lib/types/params.type";
 import Copyright from "./Copyright";
 import FooterInfoColumn, { InfoColumnProps } from "./FooterInfoColumn";
@@ -78,7 +77,7 @@ const Footer = ({ lng }: FooterProps) => {
   return (
     <Box component={"footer"} paddingY={4} sx={{ mt: "auto" }}>
       <Container>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} paddingX={{ md: 8, xs: 3 }}>
           <Grid item xs={12}>
             <Logo />
           </Grid>

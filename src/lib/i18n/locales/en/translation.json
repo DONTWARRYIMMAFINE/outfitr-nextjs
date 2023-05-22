@@ -6,6 +6,16 @@
       "text": "Subscribe"
     }
   },
+  "page": {
+    "product": {
+      "content": {
+        "description": "Description",
+        "colors": "Colors",
+        "sizes": "Sizes",
+        "stock": "Currently in stock"
+      }
+    }
+  },
   "component": {
     "fileUpload": {
       "header": "[Drag to drop]",
@@ -13,6 +23,9 @@
       "buttonLabel": "click here",
       "rightLabel": "to select files",
       "buttonRemoveLabel": "Remove all"
+    },
+    "button": {
+      "addToCart": "Add To Cart"
     }
   }
 }

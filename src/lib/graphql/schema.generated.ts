@@ -49,10 +49,12 @@ export type Address = {
   building?: Maybe<Scalars['String']>;
   city: City;
   cityId: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   postalCode: Scalars['String'];
   state?: Maybe<Scalars['String']>;
   street?: Maybe<Scalars['String']>;
+  updatedAt: Scalars['DateTime'];
 };
 
 export type AddressAggregateGroupBy = {
@@ -69,10 +71,12 @@ export type AddressAggregateGroupBy = {
 
 export type AddressConnection = {
   __typename?: 'AddressConnection';
-  /** Array of edges. */
-  edges: Array<AddressEdge>;
+  /** Array of nodes. */
+  nodes: Array<Address>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type AddressCountAggregate = {
@@ -91,18 +95,12 @@ export type AddressDeleteResponse = {
   __typename?: 'AddressDeleteResponse';
   building?: Maybe<Scalars['String']>;
   cityId?: Maybe<Scalars['ID']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   postalCode?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
   street?: Maybe<Scalars['String']>;
-};
-
-export type AddressEdge = {
-  __typename?: 'AddressEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the Address */
-  node: Address;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type AddressFilter = {
@@ -178,8 +176,10 @@ export type BooleanFieldComparison = {
 export type Brand = {
   __typename?: 'Brand';
   code: Scalars['String'];
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   name: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
   user: User;
   userId: Scalars['ID'];
 };
@@ -196,10 +196,12 @@ export type BrandAggregateGroupBy = {
 
 export type BrandConnection = {
   __typename?: 'BrandConnection';
-  /** Array of edges. */
-  edges: Array<BrandEdge>;
+  /** Array of nodes. */
+  nodes: Array<Brand>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type BrandCountAggregate = {
@@ -215,17 +217,11 @@ export type BrandCountAggregate = {
 export type BrandDeleteResponse = {
   __typename?: 'BrandDeleteResponse';
   code?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
   userId?: Maybe<Scalars['ID']>;
-};
-
-export type BrandEdge = {
-  __typename?: 'BrandEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the Brand */
-  node: Brand;
 };
 
 export type BrandFilter = {
@@ -297,9 +293,11 @@ export type CancelOrderInputType = {
 export type Cart = {
   __typename?: 'Cart';
   cartItems: Array<CartItem>;
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   price: Price;
   quantity: Scalars['Float'];
+  updatedAt: Scalars['DateTime'];
   user: User;
   userId: Scalars['ID'];
 };
@@ -326,10 +324,12 @@ export type CartAvgAggregate = {
 
 export type CartConnection = {
   __typename?: 'CartConnection';
-  /** Array of edges. */
-  edges: Array<CartEdge>;
+  /** Array of nodes. */
+  nodes: Array<Cart>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type CartCountAggregate = {
@@ -339,14 +339,6 @@ export type CartCountAggregate = {
   quantity?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['Int']>;
   userId?: Maybe<Scalars['Int']>;
-};
-
-export type CartEdge = {
-  __typename?: 'CartEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the Cart */
-  node: Cart;
 };
 
 export type CartFilter = {
@@ -401,12 +393,16 @@ export type CartFilterUserFilter = {
 export type CartItem = {
   __typename?: 'CartItem';
   cartId: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
+  image?: Maybe<Media>;
   price: Price;
   priceId: Scalars['ID'];
+  productTitle: Scalars['String'];
   productVariant: ProductVariant;
   productVariantId: Scalars['ID'];
   quantity: Scalars['Int'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type CartItemAggregateGroupBy = {
@@ -427,10 +423,12 @@ export type CartItemAvgAggregate = {
 
 export type CartItemConnection = {
   __typename?: 'CartItemConnection';
-  /** Array of edges. */
-  edges: Array<CartItemEdge>;
+  /** Array of nodes. */
+  nodes: Array<CartItem>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type CartItemCountAggregate = {
@@ -447,18 +445,14 @@ export type CartItemCountAggregate = {
 export type CartItemDeleteResponse = {
   __typename?: 'CartItemDeleteResponse';
   cartId?: Maybe<Scalars['ID']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
+  image?: Maybe<Media>;
   priceId?: Maybe<Scalars['ID']>;
+  productTitle?: Maybe<Scalars['String']>;
   productVariantId?: Maybe<Scalars['ID']>;
   quantity?: Maybe<Scalars['Int']>;
-};
-
-export type CartItemEdge = {
-  __typename?: 'CartItemEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the CartItem */
-  node: CartItem;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type CartItemFilter = {
@@ -495,6 +489,7 @@ export type CartItemFilterProductVariantFilter = {
   productId?: InputMaybe<IdFilterComparison>;
   sizeId?: InputMaybe<IdFilterComparison>;
   sku?: InputMaybe<IdFilterComparison>;
+  stock?: InputMaybe<NumberFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -582,11 +577,13 @@ export type Category = {
   __typename?: 'Category';
   children?: Maybe<Array<Category>>;
   code: Scalars['String'];
+  createdAt: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   name: Scalars['String'];
   parent?: Maybe<Category>;
   parentId?: Maybe<Scalars['ID']>;
+  updatedAt: Scalars['DateTime'];
 };
 
 
@@ -608,10 +605,12 @@ export type CategoryAggregateGroupBy = {
 
 export type CategoryConnection = {
   __typename?: 'CategoryConnection';
-  /** Array of edges. */
-  edges: Array<CategoryEdge>;
+  /** Array of nodes. */
+  nodes: Array<Category>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type CategoryCountAggregate = {
@@ -628,10 +627,12 @@ export type CategoryCountAggregate = {
 export type CategoryDeleteResponse = {
   __typename?: 'CategoryDeleteResponse';
   code?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   parentId?: Maybe<Scalars['ID']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type CategoryEdge = {
@@ -710,8 +711,10 @@ export type City = {
   __typename?: 'City';
   country: Country;
   countryId: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   name: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type CityAggregateGroupBy = {
@@ -725,10 +728,12 @@ export type CityAggregateGroupBy = {
 
 export type CityConnection = {
   __typename?: 'CityConnection';
-  /** Array of edges. */
-  edges: Array<CityEdge>;
+  /** Array of nodes. */
+  nodes: Array<City>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type CityCountAggregate = {
@@ -743,16 +748,10 @@ export type CityCountAggregate = {
 export type CityDeleteResponse = {
   __typename?: 'CityDeleteResponse';
   countryId?: Maybe<Scalars['ID']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
-};
-
-export type CityEdge = {
-  __typename?: 'CityEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the City */
-  node: City;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type CityFilter = {
@@ -811,9 +810,11 @@ export enum CitySortFields {
 export type Color = {
   __typename?: 'Color';
   code: Scalars['String'];
+  createdAt: Scalars['DateTime'];
   hex: Scalars['String'];
   id: Scalars['ID'];
   name: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type ColorAggregateGroupBy = {
@@ -828,10 +829,12 @@ export type ColorAggregateGroupBy = {
 
 export type ColorConnection = {
   __typename?: 'ColorConnection';
-  /** Array of edges. */
-  edges: Array<ColorEdge>;
+  /** Array of nodes. */
+  nodes: Array<Color>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type ColorCountAggregate = {
@@ -847,17 +850,11 @@ export type ColorCountAggregate = {
 export type ColorDeleteResponse = {
   __typename?: 'ColorDeleteResponse';
   code?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   hex?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
-};
-
-export type ColorEdge = {
-  __typename?: 'ColorEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the Color */
-  node: Color;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type ColorFilter = {
@@ -908,12 +905,14 @@ export enum ColorSortFields {
 
 export type Comment = {
   __typename?: 'Comment';
+  createdAt: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   media: Array<Media>;
   product: Product;
   productId: Scalars['ID'];
   rating: Scalars['Float'];
+  updatedAt: Scalars['DateTime'];
   user: User;
   userId: Scalars['ID'];
 };
@@ -942,10 +941,12 @@ export type CommentAvgAggregate = {
 
 export type CommentConnection = {
   __typename?: 'CommentConnection';
-  /** Array of edges. */
-  edges: Array<CommentEdge>;
+  /** Array of nodes. */
+  nodes: Array<Comment>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type CommentCountAggregate = {
@@ -961,19 +962,13 @@ export type CommentCountAggregate = {
 
 export type CommentDeleteResponse = {
   __typename?: 'CommentDeleteResponse';
+  createdAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   productId?: Maybe<Scalars['ID']>;
   rating?: Maybe<Scalars['Float']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
   userId?: Maybe<Scalars['ID']>;
-};
-
-export type CommentEdge = {
-  __typename?: 'CommentEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the Comment */
-  node: Comment;
 };
 
 export type CommentFilter = {
@@ -996,11 +991,13 @@ export type CommentFilterMediaFilter = {
   createdAt?: InputMaybe<DateFieldComparison>;
   filename?: InputMaybe<StringFieldComparison>;
   format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<CommentFilterMediaFilter>>;
   publicId?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
   url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
 };
 
 export type CommentFilterProductFilter = {
@@ -1076,8 +1073,10 @@ export type Country = {
   __typename?: 'Country';
   cities: Array<City>;
   code: Scalars['String'];
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   name: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
 };
 
 
@@ -1097,10 +1096,12 @@ export type CountryAggregateGroupBy = {
 
 export type CountryConnection = {
   __typename?: 'CountryConnection';
-  /** Array of edges. */
-  edges: Array<CountryEdge>;
+  /** Array of nodes. */
+  nodes: Array<Country>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type CountryCountAggregate = {
@@ -1115,16 +1116,10 @@ export type CountryCountAggregate = {
 export type CountryDeleteResponse = {
   __typename?: 'CountryDeleteResponse';
   code?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
-};
-
-export type CountryEdge = {
-  __typename?: 'CountryEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the Country */
-  node: Country;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type CountryFilter = {
@@ -1338,6 +1333,16 @@ export type CreateOneProductVariantInput = {
   productVariant: CreateProductVariantInput;
 };
 
+export type CreateOnePromotionInput = {
+  /** The record to create */
+  promotion: CreatePromotionInput;
+};
+
+export type CreateOnePromotionProductInput = {
+  /** The record to create */
+  promotionProduct: CreatePromotionProductInput;
+};
+
 export type CreateOneRoleInput = {
   /** The record to create */
   role: CreateRoleInput;
@@ -1422,6 +1427,18 @@ export type CreateProductVariantInput = {
   price: CreatePriceInput;
   productId: Scalars['String'];
   sizeId: Scalars['String'];
+};
+
+export type CreatePromotionInput = {
+  code: Scalars['String'];
+  name: Scalars['String'];
+  price: CreatePriceInput;
+};
+
+export type CreatePromotionProductInput = {
+  productId: Scalars['String'];
+  promotionId: Scalars['String'];
+  promotionLengthInDays?: Scalars['Float'];
 };
 
 export type CreateRoleInput = {
@@ -1615,6 +1632,16 @@ export type DeleteOneProductVariantInput = {
   id: Scalars['ID'];
 };
 
+export type DeleteOnePromotionInput = {
+  /** The id of the record to delete. */
+  id: Scalars['ID'];
+};
+
+export type DeleteOnePromotionProductInput = {
+  /** The id of the record to delete. */
+  id: Scalars['ID'];
+};
+
 export type DeleteOneRoleInput = {
   /** The id of the record to delete. */
   id: Scalars['ID'];
@@ -1644,11 +1671,13 @@ export type DeliveryMethod = {
   __typename?: 'DeliveryMethod';
   avgDeliveryTimeInHours?: Maybe<Scalars['Int']>;
   code: Scalars['String'];
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   name: Scalars['String'];
   price: Price;
   priceId: Scalars['ID'];
   status: DeliveryMethodStatus;
+  updatedAt: Scalars['DateTime'];
 };
 
 export type DeliveryMethodAggregateGroupBy = {
@@ -1670,10 +1699,12 @@ export type DeliveryMethodAvgAggregate = {
 
 export type DeliveryMethodConnection = {
   __typename?: 'DeliveryMethodConnection';
-  /** Array of edges. */
-  edges: Array<DeliveryMethodEdge>;
+  /** Array of nodes. */
+  nodes: Array<DeliveryMethod>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type DeliveryMethodCountAggregate = {
@@ -1692,18 +1723,12 @@ export type DeliveryMethodDeleteResponse = {
   __typename?: 'DeliveryMethodDeleteResponse';
   avgDeliveryTimeInHours?: Maybe<Scalars['Int']>;
   code?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   priceId?: Maybe<Scalars['ID']>;
   status?: Maybe<DeliveryMethodStatus>;
-};
-
-export type DeliveryMethodEdge = {
-  __typename?: 'DeliveryMethodEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the DeliveryMethod */
-  node: DeliveryMethod;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type DeliveryMethodFilter = {
@@ -1801,8 +1826,10 @@ export type DeliveryMethodSumAggregate = {
 export type EmailAddress = {
   __typename?: 'EmailAddress';
   address: Scalars['String'];
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
+  updatedAt: Scalars['DateTime'];
   verified: Scalars['Boolean'];
 };
 
@@ -1818,10 +1845,12 @@ export type EmailAddressAggregateGroupBy = {
 
 export type EmailAddressConfirmation = {
   __typename?: 'EmailAddressConfirmation';
+  createdAt: Scalars['DateTime'];
   emailAddress: EmailAddress;
   emailAddressId: Scalars['ID'];
   id: Scalars['ID'];
   token: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
   user: User;
   userId: Scalars['ID'];
 };
@@ -1838,10 +1867,12 @@ export type EmailAddressConfirmationAggregateGroupBy = {
 
 export type EmailAddressConfirmationConnection = {
   __typename?: 'EmailAddressConfirmationConnection';
-  /** Array of edges. */
-  edges: Array<EmailAddressConfirmationEdge>;
+  /** Array of nodes. */
+  nodes: Array<EmailAddressConfirmation>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type EmailAddressConfirmationCountAggregate = {
@@ -1852,14 +1883,6 @@ export type EmailAddressConfirmationCountAggregate = {
   token?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['Int']>;
   userId?: Maybe<Scalars['Int']>;
-};
-
-export type EmailAddressConfirmationEdge = {
-  __typename?: 'EmailAddressConfirmationEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the EmailAddressConfirmation */
-  node: EmailAddressConfirmation;
 };
 
 export type EmailAddressConfirmationFilter = {
@@ -1937,10 +1960,12 @@ export enum EmailAddressConfirmationSortFields {
 
 export type EmailAddressConnection = {
   __typename?: 'EmailAddressConnection';
-  /** Array of edges. */
-  edges: Array<EmailAddressEdge>;
+  /** Array of nodes. */
+  nodes: Array<EmailAddress>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type EmailAddressCountAggregate = {
@@ -1956,17 +1981,11 @@ export type EmailAddressCountAggregate = {
 export type EmailAddressDeleteResponse = {
   __typename?: 'EmailAddressDeleteResponse';
   address?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
   verified?: Maybe<Scalars['Boolean']>;
-};
-
-export type EmailAddressEdge = {
-  __typename?: 'EmailAddressEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the EmailAddress */
-  node: EmailAddress;
 };
 
 export type EmailAddressFilter = {
@@ -2104,11 +2123,15 @@ export type LoginResponse = {
 
 export type Media = {
   __typename?: 'Media';
+  createdAt: Scalars['DateTime'];
   filename: Scalars['String'];
   format: MediaType;
+  height?: Maybe<Scalars['Float']>;
   id: Scalars['ID'];
   publicId: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
   url: Scalars['String'];
+  width?: Maybe<Scalars['Float']>;
 };
 
 export type MediaAggregateGroupBy = {
@@ -2116,18 +2139,28 @@ export type MediaAggregateGroupBy = {
   createdAt?: Maybe<Scalars['DateTime']>;
   filename?: Maybe<Scalars['String']>;
   format?: Maybe<MediaType>;
+  height?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['ID']>;
   publicId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Float']>;
+};
+
+export type MediaAvgAggregate = {
+  __typename?: 'MediaAvgAggregate';
+  height?: Maybe<Scalars['Float']>;
+  width?: Maybe<Scalars['Float']>;
 };
 
 export type MediaConnection = {
   __typename?: 'MediaConnection';
-  /** Array of edges. */
-  edges: Array<MediaEdge>;
+  /** Array of nodes. */
+  nodes: Array<Media>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type MediaCountAggregate = {
@@ -2135,27 +2168,25 @@ export type MediaCountAggregate = {
   createdAt?: Maybe<Scalars['Int']>;
   filename?: Maybe<Scalars['Int']>;
   format?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
   publicId?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['Int']>;
   url?: Maybe<Scalars['Int']>;
+  width?: Maybe<Scalars['Int']>;
 };
 
 export type MediaDeleteResponse = {
   __typename?: 'MediaDeleteResponse';
+  createdAt?: Maybe<Scalars['DateTime']>;
   filename?: Maybe<Scalars['String']>;
   format?: Maybe<MediaType>;
+  height?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['ID']>;
   publicId?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
   url?: Maybe<Scalars['String']>;
-};
-
-export type MediaEdge = {
-  __typename?: 'MediaEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the Media */
-  node: Media;
+  width?: Maybe<Scalars['Float']>;
 };
 
 export type MediaFilter = {
@@ -2163,11 +2194,13 @@ export type MediaFilter = {
   createdAt?: InputMaybe<DateFieldComparison>;
   filename?: InputMaybe<StringFieldComparison>;
   format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<MediaFilter>>;
   publicId?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
   url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
 };
 
 export type MediaMaxAggregate = {
@@ -2175,10 +2208,12 @@ export type MediaMaxAggregate = {
   createdAt?: Maybe<Scalars['DateTime']>;
   filename?: Maybe<Scalars['String']>;
   format?: Maybe<MediaType>;
+  height?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['ID']>;
   publicId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Float']>;
 };
 
 export type MediaMinAggregate = {
@@ -2186,10 +2221,12 @@ export type MediaMinAggregate = {
   createdAt?: Maybe<Scalars['DateTime']>;
   filename?: Maybe<Scalars['String']>;
   format?: Maybe<MediaType>;
+  height?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['ID']>;
   publicId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Float']>;
 };
 
 export type MediaSort = {
@@ -2202,11 +2239,19 @@ export enum MediaSortFields {
   CreatedAt = 'createdAt',
   Filename = 'filename',
   Format = 'format',
+  Height = 'height',
   Id = 'id',
   PublicId = 'publicId',
   UpdatedAt = 'updatedAt',
-  Url = 'url'
+  Url = 'url',
+  Width = 'width'
 }
+
+export type MediaSumAggregate = {
+  __typename?: 'MediaSumAggregate';
+  height?: Maybe<Scalars['Float']>;
+  width?: Maybe<Scalars['Float']>;
+};
 
 export enum MediaType {
   Image = 'IMAGE',
@@ -2261,6 +2306,8 @@ export type Mutation = {
   createOnePrice: Price;
   createOneProduct: Product;
   createOneProductVariant: ProductVariant;
+  createOnePromotion: Promotion;
+  createOnePromotionProduct: PromotionProduct;
   createOneRole: Role;
   createOneSize: Size;
   createOneUser: User;
@@ -2285,6 +2332,8 @@ export type Mutation = {
   deleteOnePrice: PriceDeleteResponse;
   deleteOneProduct: ProductDeleteResponse;
   deleteOneProductVariant: ProductVariantDeleteResponse;
+  deleteOnePromotion: PromotionDeleteResponse;
+  deleteOnePromotionProduct: PromotionProductDeleteResponse;
   deleteOneRole: RoleDeleteResponse;
   deleteOneSize: SizeDeleteResponse;
   deleteOneUser: UserDeleteResponse;
@@ -2324,6 +2373,8 @@ export type Mutation = {
   updateOnePrice: Price;
   updateOneProduct: Product;
   updateOneProductVariant: ProductVariant;
+  updateOnePromotion: Promotion;
+  updateOnePromotionProduct: PromotionProduct;
   updateOneRole: Role;
   updateOneSize: Size;
   updateOneUser: User;
@@ -2464,6 +2515,16 @@ export type MutationCreateOneProductVariantArgs = {
 };
 
 
+export type MutationCreateOnePromotionArgs = {
+  input: CreateOnePromotionInput;
+};
+
+
+export type MutationCreateOnePromotionProductArgs = {
+  input: CreateOnePromotionProductInput;
+};
+
+
 export type MutationCreateOneRoleArgs = {
   input: CreateOneRoleInput;
 };
@@ -2581,6 +2642,16 @@ export type MutationDeleteOneProductArgs = {
 
 export type MutationDeleteOneProductVariantArgs = {
   input: DeleteOneProductVariantInput;
+};
+
+
+export type MutationDeleteOnePromotionArgs = {
+  input: DeleteOnePromotionInput;
+};
+
+
+export type MutationDeleteOnePromotionProductArgs = {
+  input: DeleteOnePromotionProductInput;
 };
 
 
@@ -2767,6 +2838,16 @@ export type MutationUpdateOneProductVariantArgs = {
 };
 
 
+export type MutationUpdateOnePromotionArgs = {
+  input: UpdateOnePromotionInput;
+};
+
+
+export type MutationUpdateOnePromotionProductArgs = {
+  input: UpdateOnePromotionProductInput;
+};
+
+
 export type MutationUpdateOneRoleArgs = {
   input: UpdateOneRoleInput;
 };
@@ -2811,8 +2892,24 @@ export type NumberFieldComparisonBetween = {
   upper: Scalars['Float'];
 };
 
+export type OffsetPageInfo = {
+  __typename?: 'OffsetPageInfo';
+  /** true if paging forward and there are more records. */
+  hasNextPage?: Maybe<Scalars['Boolean']>;
+  /** true if paging backwards and there are more records. */
+  hasPreviousPage?: Maybe<Scalars['Boolean']>;
+};
+
+export type OffsetPaging = {
+  /** Limit the number of records returned */
+  limit?: InputMaybe<Scalars['Int']>;
+  /** Offset to start returning records from */
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
 export type Order = {
   __typename?: 'Order';
+  createdAt: Scalars['DateTime'];
   deliveryAddress: Address;
   deliveryAddressId: Scalars['ID'];
   deliveryMethod: DeliveryMethod;
@@ -2820,7 +2917,9 @@ export type Order = {
   deliveryPrice: Price;
   deliveryPriceId: Scalars['ID'];
   id: Scalars['ID'];
+  orderId: Scalars['ID'];
   orderItems: Array<OrderItem>;
+  paymentIntent?: Maybe<PaymentIntent>;
   paymentMethod: PaymentMethod;
   paymentMethodId: Scalars['ID'];
   status: OrderStatus;
@@ -2830,6 +2929,7 @@ export type Order = {
   taxPriceId: Scalars['ID'];
   totalPrice: Price;
   totalPriceId: Scalars['ID'];
+  updatedAt: Scalars['DateTime'];
   user: User;
   userId: Scalars['ID'];
 };
@@ -2847,6 +2947,7 @@ export type OrderAggregateGroupBy = {
   deliveryMethodId?: Maybe<Scalars['ID']>;
   deliveryPriceId?: Maybe<Scalars['ID']>;
   id?: Maybe<Scalars['ID']>;
+  orderId?: Maybe<Scalars['ID']>;
   paymentMethodId?: Maybe<Scalars['ID']>;
   status?: Maybe<OrderStatus>;
   subtotalPriceId?: Maybe<Scalars['ID']>;
@@ -2858,10 +2959,12 @@ export type OrderAggregateGroupBy = {
 
 export type OrderConnection = {
   __typename?: 'OrderConnection';
-  /** Array of edges. */
-  edges: Array<OrderEdge>;
+  /** Array of nodes. */
+  nodes: Array<Order>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type OrderCountAggregate = {
@@ -2871,6 +2974,7 @@ export type OrderCountAggregate = {
   deliveryMethodId?: Maybe<Scalars['Int']>;
   deliveryPriceId?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
+  orderId?: Maybe<Scalars['Int']>;
   paymentMethodId?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['Int']>;
   subtotalPriceId?: Maybe<Scalars['Int']>;
@@ -2882,24 +2986,19 @@ export type OrderCountAggregate = {
 
 export type OrderDeleteResponse = {
   __typename?: 'OrderDeleteResponse';
+  createdAt?: Maybe<Scalars['DateTime']>;
   deliveryAddressId?: Maybe<Scalars['ID']>;
   deliveryMethodId?: Maybe<Scalars['ID']>;
   deliveryPriceId?: Maybe<Scalars['ID']>;
   id?: Maybe<Scalars['ID']>;
+  orderId?: Maybe<Scalars['ID']>;
   paymentMethodId?: Maybe<Scalars['ID']>;
   status?: Maybe<OrderStatus>;
   subtotalPriceId?: Maybe<Scalars['ID']>;
   taxPriceId?: Maybe<Scalars['ID']>;
   totalPriceId?: Maybe<Scalars['ID']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
   userId?: Maybe<Scalars['ID']>;
-};
-
-export type OrderEdge = {
-  __typename?: 'OrderEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the Order */
-  node: Order;
 };
 
 export type OrderFilter = {
@@ -2913,7 +3012,9 @@ export type OrderFilter = {
   deliveryPriceId?: InputMaybe<IdFilterComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<OrderFilter>>;
+  orderId?: InputMaybe<IdFilterComparison>;
   orderItems?: InputMaybe<OrderFilterOrderItemFilter>;
+  paymentIntent?: InputMaybe<OrderFilterPaymentIntentFilter>;
   paymentMethod?: InputMaybe<OrderFilterPaymentMethodFilter>;
   paymentMethodId?: InputMaybe<IdFilterComparison>;
   status?: InputMaybe<OrderStatusFilterComparison>;
@@ -2967,6 +3068,17 @@ export type OrderFilterOrderItemFilter = {
   warehouseId?: InputMaybe<IdFilterComparison>;
 };
 
+export type OrderFilterPaymentIntentFilter = {
+  and?: InputMaybe<Array<OrderFilterPaymentIntentFilter>>;
+  clientSecret?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterPaymentIntentFilter>>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
 export type OrderFilterPaymentMethodFilter = {
   and?: InputMaybe<Array<OrderFilterPaymentMethodFilter>>;
   code?: InputMaybe<PaymentMethodsFilterComparison>;
@@ -3004,6 +3116,7 @@ export type OrderFilterUserFilter = {
 
 export type OrderItem = {
   __typename?: 'OrderItem';
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   order: Order;
   orderId: Scalars['ID'];
@@ -3012,6 +3125,7 @@ export type OrderItem = {
   productVariant: ProductVariant;
   productVariantId: Scalars['ID'];
   quantity: Scalars['Int'];
+  updatedAt: Scalars['DateTime'];
   warehouse: Warehouse;
   warehouseId: Scalars['ID'];
 };
@@ -3078,6 +3192,7 @@ export type OrderItemFilterOrderFilter = {
   deliveryPriceId?: InputMaybe<IdFilterComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<OrderItemFilterOrderFilter>>;
+  orderId?: InputMaybe<IdFilterComparison>;
   paymentMethodId?: InputMaybe<IdFilterComparison>;
   status?: InputMaybe<OrderStatusFilterComparison>;
   subtotalPriceId?: InputMaybe<IdFilterComparison>;
@@ -3107,6 +3222,7 @@ export type OrderItemFilterProductVariantFilter = {
   productId?: InputMaybe<IdFilterComparison>;
   sizeId?: InputMaybe<IdFilterComparison>;
   sku?: InputMaybe<IdFilterComparison>;
+  stock?: InputMaybe<NumberFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -3174,6 +3290,7 @@ export type OrderMaxAggregate = {
   deliveryMethodId?: Maybe<Scalars['ID']>;
   deliveryPriceId?: Maybe<Scalars['ID']>;
   id?: Maybe<Scalars['ID']>;
+  orderId?: Maybe<Scalars['ID']>;
   paymentMethodId?: Maybe<Scalars['ID']>;
   status?: Maybe<OrderStatus>;
   subtotalPriceId?: Maybe<Scalars['ID']>;
@@ -3190,6 +3307,7 @@ export type OrderMinAggregate = {
   deliveryMethodId?: Maybe<Scalars['ID']>;
   deliveryPriceId?: Maybe<Scalars['ID']>;
   id?: Maybe<Scalars['ID']>;
+  orderId?: Maybe<Scalars['ID']>;
   paymentMethodId?: Maybe<Scalars['ID']>;
   status?: Maybe<OrderStatus>;
   subtotalPriceId?: Maybe<Scalars['ID']>;
@@ -3211,6 +3329,7 @@ export enum OrderSortFields {
   DeliveryMethodId = 'deliveryMethodId',
   DeliveryPriceId = 'deliveryPriceId',
   Id = 'id',
+  OrderId = 'orderId',
   PaymentMethodId = 'paymentMethodId',
   Status = 'status',
   SubtotalPriceId = 'subtotalPriceId',
@@ -3226,6 +3345,7 @@ export enum OrderStatus {
   Created = 'CREATED',
   InShipping = 'IN_SHIPPING',
   OnTheWayToWarehouse = 'ON_THE_WAY_TO_WAREHOUSE',
+  Paid = 'PAID',
   Rejected = 'REJECTED',
   WaitingForPayment = 'WAITING_FOR_PAYMENT'
 }
@@ -3262,13 +3382,13 @@ export type PageInfo = {
 export type PaymentIntent = {
   __typename?: 'PaymentIntent';
   clientSecret: Scalars['String'];
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
-  order: Order;
-  orderId: Scalars['ID'];
   paymentMethod: PaymentMethod;
   paymentMethodId: Scalars['ID'];
   price: PaymentMethod;
   priceId: Scalars['ID'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type PaymentIntentAggregateGroupBy = {
@@ -3276,7 +3396,6 @@ export type PaymentIntentAggregateGroupBy = {
   clientSecret?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
-  orderId?: Maybe<Scalars['ID']>;
   paymentMethodId?: Maybe<Scalars['ID']>;
   priceId?: Maybe<Scalars['ID']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -3284,10 +3403,12 @@ export type PaymentIntentAggregateGroupBy = {
 
 export type PaymentIntentConnection = {
   __typename?: 'PaymentIntentConnection';
-  /** Array of edges. */
-  edges: Array<PaymentIntentEdge>;
+  /** Array of nodes. */
+  nodes: Array<PaymentIntent>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type PaymentIntentCountAggregate = {
@@ -3295,7 +3416,6 @@ export type PaymentIntentCountAggregate = {
   clientSecret?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
-  orderId?: Maybe<Scalars['Int']>;
   paymentMethodId?: Maybe<Scalars['Int']>;
   priceId?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['Int']>;
@@ -3304,18 +3424,11 @@ export type PaymentIntentCountAggregate = {
 export type PaymentIntentDeleteResponse = {
   __typename?: 'PaymentIntentDeleteResponse';
   clientSecret?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
-  orderId?: Maybe<Scalars['ID']>;
   paymentMethodId?: Maybe<Scalars['ID']>;
   priceId?: Maybe<Scalars['ID']>;
-};
-
-export type PaymentIntentEdge = {
-  __typename?: 'PaymentIntentEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the PaymentIntent */
-  node: PaymentIntent;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type PaymentIntentFilter = {
@@ -3324,30 +3437,11 @@ export type PaymentIntentFilter = {
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<PaymentIntentFilter>>;
-  order?: InputMaybe<PaymentIntentFilterOrderFilter>;
-  orderId?: InputMaybe<IdFilterComparison>;
   paymentMethod?: InputMaybe<PaymentIntentFilterPaymentMethodFilter>;
   paymentMethodId?: InputMaybe<IdFilterComparison>;
   price?: InputMaybe<PaymentIntentFilterPaymentMethodFilter>;
   priceId?: InputMaybe<IdFilterComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
-};
-
-export type PaymentIntentFilterOrderFilter = {
-  and?: InputMaybe<Array<PaymentIntentFilterOrderFilter>>;
-  createdAt?: InputMaybe<DateFieldComparison>;
-  deliveryAddressId?: InputMaybe<IdFilterComparison>;
-  deliveryMethodId?: InputMaybe<IdFilterComparison>;
-  deliveryPriceId?: InputMaybe<IdFilterComparison>;
-  id?: InputMaybe<IdFilterComparison>;
-  or?: InputMaybe<Array<PaymentIntentFilterOrderFilter>>;
-  paymentMethodId?: InputMaybe<IdFilterComparison>;
-  status?: InputMaybe<OrderStatusFilterComparison>;
-  subtotalPriceId?: InputMaybe<IdFilterComparison>;
-  taxPriceId?: InputMaybe<IdFilterComparison>;
-  totalPriceId?: InputMaybe<IdFilterComparison>;
-  updatedAt?: InputMaybe<DateFieldComparison>;
-  userId?: InputMaybe<IdFilterComparison>;
 };
 
 export type PaymentIntentFilterPaymentMethodFilter = {
@@ -3366,7 +3460,6 @@ export type PaymentIntentMaxAggregate = {
   clientSecret?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
-  orderId?: Maybe<Scalars['ID']>;
   paymentMethodId?: Maybe<Scalars['ID']>;
   priceId?: Maybe<Scalars['ID']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -3377,7 +3470,6 @@ export type PaymentIntentMinAggregate = {
   clientSecret?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
-  orderId?: Maybe<Scalars['ID']>;
   paymentMethodId?: Maybe<Scalars['ID']>;
   priceId?: Maybe<Scalars['ID']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -3393,7 +3485,6 @@ export enum PaymentIntentSortFields {
   ClientSecret = 'clientSecret',
   CreatedAt = 'createdAt',
   Id = 'id',
-  OrderId = 'orderId',
   PaymentMethodId = 'paymentMethodId',
   PriceId = 'priceId',
   UpdatedAt = 'updatedAt'
@@ -3402,9 +3493,11 @@ export enum PaymentIntentSortFields {
 export type PaymentMethod = {
   __typename?: 'PaymentMethod';
   code: PaymentMethods;
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   name: Scalars['String'];
   status: PaymentMethodStatus;
+  updatedAt: Scalars['DateTime'];
 };
 
 export type PaymentMethodAggregateGroupBy = {
@@ -3419,10 +3512,12 @@ export type PaymentMethodAggregateGroupBy = {
 
 export type PaymentMethodConnection = {
   __typename?: 'PaymentMethodConnection';
-  /** Array of edges. */
-  edges: Array<PaymentMethodEdge>;
+  /** Array of nodes. */
+  nodes: Array<PaymentMethod>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type PaymentMethodCountAggregate = {
@@ -3438,17 +3533,11 @@ export type PaymentMethodCountAggregate = {
 export type PaymentMethodDeleteResponse = {
   __typename?: 'PaymentMethodDeleteResponse';
   code?: Maybe<PaymentMethods>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   status?: Maybe<PaymentMethodStatus>;
-};
-
-export type PaymentMethodEdge = {
-  __typename?: 'PaymentMethodEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the PaymentMethod */
-  node: PaymentMethod;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type PaymentMethodFilter = {
@@ -3545,8 +3634,10 @@ export type Permission = {
   __typename?: 'Permission';
   action: Actions;
   conditions?: Maybe<Scalars['JSON']>;
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   subject: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type PermissionAggregateGroupBy = {
@@ -3560,10 +3651,12 @@ export type PermissionAggregateGroupBy = {
 
 export type PermissionConnection = {
   __typename?: 'PermissionConnection';
-  /** Array of edges. */
-  edges: Array<PermissionEdge>;
+  /** Array of nodes. */
+  nodes: Array<Permission>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type PermissionCountAggregate = {
@@ -3579,16 +3672,10 @@ export type PermissionDeleteResponse = {
   __typename?: 'PermissionDeleteResponse';
   action?: Maybe<Actions>;
   conditions?: Maybe<Scalars['JSON']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   subject?: Maybe<Scalars['String']>;
-};
-
-export type PermissionEdge = {
-  __typename?: 'PermissionEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the Permission */
-  node: Permission;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type PermissionFilter = {
@@ -3638,9 +3725,11 @@ export type PickupPoint = {
   address: Address;
   addressId: Scalars['ID'];
   code: Scalars['String'];
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   name: Scalars['String'];
   status: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type PickupPointAggregateGroupBy = {
@@ -3656,10 +3745,12 @@ export type PickupPointAggregateGroupBy = {
 
 export type PickupPointConnection = {
   __typename?: 'PickupPointConnection';
-  /** Array of edges. */
-  edges: Array<PickupPointEdge>;
+  /** Array of nodes. */
+  nodes: Array<PickupPoint>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type PickupPointCountAggregate = {
@@ -3677,17 +3768,11 @@ export type PickupPointDeleteResponse = {
   __typename?: 'PickupPointDeleteResponse';
   addressId?: Maybe<Scalars['ID']>;
   code?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
-};
-
-export type PickupPointEdge = {
-  __typename?: 'PickupPointEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the PickupPoint */
-  node: PickupPoint;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type PickupPointFilter = {
@@ -3762,8 +3847,10 @@ export enum PickupPointStatus {
 export type Price = {
   __typename?: 'Price';
   amount: Scalars['Float'];
+  createdAt: Scalars['DateTime'];
   currency: Currencies;
   id: Scalars['ID'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type PriceAggregateGroupBy = {
@@ -3782,10 +3869,12 @@ export type PriceAvgAggregate = {
 
 export type PriceConnection = {
   __typename?: 'PriceConnection';
-  /** Array of edges. */
-  edges: Array<PriceEdge>;
+  /** Array of nodes. */
+  nodes: Array<Price>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type PriceCountAggregate = {
@@ -3800,16 +3889,10 @@ export type PriceCountAggregate = {
 export type PriceDeleteResponse = {
   __typename?: 'PriceDeleteResponse';
   amount?: Maybe<Scalars['Float']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   currency?: Maybe<Currencies>;
   id?: Maybe<Scalars['ID']>;
-};
-
-export type PriceEdge = {
-  __typename?: 'PriceEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the Price */
-  node: Price;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type PriceFilter = {
@@ -3865,11 +3948,22 @@ export type Product = {
   brandId: Scalars['ID'];
   category: Category;
   categoryId: Scalars['ID'];
+  colors: Array<Color>;
+  comments: Array<Comment>;
+  createdAt: Scalars['DateTime'];
   description: Scalars['String'];
   id: Scalars['ID'];
   media: Array<Media>;
   productVariants: Array<ProductVariant>;
+  sizes: Array<Size>;
   title: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+};
+
+
+export type ProductCommentsArgs = {
+  filter?: CommentFilter;
+  sorting?: Array<CommentSort>;
 };
 
 
@@ -3897,10 +3991,12 @@ export type ProductAggregateGroupBy = {
 
 export type ProductConnection = {
   __typename?: 'ProductConnection';
-  /** Array of edges. */
-  edges: Array<ProductEdge>;
+  /** Array of nodes. */
+  nodes: Array<Product>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type ProductCountAggregate = {
@@ -3918,17 +4014,13 @@ export type ProductDeleteResponse = {
   __typename?: 'ProductDeleteResponse';
   brandId?: Maybe<Scalars['ID']>;
   categoryId?: Maybe<Scalars['ID']>;
+  colors?: Maybe<Array<Color>>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
+  sizes?: Maybe<Array<Size>>;
   title?: Maybe<Scalars['String']>;
-};
-
-export type ProductEdge = {
-  __typename?: 'ProductEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the Product */
-  node: Product;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type ProductFilter = {
@@ -3937,6 +4029,7 @@ export type ProductFilter = {
   brandId?: InputMaybe<IdFilterComparison>;
   category?: InputMaybe<ProductFilterCategoryFilter>;
   categoryId?: InputMaybe<IdFilterComparison>;
+  comments?: InputMaybe<ProductFilterCommentFilter>;
   createdAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
@@ -3969,6 +4062,18 @@ export type ProductFilterCategoryFilter = {
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
+export type ProductFilterCommentFilter = {
+  and?: InputMaybe<Array<ProductFilterCommentFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<ProductFilterCommentFilter>>;
+  productId?: InputMaybe<IdFilterComparison>;
+  rating?: InputMaybe<FloatFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
 export type ProductFilterProductVariantFilter = {
   and?: InputMaybe<Array<ProductFilterProductVariantFilter>>;
   colorId?: InputMaybe<IdFilterComparison>;
@@ -3979,6 +4084,7 @@ export type ProductFilterProductVariantFilter = {
   productId?: InputMaybe<IdFilterComparison>;
   sizeId?: InputMaybe<IdFilterComparison>;
   sku?: InputMaybe<IdFilterComparison>;
+  stock?: InputMaybe<NumberFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -4024,6 +4130,7 @@ export type ProductVariant = {
   __typename?: 'ProductVariant';
   color: Color;
   colorId: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   price: Price;
   priceId: Scalars['ID'];
@@ -4032,6 +4139,8 @@ export type ProductVariant = {
   size: Size;
   sizeId: Scalars['ID'];
   sku: Scalars['ID'];
+  stock: Scalars['Float'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type ProductVariantAggregateGroupBy = {
@@ -4043,7 +4152,13 @@ export type ProductVariantAggregateGroupBy = {
   productId?: Maybe<Scalars['ID']>;
   sizeId?: Maybe<Scalars['ID']>;
   sku?: Maybe<Scalars['ID']>;
+  stock?: Maybe<Scalars['Float']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type ProductVariantAvgAggregate = {
+  __typename?: 'ProductVariantAvgAggregate';
+  stock?: Maybe<Scalars['Float']>;
 };
 
 export type ProductVariantConnection = {
@@ -4063,17 +4178,21 @@ export type ProductVariantCountAggregate = {
   productId?: Maybe<Scalars['Int']>;
   sizeId?: Maybe<Scalars['Int']>;
   sku?: Maybe<Scalars['Int']>;
+  stock?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['Int']>;
 };
 
 export type ProductVariantDeleteResponse = {
   __typename?: 'ProductVariantDeleteResponse';
   colorId?: Maybe<Scalars['ID']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   priceId?: Maybe<Scalars['ID']>;
   productId?: Maybe<Scalars['ID']>;
   sizeId?: Maybe<Scalars['ID']>;
   sku?: Maybe<Scalars['ID']>;
+  stock?: Maybe<Scalars['Float']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type ProductVariantEdge = {
@@ -4098,6 +4217,7 @@ export type ProductVariantFilter = {
   size?: InputMaybe<ProductVariantFilterSizeFilter>;
   sizeId?: InputMaybe<IdFilterComparison>;
   sku?: InputMaybe<IdFilterComparison>;
+  stock?: InputMaybe<NumberFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -4153,6 +4273,7 @@ export type ProductVariantMaxAggregate = {
   productId?: Maybe<Scalars['ID']>;
   sizeId?: Maybe<Scalars['ID']>;
   sku?: Maybe<Scalars['ID']>;
+  stock?: Maybe<Scalars['Float']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -4165,6 +4286,7 @@ export type ProductVariantMinAggregate = {
   productId?: Maybe<Scalars['ID']>;
   sizeId?: Maybe<Scalars['ID']>;
   sku?: Maybe<Scalars['ID']>;
+  stock?: Maybe<Scalars['Float']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -4182,6 +4304,286 @@ export enum ProductVariantSortFields {
   ProductId = 'productId',
   SizeId = 'sizeId',
   Sku = 'sku',
+  Stock = 'stock',
+  UpdatedAt = 'updatedAt'
+}
+
+export type ProductVariantSumAggregate = {
+  __typename?: 'ProductVariantSumAggregate';
+  stock?: Maybe<Scalars['Float']>;
+};
+
+export type Promotion = {
+  __typename?: 'Promotion';
+  code: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  price: Price;
+  priceId: Scalars['ID'];
+  products: Array<PromotionProduct>;
+  updatedAt: Scalars['DateTime'];
+};
+
+
+export type PromotionProductsArgs = {
+  filter?: PromotionProductFilter;
+  sorting?: Array<PromotionProductSort>;
+};
+
+export type PromotionAggregateGroupBy = {
+  __typename?: 'PromotionAggregateGroupBy';
+  code?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  priceId?: Maybe<Scalars['ID']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type PromotionConnection = {
+  __typename?: 'PromotionConnection';
+  /** Array of nodes. */
+  nodes: Array<Promotion>;
+  /** Paging information */
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
+};
+
+export type PromotionCountAggregate = {
+  __typename?: 'PromotionCountAggregate';
+  code?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['Int']>;
+  priceId?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['Int']>;
+};
+
+export type PromotionDeleteResponse = {
+  __typename?: 'PromotionDeleteResponse';
+  code?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  priceId?: Maybe<Scalars['ID']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type PromotionFilter = {
+  and?: InputMaybe<Array<PromotionFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<PromotionFilter>>;
+  price?: InputMaybe<PromotionFilterPriceFilter>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  products?: InputMaybe<PromotionFilterPromotionProductFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type PromotionFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<PromotionFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<PromotionFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type PromotionFilterPromotionProductFilter = {
+  and?: InputMaybe<Array<PromotionFilterPromotionProductFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  expireAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<PromotionFilterPromotionProductFilter>>;
+  productId?: InputMaybe<IdFilterComparison>;
+  promotionId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  valid?: InputMaybe<BooleanFieldComparison>;
+};
+
+export type PromotionMaxAggregate = {
+  __typename?: 'PromotionMaxAggregate';
+  code?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  priceId?: Maybe<Scalars['ID']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type PromotionMinAggregate = {
+  __typename?: 'PromotionMinAggregate';
+  code?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  priceId?: Maybe<Scalars['ID']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type PromotionProduct = {
+  __typename?: 'PromotionProduct';
+  createdAt: Scalars['DateTime'];
+  id: Scalars['ID'];
+  paymentIntent: PaymentIntent;
+  product: Product;
+  productId: Scalars['ID'];
+  promotion: Promotion;
+  promotionId: Scalars['ID'];
+  updatedAt: Scalars['DateTime'];
+  valid: Scalars['Boolean'];
+};
+
+export type PromotionProductAggregateGroupBy = {
+  __typename?: 'PromotionProductAggregateGroupBy';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  expireAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['ID']>;
+  productId?: Maybe<Scalars['ID']>;
+  promotionId?: Maybe<Scalars['ID']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  valid?: Maybe<Scalars['Boolean']>;
+};
+
+export type PromotionProductConnection = {
+  __typename?: 'PromotionProductConnection';
+  /** Array of edges. */
+  edges: Array<PromotionProductEdge>;
+  /** Paging information */
+  pageInfo: PageInfo;
+};
+
+export type PromotionProductCountAggregate = {
+  __typename?: 'PromotionProductCountAggregate';
+  createdAt?: Maybe<Scalars['Int']>;
+  expireAt?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  productId?: Maybe<Scalars['Int']>;
+  promotionId?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['Int']>;
+  valid?: Maybe<Scalars['Int']>;
+};
+
+export type PromotionProductDeleteResponse = {
+  __typename?: 'PromotionProductDeleteResponse';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['ID']>;
+  productId?: Maybe<Scalars['ID']>;
+  promotionId?: Maybe<Scalars['ID']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  valid?: Maybe<Scalars['Boolean']>;
+};
+
+export type PromotionProductEdge = {
+  __typename?: 'PromotionProductEdge';
+  /** Cursor for this node. */
+  cursor: Scalars['ConnectionCursor'];
+  /** The node containing the PromotionProduct */
+  node: PromotionProduct;
+};
+
+export type PromotionProductFilter = {
+  and?: InputMaybe<Array<PromotionProductFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  expireAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<PromotionProductFilter>>;
+  paymentIntent?: InputMaybe<PromotionProductFilterPaymentIntentFilter>;
+  product?: InputMaybe<PromotionProductFilterProductFilter>;
+  productId?: InputMaybe<IdFilterComparison>;
+  promotion?: InputMaybe<PromotionProductFilterPromotionFilter>;
+  promotionId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  valid?: InputMaybe<BooleanFieldComparison>;
+};
+
+export type PromotionProductFilterPaymentIntentFilter = {
+  and?: InputMaybe<Array<PromotionProductFilterPaymentIntentFilter>>;
+  clientSecret?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<PromotionProductFilterPaymentIntentFilter>>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type PromotionProductFilterProductFilter = {
+  and?: InputMaybe<Array<PromotionProductFilterProductFilter>>;
+  brandId?: InputMaybe<IdFilterComparison>;
+  categoryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<PromotionProductFilterProductFilter>>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type PromotionProductFilterPromotionFilter = {
+  and?: InputMaybe<Array<PromotionProductFilterPromotionFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<PromotionProductFilterPromotionFilter>>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type PromotionProductMaxAggregate = {
+  __typename?: 'PromotionProductMaxAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  expireAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['ID']>;
+  productId?: Maybe<Scalars['ID']>;
+  promotionId?: Maybe<Scalars['ID']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type PromotionProductMinAggregate = {
+  __typename?: 'PromotionProductMinAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  expireAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['ID']>;
+  productId?: Maybe<Scalars['ID']>;
+  promotionId?: Maybe<Scalars['ID']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type PromotionProductSort = {
+  direction: SortDirection;
+  field: PromotionProductSortFields;
+  nulls?: InputMaybe<SortNulls>;
+};
+
+export enum PromotionProductSortFields {
+  CreatedAt = 'createdAt',
+  ExpireAt = 'expireAt',
+  Id = 'id',
+  ProductId = 'productId',
+  PromotionId = 'promotionId',
+  UpdatedAt = 'updatedAt',
+  Valid = 'valid'
+}
+
+export type PromotionSort = {
+  direction: SortDirection;
+  field: PromotionSortFields;
+  nulls?: InputMaybe<SortNulls>;
+};
+
+export enum PromotionSortFields {
+  Code = 'code',
+  CreatedAt = 'createdAt',
+  Id = 'id',
+  Name = 'name',
+  PriceId = 'priceId',
   UpdatedAt = 'updatedAt'
 }
 
@@ -4233,6 +4635,10 @@ export type Query = {
   productVariant?: Maybe<ProductVariant>;
   productVariants: ProductVariantConnection;
   products: ProductConnection;
+  promotion?: Maybe<Promotion>;
+  promotionProduct?: Maybe<PromotionProduct>;
+  promotionProducts: PromotionProductConnection;
+  promotions: PromotionConnection;
   role?: Maybe<Role>;
   roles: RoleConnection;
   size?: Maybe<Size>;
@@ -4253,7 +4659,7 @@ export type QueryAddressArgs = {
 
 export type QueryAddressesArgs = {
   filter?: AddressFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<AddressSort>;
 };
 
@@ -4265,7 +4671,7 @@ export type QueryBrandArgs = {
 
 export type QueryBrandsArgs = {
   filter?: BrandFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<BrandSort>;
 };
 
@@ -4282,21 +4688,21 @@ export type QueryCartItemArgs = {
 
 export type QueryCartItemsArgs = {
   filter?: CartItemFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<CartItemSort>;
 };
 
 
 export type QueryCartsArgs = {
   filter?: CartFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<CartSort>;
 };
 
 
 export type QueryCategoriesArgs = {
   filter?: CategoryFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<CategorySort>;
 };
 
@@ -4308,7 +4714,7 @@ export type QueryCategoryArgs = {
 
 export type QueryCitiesArgs = {
   filter?: CityFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<CitySort>;
 };
 
@@ -4325,7 +4731,7 @@ export type QueryColorArgs = {
 
 export type QueryColorsArgs = {
   filter?: ColorFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<ColorSort>;
 };
 
@@ -4337,14 +4743,14 @@ export type QueryCommentArgs = {
 
 export type QueryCommentsArgs = {
   filter?: CommentFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<CommentSort>;
 };
 
 
 export type QueryCountriesArgs = {
   filter?: CountryFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<CountrySort>;
 };
 
@@ -4361,7 +4767,7 @@ export type QueryDeliveryMethodArgs = {
 
 export type QueryDeliveryMethodsArgs = {
   filter?: DeliveryMethodFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<DeliveryMethodSort>;
 };
 
@@ -4378,21 +4784,21 @@ export type QueryEmailAddressConfirmationArgs = {
 
 export type QueryEmailAddressConfirmationsArgs = {
   filter?: EmailAddressConfirmationFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<EmailAddressConfirmationSort>;
 };
 
 
 export type QueryEmailAddressesArgs = {
   filter?: EmailAddressFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<EmailAddressSort>;
 };
 
 
 export type QueryMediaArgs = {
   filter?: MediaFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<MediaSort>;
 };
 
@@ -4404,7 +4810,7 @@ export type QueryOrderArgs = {
 
 export type QueryOrdersArgs = {
   filter?: OrderFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<OrderSort>;
 };
 
@@ -4416,7 +4822,7 @@ export type QueryPaymentIntentArgs = {
 
 export type QueryPaymentIntentsArgs = {
   filter?: PaymentIntentFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<PaymentIntentSort>;
 };
 
@@ -4428,7 +4834,7 @@ export type QueryPaymentMethodArgs = {
 
 export type QueryPaymentMethodsArgs = {
   filter?: PaymentMethodFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<PaymentMethodSort>;
 };
 
@@ -4440,7 +4846,7 @@ export type QueryPermissionArgs = {
 
 export type QueryPermissionsArgs = {
   filter?: PermissionFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<PermissionSort>;
 };
 
@@ -4452,7 +4858,7 @@ export type QueryPickupPointArgs = {
 
 export type QueryPickupPointsArgs = {
   filter?: PickupPointFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<PickupPointSort>;
 };
 
@@ -4464,7 +4870,7 @@ export type QueryPriceArgs = {
 
 export type QueryPricesArgs = {
   filter?: PriceFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<PriceSort>;
 };
 
@@ -4488,8 +4894,32 @@ export type QueryProductVariantsArgs = {
 
 export type QueryProductsArgs = {
   filter?: ProductFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<ProductSort>;
+};
+
+
+export type QueryPromotionArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryPromotionProductArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryPromotionProductsArgs = {
+  filter?: PromotionProductFilter;
+  paging?: CursorPaging;
+  sorting?: Array<PromotionProductSort>;
+};
+
+
+export type QueryPromotionsArgs = {
+  filter?: PromotionFilter;
+  paging?: OffsetPaging;
+  sorting?: Array<PromotionSort>;
 };
 
 
@@ -4500,7 +4930,7 @@ export type QueryRoleArgs = {
 
 export type QueryRolesArgs = {
   filter?: RoleFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<RoleSort>;
 };
 
@@ -4512,7 +4942,7 @@ export type QuerySizeArgs = {
 
 export type QuerySizesArgs = {
   filter?: SizeFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<SizeSort>;
 };
 
@@ -4529,14 +4959,14 @@ export type QueryUserAddressArgs = {
 
 export type QueryUserAddressesArgs = {
   filter?: UserAddressFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<UserAddressSort>;
 };
 
 
 export type QueryUsersArgs = {
   filter?: UserFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<UserSort>;
 };
 
@@ -4548,7 +4978,7 @@ export type QueryWarehouseArgs = {
 
 export type QueryWarehousesArgs = {
   filter?: WarehouseFilter;
-  paging?: CursorPaging;
+  paging?: OffsetPaging;
   sorting?: Array<WarehouseSort>;
 };
 
@@ -4585,9 +5015,11 @@ export type ResetPasswordInputType = {
 export type Role = {
   __typename?: 'Role';
   code: Roles;
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   name: Scalars['String'];
   permissions: Array<Permission>;
+  updatedAt: Scalars['DateTime'];
 };
 
 
@@ -4607,10 +5039,12 @@ export type RoleAggregateGroupBy = {
 
 export type RoleConnection = {
   __typename?: 'RoleConnection';
-  /** Array of edges. */
-  edges: Array<RoleEdge>;
+  /** Array of nodes. */
+  nodes: Array<Role>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type RoleCountAggregate = {
@@ -4625,16 +5059,10 @@ export type RoleCountAggregate = {
 export type RoleDeleteResponse = {
   __typename?: 'RoleDeleteResponse';
   code?: Maybe<Roles>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
-};
-
-export type RoleEdge = {
-  __typename?: 'RoleEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the Role */
-  node: Role;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type RoleFilter = {
@@ -4749,8 +5177,10 @@ export type SignupResponse = {
 export type Size = {
   __typename?: 'Size';
   code: Scalars['String'];
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   name: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type SizeAggregateGroupBy = {
@@ -4764,10 +5194,12 @@ export type SizeAggregateGroupBy = {
 
 export type SizeConnection = {
   __typename?: 'SizeConnection';
-  /** Array of edges. */
-  edges: Array<SizeEdge>;
+  /** Array of nodes. */
+  nodes: Array<Size>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type SizeCountAggregate = {
@@ -4782,16 +5214,10 @@ export type SizeCountAggregate = {
 export type SizeDeleteResponse = {
   __typename?: 'SizeDeleteResponse';
   code?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
-};
-
-export type SizeEdge = {
-  __typename?: 'SizeEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the Size */
-  node: Size;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type SizeFilter = {
@@ -5065,6 +5491,20 @@ export type UpdateOneProductVariantInput = {
   update: UpdateProductVariantInput;
 };
 
+export type UpdateOnePromotionInput = {
+  /** The id of the record to update */
+  id: Scalars['ID'];
+  /** The update to apply. */
+  update: UpdatePromotionInput;
+};
+
+export type UpdateOnePromotionProductInput = {
+  /** The id of the record to update */
+  id: Scalars['ID'];
+  /** The update to apply. */
+  update: UpdatePromotionProductInput;
+};
+
 export type UpdateOneRoleInput = {
   /** The id of the record to update */
   id: Scalars['ID'];
@@ -5152,6 +5592,15 @@ export type UpdateProductVariantInput = {
   sizeId?: InputMaybe<Scalars['String']>;
 };
 
+export type UpdatePromotionInput = {
+  name?: InputMaybe<Scalars['String']>;
+  price?: InputMaybe<CreatePriceInput>;
+};
+
+export type UpdatePromotionProductInput = {
+  promotionLengthInDays?: InputMaybe<Scalars['Float']>;
+};
+
 export type UpdateRoleInput = {
   name?: InputMaybe<Scalars['String']>;
   permissions?: InputMaybe<Array<CreatePermissionInput>>;
@@ -5192,6 +5641,7 @@ export type User = {
   avatarId?: Maybe<Scalars['ID']>;
   brands: Array<Brand>;
   cart: Cart;
+  createdAt: Scalars['DateTime'];
   emailAddress: EmailAddress;
   emailAddressId: Scalars['ID'];
   firstName?: Maybe<Scalars['String']>;
@@ -5201,6 +5651,7 @@ export type User = {
   permissions: Array<Permission>;
   phone?: Maybe<Scalars['String']>;
   roles: Array<Role>;
+  updatedAt: Scalars['DateTime'];
   userAddresses: Array<UserAddress>;
   wishlist: Wishlist;
 };
@@ -5227,7 +5678,9 @@ export type UserAddress = {
   __typename?: 'UserAddress';
   address: Address;
   addressId: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
+  updatedAt: Scalars['DateTime'];
   user: User;
   userId: Scalars['ID'];
 };
@@ -5243,10 +5696,12 @@ export type UserAddressAggregateGroupBy = {
 
 export type UserAddressConnection = {
   __typename?: 'UserAddressConnection';
-  /** Array of edges. */
-  edges: Array<UserAddressEdge>;
+  /** Array of nodes. */
+  nodes: Array<UserAddress>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type UserAddressCountAggregate = {
@@ -5261,16 +5716,10 @@ export type UserAddressCountAggregate = {
 export type UserAddressDeleteResponse = {
   __typename?: 'UserAddressDeleteResponse';
   addressId?: Maybe<Scalars['ID']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
   userId?: Maybe<Scalars['ID']>;
-};
-
-export type UserAddressEdge = {
-  __typename?: 'UserAddressEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the UserAddress */
-  node: UserAddress;
 };
 
 export type UserAddressFilter = {
@@ -5359,10 +5808,12 @@ export type UserAggregateGroupBy = {
 
 export type UserConnection = {
   __typename?: 'UserConnection';
-  /** Array of edges. */
-  edges: Array<UserEdge>;
+  /** Array of nodes. */
+  nodes: Array<User>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type UserCountAggregate = {
@@ -5381,6 +5832,7 @@ export type UserCountAggregate = {
 export type UserDeleteResponse = {
   __typename?: 'UserDeleteResponse';
   avatarId?: Maybe<Scalars['ID']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   emailAddressId?: Maybe<Scalars['ID']>;
   firstName?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
@@ -5388,14 +5840,7 @@ export type UserDeleteResponse = {
   lastName?: Maybe<Scalars['String']>;
   permissions?: Maybe<Array<Permission>>;
   phone?: Maybe<Scalars['String']>;
-};
-
-export type UserEdge = {
-  __typename?: 'UserEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the User */
-  node: User;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserFilter = {
@@ -5456,11 +5901,13 @@ export type UserFilterMediaFilter = {
   createdAt?: InputMaybe<DateFieldComparison>;
   filename?: InputMaybe<StringFieldComparison>;
   format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<UserFilterMediaFilter>>;
   publicId?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
   url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
 };
 
 export type UserFilterRoleFilter = {
@@ -5540,9 +5987,11 @@ export type Warehouse = {
   __typename?: 'Warehouse';
   address?: Maybe<Address>;
   code: Scalars['String'];
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   name: Scalars['String'];
   status: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
   warehouseItems: Array<WarehouseItem>;
 };
 
@@ -5564,10 +6013,12 @@ export type WarehouseAggregateGroupBy = {
 
 export type WarehouseConnection = {
   __typename?: 'WarehouseConnection';
-  /** Array of edges. */
-  edges: Array<WarehouseEdge>;
+  /** Array of nodes. */
+  nodes: Array<Warehouse>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type WarehouseCountAggregate = {
@@ -5583,17 +6034,11 @@ export type WarehouseCountAggregate = {
 export type WarehouseDeleteResponse = {
   __typename?: 'WarehouseDeleteResponse';
   code?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
-};
-
-export type WarehouseEdge = {
-  __typename?: 'WarehouseEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the Warehouse */
-  node: Warehouse;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type WarehouseFilter = {
@@ -5642,11 +6087,13 @@ export type WarehouseInput = {
 export type WarehouseItem = {
   __typename?: 'WarehouseItem';
   available: Scalars['Int'];
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   productVariant: ProductVariant;
   productVariantId: Scalars['ID'];
   reserved: Scalars['Int'];
   stock: Scalars['Int'];
+  updatedAt: Scalars['DateTime'];
   warehouseId: Scalars['ID'];
 };
 
@@ -5713,6 +6160,7 @@ export type WarehouseItemFilterProductVariantFilter = {
   productId?: InputMaybe<IdFilterComparison>;
   sizeId?: InputMaybe<IdFilterComparison>;
   sku?: InputMaybe<IdFilterComparison>;
+  stock?: InputMaybe<NumberFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -5811,8 +6259,10 @@ export enum WarehouseStatus {
 
 export type Wishlist = {
   __typename?: 'Wishlist';
+  createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   products: Array<Product>;
+  updatedAt: Scalars['DateTime'];
   user: User;
   userId: Scalars['ID'];
 };
@@ -5863,22 +6313,49 @@ export type WishlistMinAggregate = {
   userId?: Maybe<Scalars['ID']>;
 };
 
+export type BrandFragment = { __typename?: 'Brand', id: string, code: string, name: string };
+
+export type CartFragment = { __typename?: 'Cart', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> };
+
+export type CartItemFragment = { __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null };
+
 export type CategoryFragment = { __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null };
+
+export type ColorFragment = { __typename?: 'Color', id: string, code: string, name: string, hex: string };
+
+export type CommentFragment = { __typename?: 'Comment', id: string, description?: string | null, rating: number, user: { __typename?: 'User', fullName: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> };
 
 export type FullCountryFragment = { __typename?: 'Country', id: string, code: string, name: string };
 
+export type MediaFragment = { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null };
+
 export type PermissionFragment = { __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null };
+
+export type PriceFragment = { __typename?: 'Price', id: string, amount: number, currency: Currencies };
+
+export type ProductFragment = { __typename?: 'Product', id: string, title: string, description: string, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: string, name: string }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }> };
+
+export type ProductVariantFragment = { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } };
 
 export type RoleFragment = { __typename?: 'Role', id: string, code: Roles, name: string };
 
-export type UserFragment = { __typename?: 'User', id: string, fullName: string, phone?: string | null, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> };
+export type SizeFragment = { __typename?: 'Size', id: string, code: string, name: string };
+
+export type UserFragment = { __typename?: 'User', id: string, fullName: string, phone?: string | null, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }>, cart: { __typename?: 'Cart', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } };
+
+export type AddCartItemsToCartMutationVariables = Exact<{
+  input: UpdateOneCartInputType;
+}>;
+
+
+export type AddCartItemsToCartMutation = { __typename?: 'Mutation', addCartItemsToCart: { __typename?: 'Cart', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } };
 
 export type LoginMutationVariables = Exact<{
   input: LoginInput;
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', accessToken: string, user: { __typename?: 'User', id: string, fullName: string, phone?: string | null, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', accessToken: string, user: { __typename?: 'User', id: string, fullName: string, phone?: string | null, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }>, cart: { __typename?: 'Cart', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } } } };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -5890,12 +6367,19 @@ export type ReissueAccessTokenMutationVariables = Exact<{ [key: string]: never; 
 
 export type ReissueAccessTokenMutation = { __typename?: 'Mutation', reissueAccessToken: { __typename?: 'AccessTokenResponse', accessToken: string } };
 
+export type RemoveCartItemsFromCartMutationVariables = Exact<{
+  input: UpdateOneCartInputType;
+}>;
+
+
+export type RemoveCartItemsFromCartMutation = { __typename?: 'Mutation', removeCartItemsFromCart: { __typename?: 'Cart', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } };
+
 export type ResetPasswordMutationVariables = Exact<{
   input: ResetPasswordInputType;
 }>;
 
 
-export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: { __typename?: 'User', id: string, fullName: string, phone?: string | null, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } };
+export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: { __typename?: 'User', id: string, fullName: string, phone?: string | null, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }>, cart: { __typename?: 'Cart', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } } };
 
 export type SignupMutationVariables = Exact<{
   input: SignupInput;
@@ -5903,28 +6387,115 @@ export type SignupMutationVariables = Exact<{
 }>;
 
 
-export type SignupMutation = { __typename?: 'Mutation', signup: { __typename?: 'SignupResponse', accessToken: string, refreshToken: string, user: { __typename?: 'User', id: string, fullName: string, phone?: string | null, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } } };
+export type SignupMutation = { __typename?: 'Mutation', signup: { __typename?: 'SignupResponse', accessToken: string, refreshToken: string, user: { __typename?: 'User', id: string, fullName: string, phone?: string | null, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }>, cart: { __typename?: 'Cart', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } } } };
+
+export type BrandsQueryVariables = Exact<{
+  filter?: InputMaybe<BrandFilter>;
+  paging?: InputMaybe<OffsetPaging>;
+  sorting?: InputMaybe<Array<BrandSort> | BrandSort>;
+}>;
+
+
+export type BrandsQuery = { __typename?: 'Query', brands: { __typename?: 'BrandConnection', nodes: Array<{ __typename?: 'Brand', id: string, code: string, name: string }> } };
+
+export type BrandsTotalCountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type BrandsTotalCountQuery = { __typename?: 'Query', brands: { __typename?: 'BrandConnection', totalCount: number } };
 
 export type CategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CategoriesQuery = { __typename?: 'Query', categories: { __typename?: 'CategoryConnection', edges: Array<{ __typename?: 'CategoryEdge', node: { __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null } }> } };
+export type CategoriesQuery = { __typename?: 'Query', categories: { __typename?: 'CategoryConnection', nodes: Array<{ __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null }> } };
 
 export type CategoryTreeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CategoryTreeQuery = { __typename?: 'Query', categoryTree: Array<{ __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null, children?: Array<{ __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null, children?: Array<{ __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null }> | null }> | null }> };
 
+export type ColorsQueryVariables = Exact<{
+  filter?: InputMaybe<ColorFilter>;
+  paging?: InputMaybe<OffsetPaging>;
+  sorting?: InputMaybe<Array<ColorSort> | ColorSort>;
+}>;
+
+
+export type ColorsQuery = { __typename?: 'Query', colors: { __typename?: 'ColorConnection', nodes: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }> } };
+
+export type ColorsTotalCountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ColorsTotalCountQuery = { __typename?: 'Query', colors: { __typename?: 'ColorConnection', totalCount: number } };
+
+export type CommentsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CommentsQuery = { __typename?: 'Query', comments: { __typename?: 'CommentConnection', nodes: Array<{ __typename?: 'Comment', id: string, description?: string | null, rating: number, user: { __typename?: 'User', fullName: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }> } };
+
+export type CommentsTotalCountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CommentsTotalCountQuery = { __typename?: 'Query', comments: { __typename?: 'CommentConnection', totalCount: number } };
+
 export type CountriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CountriesQuery = { __typename?: 'Query', countries: { __typename?: 'CountryConnection', edges: Array<{ __typename?: 'CountryEdge', node: { __typename?: 'Country', id: string, code: string, name: string } }> } };
+export type CountriesQuery = { __typename?: 'Query', countries: { __typename?: 'CountryConnection', nodes: Array<{ __typename?: 'Country', id: string, code: string, name: string }> } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, fullName: string, phone?: string | null, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } | null };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, fullName: string, phone?: string | null, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }>, cart: { __typename?: 'Cart', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } } | null };
 
+export type OneProductQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+
+export type OneProductQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, title: string, description: string, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: string, name: string }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }> } | null };
+
+export type ProductsQueryVariables = Exact<{
+  filter?: InputMaybe<ProductFilter>;
+  paging?: InputMaybe<OffsetPaging>;
+  sorting?: InputMaybe<Array<ProductSort> | ProductSort>;
+}>;
+
+
+export type ProductsQuery = { __typename?: 'Query', products: { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', id: string, title: string, description: string, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: string, name: string }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }> }> } };
+
+export type ProductsTotalCountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ProductsTotalCountQuery = { __typename?: 'Query', products: { __typename?: 'ProductConnection', totalCount: number } };
+
+export type SizesQueryVariables = Exact<{
+  filter?: InputMaybe<SizeFilter>;
+  paging?: InputMaybe<OffsetPaging>;
+  sorting?: InputMaybe<Array<SizeSort> | SizeSort>;
+}>;
+
+
+export type SizesQuery = { __typename?: 'Query', sizes: { __typename?: 'SizeConnection', nodes: Array<{ __typename?: 'Size', id: string, code: string, name: string }> } };
+
+export type SizesTotalCountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SizesTotalCountQuery = { __typename?: 'Query', sizes: { __typename?: 'SizeConnection', totalCount: number } };
+
+export type UserCartQueryVariables = Exact<{
+  cartId: Scalars['ID'];
+}>;
+
+
+export type UserCartQuery = { __typename?: 'Query', cart?: { __typename?: 'Cart', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } | null };
+
+export const BrandFragmentDoc = gql`
+    fragment Brand on Brand {
+  id
+  code
+  name
+}
+    `;
 export const CategoryFragmentDoc = gql`
     fragment Category on Category {
   id
@@ -5934,6 +6505,29 @@ export const CategoryFragmentDoc = gql`
   parentId
 }
     `;
+export const MediaFragmentDoc = gql`
+    fragment Media on Media {
+  id
+  publicId
+  url
+  filename
+  width
+  height
+}
+    `;
+export const CommentFragmentDoc = gql`
+    fragment Comment on Comment {
+  id
+  description
+  rating
+  user {
+    fullName
+  }
+  media {
+    ...Media
+  }
+}
+    ${MediaFragmentDoc}`;
 export const FullCountryFragmentDoc = gql`
     fragment FullCountry on Country {
   id
@@ -5941,6 +6535,68 @@ export const FullCountryFragmentDoc = gql`
   name
 }
     `;
+export const ColorFragmentDoc = gql`
+    fragment Color on Color {
+  id
+  code
+  name
+  hex
+}
+    `;
+export const SizeFragmentDoc = gql`
+    fragment Size on Size {
+  id
+  code
+  name
+}
+    `;
+export const PriceFragmentDoc = gql`
+    fragment Price on Price {
+  id
+  amount
+  currency
+}
+    `;
+export const ProductVariantFragmentDoc = gql`
+    fragment ProductVariant on ProductVariant {
+  id
+  sku
+  price {
+    ...Price
+  }
+  color {
+    ...Color
+  }
+  size {
+    ...Size
+  }
+  stock
+}
+    ${PriceFragmentDoc}
+${ColorFragmentDoc}
+${SizeFragmentDoc}`;
+export const ProductFragmentDoc = gql`
+    fragment Product on Product {
+  id
+  title
+  description
+  media {
+    ...Media
+  }
+  colors {
+    ...Color
+  }
+  sizes {
+    ...Size
+  }
+  productVariants {
+    ...ProductVariant
+  }
+}
+    ${MediaFragmentDoc}
+${ColorFragmentDoc}
+${SizeFragmentDoc}
+${ProductVariantFragmentDoc}`;
 export const RoleFragmentDoc = gql`
     fragment Role on Role {
   id
@@ -5956,6 +6612,37 @@ export const PermissionFragmentDoc = gql`
   conditions
 }
     `;
+export const CartItemFragmentDoc = gql`
+    fragment CartItem on CartItem {
+  id
+  price {
+    ...Price
+  }
+  productTitle
+  productVariant {
+    ...ProductVariant
+  }
+  image {
+    ...Media
+  }
+  quantity
+}
+    ${PriceFragmentDoc}
+${ProductVariantFragmentDoc}
+${MediaFragmentDoc}`;
+export const CartFragmentDoc = gql`
+    fragment Cart on Cart {
+  id
+  price {
+    ...Price
+  }
+  quantity
+  cartItems {
+    ...CartItem
+  }
+}
+    ${PriceFragmentDoc}
+${CartItemFragmentDoc}`;
 export const UserFragmentDoc = gql`
     fragment User on User {
   id
@@ -5970,9 +6657,46 @@ export const UserFragmentDoc = gql`
   permissions {
     ...Permission
   }
+  cart {
+    ...Cart
+  }
 }
     ${RoleFragmentDoc}
-${PermissionFragmentDoc}`;
+${PermissionFragmentDoc}
+${CartFragmentDoc}`;
+export const AddCartItemsToCartDocument = gql`
+    mutation AddCartItemsToCart($input: UpdateOneCartInputType!) {
+  addCartItemsToCart(input: $input) {
+    ...Cart
+  }
+}
+    ${CartFragmentDoc}`;
+export type AddCartItemsToCartMutationFn = Apollo.MutationFunction<AddCartItemsToCartMutation, AddCartItemsToCartMutationVariables>;
+
+/**
+ * __useAddCartItemsToCartMutation__
+ *
+ * To run a mutation, you first call `useAddCartItemsToCartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddCartItemsToCartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addCartItemsToCartMutation, { data, loading, error }] = useAddCartItemsToCartMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAddCartItemsToCartMutation(baseOptions?: Apollo.MutationHookOptions<AddCartItemsToCartMutation, AddCartItemsToCartMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddCartItemsToCartMutation, AddCartItemsToCartMutationVariables>(AddCartItemsToCartDocument, options);
+      }
+export type AddCartItemsToCartMutationHookResult = ReturnType<typeof useAddCartItemsToCartMutation>;
+export type AddCartItemsToCartMutationResult = Apollo.MutationResult<AddCartItemsToCartMutation>;
+export type AddCartItemsToCartMutationOptions = Apollo.BaseMutationOptions<AddCartItemsToCartMutation, AddCartItemsToCartMutationVariables>;
 export const LoginDocument = gql`
     mutation Login($input: LoginInput!) {
   login(input: $input) {
@@ -6071,6 +6795,39 @@ export function useReissueAccessTokenMutation(baseOptions?: Apollo.MutationHookO
 export type ReissueAccessTokenMutationHookResult = ReturnType<typeof useReissueAccessTokenMutation>;
 export type ReissueAccessTokenMutationResult = Apollo.MutationResult<ReissueAccessTokenMutation>;
 export type ReissueAccessTokenMutationOptions = Apollo.BaseMutationOptions<ReissueAccessTokenMutation, ReissueAccessTokenMutationVariables>;
+export const RemoveCartItemsFromCartDocument = gql`
+    mutation RemoveCartItemsFromCart($input: UpdateOneCartInputType!) {
+  removeCartItemsFromCart(input: $input) {
+    ...Cart
+  }
+}
+    ${CartFragmentDoc}`;
+export type RemoveCartItemsFromCartMutationFn = Apollo.MutationFunction<RemoveCartItemsFromCartMutation, RemoveCartItemsFromCartMutationVariables>;
+
+/**
+ * __useRemoveCartItemsFromCartMutation__
+ *
+ * To run a mutation, you first call `useRemoveCartItemsFromCartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveCartItemsFromCartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeCartItemsFromCartMutation, { data, loading, error }] = useRemoveCartItemsFromCartMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRemoveCartItemsFromCartMutation(baseOptions?: Apollo.MutationHookOptions<RemoveCartItemsFromCartMutation, RemoveCartItemsFromCartMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveCartItemsFromCartMutation, RemoveCartItemsFromCartMutationVariables>(RemoveCartItemsFromCartDocument, options);
+      }
+export type RemoveCartItemsFromCartMutationHookResult = ReturnType<typeof useRemoveCartItemsFromCartMutation>;
+export type RemoveCartItemsFromCartMutationResult = Apollo.MutationResult<RemoveCartItemsFromCartMutation>;
+export type RemoveCartItemsFromCartMutationOptions = Apollo.BaseMutationOptions<RemoveCartItemsFromCartMutation, RemoveCartItemsFromCartMutationVariables>;
 export const ResetPasswordDocument = gql`
     mutation ResetPassword($input: ResetPasswordInputType!) {
   resetPassword(input: $input) {
@@ -6142,13 +6899,84 @@ export function useSignupMutation(baseOptions?: Apollo.MutationHookOptions<Signu
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
 export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
+export const BrandsDocument = gql`
+    query Brands($filter: BrandFilter, $paging: OffsetPaging, $sorting: [BrandSort!]) {
+  brands(filter: $filter, paging: $paging, sorting: $sorting) {
+    nodes {
+      ...Brand
+    }
+  }
+}
+    ${BrandFragmentDoc}`;
+
+/**
+ * __useBrandsQuery__
+ *
+ * To run a query within a React component, call `useBrandsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBrandsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBrandsQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      paging: // value for 'paging'
+ *      sorting: // value for 'sorting'
+ *   },
+ * });
+ */
+export function useBrandsQuery(baseOptions?: Apollo.QueryHookOptions<BrandsQuery, BrandsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BrandsQuery, BrandsQueryVariables>(BrandsDocument, options);
+      }
+export function useBrandsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BrandsQuery, BrandsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BrandsQuery, BrandsQueryVariables>(BrandsDocument, options);
+        }
+export type BrandsQueryHookResult = ReturnType<typeof useBrandsQuery>;
+export type BrandsLazyQueryHookResult = ReturnType<typeof useBrandsLazyQuery>;
+export type BrandsQueryResult = Apollo.QueryResult<BrandsQuery, BrandsQueryVariables>;
+export const BrandsTotalCountDocument = gql`
+    query BrandsTotalCount {
+  brands {
+    totalCount
+  }
+}
+    `;
+
+/**
+ * __useBrandsTotalCountQuery__
+ *
+ * To run a query within a React component, call `useBrandsTotalCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBrandsTotalCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBrandsTotalCountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useBrandsTotalCountQuery(baseOptions?: Apollo.QueryHookOptions<BrandsTotalCountQuery, BrandsTotalCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BrandsTotalCountQuery, BrandsTotalCountQueryVariables>(BrandsTotalCountDocument, options);
+      }
+export function useBrandsTotalCountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BrandsTotalCountQuery, BrandsTotalCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BrandsTotalCountQuery, BrandsTotalCountQueryVariables>(BrandsTotalCountDocument, options);
+        }
+export type BrandsTotalCountQueryHookResult = ReturnType<typeof useBrandsTotalCountQuery>;
+export type BrandsTotalCountLazyQueryHookResult = ReturnType<typeof useBrandsTotalCountLazyQuery>;
+export type BrandsTotalCountQueryResult = Apollo.QueryResult<BrandsTotalCountQuery, BrandsTotalCountQueryVariables>;
 export const CategoriesDocument = gql`
     query Categories {
   categories {
-    edges {
-      node {
-        ...Category
-      }
+    nodes {
+      ...Category
     }
   }
 }
@@ -6220,13 +7048,157 @@ export function useCategoryTreeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type CategoryTreeQueryHookResult = ReturnType<typeof useCategoryTreeQuery>;
 export type CategoryTreeLazyQueryHookResult = ReturnType<typeof useCategoryTreeLazyQuery>;
 export type CategoryTreeQueryResult = Apollo.QueryResult<CategoryTreeQuery, CategoryTreeQueryVariables>;
+export const ColorsDocument = gql`
+    query Colors($filter: ColorFilter, $paging: OffsetPaging, $sorting: [ColorSort!]) {
+  colors(filter: $filter, paging: $paging, sorting: $sorting) {
+    nodes {
+      id
+      code
+      name
+      hex
+    }
+  }
+}
+    `;
+
+/**
+ * __useColorsQuery__
+ *
+ * To run a query within a React component, call `useColorsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useColorsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useColorsQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      paging: // value for 'paging'
+ *      sorting: // value for 'sorting'
+ *   },
+ * });
+ */
+export function useColorsQuery(baseOptions?: Apollo.QueryHookOptions<ColorsQuery, ColorsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ColorsQuery, ColorsQueryVariables>(ColorsDocument, options);
+      }
+export function useColorsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ColorsQuery, ColorsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ColorsQuery, ColorsQueryVariables>(ColorsDocument, options);
+        }
+export type ColorsQueryHookResult = ReturnType<typeof useColorsQuery>;
+export type ColorsLazyQueryHookResult = ReturnType<typeof useColorsLazyQuery>;
+export type ColorsQueryResult = Apollo.QueryResult<ColorsQuery, ColorsQueryVariables>;
+export const ColorsTotalCountDocument = gql`
+    query ColorsTotalCount {
+  colors {
+    totalCount
+  }
+}
+    `;
+
+/**
+ * __useColorsTotalCountQuery__
+ *
+ * To run a query within a React component, call `useColorsTotalCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useColorsTotalCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useColorsTotalCountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useColorsTotalCountQuery(baseOptions?: Apollo.QueryHookOptions<ColorsTotalCountQuery, ColorsTotalCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ColorsTotalCountQuery, ColorsTotalCountQueryVariables>(ColorsTotalCountDocument, options);
+      }
+export function useColorsTotalCountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ColorsTotalCountQuery, ColorsTotalCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ColorsTotalCountQuery, ColorsTotalCountQueryVariables>(ColorsTotalCountDocument, options);
+        }
+export type ColorsTotalCountQueryHookResult = ReturnType<typeof useColorsTotalCountQuery>;
+export type ColorsTotalCountLazyQueryHookResult = ReturnType<typeof useColorsTotalCountLazyQuery>;
+export type ColorsTotalCountQueryResult = Apollo.QueryResult<ColorsTotalCountQuery, ColorsTotalCountQueryVariables>;
+export const CommentsDocument = gql`
+    query Comments {
+  comments {
+    nodes {
+      ...Comment
+    }
+  }
+}
+    ${CommentFragmentDoc}`;
+
+/**
+ * __useCommentsQuery__
+ *
+ * To run a query within a React component, call `useCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCommentsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCommentsQuery(baseOptions?: Apollo.QueryHookOptions<CommentsQuery, CommentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CommentsQuery, CommentsQueryVariables>(CommentsDocument, options);
+      }
+export function useCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CommentsQuery, CommentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CommentsQuery, CommentsQueryVariables>(CommentsDocument, options);
+        }
+export type CommentsQueryHookResult = ReturnType<typeof useCommentsQuery>;
+export type CommentsLazyQueryHookResult = ReturnType<typeof useCommentsLazyQuery>;
+export type CommentsQueryResult = Apollo.QueryResult<CommentsQuery, CommentsQueryVariables>;
+export const CommentsTotalCountDocument = gql`
+    query CommentsTotalCount {
+  comments {
+    totalCount
+  }
+}
+    `;
+
+/**
+ * __useCommentsTotalCountQuery__
+ *
+ * To run a query within a React component, call `useCommentsTotalCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCommentsTotalCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCommentsTotalCountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCommentsTotalCountQuery(baseOptions?: Apollo.QueryHookOptions<CommentsTotalCountQuery, CommentsTotalCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CommentsTotalCountQuery, CommentsTotalCountQueryVariables>(CommentsTotalCountDocument, options);
+      }
+export function useCommentsTotalCountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CommentsTotalCountQuery, CommentsTotalCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CommentsTotalCountQuery, CommentsTotalCountQueryVariables>(CommentsTotalCountDocument, options);
+        }
+export type CommentsTotalCountQueryHookResult = ReturnType<typeof useCommentsTotalCountQuery>;
+export type CommentsTotalCountLazyQueryHookResult = ReturnType<typeof useCommentsTotalCountLazyQuery>;
+export type CommentsTotalCountQueryResult = Apollo.QueryResult<CommentsTotalCountQuery, CommentsTotalCountQueryVariables>;
 export const CountriesDocument = gql`
     query Countries {
   countries {
-    edges {
-      node {
-        ...FullCountry
-      }
+    nodes {
+      ...FullCountry
     }
   }
 }
@@ -6292,3 +7264,219 @@ export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const OneProductDocument = gql`
+    query OneProduct($productId: ID!) {
+  product(id: $productId) {
+    ...Product
+  }
+}
+    ${ProductFragmentDoc}`;
+
+/**
+ * __useOneProductQuery__
+ *
+ * To run a query within a React component, call `useOneProductQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOneProductQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOneProductQuery({
+ *   variables: {
+ *      productId: // value for 'productId'
+ *   },
+ * });
+ */
+export function useOneProductQuery(baseOptions: Apollo.QueryHookOptions<OneProductQuery, OneProductQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<OneProductQuery, OneProductQueryVariables>(OneProductDocument, options);
+      }
+export function useOneProductLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<OneProductQuery, OneProductQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<OneProductQuery, OneProductQueryVariables>(OneProductDocument, options);
+        }
+export type OneProductQueryHookResult = ReturnType<typeof useOneProductQuery>;
+export type OneProductLazyQueryHookResult = ReturnType<typeof useOneProductLazyQuery>;
+export type OneProductQueryResult = Apollo.QueryResult<OneProductQuery, OneProductQueryVariables>;
+export const ProductsDocument = gql`
+    query Products($filter: ProductFilter, $paging: OffsetPaging, $sorting: [ProductSort!]) {
+  products(filter: $filter, paging: $paging, sorting: $sorting) {
+    nodes {
+      ...Product
+    }
+  }
+}
+    ${ProductFragmentDoc}`;
+
+/**
+ * __useProductsQuery__
+ *
+ * To run a query within a React component, call `useProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductsQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      paging: // value for 'paging'
+ *      sorting: // value for 'sorting'
+ *   },
+ * });
+ */
+export function useProductsQuery(baseOptions?: Apollo.QueryHookOptions<ProductsQuery, ProductsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductsQuery, ProductsQueryVariables>(ProductsDocument, options);
+      }
+export function useProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductsQuery, ProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductsQuery, ProductsQueryVariables>(ProductsDocument, options);
+        }
+export type ProductsQueryHookResult = ReturnType<typeof useProductsQuery>;
+export type ProductsLazyQueryHookResult = ReturnType<typeof useProductsLazyQuery>;
+export type ProductsQueryResult = Apollo.QueryResult<ProductsQuery, ProductsQueryVariables>;
+export const ProductsTotalCountDocument = gql`
+    query ProductsTotalCount {
+  products {
+    totalCount
+  }
+}
+    `;
+
+/**
+ * __useProductsTotalCountQuery__
+ *
+ * To run a query within a React component, call `useProductsTotalCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductsTotalCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductsTotalCountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useProductsTotalCountQuery(baseOptions?: Apollo.QueryHookOptions<ProductsTotalCountQuery, ProductsTotalCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductsTotalCountQuery, ProductsTotalCountQueryVariables>(ProductsTotalCountDocument, options);
+      }
+export function useProductsTotalCountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductsTotalCountQuery, ProductsTotalCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductsTotalCountQuery, ProductsTotalCountQueryVariables>(ProductsTotalCountDocument, options);
+        }
+export type ProductsTotalCountQueryHookResult = ReturnType<typeof useProductsTotalCountQuery>;
+export type ProductsTotalCountLazyQueryHookResult = ReturnType<typeof useProductsTotalCountLazyQuery>;
+export type ProductsTotalCountQueryResult = Apollo.QueryResult<ProductsTotalCountQuery, ProductsTotalCountQueryVariables>;
+export const SizesDocument = gql`
+    query Sizes($filter: SizeFilter, $paging: OffsetPaging, $sorting: [SizeSort!]) {
+  sizes(filter: $filter, paging: $paging, sorting: $sorting) {
+    nodes {
+      ...Size
+    }
+  }
+}
+    ${SizeFragmentDoc}`;
+
+/**
+ * __useSizesQuery__
+ *
+ * To run a query within a React component, call `useSizesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSizesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSizesQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      paging: // value for 'paging'
+ *      sorting: // value for 'sorting'
+ *   },
+ * });
+ */
+export function useSizesQuery(baseOptions?: Apollo.QueryHookOptions<SizesQuery, SizesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SizesQuery, SizesQueryVariables>(SizesDocument, options);
+      }
+export function useSizesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SizesQuery, SizesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SizesQuery, SizesQueryVariables>(SizesDocument, options);
+        }
+export type SizesQueryHookResult = ReturnType<typeof useSizesQuery>;
+export type SizesLazyQueryHookResult = ReturnType<typeof useSizesLazyQuery>;
+export type SizesQueryResult = Apollo.QueryResult<SizesQuery, SizesQueryVariables>;
+export const SizesTotalCountDocument = gql`
+    query SizesTotalCount {
+  sizes {
+    totalCount
+  }
+}
+    `;
+
+/**
+ * __useSizesTotalCountQuery__
+ *
+ * To run a query within a React component, call `useSizesTotalCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSizesTotalCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSizesTotalCountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSizesTotalCountQuery(baseOptions?: Apollo.QueryHookOptions<SizesTotalCountQuery, SizesTotalCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SizesTotalCountQuery, SizesTotalCountQueryVariables>(SizesTotalCountDocument, options);
+      }
+export function useSizesTotalCountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SizesTotalCountQuery, SizesTotalCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SizesTotalCountQuery, SizesTotalCountQueryVariables>(SizesTotalCountDocument, options);
+        }
+export type SizesTotalCountQueryHookResult = ReturnType<typeof useSizesTotalCountQuery>;
+export type SizesTotalCountLazyQueryHookResult = ReturnType<typeof useSizesTotalCountLazyQuery>;
+export type SizesTotalCountQueryResult = Apollo.QueryResult<SizesTotalCountQuery, SizesTotalCountQueryVariables>;
+export const UserCartDocument = gql`
+    query UserCart($cartId: ID!) {
+  cart(id: $cartId) {
+    ...Cart
+  }
+}
+    ${CartFragmentDoc}`;
+
+/**
+ * __useUserCartQuery__
+ *
+ * To run a query within a React component, call `useUserCartQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserCartQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserCartQuery({
+ *   variables: {
+ *      cartId: // value for 'cartId'
+ *   },
+ * });
+ */
+export function useUserCartQuery(baseOptions: Apollo.QueryHookOptions<UserCartQuery, UserCartQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserCartQuery, UserCartQueryVariables>(UserCartDocument, options);
+      }
+export function useUserCartLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserCartQuery, UserCartQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserCartQuery, UserCartQueryVariables>(UserCartDocument, options);
+        }
+export type UserCartQueryHookResult = ReturnType<typeof useUserCartQuery>;
+export type UserCartLazyQueryHookResult = ReturnType<typeof useUserCartLazyQuery>;
+export type UserCartQueryResult = Apollo.QueryResult<UserCartQuery, UserCartQueryVariables>;

@@ -1,5 +1,4 @@
-import { News } from "@/components/common";
-import About from "@/components/common/about/About";
+import { About, News } from "@/components/common";
 import DotSeparated from "@/components/common/DotSeparated";
 import ContentContainer from "@/components/ui/ContentContainer";
 import { I18NS } from "@/constants/I18NS";
@@ -33,7 +32,7 @@ const AboutPage = async ({ params }: PageProps) => {
       />
     </ContentContainer>
     {/* @ts-expect-error Server Component */}
-    <News lng={params.lng} />
+    <News lng={lng} />
   </>);
 };
 

@@ -1,0 +1,17 @@
+fragment Product on Product {
+  id
+  title
+  description
+  media {
+    ...Media
+  }
+  colors {
+    ...Color
+  }
+  sizes {
+    ...Size
+  }
+  productVariants {
+    ...ProductVariant
+  }
+}

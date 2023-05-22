@@ -3,7 +3,7 @@
 import { Box, Tab, TabPanel, Tabs, Text } from "@/components/ui";
 import { tabs } from "@/constants/routes";
 import { indexOf } from "lodash";
-import { useRouter } from "next-intl/client";
+import { usePathname, useRouter } from "next-intl/client";
 import { notFound, useSearchParams } from "next/navigation";
 import { SyntheticEvent } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
@@ -20,6 +20,7 @@ export interface ProfileTabs extends WithTranslation {}
 
 const ProfileTabs = ({ t }: ProfileTabs) => {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const value = indexOf(tabs, searchParams.get("tab") || "");
 
@@ -32,7 +33,7 @@ const ProfileTabs = ({ t }: ProfileTabs) => {
   const handleChange = async (event: SyntheticEvent, newValue: number) => {
     const params = new URLSearchParams(searchParams);
     params.set("tab", tabs[newValue]);
-    router.replace(`/profile?${params.toString()}`);
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
   return (

@@ -1,0 +1,14 @@
+fragment CartItem on CartItem {
+  id
+  price {
+    ...Price
+  }
+  productTitle
+  productVariant {
+    ...ProductVariant
+  }
+  image {
+    ...Media
+  }
+  quantity
+}

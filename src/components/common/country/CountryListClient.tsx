@@ -24,7 +24,7 @@ const CountryListClient = ({}) => {
     );
   }
 
-  if (data?.countries.edges.length === 0) {
+  if (data?.countries.nodes.length === 0) {
     return (
       <Box>
         <Text>No countries yet</Text>
@@ -34,11 +34,11 @@ const CountryListClient = ({}) => {
 
   return (
     <Box display={"flex"} flexDirection={"column"} gap={2}>
-      {data?.countries.edges.map(({ node }) => (
-        <Box key={node.id}>
-          <Text>{node.id}</Text>
-          <Text>{node.code}</Text>
-          <Text>{node.name}</Text>
+      {data?.countries.nodes.map(({ id, code, name }) => (
+        <Box key={id}>
+          <Text>{id}</Text>
+          <Text>{code}</Text>
+          <Text>{name}</Text>
         </Box>
       ))}
     </Box>

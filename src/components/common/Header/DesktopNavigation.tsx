@@ -1,10 +1,14 @@
 "use client";
 
 import AccountMenu from "@/components/common/Header/AccountMenu";
-import { Box, IconButton, Icons, List, ListItem } from "@/components/ui";
+import { Badge, Box, IconButton, Icons, List, ListItem } from "@/components/ui";
 import { Routes } from "@/constants/routes";
+import { loggedInUser } from "@/store/user.store";
+import { useReactiveVar } from "@apollo/client";
 
 const DesktopNavigation = () => {
+  const user = useReactiveVar(loggedInUser);
+
   return (
     <Box component={"nav"}>
       <List>
@@ -15,7 +19,9 @@ const DesktopNavigation = () => {
         </ListItem>
         <ListItem>
           <IconButton href={Routes.Cart.href}>
-            <Icons.Cart />
+            <Badge color={"primary"} badgeContent={user?.cart.quantity} invisible={!user}>
+              <Icons.Cart />
+            </Badge>
           </IconButton>
         </ListItem>
         <AccountMenu />

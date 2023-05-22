@@ -60,15 +60,23 @@ export const themeOptions: ThemeOptions = {
       fontWeight: 400,
       fontSize: 18,
     },
+    price: {
+      fontWeight: 500,
+      fontSize: 16,
+    },
     small: {
       fontWeight: 400,
       fontSize: 15,
+    },
+    tiny: {
+      fontWeight: 600,
+      fontSize: 10,
     },
     button: {
       fontWeight: 600,
       fontSize: 16,
       textTransform: "none",
-      color: palette.primary.contrastText,
+      color: palette.text.primary,
     },
     nav: {
       fontWeight: 400,

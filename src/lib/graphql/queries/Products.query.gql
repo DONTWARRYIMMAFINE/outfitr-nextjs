@@ -1,0 +1,7 @@
+query Products($filter: ProductFilter, $paging: OffsetPaging, $sorting: [ProductSort!]) {
+  products(filter: $filter, paging: $paging, sorting: $sorting) {
+    nodes {
+      ...Product
+    }
+  }
+}

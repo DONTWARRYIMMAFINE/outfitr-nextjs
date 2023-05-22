@@ -1,0 +1,5 @@
+query SizesTotalCount {
+  sizes {
+    totalCount
+  }
+}

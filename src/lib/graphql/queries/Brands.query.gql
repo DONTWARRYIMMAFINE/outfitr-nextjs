@@ -1,0 +1,7 @@
+query Brands($filter: BrandFilter, $paging: OffsetPaging, $sorting: [BrandSort!]) {
+  brands(filter: $filter, paging: $paging, sorting: $sorting) {
+    nodes {
+      ...Brand
+    }
+  }
+}

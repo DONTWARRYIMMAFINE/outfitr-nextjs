@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <AppBar sx={{ minHeight: "10vh" }}>
       <Container sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <Toolbar sx={{ width: "100%" }}>
+        <Toolbar sx={{ width: "100%", paddingX: { md: 8, xs: 3 } }}>
           <Logo />
           <Hidden mdDown>
             <LinkNavigation />

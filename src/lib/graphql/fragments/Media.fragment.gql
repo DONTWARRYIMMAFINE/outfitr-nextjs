@@ -1,0 +1,8 @@
+fragment Media on Media {
+  id
+  publicId
+  url
+  filename
+  width
+  height
+}

@@ -15,7 +15,13 @@ const ContentContainer: FC<ContainerContainerProps> = ({ pageTitle, disableBotto
         <Box paddingY={2} bgcolor={"background.body"} hidden={!pageTitle}>
           <Text variant={"h1"} component={"h1"} textAlign={"center"}>{pageTitle}</Text>
         </Box>
-        <Box bgcolor={"background.container"} borderRadius={1} paddingY={{ md: 8, xs: 6 }} paddingX={{ md: 8, xs: 3 }}>
+        <Box
+          bgcolor={"background.container"}
+          borderRadius={1}
+          paddingY={{ md: 8, xs: 6 }}
+          paddingX={{ md: 8, xs: 3 }}
+          overflow={"hidden"}
+        >
           <Container>
             <Box display={"flex"} flexDirection={"column"} gap={{ md: 8, xs: 3 }}>
               {children}
