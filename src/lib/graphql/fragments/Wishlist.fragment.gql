@@ -1,0 +1,6 @@
+fragment Wishlist on Wishlist {
+  id
+  products {
+    ...Product
+  }
+}

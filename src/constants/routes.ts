@@ -101,7 +101,7 @@ export const Routes: Record<RouteKey, RouteValue> = {
   Checkout: {
     title: "Checkout",
     i18nKey: "checkout",
-    href: "/checkout",
+    href: "/cart/checkout",
   },
 };
 

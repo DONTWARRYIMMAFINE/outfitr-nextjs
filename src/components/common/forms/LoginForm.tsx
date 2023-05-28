@@ -44,7 +44,7 @@ const LoginForm = ({ t, redirectUrl }: LoginFormProps) => {
       validationSchema={LogInSchema}
       onSubmit={values => onSubmit(values)}
     >
-      {({ handleSubmit, isValid, values, handleChange, touched, errors }) => (
+      {({ handleSubmit, isValid, values, handleChange, errors }) => (
         <Box display={"flex"} flexDirection={"column"} alignItems={"center"} width={"100%"} gap={4}>
           <IconTextField
             id={"email"}
@@ -54,8 +54,8 @@ const LoginForm = ({ t, redirectUrl }: LoginFormProps) => {
             placeholder={t("content.form.email.placeholder")!}
             value={values.email}
             onChange={handleChange}
-            error={touched.email && (Boolean(errors.email) || !!error)}
-            helperText={touched.email && errors.email}
+            error={(Boolean(errors.email) || !!error)}
+            helperText={errors.email}
             variant={"outlined"}
             iconStart={<Icons.Email />}
             required
@@ -68,8 +68,8 @@ const LoginForm = ({ t, redirectUrl }: LoginFormProps) => {
             placeholder={t("content.form.password.placeholder")!}
             value={values.password}
             onChange={handleChange}
-            error={touched.password && (Boolean(errors.password) || !!error)}
-            helperText={touched.password && errors.password}
+            error={(Boolean(errors.password) || !!error)}
+            helperText={errors.password}
             variant={"outlined"}
             iconStart={<Icons.Key />}
             required

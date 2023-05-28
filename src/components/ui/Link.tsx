@@ -68,6 +68,7 @@ const StyledMuiLink: FC<CustomMuiLinkProps> = styled(MuiLink)<CustomMuiLinkProps
   transition: theme.transitions.create(["all"]),
   cursor: "pointer",
   ":hover": {
+    opacity: 1,
     color: theme.palette.primary.main,
   },
   ...(showUnderline) && {

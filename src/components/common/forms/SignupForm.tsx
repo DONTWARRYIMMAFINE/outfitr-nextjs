@@ -58,7 +58,7 @@ const SignupForm: FC<SignupFormProps> = ({ t, redirectUrl = Routes.Home.href }) 
       validationSchema={SignUpSchema}
       onSubmit={values => onSubmit(values)}
     >
-      {({ handleSubmit, isValid, values, handleChange, touched, errors }) => (
+      {({ handleSubmit, isValid, values, handleChange, errors }) => (
         <Box
           display={"flex"}
           flexDirection={"column"}
@@ -75,8 +75,8 @@ const SignupForm: FC<SignupFormProps> = ({ t, redirectUrl = Routes.Home.href }) 
             placeholder={t("content.form.email.placeholder")!}
             value={values.email}
             onChange={handleChange}
-            error={touched.email && (Boolean(errors.email) || !!error)}
-            helperText={touched.email && errors.email}
+            error={(Boolean(errors.email) || !!error)}
+            helperText={errors.email}
             variant={"outlined"}
             iconStart={<Icons.Email />}
             required
@@ -90,8 +90,8 @@ const SignupForm: FC<SignupFormProps> = ({ t, redirectUrl = Routes.Home.href }) 
             placeholder={t("content.form.phone.placeholder")!}
             value={values.phone}
             onChange={handleChange}
-            error={touched.phone && Boolean(errors.phone)}
-            helperText={touched.phone && errors.phone}
+            error={Boolean(errors.phone)}
+            helperText={errors.phone}
             variant={"outlined"}
             iconStart={<Icons.Phone />}
             fullWidth
@@ -103,8 +103,8 @@ const SignupForm: FC<SignupFormProps> = ({ t, redirectUrl = Routes.Home.href }) 
             placeholder={t("content.form.firstName.placeholder")!}
             value={values.firstName}
             onChange={handleChange}
-            error={touched.firstName && Boolean(errors.firstName)}
-            helperText={touched.firstName && errors.firstName}
+            error={Boolean(errors.firstName)}
+            helperText={errors.firstName}
             variant={"outlined"}
             iconStart={<Icons.Credentials />}
             required
@@ -117,8 +117,8 @@ const SignupForm: FC<SignupFormProps> = ({ t, redirectUrl = Routes.Home.href }) 
             placeholder={t("content.form.lastName.placeholder")!}
             value={values.lastName}
             onChange={handleChange}
-            error={touched.lastName && Boolean(errors.lastName)}
-            helperText={touched.lastName && errors.lastName}
+            error={Boolean(errors.lastName)}
+            helperText={errors.lastName}
             variant={"outlined"}
             iconStart={<Icons.Credentials />}
             required
@@ -137,8 +137,8 @@ const SignupForm: FC<SignupFormProps> = ({ t, redirectUrl = Routes.Home.href }) 
             placeholder={t("content.form.password.placeholder")!}
             value={values.password}
             onChange={handleChange}
-            error={touched.password && (Boolean(errors.password) || !!error)}
-            helperText={touched.password && errors.password}
+            error={(Boolean(errors.password) || !!error)}
+            helperText={errors.password}
             variant={"outlined"}
             iconStart={<Icons.Key />}
             required
@@ -151,8 +151,8 @@ const SignupForm: FC<SignupFormProps> = ({ t, redirectUrl = Routes.Home.href }) 
             placeholder={t("content.form.passwordConfirmation.placeholder")!}
             value={values.passwordConfirmation}
             onChange={handleChange}
-            error={touched.passwordConfirmation && (Boolean(errors.passwordConfirmation) || !!error)}
-            helperText={touched.passwordConfirmation && errors.passwordConfirmation}
+            error={(Boolean(errors.passwordConfirmation) || !!error)}
+            helperText={errors.passwordConfirmation}
             variant={"outlined"}
             iconStart={<Icons.Key />}
             required

@@ -1,9 +1,8 @@
-import Catalog from "@/components/common/Catalog";
 import ProductDetails from "@/components/common/ProductDetails";
-import { ContentContainer } from "@/components/ui";
+import { PageContainer } from "@/components/ui";
+import { useTranslation } from "@/lib/i18n";
 import { LngParamsProps } from "@/lib/types/params.type";
 import { Metadata } from "next";
-import { FC } from "react";
 
 export const metadata: Metadata = {
   title: "Outfitr | Product",
@@ -15,13 +14,14 @@ type PageProps = LngParamsProps & {
   }
 };
 
-const ProductPage: FC<PageProps> = ({ params }) => {
+const ProductPage = async ({ params }: PageProps) => {
   const { id, lng } = params;
+  const { t } = await useTranslation(lng);
 
   return (
-    <ContentContainer pageTitle={"Product Details Page"}>
+    <PageContainer pageTitle={t("page.product.title")}>
       <ProductDetails productId={id} lng={lng} />
-    </ContentContainer>
+    </PageContainer>
   );
 };
 

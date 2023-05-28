@@ -1,0 +1,10 @@
+fragment Address on Address {
+  id
+  city {
+    ...City
+  }
+  state
+  street
+  building
+  formattedAddress
+}

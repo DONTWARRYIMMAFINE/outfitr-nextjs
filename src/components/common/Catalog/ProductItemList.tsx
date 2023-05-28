@@ -9,7 +9,7 @@ import { useSearchParams } from "next/navigation";
 import { FC } from "react";
 
 interface ProductCardListProps {
-  category: string;
+  category?: string;
 }
 
 // const prepareFilter = (

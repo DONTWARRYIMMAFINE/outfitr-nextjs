@@ -1,0 +1,5 @@
+mutation UpdateOneCart($input: UpdateOneCartInput!) {
+  updateOneCart(input: $input) {
+    ...Cart
+  }
+}

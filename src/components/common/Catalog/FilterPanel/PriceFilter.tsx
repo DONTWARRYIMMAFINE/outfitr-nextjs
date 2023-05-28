@@ -1,21 +1,21 @@
 import { Box, Text } from "@/components/ui";
 import PriceRangeSlider from "@/components/common/PriceRangeSlider";
 import { FC } from "react";
+import { WithTranslation, withTranslation } from "react-i18next";
 
-interface PriceFilterProps {
+interface PriceFilterProps extends WithTranslation {
   value: number[];
   handleChange: (value: number[]) => void;
   currency?: string;
-  lng?: string;
 }
 
-const PriceFilter: FC<PriceFilterProps> = ({ value, handleChange, currency = "BYN", lng }) => {
+const PriceFilter: FC<PriceFilterProps> = ({ value, handleChange, currency = "BYN", t }) => {
   return (
     <Box display={"flex"} flexDirection={"column"} width={"100%"}>
-      <Text variant={"p"}>Price Range</Text>
-      <PriceRangeSlider value={value} handleChange={handleChange} currency={currency} lng={lng} />
+      <Text variant={"p"}>{t("component.label.priceRange")}</Text>
+      <PriceRangeSlider value={value} handleChange={handleChange} currency={currency} />
     </Box>
   );
 };
 
-export default PriceFilter;
+export default withTranslation()(PriceFilter);

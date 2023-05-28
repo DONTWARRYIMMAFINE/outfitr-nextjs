@@ -1,0 +1,5 @@
+query DeliveryMethod($deliveryMethodId: ID!) {
+  deliveryMethod(id: $deliveryMethodId) {
+    ...DeliveryMethod
+  }
+}

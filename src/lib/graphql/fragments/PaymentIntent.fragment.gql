@@ -1,0 +1,10 @@
+fragment PaymentIntent on PaymentIntent {
+  id
+  clientSecret
+  paymentMethod {
+    ...PaymentMethod
+  }
+  price {
+    ...Price
+  }
+}

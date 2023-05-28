@@ -1,0 +1,4 @@
+fragment City on City {
+  id
+  name
+}

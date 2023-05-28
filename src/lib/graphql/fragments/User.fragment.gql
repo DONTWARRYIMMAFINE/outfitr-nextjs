@@ -1,7 +1,12 @@
 fragment User on User {
   id
+  firstName
+  lastName
   fullName
   phone
+  emailAddress {
+    ...EmailAddress
+  }
   avatar {
     url
   }
@@ -10,8 +15,5 @@ fragment User on User {
   }
   permissions {
     ...Permission
-  }
-  cart {
-    ...Cart
   }
 }

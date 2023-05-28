@@ -1,0 +1,10 @@
+fragment PaymentMethod on PaymentMethod {
+  id
+  code
+  name
+  description
+  online
+  media {
+    ...Media
+  }
+}

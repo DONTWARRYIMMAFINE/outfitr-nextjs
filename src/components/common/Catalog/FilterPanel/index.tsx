@@ -9,10 +9,11 @@ import { isNotEmpty } from "@/lib/utils/string.utils";
 import { usePathname, useRouter } from "next-intl/client";
 import { useSearchParams } from "next/navigation";
 import { FC, useState } from "react";
+import { WithTranslation, withTranslation } from "react-i18next";
 
-export interface FilterPanelProps {}
+export interface FilterPanelProps extends WithTranslation {}
 
-const FilterPanel: FC<FilterPanelProps> = ({}) => {
+const FilterPanel: FC<FilterPanelProps> = ({ t }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -83,10 +84,10 @@ const FilterPanel: FC<FilterPanelProps> = ({}) => {
       />
       <Divider light flexItem />
       <Button variant={"primary"} onClick={handleApplyFilter}>
-        Apply Filters
+        {t("component.button.applyFilters")}
       </Button>
     </Box>
   );
 };
 
-export default FilterPanel;
+export default withTranslation()(FilterPanel);

@@ -1,5 +1,8 @@
-fragment FullCountry on Country {
+fragment Country on Country {
   id
   code
   name
+  cities {
+    ...City
+  }
 }

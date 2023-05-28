@@ -1,5 +1,5 @@
 import ProfileTabs from "@/components/common/ProfileTabs";
-import { ContentContainer } from "@/components/ui";
+import { PageContainer } from "@/components/ui";
 import { tabs } from "@/constants/routes";
 import { useTranslation } from "@/lib/i18n";
 import { languages } from "@/lib/i18n/settings";
@@ -17,9 +17,9 @@ const ProfilePage = async ({ params }: ProfilePageProps) => {
   const { t } = await useTranslation(lng, "profile");
 
   return (
-    <ContentContainer pageTitle={t("page.title")}>
+    <PageContainer pageTitle={t("page.title")}>
       <ProfileTabs/>
-    </ContentContainer>
+    </PageContainer>
   );
 };
 

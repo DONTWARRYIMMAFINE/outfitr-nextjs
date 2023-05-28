@@ -1,0 +1,5 @@
+mutation CreateOneAddress($input: CreateOneAddressInput!) {
+  createOneAddress(input: $input) {
+    ...Address
+  }
+}

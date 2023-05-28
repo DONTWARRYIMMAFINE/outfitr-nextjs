@@ -1,0 +1,9 @@
+fragment DeliveryMethod on DeliveryMethod {
+  id
+  code
+  name
+  price {
+    ...Price
+  }
+  avgDeliveryTimeInHours
+}

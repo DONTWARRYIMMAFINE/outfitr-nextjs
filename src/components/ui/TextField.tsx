@@ -8,17 +8,19 @@ export type TextFieldProps = MuiTextFieldProps & {
   success?: boolean;
 };
 
-const StyledTextField: FC<TextFieldProps> = styled(MuiTextField)<TextFieldProps>(({ theme, variant, error }) => ({
+const StyledTextField: FC<TextFieldProps> = styled(MuiTextField)<TextFieldProps>(({ theme, variant, error, disabled }) => ({
   ...(variant === "outlined" && {
     label: {
       color: theme.palette.text.placeholder,
     },
     "& .MuiOutlinedInput-root": {
       backgroundColor: theme.palette.background.textField,
-      "&:hover fieldset": {
-        borderColor: error ? theme.palette.error.light : theme.palette.primary.main,
-        transition: theme.transitions.create(["border-color"]),
-      },
+      ...(!disabled && {
+        "&:hover fieldset": {
+          borderColor: error ? theme.palette.error.light : theme.palette.primary.main,
+          transition: theme.transitions.create(["border-color"]),
+        },
+      }),
       "&.Mui-focused fieldset": {
         borderColor: error ? theme.palette.error.main : theme.palette.primary.main,
       },

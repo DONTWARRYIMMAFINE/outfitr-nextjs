@@ -50,6 +50,7 @@ export type Address = {
   city: City;
   cityId: Scalars['ID'];
   createdAt: Scalars['DateTime'];
+  formattedAddress: Scalars['String'];
   id: Scalars['ID'];
   postalCode: Scalars['String'];
   state?: Maybe<Scalars['String']>;
@@ -96,6 +97,7 @@ export type AddressDeleteResponse = {
   building?: Maybe<Scalars['String']>;
   cityId?: Maybe<Scalars['ID']>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  formattedAddress?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   postalCode?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
@@ -294,9 +296,22 @@ export type Cart = {
   __typename?: 'Cart';
   cartItems: Array<CartItem>;
   createdAt: Scalars['DateTime'];
+  deliveryAddress?: Maybe<Address>;
+  deliveryAddressId?: Maybe<Scalars['ID']>;
+  deliveryMethod?: Maybe<DeliveryMethod>;
+  deliveryMethodId?: Maybe<Scalars['ID']>;
+  deliveryPrice: Price;
+  deliveryPriceId: Scalars['ID'];
   id: Scalars['ID'];
-  price: Price;
+  paymentMethod?: Maybe<PaymentMethod>;
+  paymentMethodId?: Maybe<Scalars['ID']>;
   quantity: Scalars['Float'];
+  subtotalPrice: Price;
+  subtotalPriceId: Scalars['ID'];
+  taxPrice: Price;
+  taxPriceId: Scalars['ID'];
+  totalPrice: Price;
+  totalPriceId: Scalars['ID'];
   updatedAt: Scalars['DateTime'];
   user: User;
   userId: Scalars['ID'];
@@ -311,8 +326,15 @@ export type CartCartItemsArgs = {
 export type CartAggregateGroupBy = {
   __typename?: 'CartAggregateGroupBy';
   createdAt?: Maybe<Scalars['DateTime']>;
+  deliveryAddressId?: Maybe<Scalars['ID']>;
+  deliveryMethodId?: Maybe<Scalars['ID']>;
+  deliveryPriceId?: Maybe<Scalars['ID']>;
   id?: Maybe<Scalars['ID']>;
+  paymentMethodId?: Maybe<Scalars['ID']>;
   quantity?: Maybe<Scalars['Float']>;
+  subtotalPriceId?: Maybe<Scalars['ID']>;
+  taxPriceId?: Maybe<Scalars['ID']>;
+  totalPriceId?: Maybe<Scalars['ID']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   userId?: Maybe<Scalars['ID']>;
 };
@@ -335,8 +357,15 @@ export type CartConnection = {
 export type CartCountAggregate = {
   __typename?: 'CartCountAggregate';
   createdAt?: Maybe<Scalars['Int']>;
+  deliveryAddressId?: Maybe<Scalars['Int']>;
+  deliveryMethodId?: Maybe<Scalars['Int']>;
+  deliveryPriceId?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
+  paymentMethodId?: Maybe<Scalars['Int']>;
   quantity?: Maybe<Scalars['Int']>;
+  subtotalPriceId?: Maybe<Scalars['Int']>;
+  taxPriceId?: Maybe<Scalars['Int']>;
+  totalPriceId?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['Int']>;
   userId?: Maybe<Scalars['Int']>;
 };
@@ -345,13 +374,39 @@ export type CartFilter = {
   and?: InputMaybe<Array<CartFilter>>;
   cartItems?: InputMaybe<CartFilterCartItemFilter>;
   createdAt?: InputMaybe<DateFieldComparison>;
+  deliveryAddress?: InputMaybe<CartFilterAddressFilter>;
+  deliveryAddressId?: InputMaybe<IdFilterComparison>;
+  deliveryMethod?: InputMaybe<CartFilterDeliveryMethodFilter>;
+  deliveryMethodId?: InputMaybe<IdFilterComparison>;
+  deliveryPrice?: InputMaybe<CartFilterPriceFilter>;
+  deliveryPriceId?: InputMaybe<IdFilterComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<CartFilter>>;
-  price?: InputMaybe<CartFilterPriceFilter>;
+  paymentMethod?: InputMaybe<CartFilterPaymentMethodFilter>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
   quantity?: InputMaybe<NumberFieldComparison>;
+  subtotalPrice?: InputMaybe<CartFilterPriceFilter>;
+  subtotalPriceId?: InputMaybe<IdFilterComparison>;
+  taxPrice?: InputMaybe<CartFilterPriceFilter>;
+  taxPriceId?: InputMaybe<IdFilterComparison>;
+  totalPrice?: InputMaybe<CartFilterPriceFilter>;
+  totalPriceId?: InputMaybe<IdFilterComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
   user?: InputMaybe<CartFilterUserFilter>;
   userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type CartFilterAddressFilter = {
+  and?: InputMaybe<Array<CartFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<CartFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type CartFilterCartItemFilter = {
@@ -363,6 +418,33 @@ export type CartFilterCartItemFilter = {
   priceId?: InputMaybe<IdFilterComparison>;
   productVariantId?: InputMaybe<IdFilterComparison>;
   quantity?: InputMaybe<IntFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type CartFilterDeliveryMethodFilter = {
+  and?: InputMaybe<Array<CartFilterDeliveryMethodFilter>>;
+  avgDeliveryTimeInHours?: InputMaybe<IntFieldComparison>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<CartFilterDeliveryMethodFilter>>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<DeliveryMethodStatusFilterComparison>;
+  type?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type CartFilterPaymentMethodFilter = {
+  and?: InputMaybe<Array<CartFilterPaymentMethodFilter>>;
+  code?: InputMaybe<PaymentMethodsFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  online?: InputMaybe<BooleanFieldComparison>;
+  or?: InputMaybe<Array<CartFilterPaymentMethodFilter>>;
+  status?: InputMaybe<PaymentMethodStatusFilterComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -539,8 +621,15 @@ export type CartItemSumAggregate = {
 export type CartMaxAggregate = {
   __typename?: 'CartMaxAggregate';
   createdAt?: Maybe<Scalars['DateTime']>;
+  deliveryAddressId?: Maybe<Scalars['ID']>;
+  deliveryMethodId?: Maybe<Scalars['ID']>;
+  deliveryPriceId?: Maybe<Scalars['ID']>;
   id?: Maybe<Scalars['ID']>;
+  paymentMethodId?: Maybe<Scalars['ID']>;
   quantity?: Maybe<Scalars['Float']>;
+  subtotalPriceId?: Maybe<Scalars['ID']>;
+  taxPriceId?: Maybe<Scalars['ID']>;
+  totalPriceId?: Maybe<Scalars['ID']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   userId?: Maybe<Scalars['ID']>;
 };
@@ -548,8 +637,15 @@ export type CartMaxAggregate = {
 export type CartMinAggregate = {
   __typename?: 'CartMinAggregate';
   createdAt?: Maybe<Scalars['DateTime']>;
+  deliveryAddressId?: Maybe<Scalars['ID']>;
+  deliveryMethodId?: Maybe<Scalars['ID']>;
+  deliveryPriceId?: Maybe<Scalars['ID']>;
   id?: Maybe<Scalars['ID']>;
+  paymentMethodId?: Maybe<Scalars['ID']>;
   quantity?: Maybe<Scalars['Float']>;
+  subtotalPriceId?: Maybe<Scalars['ID']>;
+  taxPriceId?: Maybe<Scalars['ID']>;
+  totalPriceId?: Maybe<Scalars['ID']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   userId?: Maybe<Scalars['ID']>;
 };
@@ -562,8 +658,15 @@ export type CartSort = {
 
 export enum CartSortFields {
   CreatedAt = 'createdAt',
+  DeliveryAddressId = 'deliveryAddressId',
+  DeliveryMethodId = 'deliveryMethodId',
+  DeliveryPriceId = 'deliveryPriceId',
   Id = 'id',
+  PaymentMethodId = 'paymentMethodId',
   Quantity = 'quantity',
+  SubtotalPriceId = 'subtotalPriceId',
+  TaxPriceId = 'taxPriceId',
+  TotalPriceId = 'totalPriceId',
   UpdatedAt = 'updatedAt',
   UserId = 'userId'
 }
@@ -571,6 +674,23 @@ export enum CartSortFields {
 export type CartSumAggregate = {
   __typename?: 'CartSumAggregate';
   quantity?: Maybe<Scalars['Float']>;
+};
+
+export type CartUpdateFilter = {
+  and?: InputMaybe<Array<CartUpdateFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deliveryAddressId?: InputMaybe<IdFilterComparison>;
+  deliveryMethodId?: InputMaybe<IdFilterComparison>;
+  deliveryPriceId?: InputMaybe<IdFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<CartUpdateFilter>>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<NumberFieldComparison>;
+  subtotalPriceId?: InputMaybe<IdFilterComparison>;
+  taxPriceId?: InputMaybe<IdFilterComparison>;
+  totalPriceId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userId?: InputMaybe<IdFilterComparison>;
 };
 
 export type Category = {
@@ -1189,6 +1309,14 @@ export type CreateBrandInput = {
   userId: Scalars['String'];
 };
 
+export type CreateCartInput = {
+  cartItems?: InputMaybe<Array<UpdateCartItemInput>>;
+  deliveryAddressId?: InputMaybe<Scalars['String']>;
+  deliveryMethodId?: InputMaybe<Scalars['String']>;
+  paymentMethodId?: InputMaybe<Scalars['String']>;
+  userId: Scalars['String'];
+};
+
 export type CreateCartItemInput = {
   cartId: Scalars['String'];
   productVariantId: Scalars['String'];
@@ -1238,6 +1366,11 @@ export type CreateEmailAddressInput = {
   name: Scalars['String'];
 };
 
+export type CreateManyCartsInput = {
+  /** Array of records to create */
+  carts: Array<CreateCartInput>;
+};
+
 export type CreateOneAddressInput = {
   /** The record to create */
   address: CreateAddressInput;
@@ -1246,6 +1379,11 @@ export type CreateOneAddressInput = {
 export type CreateOneBrandInput = {
   /** The record to create */
   brand: CreateBrandInput;
+};
+
+export type CreateOneCartInput = {
+  /** The record to create */
+  cart: CreateCartInput;
 };
 
 export type CreateOneCartItemInput = {
@@ -1378,21 +1516,20 @@ export type CreateOrderInput = {
   deliveryAddressId: Scalars['String'];
   deliveryMethodId: Scalars['String'];
   paymentMethodId: Scalars['String'];
-  status?: InputMaybe<OrderStatus>;
-  subtotalPrice: CreatePriceInput;
   userId: Scalars['String'];
 };
 
 export type CreatePaymentIntentInput = {
   clientSecret: Scalars['String'];
-  orderId: Scalars['ID'];
   paymentMethodId: Scalars['ID'];
   price: CreatePriceInput;
 };
 
 export type CreatePaymentMethodInput = {
   code: PaymentMethods;
+  description?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
+  online?: Scalars['Boolean'];
   status?: InputMaybe<PaymentMethodStatus>;
 };
 
@@ -1445,11 +1582,6 @@ export type CreateRoleInput = {
   code: Roles;
   name: Scalars['String'];
   permissions?: Array<CreatePermissionInput>;
-};
-
-export type CreateSessionResponse = {
-  __typename?: 'CreateSessionResponse';
-  url: Scalars['String'];
 };
 
 export type CreateSizeInput = {
@@ -1677,6 +1809,7 @@ export type DeliveryMethod = {
   price: Price;
   priceId: Scalars['ID'];
   status: DeliveryMethodStatus;
+  type: Scalars['String'];
   updatedAt: Scalars['DateTime'];
 };
 
@@ -1689,6 +1822,7 @@ export type DeliveryMethodAggregateGroupBy = {
   name?: Maybe<Scalars['String']>;
   priceId?: Maybe<Scalars['ID']>;
   status?: Maybe<DeliveryMethodStatus>;
+  type?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -1716,6 +1850,7 @@ export type DeliveryMethodCountAggregate = {
   name?: Maybe<Scalars['Int']>;
   priceId?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['Int']>;
+  type?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['Int']>;
 };
 
@@ -1728,6 +1863,7 @@ export type DeliveryMethodDeleteResponse = {
   name?: Maybe<Scalars['String']>;
   priceId?: Maybe<Scalars['ID']>;
   status?: Maybe<DeliveryMethodStatus>;
+  type?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -1742,6 +1878,7 @@ export type DeliveryMethodFilter = {
   price?: InputMaybe<DeliveryMethodFilterPriceFilter>;
   priceId?: InputMaybe<IdFilterComparison>;
   status?: InputMaybe<DeliveryMethodStatusFilterComparison>;
+  type?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -1764,6 +1901,7 @@ export type DeliveryMethodMaxAggregate = {
   name?: Maybe<Scalars['String']>;
   priceId?: Maybe<Scalars['ID']>;
   status?: Maybe<DeliveryMethodStatus>;
+  type?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -1776,6 +1914,7 @@ export type DeliveryMethodMinAggregate = {
   name?: Maybe<Scalars['String']>;
   priceId?: Maybe<Scalars['ID']>;
   status?: Maybe<DeliveryMethodStatus>;
+  type?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -1793,6 +1932,7 @@ export enum DeliveryMethodSortFields {
   Name = 'name',
   PriceId = 'priceId',
   Status = 'status',
+  Type = 'type',
   UpdatedAt = 'updatedAt'
 }
 
@@ -2285,9 +2425,10 @@ export type Mutation = {
   cancelOrder: Order;
   cancelReservationForWarehouseItemsInWarehouse: Warehouse;
   confirmEmail: EmailAddressConfirmation;
-  createCheckoutSession: CreateSessionResponse;
+  createManyCarts: Array<Cart>;
   createOneAddress: Address;
   createOneBrand: Brand;
+  createOneCart: Cart;
   createOneCartItem: CartItem;
   createOneCategory: Category;
   createOneCity: City;
@@ -2300,6 +2441,7 @@ export type Mutation = {
   createOneOrder: Order;
   createOneOrderFromCurrentUserCart: Order;
   createOnePaymentIntent: PaymentIntent;
+  createOnePaymentIntentFromCart: PaymentIntent;
   createOnePaymentMethod: PaymentMethod;
   createOnePermission: Permission;
   createOnePickupPoint: PickupPoint;
@@ -2354,8 +2496,10 @@ export type Mutation = {
   sendConfirmationEmail: EmailAddressConfirmation;
   signup: SignupResponse;
   updateAvatar: User;
+  updateManyCarts: UpdateManyResponse;
   updateOneAddress: Address;
   updateOneBrand: Brand;
+  updateOneCart: Cart;
   updateOneCartItem: CartItem;
   updateOneCategory: Category;
   updateOneCity: City;
@@ -2414,6 +2558,11 @@ export type MutationCancelReservationForWarehouseItemsInWarehouseArgs = {
 };
 
 
+export type MutationCreateManyCartsArgs = {
+  input: CreateManyCartsInput;
+};
+
+
 export type MutationCreateOneAddressArgs = {
   input: CreateOneAddressInput;
 };
@@ -2421,6 +2570,11 @@ export type MutationCreateOneAddressArgs = {
 
 export type MutationCreateOneBrandArgs = {
   input: CreateOneBrandInput;
+};
+
+
+export type MutationCreateOneCartArgs = {
+  input: CreateOneCartInput;
 };
 
 
@@ -2485,6 +2639,7 @@ export type MutationCreateOnePaymentIntentArgs = {
 
 
 export type MutationCreateOnePaymentMethodArgs = {
+  file?: InputMaybe<Scalars['Upload']>;
   input: CreateOnePaymentMethodInput;
 };
 
@@ -2742,6 +2897,11 @@ export type MutationUpdateAvatarArgs = {
 };
 
 
+export type MutationUpdateManyCartsArgs = {
+  input: UpdateManyCartsInput;
+};
+
+
 export type MutationUpdateOneAddressArgs = {
   input: UpdateOneAddressInput;
 };
@@ -2749,6 +2909,11 @@ export type MutationUpdateOneAddressArgs = {
 
 export type MutationUpdateOneBrandArgs = {
   input: UpdateOneBrandInput;
+};
+
+
+export type MutationUpdateOneCartArgs = {
+  input: UpdateOneCartInput;
 };
 
 
@@ -2917,7 +3082,6 @@ export type Order = {
   deliveryPrice: Price;
   deliveryPriceId: Scalars['ID'];
   id: Scalars['ID'];
-  orderId: Scalars['ID'];
   orderItems: Array<OrderItem>;
   paymentIntent?: Maybe<PaymentIntent>;
   paymentMethod: PaymentMethod;
@@ -2947,7 +3111,6 @@ export type OrderAggregateGroupBy = {
   deliveryMethodId?: Maybe<Scalars['ID']>;
   deliveryPriceId?: Maybe<Scalars['ID']>;
   id?: Maybe<Scalars['ID']>;
-  orderId?: Maybe<Scalars['ID']>;
   paymentMethodId?: Maybe<Scalars['ID']>;
   status?: Maybe<OrderStatus>;
   subtotalPriceId?: Maybe<Scalars['ID']>;
@@ -2974,7 +3137,6 @@ export type OrderCountAggregate = {
   deliveryMethodId?: Maybe<Scalars['Int']>;
   deliveryPriceId?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
-  orderId?: Maybe<Scalars['Int']>;
   paymentMethodId?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['Int']>;
   subtotalPriceId?: Maybe<Scalars['Int']>;
@@ -2991,7 +3153,6 @@ export type OrderDeleteResponse = {
   deliveryMethodId?: Maybe<Scalars['ID']>;
   deliveryPriceId?: Maybe<Scalars['ID']>;
   id?: Maybe<Scalars['ID']>;
-  orderId?: Maybe<Scalars['ID']>;
   paymentMethodId?: Maybe<Scalars['ID']>;
   status?: Maybe<OrderStatus>;
   subtotalPriceId?: Maybe<Scalars['ID']>;
@@ -3012,7 +3173,6 @@ export type OrderFilter = {
   deliveryPriceId?: InputMaybe<IdFilterComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<OrderFilter>>;
-  orderId?: InputMaybe<IdFilterComparison>;
   orderItems?: InputMaybe<OrderFilterOrderItemFilter>;
   paymentIntent?: InputMaybe<OrderFilterPaymentIntentFilter>;
   paymentMethod?: InputMaybe<OrderFilterPaymentMethodFilter>;
@@ -3052,6 +3212,7 @@ export type OrderFilterDeliveryMethodFilter = {
   or?: InputMaybe<Array<OrderFilterDeliveryMethodFilter>>;
   priceId?: InputMaybe<IdFilterComparison>;
   status?: InputMaybe<DeliveryMethodStatusFilterComparison>;
+  type?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -3083,8 +3244,10 @@ export type OrderFilterPaymentMethodFilter = {
   and?: InputMaybe<Array<OrderFilterPaymentMethodFilter>>;
   code?: InputMaybe<PaymentMethodsFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
+  online?: InputMaybe<BooleanFieldComparison>;
   or?: InputMaybe<Array<OrderFilterPaymentMethodFilter>>;
   status?: InputMaybe<PaymentMethodStatusFilterComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
@@ -3192,7 +3355,6 @@ export type OrderItemFilterOrderFilter = {
   deliveryPriceId?: InputMaybe<IdFilterComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<OrderItemFilterOrderFilter>>;
-  orderId?: InputMaybe<IdFilterComparison>;
   paymentMethodId?: InputMaybe<IdFilterComparison>;
   status?: InputMaybe<OrderStatusFilterComparison>;
   subtotalPriceId?: InputMaybe<IdFilterComparison>;
@@ -3290,7 +3452,6 @@ export type OrderMaxAggregate = {
   deliveryMethodId?: Maybe<Scalars['ID']>;
   deliveryPriceId?: Maybe<Scalars['ID']>;
   id?: Maybe<Scalars['ID']>;
-  orderId?: Maybe<Scalars['ID']>;
   paymentMethodId?: Maybe<Scalars['ID']>;
   status?: Maybe<OrderStatus>;
   subtotalPriceId?: Maybe<Scalars['ID']>;
@@ -3307,7 +3468,6 @@ export type OrderMinAggregate = {
   deliveryMethodId?: Maybe<Scalars['ID']>;
   deliveryPriceId?: Maybe<Scalars['ID']>;
   id?: Maybe<Scalars['ID']>;
-  orderId?: Maybe<Scalars['ID']>;
   paymentMethodId?: Maybe<Scalars['ID']>;
   status?: Maybe<OrderStatus>;
   subtotalPriceId?: Maybe<Scalars['ID']>;
@@ -3329,7 +3489,6 @@ export enum OrderSortFields {
   DeliveryMethodId = 'deliveryMethodId',
   DeliveryPriceId = 'deliveryPriceId',
   Id = 'id',
-  OrderId = 'orderId',
   PaymentMethodId = 'paymentMethodId',
   Status = 'status',
   SubtotalPriceId = 'subtotalPriceId',
@@ -3386,8 +3545,8 @@ export type PaymentIntent = {
   id: Scalars['ID'];
   paymentMethod: PaymentMethod;
   paymentMethodId: Scalars['ID'];
-  price: PaymentMethod;
-  priceId: Scalars['ID'];
+  price?: Maybe<Price>;
+  priceId?: Maybe<Scalars['ID']>;
   updatedAt: Scalars['DateTime'];
 };
 
@@ -3439,7 +3598,7 @@ export type PaymentIntentFilter = {
   or?: InputMaybe<Array<PaymentIntentFilter>>;
   paymentMethod?: InputMaybe<PaymentIntentFilterPaymentMethodFilter>;
   paymentMethodId?: InputMaybe<IdFilterComparison>;
-  price?: InputMaybe<PaymentIntentFilterPaymentMethodFilter>;
+  price?: InputMaybe<PaymentIntentFilterPriceFilter>;
   priceId?: InputMaybe<IdFilterComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
@@ -3448,10 +3607,22 @@ export type PaymentIntentFilterPaymentMethodFilter = {
   and?: InputMaybe<Array<PaymentIntentFilterPaymentMethodFilter>>;
   code?: InputMaybe<PaymentMethodsFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
+  online?: InputMaybe<BooleanFieldComparison>;
   or?: InputMaybe<Array<PaymentIntentFilterPaymentMethodFilter>>;
   status?: InputMaybe<PaymentMethodStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type PaymentIntentFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<PaymentIntentFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<PaymentIntentFilterPriceFilter>>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -3494,8 +3665,11 @@ export type PaymentMethod = {
   __typename?: 'PaymentMethod';
   code: PaymentMethods;
   createdAt: Scalars['DateTime'];
+  description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  media?: Maybe<Media>;
   name: Scalars['String'];
+  online: Scalars['Boolean'];
   status: PaymentMethodStatus;
   updatedAt: Scalars['DateTime'];
 };
@@ -3504,8 +3678,10 @@ export type PaymentMethodAggregateGroupBy = {
   __typename?: 'PaymentMethodAggregateGroupBy';
   code?: Maybe<PaymentMethods>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
+  online?: Maybe<Scalars['Boolean']>;
   status?: Maybe<PaymentMethodStatus>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
@@ -3524,8 +3700,10 @@ export type PaymentMethodCountAggregate = {
   __typename?: 'PaymentMethodCountAggregate';
   code?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['Int']>;
+  description?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['Int']>;
+  online?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['Int']>;
 };
@@ -3534,8 +3712,10 @@ export type PaymentMethodDeleteResponse = {
   __typename?: 'PaymentMethodDeleteResponse';
   code?: Maybe<PaymentMethods>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
+  online?: Maybe<Scalars['Boolean']>;
   status?: Maybe<PaymentMethodStatus>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
@@ -3544,17 +3724,35 @@ export type PaymentMethodFilter = {
   and?: InputMaybe<Array<PaymentMethodFilter>>;
   code?: InputMaybe<PaymentMethodsFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
+  media?: InputMaybe<PaymentMethodFilterMediaFilter>;
   name?: InputMaybe<StringFieldComparison>;
+  online?: InputMaybe<BooleanFieldComparison>;
   or?: InputMaybe<Array<PaymentMethodFilter>>;
   status?: InputMaybe<PaymentMethodStatusFilterComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type PaymentMethodFilterMediaFilter = {
+  and?: InputMaybe<Array<PaymentMethodFilterMediaFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  filename?: InputMaybe<StringFieldComparison>;
+  format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<PaymentMethodFilterMediaFilter>>;
+  publicId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
 };
 
 export type PaymentMethodMaxAggregate = {
   __typename?: 'PaymentMethodMaxAggregate';
   code?: Maybe<PaymentMethods>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   status?: Maybe<PaymentMethodStatus>;
@@ -3565,6 +3763,7 @@ export type PaymentMethodMinAggregate = {
   __typename?: 'PaymentMethodMinAggregate';
   code?: Maybe<PaymentMethods>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   status?: Maybe<PaymentMethodStatus>;
@@ -3580,8 +3779,10 @@ export type PaymentMethodSort = {
 export enum PaymentMethodSortFields {
   Code = 'code',
   CreatedAt = 'createdAt',
+  Description = 'description',
   Id = 'id',
   Name = 'name',
+  Online = 'online',
   Status = 'status',
   UpdatedAt = 'updatedAt'
 }
@@ -3610,7 +3811,7 @@ export type PaymentMethodStatusFilterComparison = {
 
 export enum PaymentMethods {
   Card = 'CARD',
-  CashOnDelivery = 'CASH_ON_DELIVERY'
+  Cash = 'CASH'
 }
 
 export type PaymentMethodsFilterComparison = {
@@ -5313,6 +5514,9 @@ export type UpdateBrandInput = {
 
 export type UpdateCartInput = {
   cartItems?: InputMaybe<Array<UpdateCartItemInput>>;
+  deliveryAddressId?: InputMaybe<Scalars['String']>;
+  deliveryMethodId?: InputMaybe<Scalars['String']>;
+  paymentMethodId?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateCartItemInput = {
@@ -5358,6 +5562,19 @@ export type UpdateEmailAddressInput = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+export type UpdateManyCartsInput = {
+  /** Filter used to find fields to update */
+  filter: CartUpdateFilter;
+  /** The update to apply to all records found using the filter */
+  update: UpdateCartInput;
+};
+
+export type UpdateManyResponse = {
+  __typename?: 'UpdateManyResponse';
+  /** The number of records updated. */
+  updatedCount: Scalars['Int'];
+};
+
 export type UpdateOneAddressInput = {
   /** The id of the record to update */
   id: Scalars['ID'];
@@ -5370,6 +5587,13 @@ export type UpdateOneBrandInput = {
   id: Scalars['ID'];
   /** The update to apply. */
   update: UpdateBrandInput;
+};
+
+export type UpdateOneCartInput = {
+  /** The id of the record to update */
+  id: Scalars['ID'];
+  /** The update to apply. */
+  update: UpdateCartInput;
 };
 
 export type UpdateOneCartInputType = {
@@ -5548,7 +5772,9 @@ export type UpdateOneWarehouseInputType = {
 };
 
 export type UpdateOrderInput = {
-  status?: InputMaybe<OrderStatus>;
+  deliveryAddressId?: InputMaybe<Scalars['String']>;
+  deliveryMethodId?: InputMaybe<Scalars['String']>;
+  paymentMethodId?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdatePaymentIntentInput = {
@@ -5558,7 +5784,9 @@ export type UpdatePaymentIntentInput = {
 };
 
 export type UpdatePaymentMethodInput = {
+  description?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  online?: InputMaybe<Scalars['Boolean']>;
   status?: InputMaybe<PaymentMethodStatus>;
 };
 
@@ -5611,14 +5839,12 @@ export type UpdateSizeInput = {
 };
 
 export type UpdateUserAddressInput = {
-  address: UpdateAddressInput;
+  address?: InputMaybe<CreateAddressInput>;
 };
 
 export type UpdateUserInput = {
-  email?: InputMaybe<Scalars['String']>;
   firstName?: InputMaybe<Scalars['String']>;
   lastName?: InputMaybe<Scalars['String']>;
-  passwordConfirmation?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
 };
 
@@ -5878,9 +6104,16 @@ export type UserFilterBrandFilter = {
 export type UserFilterCartFilter = {
   and?: InputMaybe<Array<UserFilterCartFilter>>;
   createdAt?: InputMaybe<DateFieldComparison>;
+  deliveryAddressId?: InputMaybe<IdFilterComparison>;
+  deliveryMethodId?: InputMaybe<IdFilterComparison>;
+  deliveryPriceId?: InputMaybe<IdFilterComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<UserFilterCartFilter>>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
   quantity?: InputMaybe<NumberFieldComparison>;
+  subtotalPriceId?: InputMaybe<IdFilterComparison>;
+  taxPriceId?: InputMaybe<IdFilterComparison>;
+  totalPriceId?: InputMaybe<IdFilterComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
   userId?: InputMaybe<IdFilterComparison>;
 };
@@ -6313,21 +6546,33 @@ export type WishlistMinAggregate = {
   userId?: Maybe<Scalars['ID']>;
 };
 
+export type AddressFragment = { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } };
+
 export type BrandFragment = { __typename?: 'Brand', id: string, code: string, name: string };
 
-export type CartFragment = { __typename?: 'Cart', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> };
+export type CartFragment = { __typename?: 'Cart', id: string, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> };
 
 export type CartItemFragment = { __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null };
 
 export type CategoryFragment = { __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null };
 
+export type CityFragment = { __typename?: 'City', id: string, name: string };
+
 export type ColorFragment = { __typename?: 'Color', id: string, code: string, name: string, hex: string };
 
 export type CommentFragment = { __typename?: 'Comment', id: string, description?: string | null, rating: number, user: { __typename?: 'User', fullName: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> };
 
-export type FullCountryFragment = { __typename?: 'Country', id: string, code: string, name: string };
+export type CountryFragment = { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> };
+
+export type DeliveryMethodFragment = { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } };
+
+export type EmailAddressFragment = { __typename?: 'EmailAddress', id: string, address: string, name?: string | null };
 
 export type MediaFragment = { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null };
+
+export type PaymentIntentFragment = { __typename?: 'PaymentIntent', id: string, clientSecret: string, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, price?: { __typename?: 'Price', id: string, amount: number, currency: Currencies } | null };
+
+export type PaymentMethodFragment = { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null };
 
 export type PermissionFragment = { __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null };
 
@@ -6341,21 +6586,58 @@ export type RoleFragment = { __typename?: 'Role', id: string, code: Roles, name:
 
 export type SizeFragment = { __typename?: 'Size', id: string, code: string, name: string };
 
-export type UserFragment = { __typename?: 'User', id: string, fullName: string, phone?: string | null, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }>, cart: { __typename?: 'Cart', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } };
+export type UserFragment = { __typename?: 'User', id: string, firstName?: string | null, lastName?: string | null, fullName: string, phone?: string | null, emailAddress: { __typename?: 'EmailAddress', id: string, address: string, name?: string | null }, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> };
+
+export type UserAddressFragment = { __typename?: 'UserAddress', id: string, address: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } } };
+
+export type WishlistFragment = { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: string, name: string }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }> }> };
 
 export type AddCartItemsToCartMutationVariables = Exact<{
   input: UpdateOneCartInputType;
 }>;
 
 
-export type AddCartItemsToCartMutation = { __typename?: 'Mutation', addCartItemsToCart: { __typename?: 'Cart', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } };
+export type AddCartItemsToCartMutation = { __typename?: 'Mutation', addCartItemsToCart: { __typename?: 'Cart', id: string, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } };
+
+export type AddProductsToWishlistMutationVariables = Exact<{
+  input: AddProductsToWishlistInputType;
+}>;
+
+
+export type AddProductsToWishlistMutation = { __typename?: 'Mutation', addProductsToWishlist: { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: string, name: string }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }> }> } };
+
+export type CreateOneAddressMutationVariables = Exact<{
+  input: CreateOneAddressInput;
+}>;
+
+
+export type CreateOneAddressMutation = { __typename?: 'Mutation', createOneAddress: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } } };
+
+export type CreateOnePaymentIntentFromCartMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CreateOnePaymentIntentFromCartMutation = { __typename?: 'Mutation', createOnePaymentIntentFromCart: { __typename?: 'PaymentIntent', id: string, clientSecret: string, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, price?: { __typename?: 'Price', id: string, amount: number, currency: Currencies } | null } };
+
+export type CreateOneUserAddressMutationVariables = Exact<{
+  input: CreateOneUserAddressInput;
+}>;
+
+
+export type CreateOneUserAddressMutation = { __typename?: 'Mutation', createOneUserAddress: { __typename?: 'UserAddress', id: string, address: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } } } };
+
+export type DeleteOneUserAddressMutationVariables = Exact<{
+  input: DeleteOneUserAddressInput;
+}>;
+
+
+export type DeleteOneUserAddressMutation = { __typename?: 'Mutation', deleteOneUserAddress: { __typename?: 'UserAddressDeleteResponse', id?: string | null } };
 
 export type LoginMutationVariables = Exact<{
   input: LoginInput;
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', accessToken: string, user: { __typename?: 'User', id: string, fullName: string, phone?: string | null, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }>, cart: { __typename?: 'Cart', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } } } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', accessToken: string, user: { __typename?: 'User', id: string, firstName?: string | null, lastName?: string | null, fullName: string, phone?: string | null, emailAddress: { __typename?: 'EmailAddress', id: string, address: string, name?: string | null }, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } } };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -6372,14 +6654,21 @@ export type RemoveCartItemsFromCartMutationVariables = Exact<{
 }>;
 
 
-export type RemoveCartItemsFromCartMutation = { __typename?: 'Mutation', removeCartItemsFromCart: { __typename?: 'Cart', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } };
+export type RemoveCartItemsFromCartMutation = { __typename?: 'Mutation', removeCartItemsFromCart: { __typename?: 'Cart', id: string, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } };
+
+export type RemoveProductsFromWishlistMutationVariables = Exact<{
+  input: RemoveProductsFromWishlistInputType;
+}>;
+
+
+export type RemoveProductsFromWishlistMutation = { __typename?: 'Mutation', removeProductsFromWishlist: { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: string, name: string }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }> }> } };
 
 export type ResetPasswordMutationVariables = Exact<{
   input: ResetPasswordInputType;
 }>;
 
 
-export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: { __typename?: 'User', id: string, fullName: string, phone?: string | null, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }>, cart: { __typename?: 'Cart', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } } };
+export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: { __typename?: 'User', id: string, firstName?: string | null, lastName?: string | null, fullName: string, phone?: string | null, emailAddress: { __typename?: 'EmailAddress', id: string, address: string, name?: string | null }, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } };
 
 export type SignupMutationVariables = Exact<{
   input: SignupInput;
@@ -6387,7 +6676,28 @@ export type SignupMutationVariables = Exact<{
 }>;
 
 
-export type SignupMutation = { __typename?: 'Mutation', signup: { __typename?: 'SignupResponse', accessToken: string, refreshToken: string, user: { __typename?: 'User', id: string, fullName: string, phone?: string | null, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }>, cart: { __typename?: 'Cart', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } } } };
+export type SignupMutation = { __typename?: 'Mutation', signup: { __typename?: 'SignupResponse', accessToken: string, refreshToken: string, user: { __typename?: 'User', id: string, firstName?: string | null, lastName?: string | null, fullName: string, phone?: string | null, emailAddress: { __typename?: 'EmailAddress', id: string, address: string, name?: string | null }, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } } };
+
+export type UpdateOneCartMutationVariables = Exact<{
+  input: UpdateOneCartInput;
+}>;
+
+
+export type UpdateOneCartMutation = { __typename?: 'Mutation', updateOneCart: { __typename?: 'Cart', id: string, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } };
+
+export type UpdateOneUserMutationVariables = Exact<{
+  input: UpdateOneUserInput;
+}>;
+
+
+export type UpdateOneUserMutation = { __typename?: 'Mutation', updateOneUser: { __typename?: 'User', id: string, firstName?: string | null, lastName?: string | null, fullName: string, phone?: string | null, emailAddress: { __typename?: 'EmailAddress', id: string, address: string, name?: string | null }, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } };
+
+export type UpdateOneUserAddressMutationVariables = Exact<{
+  input: UpdateOneUserAddressInput;
+}>;
+
+
+export type UpdateOneUserAddressMutation = { __typename?: 'Mutation', updateOneUserAddress: { __typename?: 'UserAddress', id: string, address: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } } } };
 
 export type BrandsQueryVariables = Exact<{
   filter?: InputMaybe<BrandFilter>;
@@ -6412,6 +6722,13 @@ export type CategoryTreeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CategoryTreeQuery = { __typename?: 'Query', categoryTree: Array<{ __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null, children?: Array<{ __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null, children?: Array<{ __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null }> | null }> | null }> };
+
+export type CitiesQueryVariables = Exact<{
+  filter: CityFilter;
+}>;
+
+
+export type CitiesQuery = { __typename?: 'Query', cities: { __typename?: 'CityConnection', nodes: Array<{ __typename?: 'City', id: string, name: string }> } };
 
 export type ColorsQueryVariables = Exact<{
   filter?: InputMaybe<ColorFilter>;
@@ -6440,12 +6757,34 @@ export type CommentsTotalCountQuery = { __typename?: 'Query', comments: { __type
 export type CountriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CountriesQuery = { __typename?: 'Query', countries: { __typename?: 'CountryConnection', nodes: Array<{ __typename?: 'Country', id: string, code: string, name: string }> } };
+export type CountriesQuery = { __typename?: 'Query', countries: { __typename?: 'CountryConnection', nodes: Array<{ __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> }> } };
+
+export type DeliveryMethodQueryVariables = Exact<{
+  deliveryMethodId: Scalars['ID'];
+}>;
+
+
+export type DeliveryMethodQuery = { __typename?: 'Query', deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null };
+
+export type DeliveryMethodsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DeliveryMethodsQuery = { __typename?: 'Query', deliveryMethods: { __typename?: 'DeliveryMethodConnection', nodes: Array<{ __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }> } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, fullName: string, phone?: string | null, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }>, cart: { __typename?: 'Cart', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } } | null };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, firstName?: string | null, lastName?: string | null, fullName: string, phone?: string | null, emailAddress: { __typename?: 'EmailAddress', id: string, address: string, name?: string | null }, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } | null };
+
+export type MyCartQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyCartQuery = { __typename?: 'Query', myCart: { __typename?: 'Cart', id: string, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } };
+
+export type MyWishlistQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyWishlistQuery = { __typename?: 'Query', myWishlist: { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: string, name: string }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }> }> } };
 
 export type OneProductQueryVariables = Exact<{
   productId: Scalars['ID'];
@@ -6453,6 +6792,11 @@ export type OneProductQueryVariables = Exact<{
 
 
 export type OneProductQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, title: string, description: string, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: string, name: string }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }> } | null };
+
+export type PaymentMethodsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PaymentMethodsQuery = { __typename?: 'Query', paymentMethods: { __typename?: 'PaymentMethodConnection', nodes: Array<{ __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } };
 
 export type ProductsQueryVariables = Exact<{
   filter?: InputMaybe<ProductFilter>;
@@ -6482,27 +6826,16 @@ export type SizesTotalCountQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type SizesTotalCountQuery = { __typename?: 'Query', sizes: { __typename?: 'SizeConnection', totalCount: number } };
 
-export type UserCartQueryVariables = Exact<{
-  cartId: Scalars['ID'];
-}>;
+export type UserAddressesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserCartQuery = { __typename?: 'Query', cart?: { __typename?: 'Cart', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } | null };
+export type UserAddressesQuery = { __typename?: 'Query', userAddresses: { __typename?: 'UserAddressConnection', nodes: Array<{ __typename?: 'UserAddress', id: string, address: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } } }> } };
 
 export const BrandFragmentDoc = gql`
     fragment Brand on Brand {
   id
   code
   name
-}
-    `;
-export const CategoryFragmentDoc = gql`
-    fragment Category on Category {
-  id
-  code
-  name
-  description
-  parentId
 }
     `;
 export const MediaFragmentDoc = gql`
@@ -6515,26 +6848,54 @@ export const MediaFragmentDoc = gql`
   height
 }
     `;
-export const CommentFragmentDoc = gql`
-    fragment Comment on Comment {
+export const PaymentMethodFragmentDoc = gql`
+    fragment PaymentMethod on PaymentMethod {
   id
+  code
+  name
   description
-  rating
-  user {
-    fullName
-  }
+  online
   media {
     ...Media
   }
 }
     ${MediaFragmentDoc}`;
-export const FullCountryFragmentDoc = gql`
-    fragment FullCountry on Country {
+export const CityFragmentDoc = gql`
+    fragment City on City {
   id
-  code
   name
 }
     `;
+export const AddressFragmentDoc = gql`
+    fragment Address on Address {
+  id
+  city {
+    ...City
+  }
+  state
+  street
+  building
+  formattedAddress
+}
+    ${CityFragmentDoc}`;
+export const PriceFragmentDoc = gql`
+    fragment Price on Price {
+  id
+  amount
+  currency
+}
+    `;
+export const DeliveryMethodFragmentDoc = gql`
+    fragment DeliveryMethod on DeliveryMethod {
+  id
+  code
+  name
+  price {
+    ...Price
+  }
+  avgDeliveryTimeInHours
+}
+    ${PriceFragmentDoc}`;
 export const ColorFragmentDoc = gql`
     fragment Color on Color {
   id
@@ -6548,13 +6909,6 @@ export const SizeFragmentDoc = gql`
   id
   code
   name
-}
-    `;
-export const PriceFragmentDoc = gql`
-    fragment Price on Price {
-  id
-  amount
-  currency
 }
     `;
 export const ProductVariantFragmentDoc = gql`
@@ -6575,6 +6929,156 @@ export const ProductVariantFragmentDoc = gql`
     ${PriceFragmentDoc}
 ${ColorFragmentDoc}
 ${SizeFragmentDoc}`;
+export const CartItemFragmentDoc = gql`
+    fragment CartItem on CartItem {
+  id
+  price {
+    ...Price
+  }
+  productTitle
+  productVariant {
+    ...ProductVariant
+  }
+  image {
+    ...Media
+  }
+  quantity
+}
+    ${PriceFragmentDoc}
+${ProductVariantFragmentDoc}
+${MediaFragmentDoc}`;
+export const CartFragmentDoc = gql`
+    fragment Cart on Cart {
+  id
+  paymentMethod {
+    ...PaymentMethod
+  }
+  deliveryAddress {
+    ...Address
+  }
+  deliveryMethod {
+    ...DeliveryMethod
+  }
+  subtotalPrice {
+    ...Price
+  }
+  taxPrice {
+    ...Price
+  }
+  deliveryPrice {
+    ...Price
+  }
+  totalPrice {
+    ...Price
+  }
+  quantity
+  cartItems {
+    ...CartItem
+  }
+}
+    ${PaymentMethodFragmentDoc}
+${AddressFragmentDoc}
+${DeliveryMethodFragmentDoc}
+${PriceFragmentDoc}
+${CartItemFragmentDoc}`;
+export const CategoryFragmentDoc = gql`
+    fragment Category on Category {
+  id
+  code
+  name
+  description
+  parentId
+}
+    `;
+export const CommentFragmentDoc = gql`
+    fragment Comment on Comment {
+  id
+  description
+  rating
+  user {
+    fullName
+  }
+  media {
+    ...Media
+  }
+}
+    ${MediaFragmentDoc}`;
+export const CountryFragmentDoc = gql`
+    fragment Country on Country {
+  id
+  code
+  name
+  cities {
+    ...City
+  }
+}
+    ${CityFragmentDoc}`;
+export const PaymentIntentFragmentDoc = gql`
+    fragment PaymentIntent on PaymentIntent {
+  id
+  clientSecret
+  paymentMethod {
+    ...PaymentMethod
+  }
+  price {
+    ...Price
+  }
+}
+    ${PaymentMethodFragmentDoc}
+${PriceFragmentDoc}`;
+export const EmailAddressFragmentDoc = gql`
+    fragment EmailAddress on EmailAddress {
+  id
+  address
+  name
+}
+    `;
+export const RoleFragmentDoc = gql`
+    fragment Role on Role {
+  id
+  code
+  name
+}
+    `;
+export const PermissionFragmentDoc = gql`
+    fragment Permission on Permission {
+  id
+  action
+  subject
+  conditions
+}
+    `;
+export const UserFragmentDoc = gql`
+    fragment User on User {
+  id
+  firstName
+  lastName
+  fullName
+  phone
+  emailAddress {
+    ...EmailAddress
+  }
+  avatar {
+    url
+  }
+  roles {
+    ...Role
+  }
+  permissions {
+    ...Permission
+  }
+}
+    ${EmailAddressFragmentDoc}
+${RoleFragmentDoc}
+${PermissionFragmentDoc}`;
+export const UserAddressFragmentDoc = gql`
+    fragment UserAddress on UserAddress {
+  id
+  address {
+    ...Address
+  }
+}
+    ${AddressFragmentDoc}`;
 export const ProductFragmentDoc = gql`
     fragment Product on Product {
   id
@@ -6597,73 +7101,14 @@ export const ProductFragmentDoc = gql`
 ${ColorFragmentDoc}
 ${SizeFragmentDoc}
 ${ProductVariantFragmentDoc}`;
-export const RoleFragmentDoc = gql`
-    fragment Role on Role {
+export const WishlistFragmentDoc = gql`
+    fragment Wishlist on Wishlist {
   id
-  code
-  name
-}
-    `;
-export const PermissionFragmentDoc = gql`
-    fragment Permission on Permission {
-  id
-  action
-  subject
-  conditions
-}
-    `;
-export const CartItemFragmentDoc = gql`
-    fragment CartItem on CartItem {
-  id
-  price {
-    ...Price
-  }
-  productTitle
-  productVariant {
-    ...ProductVariant
-  }
-  image {
-    ...Media
-  }
-  quantity
-}
-    ${PriceFragmentDoc}
-${ProductVariantFragmentDoc}
-${MediaFragmentDoc}`;
-export const CartFragmentDoc = gql`
-    fragment Cart on Cart {
-  id
-  price {
-    ...Price
-  }
-  quantity
-  cartItems {
-    ...CartItem
+  products {
+    ...Product
   }
 }
-    ${PriceFragmentDoc}
-${CartItemFragmentDoc}`;
-export const UserFragmentDoc = gql`
-    fragment User on User {
-  id
-  fullName
-  phone
-  avatar {
-    url
-  }
-  roles {
-    ...Role
-  }
-  permissions {
-    ...Permission
-  }
-  cart {
-    ...Cart
-  }
-}
-    ${RoleFragmentDoc}
-${PermissionFragmentDoc}
-${CartFragmentDoc}`;
+    ${ProductFragmentDoc}`;
 export const AddCartItemsToCartDocument = gql`
     mutation AddCartItemsToCart($input: UpdateOneCartInputType!) {
   addCartItemsToCart(input: $input) {
@@ -6697,6 +7142,173 @@ export function useAddCartItemsToCartMutation(baseOptions?: Apollo.MutationHookO
 export type AddCartItemsToCartMutationHookResult = ReturnType<typeof useAddCartItemsToCartMutation>;
 export type AddCartItemsToCartMutationResult = Apollo.MutationResult<AddCartItemsToCartMutation>;
 export type AddCartItemsToCartMutationOptions = Apollo.BaseMutationOptions<AddCartItemsToCartMutation, AddCartItemsToCartMutationVariables>;
+export const AddProductsToWishlistDocument = gql`
+    mutation AddProductsToWishlist($input: AddProductsToWishlistInputType!) {
+  addProductsToWishlist(input: $input) {
+    id
+    products {
+      ...Product
+    }
+  }
+}
+    ${ProductFragmentDoc}`;
+export type AddProductsToWishlistMutationFn = Apollo.MutationFunction<AddProductsToWishlistMutation, AddProductsToWishlistMutationVariables>;
+
+/**
+ * __useAddProductsToWishlistMutation__
+ *
+ * To run a mutation, you first call `useAddProductsToWishlistMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddProductsToWishlistMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addProductsToWishlistMutation, { data, loading, error }] = useAddProductsToWishlistMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAddProductsToWishlistMutation(baseOptions?: Apollo.MutationHookOptions<AddProductsToWishlistMutation, AddProductsToWishlistMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddProductsToWishlistMutation, AddProductsToWishlistMutationVariables>(AddProductsToWishlistDocument, options);
+      }
+export type AddProductsToWishlistMutationHookResult = ReturnType<typeof useAddProductsToWishlistMutation>;
+export type AddProductsToWishlistMutationResult = Apollo.MutationResult<AddProductsToWishlistMutation>;
+export type AddProductsToWishlistMutationOptions = Apollo.BaseMutationOptions<AddProductsToWishlistMutation, AddProductsToWishlistMutationVariables>;
+export const CreateOneAddressDocument = gql`
+    mutation CreateOneAddress($input: CreateOneAddressInput!) {
+  createOneAddress(input: $input) {
+    ...Address
+  }
+}
+    ${AddressFragmentDoc}`;
+export type CreateOneAddressMutationFn = Apollo.MutationFunction<CreateOneAddressMutation, CreateOneAddressMutationVariables>;
+
+/**
+ * __useCreateOneAddressMutation__
+ *
+ * To run a mutation, you first call `useCreateOneAddressMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOneAddressMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOneAddressMutation, { data, loading, error }] = useCreateOneAddressMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateOneAddressMutation(baseOptions?: Apollo.MutationHookOptions<CreateOneAddressMutation, CreateOneAddressMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOneAddressMutation, CreateOneAddressMutationVariables>(CreateOneAddressDocument, options);
+      }
+export type CreateOneAddressMutationHookResult = ReturnType<typeof useCreateOneAddressMutation>;
+export type CreateOneAddressMutationResult = Apollo.MutationResult<CreateOneAddressMutation>;
+export type CreateOneAddressMutationOptions = Apollo.BaseMutationOptions<CreateOneAddressMutation, CreateOneAddressMutationVariables>;
+export const CreateOnePaymentIntentFromCartDocument = gql`
+    mutation CreateOnePaymentIntentFromCart {
+  createOnePaymentIntentFromCart {
+    ...PaymentIntent
+  }
+}
+    ${PaymentIntentFragmentDoc}`;
+export type CreateOnePaymentIntentFromCartMutationFn = Apollo.MutationFunction<CreateOnePaymentIntentFromCartMutation, CreateOnePaymentIntentFromCartMutationVariables>;
+
+/**
+ * __useCreateOnePaymentIntentFromCartMutation__
+ *
+ * To run a mutation, you first call `useCreateOnePaymentIntentFromCartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOnePaymentIntentFromCartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOnePaymentIntentFromCartMutation, { data, loading, error }] = useCreateOnePaymentIntentFromCartMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCreateOnePaymentIntentFromCartMutation(baseOptions?: Apollo.MutationHookOptions<CreateOnePaymentIntentFromCartMutation, CreateOnePaymentIntentFromCartMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOnePaymentIntentFromCartMutation, CreateOnePaymentIntentFromCartMutationVariables>(CreateOnePaymentIntentFromCartDocument, options);
+      }
+export type CreateOnePaymentIntentFromCartMutationHookResult = ReturnType<typeof useCreateOnePaymentIntentFromCartMutation>;
+export type CreateOnePaymentIntentFromCartMutationResult = Apollo.MutationResult<CreateOnePaymentIntentFromCartMutation>;
+export type CreateOnePaymentIntentFromCartMutationOptions = Apollo.BaseMutationOptions<CreateOnePaymentIntentFromCartMutation, CreateOnePaymentIntentFromCartMutationVariables>;
+export const CreateOneUserAddressDocument = gql`
+    mutation CreateOneUserAddress($input: CreateOneUserAddressInput!) {
+  createOneUserAddress(input: $input) {
+    ...UserAddress
+  }
+}
+    ${UserAddressFragmentDoc}`;
+export type CreateOneUserAddressMutationFn = Apollo.MutationFunction<CreateOneUserAddressMutation, CreateOneUserAddressMutationVariables>;
+
+/**
+ * __useCreateOneUserAddressMutation__
+ *
+ * To run a mutation, you first call `useCreateOneUserAddressMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOneUserAddressMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOneUserAddressMutation, { data, loading, error }] = useCreateOneUserAddressMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateOneUserAddressMutation(baseOptions?: Apollo.MutationHookOptions<CreateOneUserAddressMutation, CreateOneUserAddressMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOneUserAddressMutation, CreateOneUserAddressMutationVariables>(CreateOneUserAddressDocument, options);
+      }
+export type CreateOneUserAddressMutationHookResult = ReturnType<typeof useCreateOneUserAddressMutation>;
+export type CreateOneUserAddressMutationResult = Apollo.MutationResult<CreateOneUserAddressMutation>;
+export type CreateOneUserAddressMutationOptions = Apollo.BaseMutationOptions<CreateOneUserAddressMutation, CreateOneUserAddressMutationVariables>;
+export const DeleteOneUserAddressDocument = gql`
+    mutation DeleteOneUserAddress($input: DeleteOneUserAddressInput!) {
+  deleteOneUserAddress(input: $input) {
+    id
+  }
+}
+    `;
+export type DeleteOneUserAddressMutationFn = Apollo.MutationFunction<DeleteOneUserAddressMutation, DeleteOneUserAddressMutationVariables>;
+
+/**
+ * __useDeleteOneUserAddressMutation__
+ *
+ * To run a mutation, you first call `useDeleteOneUserAddressMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteOneUserAddressMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteOneUserAddressMutation, { data, loading, error }] = useDeleteOneUserAddressMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDeleteOneUserAddressMutation(baseOptions?: Apollo.MutationHookOptions<DeleteOneUserAddressMutation, DeleteOneUserAddressMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteOneUserAddressMutation, DeleteOneUserAddressMutationVariables>(DeleteOneUserAddressDocument, options);
+      }
+export type DeleteOneUserAddressMutationHookResult = ReturnType<typeof useDeleteOneUserAddressMutation>;
+export type DeleteOneUserAddressMutationResult = Apollo.MutationResult<DeleteOneUserAddressMutation>;
+export type DeleteOneUserAddressMutationOptions = Apollo.BaseMutationOptions<DeleteOneUserAddressMutation, DeleteOneUserAddressMutationVariables>;
 export const LoginDocument = gql`
     mutation Login($input: LoginInput!) {
   login(input: $input) {
@@ -6828,6 +7440,42 @@ export function useRemoveCartItemsFromCartMutation(baseOptions?: Apollo.Mutation
 export type RemoveCartItemsFromCartMutationHookResult = ReturnType<typeof useRemoveCartItemsFromCartMutation>;
 export type RemoveCartItemsFromCartMutationResult = Apollo.MutationResult<RemoveCartItemsFromCartMutation>;
 export type RemoveCartItemsFromCartMutationOptions = Apollo.BaseMutationOptions<RemoveCartItemsFromCartMutation, RemoveCartItemsFromCartMutationVariables>;
+export const RemoveProductsFromWishlistDocument = gql`
+    mutation RemoveProductsFromWishlist($input: RemoveProductsFromWishlistInputType!) {
+  removeProductsFromWishlist(input: $input) {
+    id
+    products {
+      ...Product
+    }
+  }
+}
+    ${ProductFragmentDoc}`;
+export type RemoveProductsFromWishlistMutationFn = Apollo.MutationFunction<RemoveProductsFromWishlistMutation, RemoveProductsFromWishlistMutationVariables>;
+
+/**
+ * __useRemoveProductsFromWishlistMutation__
+ *
+ * To run a mutation, you first call `useRemoveProductsFromWishlistMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveProductsFromWishlistMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeProductsFromWishlistMutation, { data, loading, error }] = useRemoveProductsFromWishlistMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRemoveProductsFromWishlistMutation(baseOptions?: Apollo.MutationHookOptions<RemoveProductsFromWishlistMutation, RemoveProductsFromWishlistMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveProductsFromWishlistMutation, RemoveProductsFromWishlistMutationVariables>(RemoveProductsFromWishlistDocument, options);
+      }
+export type RemoveProductsFromWishlistMutationHookResult = ReturnType<typeof useRemoveProductsFromWishlistMutation>;
+export type RemoveProductsFromWishlistMutationResult = Apollo.MutationResult<RemoveProductsFromWishlistMutation>;
+export type RemoveProductsFromWishlistMutationOptions = Apollo.BaseMutationOptions<RemoveProductsFromWishlistMutation, RemoveProductsFromWishlistMutationVariables>;
 export const ResetPasswordDocument = gql`
     mutation ResetPassword($input: ResetPasswordInputType!) {
   resetPassword(input: $input) {
@@ -6899,6 +7547,105 @@ export function useSignupMutation(baseOptions?: Apollo.MutationHookOptions<Signu
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
 export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
+export const UpdateOneCartDocument = gql`
+    mutation UpdateOneCart($input: UpdateOneCartInput!) {
+  updateOneCart(input: $input) {
+    ...Cart
+  }
+}
+    ${CartFragmentDoc}`;
+export type UpdateOneCartMutationFn = Apollo.MutationFunction<UpdateOneCartMutation, UpdateOneCartMutationVariables>;
+
+/**
+ * __useUpdateOneCartMutation__
+ *
+ * To run a mutation, you first call `useUpdateOneCartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOneCartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOneCartMutation, { data, loading, error }] = useUpdateOneCartMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateOneCartMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOneCartMutation, UpdateOneCartMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOneCartMutation, UpdateOneCartMutationVariables>(UpdateOneCartDocument, options);
+      }
+export type UpdateOneCartMutationHookResult = ReturnType<typeof useUpdateOneCartMutation>;
+export type UpdateOneCartMutationResult = Apollo.MutationResult<UpdateOneCartMutation>;
+export type UpdateOneCartMutationOptions = Apollo.BaseMutationOptions<UpdateOneCartMutation, UpdateOneCartMutationVariables>;
+export const UpdateOneUserDocument = gql`
+    mutation UpdateOneUser($input: UpdateOneUserInput!) {
+  updateOneUser(input: $input) {
+    ...User
+  }
+}
+    ${UserFragmentDoc}`;
+export type UpdateOneUserMutationFn = Apollo.MutationFunction<UpdateOneUserMutation, UpdateOneUserMutationVariables>;
+
+/**
+ * __useUpdateOneUserMutation__
+ *
+ * To run a mutation, you first call `useUpdateOneUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOneUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOneUserMutation, { data, loading, error }] = useUpdateOneUserMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateOneUserMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOneUserMutation, UpdateOneUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOneUserMutation, UpdateOneUserMutationVariables>(UpdateOneUserDocument, options);
+      }
+export type UpdateOneUserMutationHookResult = ReturnType<typeof useUpdateOneUserMutation>;
+export type UpdateOneUserMutationResult = Apollo.MutationResult<UpdateOneUserMutation>;
+export type UpdateOneUserMutationOptions = Apollo.BaseMutationOptions<UpdateOneUserMutation, UpdateOneUserMutationVariables>;
+export const UpdateOneUserAddressDocument = gql`
+    mutation UpdateOneUserAddress($input: UpdateOneUserAddressInput!) {
+  updateOneUserAddress(input: $input) {
+    ...UserAddress
+  }
+}
+    ${UserAddressFragmentDoc}`;
+export type UpdateOneUserAddressMutationFn = Apollo.MutationFunction<UpdateOneUserAddressMutation, UpdateOneUserAddressMutationVariables>;
+
+/**
+ * __useUpdateOneUserAddressMutation__
+ *
+ * To run a mutation, you first call `useUpdateOneUserAddressMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOneUserAddressMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOneUserAddressMutation, { data, loading, error }] = useUpdateOneUserAddressMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateOneUserAddressMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOneUserAddressMutation, UpdateOneUserAddressMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOneUserAddressMutation, UpdateOneUserAddressMutationVariables>(UpdateOneUserAddressDocument, options);
+      }
+export type UpdateOneUserAddressMutationHookResult = ReturnType<typeof useUpdateOneUserAddressMutation>;
+export type UpdateOneUserAddressMutationResult = Apollo.MutationResult<UpdateOneUserAddressMutation>;
+export type UpdateOneUserAddressMutationOptions = Apollo.BaseMutationOptions<UpdateOneUserAddressMutation, UpdateOneUserAddressMutationVariables>;
 export const BrandsDocument = gql`
     query Brands($filter: BrandFilter, $paging: OffsetPaging, $sorting: [BrandSort!]) {
   brands(filter: $filter, paging: $paging, sorting: $sorting) {
@@ -7048,6 +7795,43 @@ export function useCategoryTreeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type CategoryTreeQueryHookResult = ReturnType<typeof useCategoryTreeQuery>;
 export type CategoryTreeLazyQueryHookResult = ReturnType<typeof useCategoryTreeLazyQuery>;
 export type CategoryTreeQueryResult = Apollo.QueryResult<CategoryTreeQuery, CategoryTreeQueryVariables>;
+export const CitiesDocument = gql`
+    query Cities($filter: CityFilter!) {
+  cities(filter: $filter) {
+    nodes {
+      ...City
+    }
+  }
+}
+    ${CityFragmentDoc}`;
+
+/**
+ * __useCitiesQuery__
+ *
+ * To run a query within a React component, call `useCitiesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCitiesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCitiesQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useCitiesQuery(baseOptions: Apollo.QueryHookOptions<CitiesQuery, CitiesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CitiesQuery, CitiesQueryVariables>(CitiesDocument, options);
+      }
+export function useCitiesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CitiesQuery, CitiesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CitiesQuery, CitiesQueryVariables>(CitiesDocument, options);
+        }
+export type CitiesQueryHookResult = ReturnType<typeof useCitiesQuery>;
+export type CitiesLazyQueryHookResult = ReturnType<typeof useCitiesLazyQuery>;
+export type CitiesQueryResult = Apollo.QueryResult<CitiesQuery, CitiesQueryVariables>;
 export const ColorsDocument = gql`
     query Colors($filter: ColorFilter, $paging: OffsetPaging, $sorting: [ColorSort!]) {
   colors(filter: $filter, paging: $paging, sorting: $sorting) {
@@ -7198,11 +7982,11 @@ export const CountriesDocument = gql`
     query Countries {
   countries {
     nodes {
-      ...FullCountry
+      ...Country
     }
   }
 }
-    ${FullCountryFragmentDoc}`;
+    ${CountryFragmentDoc}`;
 
 /**
  * __useCountriesQuery__
@@ -7230,6 +8014,77 @@ export function useCountriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type CountriesQueryHookResult = ReturnType<typeof useCountriesQuery>;
 export type CountriesLazyQueryHookResult = ReturnType<typeof useCountriesLazyQuery>;
 export type CountriesQueryResult = Apollo.QueryResult<CountriesQuery, CountriesQueryVariables>;
+export const DeliveryMethodDocument = gql`
+    query DeliveryMethod($deliveryMethodId: ID!) {
+  deliveryMethod(id: $deliveryMethodId) {
+    ...DeliveryMethod
+  }
+}
+    ${DeliveryMethodFragmentDoc}`;
+
+/**
+ * __useDeliveryMethodQuery__
+ *
+ * To run a query within a React component, call `useDeliveryMethodQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDeliveryMethodQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDeliveryMethodQuery({
+ *   variables: {
+ *      deliveryMethodId: // value for 'deliveryMethodId'
+ *   },
+ * });
+ */
+export function useDeliveryMethodQuery(baseOptions: Apollo.QueryHookOptions<DeliveryMethodQuery, DeliveryMethodQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DeliveryMethodQuery, DeliveryMethodQueryVariables>(DeliveryMethodDocument, options);
+      }
+export function useDeliveryMethodLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DeliveryMethodQuery, DeliveryMethodQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DeliveryMethodQuery, DeliveryMethodQueryVariables>(DeliveryMethodDocument, options);
+        }
+export type DeliveryMethodQueryHookResult = ReturnType<typeof useDeliveryMethodQuery>;
+export type DeliveryMethodLazyQueryHookResult = ReturnType<typeof useDeliveryMethodLazyQuery>;
+export type DeliveryMethodQueryResult = Apollo.QueryResult<DeliveryMethodQuery, DeliveryMethodQueryVariables>;
+export const DeliveryMethodsDocument = gql`
+    query DeliveryMethods {
+  deliveryMethods {
+    nodes {
+      ...DeliveryMethod
+    }
+  }
+}
+    ${DeliveryMethodFragmentDoc}`;
+
+/**
+ * __useDeliveryMethodsQuery__
+ *
+ * To run a query within a React component, call `useDeliveryMethodsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDeliveryMethodsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDeliveryMethodsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useDeliveryMethodsQuery(baseOptions?: Apollo.QueryHookOptions<DeliveryMethodsQuery, DeliveryMethodsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DeliveryMethodsQuery, DeliveryMethodsQueryVariables>(DeliveryMethodsDocument, options);
+      }
+export function useDeliveryMethodsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DeliveryMethodsQuery, DeliveryMethodsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DeliveryMethodsQuery, DeliveryMethodsQueryVariables>(DeliveryMethodsDocument, options);
+        }
+export type DeliveryMethodsQueryHookResult = ReturnType<typeof useDeliveryMethodsQuery>;
+export type DeliveryMethodsLazyQueryHookResult = ReturnType<typeof useDeliveryMethodsLazyQuery>;
+export type DeliveryMethodsQueryResult = Apollo.QueryResult<DeliveryMethodsQuery, DeliveryMethodsQueryVariables>;
 export const MeDocument = gql`
     query Me {
   me {
@@ -7264,6 +8119,74 @@ export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const MyCartDocument = gql`
+    query MyCart {
+  myCart {
+    ...Cart
+  }
+}
+    ${CartFragmentDoc}`;
+
+/**
+ * __useMyCartQuery__
+ *
+ * To run a query within a React component, call `useMyCartQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyCartQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMyCartQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMyCartQuery(baseOptions?: Apollo.QueryHookOptions<MyCartQuery, MyCartQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MyCartQuery, MyCartQueryVariables>(MyCartDocument, options);
+      }
+export function useMyCartLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyCartQuery, MyCartQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MyCartQuery, MyCartQueryVariables>(MyCartDocument, options);
+        }
+export type MyCartQueryHookResult = ReturnType<typeof useMyCartQuery>;
+export type MyCartLazyQueryHookResult = ReturnType<typeof useMyCartLazyQuery>;
+export type MyCartQueryResult = Apollo.QueryResult<MyCartQuery, MyCartQueryVariables>;
+export const MyWishlistDocument = gql`
+    query MyWishlist {
+  myWishlist {
+    ...Wishlist
+  }
+}
+    ${WishlistFragmentDoc}`;
+
+/**
+ * __useMyWishlistQuery__
+ *
+ * To run a query within a React component, call `useMyWishlistQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyWishlistQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMyWishlistQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMyWishlistQuery(baseOptions?: Apollo.QueryHookOptions<MyWishlistQuery, MyWishlistQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MyWishlistQuery, MyWishlistQueryVariables>(MyWishlistDocument, options);
+      }
+export function useMyWishlistLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyWishlistQuery, MyWishlistQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MyWishlistQuery, MyWishlistQueryVariables>(MyWishlistDocument, options);
+        }
+export type MyWishlistQueryHookResult = ReturnType<typeof useMyWishlistQuery>;
+export type MyWishlistLazyQueryHookResult = ReturnType<typeof useMyWishlistLazyQuery>;
+export type MyWishlistQueryResult = Apollo.QueryResult<MyWishlistQuery, MyWishlistQueryVariables>;
 export const OneProductDocument = gql`
     query OneProduct($productId: ID!) {
   product(id: $productId) {
@@ -7299,6 +8222,42 @@ export function useOneProductLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type OneProductQueryHookResult = ReturnType<typeof useOneProductQuery>;
 export type OneProductLazyQueryHookResult = ReturnType<typeof useOneProductLazyQuery>;
 export type OneProductQueryResult = Apollo.QueryResult<OneProductQuery, OneProductQueryVariables>;
+export const PaymentMethodsDocument = gql`
+    query PaymentMethods {
+  paymentMethods {
+    nodes {
+      ...PaymentMethod
+    }
+  }
+}
+    ${PaymentMethodFragmentDoc}`;
+
+/**
+ * __usePaymentMethodsQuery__
+ *
+ * To run a query within a React component, call `usePaymentMethodsQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePaymentMethodsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePaymentMethodsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePaymentMethodsQuery(baseOptions?: Apollo.QueryHookOptions<PaymentMethodsQuery, PaymentMethodsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PaymentMethodsQuery, PaymentMethodsQueryVariables>(PaymentMethodsDocument, options);
+      }
+export function usePaymentMethodsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PaymentMethodsQuery, PaymentMethodsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PaymentMethodsQuery, PaymentMethodsQueryVariables>(PaymentMethodsDocument, options);
+        }
+export type PaymentMethodsQueryHookResult = ReturnType<typeof usePaymentMethodsQuery>;
+export type PaymentMethodsLazyQueryHookResult = ReturnType<typeof usePaymentMethodsLazyQuery>;
+export type PaymentMethodsQueryResult = Apollo.QueryResult<PaymentMethodsQuery, PaymentMethodsQueryVariables>;
 export const ProductsDocument = gql`
     query Products($filter: ProductFilter, $paging: OffsetPaging, $sorting: [ProductSort!]) {
   products(filter: $filter, paging: $paging, sorting: $sorting) {
@@ -7445,38 +8404,39 @@ export function useSizesTotalCountLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type SizesTotalCountQueryHookResult = ReturnType<typeof useSizesTotalCountQuery>;
 export type SizesTotalCountLazyQueryHookResult = ReturnType<typeof useSizesTotalCountLazyQuery>;
 export type SizesTotalCountQueryResult = Apollo.QueryResult<SizesTotalCountQuery, SizesTotalCountQueryVariables>;
-export const UserCartDocument = gql`
-    query UserCart($cartId: ID!) {
-  cart(id: $cartId) {
-    ...Cart
+export const UserAddressesDocument = gql`
+    query UserAddresses {
+  userAddresses {
+    nodes {
+      ...UserAddress
+    }
   }
 }
-    ${CartFragmentDoc}`;
+    ${UserAddressFragmentDoc}`;
 
 /**
- * __useUserCartQuery__
+ * __useUserAddressesQuery__
  *
- * To run a query within a React component, call `useUserCartQuery` and pass it any options that fit your needs.
- * When your component renders, `useUserCartQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useUserAddressesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserAddressesQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useUserCartQuery({
+ * const { data, loading, error } = useUserAddressesQuery({
  *   variables: {
- *      cartId: // value for 'cartId'
  *   },
  * });
  */
-export function useUserCartQuery(baseOptions: Apollo.QueryHookOptions<UserCartQuery, UserCartQueryVariables>) {
+export function useUserAddressesQuery(baseOptions?: Apollo.QueryHookOptions<UserAddressesQuery, UserAddressesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<UserCartQuery, UserCartQueryVariables>(UserCartDocument, options);
+        return Apollo.useQuery<UserAddressesQuery, UserAddressesQueryVariables>(UserAddressesDocument, options);
       }
-export function useUserCartLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserCartQuery, UserCartQueryVariables>) {
+export function useUserAddressesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserAddressesQuery, UserAddressesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<UserCartQuery, UserCartQueryVariables>(UserCartDocument, options);
+          return Apollo.useLazyQuery<UserAddressesQuery, UserAddressesQueryVariables>(UserAddressesDocument, options);
         }
-export type UserCartQueryHookResult = ReturnType<typeof useUserCartQuery>;
-export type UserCartLazyQueryHookResult = ReturnType<typeof useUserCartLazyQuery>;
-export type UserCartQueryResult = Apollo.QueryResult<UserCartQuery, UserCartQueryVariables>;
+export type UserAddressesQueryHookResult = ReturnType<typeof useUserAddressesQuery>;
+export type UserAddressesLazyQueryHookResult = ReturnType<typeof useUserAddressesLazyQuery>;
+export type UserAddressesQueryResult = Apollo.QueryResult<UserAddressesQuery, UserAddressesQueryVariables>;

@@ -1,5 +1,5 @@
 import { News, Onboarding, Welcome } from "@/components/common";
-import { Container, ContentContainer } from "@/components/ui";
+import { Container, PageContainer } from "@/components/ui";
 import { LngParamsProps } from "@/lib/types/params.type";
 import React from "react";
 
@@ -17,10 +17,10 @@ const HomePage = async ({ params }: HomePageProps) => {
       {/* @ts-expect-error Server Component */}
       <Welcome lng={lng} />
     </Container>
-    <ContentContainer disableBottomPadding>
+    <PageContainer disableBottomPadding>
       {/* @ts-expect-error Server Component */}
       <Onboarding lng={lng} />
-    </ContentContainer>
+    </PageContainer>
     {/* @ts-expect-error Server Component */}
     <News lng={lng} />
   </>);

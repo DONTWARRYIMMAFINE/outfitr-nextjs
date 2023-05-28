@@ -2,7 +2,7 @@
 
 import SearchField from "@/components/common/Catalog/SearchBar/SearchField";
 import SortSelect from "@/components/common/Catalog/SearchBar/SortSelect";
-import { Box } from "@/components/ui";
+import { Box, Grid } from "@/components/ui";
 import { isNotEmpty } from "@/lib/utils/string.utils";
 import { usePathname, useRouter } from "next-intl/client";
 import { useSearchParams } from "next/navigation";
@@ -28,16 +28,15 @@ const SearchBar: FC<SearchBarProps> = ({}) => {
   };
 
   return (
-    <Box
-      display={"flex"}
-      justifyContent={"space-between"}
-      padding={3}
-      borderRadius={0.5}
-      bgcolor={"background.body"}
-      gap={3}
-    >
-      <SearchField value={value} onChange={setValue} onClick={onSearchClick} />
-      <SortSelect />
+    <Box padding={4} borderRadius={0.5} bgcolor={"background.body"}>
+      <Grid container spacing={4}>
+        <Grid item xs={10}>
+          <SearchField value={value} onChange={setValue} onClick={onSearchClick} />
+        </Grid>
+        <Grid item xs={2}>
+          <SortSelect />
+        </Grid>
+      </Grid>
     </Box>
   );
 };

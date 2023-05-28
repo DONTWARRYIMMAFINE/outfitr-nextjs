@@ -1,31 +1,32 @@
 "use client";
 
 import { Button, Icons } from "@/components/ui";
+import { ButtonProps } from "@/components/ui/Button";
 import { useAddCartItemsToCartMutation } from "@/lib/graphql/schema.generated";
-import { loggedInUser } from "@/store/user.store";
+import { userCart } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
 import { useRouter } from "next-intl/client";
 import { FC } from "react";
 import toast from "react-hot-toast";
 import { WithTranslation, withTranslation } from "react-i18next";
 
-export interface AddToCartProps extends WithTranslation {
+export interface AddToCartButtonProps extends ButtonProps, WithTranslation {
   productVariantId: string;
   disabled?: boolean;
 }
 
-const AddToCart: FC<AddToCartProps> = ({ productVariantId, disabled, t }) => {
+const AddToCartButton: FC<AddToCartButtonProps> = ({ productVariantId, disabled, t, tReady, i18n, ...props }) => {
   const router = useRouter();
-  const user = useReactiveVar(loggedInUser);
+  const cart = useReactiveVar(userCart);
 
   const [addCartItemsToCartMutation] = useAddCartItemsToCartMutation();
 
   const onClick = async () => {
-    if (user) {
+    if (cart) {
       await addCartItemsToCartMutation({
         variables: {
           input: {
-            id: user.cart.id,
+            id: cart.id,
             update: {
               cartItems: [
                 {
@@ -37,7 +38,7 @@ const AddToCart: FC<AddToCartProps> = ({ productVariantId, disabled, t }) => {
           },
         },
         onCompleted: data => {
-          loggedInUser({ ...user, cart: data.addCartItemsToCart });
+          userCart(data.addCartItemsToCart);
           toast.success("Added to cart");
         },
         onError: _ => toast.error("Ops...unable to add product to cart"),
@@ -53,10 +54,11 @@ const AddToCart: FC<AddToCartProps> = ({ productVariantId, disabled, t }) => {
       endIcon={<Icons.Cart />}
       disabled={disabled}
       onClick={() => onClick()}
+      {...props}
     >
       {t("component.button.addToCart")}
     </Button>
   );
 };
 
-export default withTranslation()(AddToCart);
+export default withTranslation()(AddToCartButton);

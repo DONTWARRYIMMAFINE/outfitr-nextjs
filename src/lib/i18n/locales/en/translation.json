@@ -8,11 +8,41 @@
   },
   "page": {
     "product": {
-      "content": {
-        "description": "Description",
-        "colors": "Colors",
-        "sizes": "Sizes",
-        "stock": "Currently in stock"
+      "title": "Product Details Page"
+    },
+    "wishlist": {
+      "title": "Wishlist"
+    },
+    "cart": {
+      "title": "Cart"
+    },
+    "checkout": {
+      "title": "Checkout",
+      "step": {
+        "contactInfo": {
+          "label": "Contact Info",
+          "deliveryOptions": {
+            "label": "Delivery Options",
+            "homeDelivery": "Home Delivery",
+            "pickupPointDelivery": "Pickup Point Delivery"
+          }
+        },
+        "deliveryInfo": {
+          "label": "Delivery Info",
+          "table": {
+            "header": [
+              "Delivery Name",
+              "Delivery Time Estimation (Days)",
+              "Delivery Price"
+            ],
+            "body": {
+              "avgDeliveryTime": "{{days}} days, {{hours}} hours"
+            }
+          }
+        },
+        "paymentInfo": {
+          "label": "Payment Info"
+        }
       }
     }
   },
@@ -24,8 +54,135 @@
       "rightLabel": "to select files",
       "buttonRemoveLabel": "Remove all"
     },
+    "form": {
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your Email",
+        "errors": {
+          "email": "Please enter a valid email",
+          "required": "Email is required"
+        }
+      },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "Enter your Phone",
+        "errors": {
+          "matches": "Please enter a valid phone",
+          "required": "Phone is required"
+        }
+      },
+      "firstName": {
+        "label": "First Name",
+        "placeholder": "Enter your First Name",
+        "errors": {
+          "min": "First Name must be at least {{min}} characters",
+          "max": "First Name must be less than {{max}} characters",
+          "required": "First Name is required"
+        }
+      },
+      "lastName": {
+        "label": "Last Name",
+        "placeholder": "Enter your Last Name",
+        "errors": {
+          "min": "Last Name must be at least {{min}} characters",
+          "max": "Last Name must be less than {{max}} characters",
+          "required": "Last Name is required"
+        }
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password",
+        "errors": {
+          "min": "Password must be at least {{min}} characters",
+          "max": "Password must be less than {{max}} characters",
+          "required": "Password is required"
+        }
+      },
+      "passwordConfirmation": {
+        "label": "Password Confirmation",
+        "placeholder": "Repeat your password",
+        "errors": {
+          "oneOf": "Passwords do not match",
+          "required": "Confirm password is required"
+        }
+      },
+      "country": {
+        "label": "Country",
+        "placeholder": "Choose country from list"
+      },
+      "city": {
+        "label": "City",
+        "placeholder": "Choose city from list",
+        "errors": {
+          "uuid": "Values should be a UUIDv4",
+          "required": "City identifier is required"
+        }
+      },
+      "postalCode": {
+        "label": "Postal Code",
+        "placeholder": "Enter postal code",
+        "errors": {
+          "matches": "Enter a valid postal code",
+          "required": "Postal code is required"
+        }
+      },
+      "state": {
+        "label": "State/province/area",
+        "placeholder": "Enter state",
+        "errors": {
+          "min": "State must be at least {{min}} characters",
+          "max": "State must be less than {{max}} characters"
+        }
+      },
+      "street": {
+        "label": "Street",
+        "placeholder": "Enter street",
+        "errors": {
+          "min": "Street must be at least {{min}} characters",
+          "max": "Street must be less than {{max}} characters"
+        }
+      },
+      "building": {
+        "label": "Building Number",
+        "placeholder": "Enter building number",
+        "errors": {
+          "min": "Building must be at least {{min}} characters",
+          "max": "Building must be less than {{max}} characters"
+        }
+      }
+    },
+    "label": {
+      "priceRange": "Price range",
+      "brands": "Brands",
+      "color": "Color",
+      "colors": "Colors",
+      "size": "Size",
+      "sizes": "Sizes",
+      "quantity": "Quantity",
+      "subtotal": "Subtotal (Excluding VAT)",
+      "tax": "VAT",
+      "delivery": "Delivery",
+      "total": "Total",
+      "orderItems": "Order items",
+      "description": "Description",
+      "stock": "Currently in stock",
+      "emptyWishlist": "Your wishlist is empty. Explore catalog first!"
+    },
     "button": {
-      "addToCart": "Add To Cart"
+      "applyFilters": "Apply filters",
+      "showDetails": "Show Details",
+      "addToCart": "Add To Cart",
+      "checkout": "Checkout",
+      "edit": "Edit",
+      "save": "Save",
+      "pay": "Pay",
+      "reset": "Reset",
+      "back": "Back",
+      "next": "Next",
+      "placeOrder": "Place an order",
+      "addUserDeliveryAddress": "Add delivery address",
+      "toDeliveryInfo": "To Delivery",
+      "toPaymentInfo": "To Payment"
     }
   }
 }

@@ -1,0 +1,8 @@
+mutation RemoveProductsFromWishlist($input: RemoveProductsFromWishlistInputType!) {
+  removeProductsFromWishlist(input: $input) {
+    id
+    products {
+      ...Product
+    }
+  }
+}

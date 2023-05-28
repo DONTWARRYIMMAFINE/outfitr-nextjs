@@ -1,9 +1,8 @@
 "use client";
 
-import { Box, Link, List, ListItem, Menu } from "@/components/ui";
+import { Box, Link, List, ListItem, Menu, Image } from "@/components/ui";
 import { Routes } from "@/constants/routes";
 import { useCategoryTreeQuery } from "@/lib/graphql/schema.generated";
-import Image from "next/image";
 import { MouseEvent, useState } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
 import { Trans } from "react-i18next/TransWithoutContext";
@@ -62,11 +61,11 @@ const CategoriesMenu = ({ t }: CategoriesMenuProps) => {
             minHeight={"100%"}
           >
             <Image
-              src={"/pattern.png"}
-              alt={""}
+              priority
+              src={"/favicon.png"}
+              alt={"Ops..."}
               style={{ objectFit: "contain" }}
               fill
-              priority
             />
           </Box>
         </Box>}

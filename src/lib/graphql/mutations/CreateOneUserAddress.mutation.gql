@@ -1,0 +1,5 @@
+mutation CreateOneUserAddress($input: CreateOneUserAddressInput!) {
+  createOneUserAddress(input: $input) {
+    ...UserAddress
+  }
+}

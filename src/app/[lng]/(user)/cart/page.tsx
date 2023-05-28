@@ -1,9 +1,9 @@
 import { News } from "@/components/common";
 import Cart from "@/components/common/Cart";
-import { ContentContainer } from "@/components/ui";
+import { PageContainer } from "@/components/ui";
+import { useTranslation } from "@/lib/i18n";
 import { LngParamsProps } from "@/lib/types/params.type";
 import { Metadata } from "next";
-import { FC } from "react";
 
 export const metadata: Metadata = {
   title: "Outfitr | Cart",
@@ -11,13 +11,14 @@ export const metadata: Metadata = {
 
 interface CartPageProps extends LngParamsProps {}
 
-const CartPage: FC<CartPageProps> = ({ params }) => {
+const CartPage = async ({ params }: CartPageProps) => {
   const { lng } = params;
+  const { t } = await useTranslation(lng);
 
   return (<>
-      <ContentContainer pageTitle={"Cart"} disableBottomPadding>
+      <PageContainer pageTitle={t("page.cart.title")} disableBottomPadding>
         <Cart />
-      </ContentContainer>
+      </PageContainer>
       {/* @ts-expect-error Server Component */}
       <News lng={lng} />
     </>

@@ -1,4 +1,4 @@
-import { Box, ContentContainer } from "@/components/ui";
+import { Box, PageContainer } from "@/components/ui";
 import { Metadata } from "next";
 import { FC } from "react";
 
@@ -10,11 +10,11 @@ interface PageProps {}
 
 const ContactPage: FC<PageProps> = ({}) => {
   return (
-    <ContentContainer pageTitle={"Contact Us"}>
+    <PageContainer pageTitle={"Contact Us"}>
       <Box>
         Contacts
       </Box>
-    </ContentContainer>
+    </PageContainer>
   );
 };
 

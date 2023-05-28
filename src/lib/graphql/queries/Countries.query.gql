@@ -1,7 +1,7 @@
 query Countries {
   countries {
     nodes {
-      ...FullCountry
+      ...Country
     }
   }
 }

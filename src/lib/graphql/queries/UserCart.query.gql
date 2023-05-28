@@ -1,5 +1,0 @@
-query UserCart($cartId: ID!) {
-  cart(id: $cartId) {
-    ...Cart
-  }
-}

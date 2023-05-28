@@ -1,6 +1,24 @@
 fragment Cart on Cart {
   id
-  price {
+  paymentMethod{
+    ...PaymentMethod
+  }
+  deliveryAddress {
+    ...Address
+  }
+  deliveryMethod {
+    ...DeliveryMethod
+  }
+  subtotalPrice {
+    ...Price
+  }
+  taxPrice {
+    ...Price
+  }
+  deliveryPrice {
+    ...Price
+  }
+  totalPrice {
     ...Price
   }
   quantity

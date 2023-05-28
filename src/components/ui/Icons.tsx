@@ -25,6 +25,10 @@ import {
   Twitter,
   VisibilityOffOutlined,
   VisibilityOutlined,
+  PinOutlined,
+  MapOutlined,
+  SignpostOutlined,
+  CabinOutlined
 } from "@mui/icons-material";
 
 const Icons = {
@@ -54,7 +58,11 @@ const Icons = {
   Like: FavoriteBorder,
   Unlike: Favorite,
   Add: Add,
-  Remove: Remove
+  Remove: Remove,
+  PostalCode: PinOutlined,
+  State: MapOutlined,
+  Street: SignpostOutlined,
+  Building: CabinOutlined
 };
 
 export default Icons;

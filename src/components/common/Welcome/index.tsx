@@ -55,6 +55,7 @@ const Welcome = async ({ lng }: WelcomeProps) => {
         alignItems={"center"}
       >
         <Image
+          priority
           src={"/pattern2.png"}
           alt={"Oops"}
           style={{ objectFit: "contain" }}

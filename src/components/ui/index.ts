@@ -4,7 +4,7 @@ export { default as Badge } from "./Badge";
 export { default as Box } from "./Box";
 export { default as Button } from "./Button";
 export { default as Container } from "./Container";
-export { default as ContentContainer } from "./ContentContainer";
+export { default as PageContainer } from "./ContentContainer";
 export { default as Divider } from "./Divider";
 export { default as Grid } from "./Grid";
 export { default as Hidden } from "./Hidden";

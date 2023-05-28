@@ -1,0 +1,5 @@
+fragment EmailAddress on EmailAddress {
+  id
+  address
+  name
+}
