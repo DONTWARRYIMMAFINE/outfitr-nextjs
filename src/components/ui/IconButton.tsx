@@ -4,7 +4,7 @@ import { IconButton as MuiIconButton, IconButtonProps as MuiIconButtonProps } fr
 import { styled } from "@mui/material/styles";
 import { FC } from "react";
 
-interface IconButtonProps extends MuiIconButtonProps {
+export interface IconButtonProps extends MuiIconButtonProps {
   href?: string;
 }
 

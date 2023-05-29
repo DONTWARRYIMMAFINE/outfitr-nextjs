@@ -3,8 +3,10 @@
 import { Grid as MuiGrid, GridProps as MuiGridProps } from "@mui/material";
 import { forwardRef } from "react";
 
+export interface GridProps extends MuiGridProps {}
+
 const Grid = forwardRef<
-  HTMLDivElement, MuiGridProps
+  HTMLDivElement, GridProps
 >(({ children, ...props }, ref) => {
   return <MuiGrid ref={ref} {...props}>{children}</MuiGrid>;
 });

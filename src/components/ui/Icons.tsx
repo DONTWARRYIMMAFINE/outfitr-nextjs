@@ -3,32 +3,37 @@
 import {
   Add,
   BadgeOutlined,
+  CabinOutlined,
   Check,
   CloseRounded,
   DarkMode,
   EmailOutlined,
   ExpandMoreRounded,
-  Facebook, Favorite, FavoriteBorder,
+  Facebook,
+  Favorite,
+  FavoriteBorder,
   FavoriteBorderOutlined,
   Instagram,
   KeyOutlined,
   LightMode,
+  MapOutlined,
   MenuRounded,
   Person,
   PersonOutlineOutlined,
-  PhoneOutlined, Remove,
+  PhoneOutlined,
+  PinOutlined,
+  Remove,
   Search,
   ShoppingCartOutlined,
+  SignpostOutlined,
   Sort,
   Storefront,
   Telegram,
   Twitter,
   VisibilityOffOutlined,
   VisibilityOutlined,
-  PinOutlined,
-  MapOutlined,
-  SignpostOutlined,
-  CabinOutlined
+  StarBorder,
+  Star,
 } from "@mui/icons-material";
 
 const Icons = {
@@ -62,7 +67,9 @@ const Icons = {
   PostalCode: PinOutlined,
   State: MapOutlined,
   Street: SignpostOutlined,
-  Building: CabinOutlined
+  Building: CabinOutlined,
+  StarEmpty: StarBorder,
+  StarFilled: Star,
 };
 
 export default Icons;

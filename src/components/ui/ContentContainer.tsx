@@ -3,7 +3,7 @@ import { Container } from "@/components/ui/index";
 import { ContainerProps } from "@mui/material";
 import { FC, PropsWithChildren } from "react";
 
-interface ContainerContainerProps extends ContainerProps, PropsWithChildren {
+export interface ContainerContainerProps extends ContainerProps, PropsWithChildren {
   pageTitle?: string | null | undefined;
   disableBottomPadding?: boolean;
 }

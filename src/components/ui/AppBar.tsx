@@ -3,7 +3,7 @@
 import { AppBar as MuiAppBar, AppBarProps as MuiAppBarProps, useTheme } from "@mui/material";
 import { FC } from "react";
 
-interface AppBarProps extends MuiAppBarProps {}
+export interface AppBarProps extends MuiAppBarProps {}
 
 const AppBar: FC<AppBarProps> = ({ children, sx, ...props }) => {
   const { palette, spacing } = useTheme();

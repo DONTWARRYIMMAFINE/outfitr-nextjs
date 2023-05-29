@@ -4,8 +4,8 @@ import { Link as MuiLink, LinkProps as MuiLinkProps } from "@mui/material";
 import { CustomMuiLinkProps } from "@mui/material/Link";
 import { styled } from "@mui/material/styles";
 import clsx from "clsx";
-import { LinkProps as NextLinkProps } from "next/link";
 import NextLink from "next-intl/link";
+import { LinkProps as NextLinkProps } from "next/link";
 
 import { usePathname } from "next/navigation";
 import { AnchorHTMLAttributes, ElementType, FC, forwardRef } from "react";

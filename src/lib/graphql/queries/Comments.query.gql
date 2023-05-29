@@ -1,5 +1,5 @@
-query Comments {
-  comments {
+query Comments($filter: CommentFilter!) {
+  comments(filter: $filter) {
     nodes {
       ...Comment
     }

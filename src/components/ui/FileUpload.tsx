@@ -2,12 +2,12 @@
 
 import toast from "react-hot-toast";
 import { WithTranslation, withTranslation } from "react-i18next";
-import { FileUploadProps } from "react-mui-fileuploader/dist/types/index.types";
 import { default as MuiFileUpload } from "react-mui-fileuploader";
+import { FileUploadProps as MuiFileUploadProps } from "react-mui-fileuploader/dist/types/index.types";
 
-export interface FileUpload extends FileUploadProps, WithTranslation {}
+export interface FileUploadProps extends MuiFileUploadProps, WithTranslation {}
 
-const FileUpload = ({ children, onFilesChange, t, multiFile = true, ...props }: FileUpload) => {
+const FileUpload = ({ children, onFilesChange, t, multiFile = true, ...props }: FileUploadProps) => {
   const onError = (err: string) => {
     toast.error(err);
   };
@@ -34,7 +34,6 @@ const FileUpload = ({ children, onFilesChange, t, multiFile = true, ...props }: 
         variant: "outlined",
         sx: { p: 4, borderStyle: "dashed", bgcolor: "background.textField", height: "100%", width: "100%", overflow: "hidden" },
       }}
-      onContextReady={(context) => {}}
       {...props}
     >
       {children}

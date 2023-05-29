@@ -5,8 +5,6 @@ import { FC, forwardRef } from "react";
 
 export interface CardProps extends MuiCardProps {}
 
-
-
 const Card: FC<CardProps> = forwardRef<
   HTMLDivElement, CardProps
 >(({ children, sx, ...props }, ref) => {
@@ -22,7 +20,7 @@ const Card: FC<CardProps> = forwardRef<
         borderRadius: 0.25,
         boxShadow: 0,
         backgroundImage: "none",
-        ...sx
+        ...sx,
       }}
       {...props}
     >

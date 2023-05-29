@@ -1345,6 +1345,7 @@ export type CreateColorInput = {
 export type CreateCommentInput = {
   description?: InputMaybe<Scalars['String']>;
   productId: Scalars['String'];
+  rating: Scalars['Float'];
   userId: Scalars['String'];
 };
 
@@ -5543,6 +5544,7 @@ export type UpdateColorInput = {
 
 export type UpdateCommentInput = {
   description?: InputMaybe<Scalars['String']>;
+  rating?: InputMaybe<Scalars['Float']>;
 };
 
 export type UpdateCountryInput = {
@@ -6560,7 +6562,7 @@ export type CityFragment = { __typename?: 'City', id: string, name: string };
 
 export type ColorFragment = { __typename?: 'Color', id: string, code: string, name: string, hex: string };
 
-export type CommentFragment = { __typename?: 'Comment', id: string, description?: string | null, rating: number, user: { __typename?: 'User', fullName: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> };
+export type CommentFragment = { __typename?: 'Comment', id: string, description?: string | null, rating: number, createdAt: any, user: { __typename?: 'User', fullName: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> };
 
 export type CountryFragment = { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> };
 
@@ -6744,10 +6746,12 @@ export type ColorsTotalCountQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ColorsTotalCountQuery = { __typename?: 'Query', colors: { __typename?: 'ColorConnection', totalCount: number } };
 
-export type CommentsQueryVariables = Exact<{ [key: string]: never; }>;
+export type CommentsQueryVariables = Exact<{
+  filter: CommentFilter;
+}>;
 
 
-export type CommentsQuery = { __typename?: 'Query', comments: { __typename?: 'CommentConnection', nodes: Array<{ __typename?: 'Comment', id: string, description?: string | null, rating: number, user: { __typename?: 'User', fullName: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }> } };
+export type CommentsQuery = { __typename?: 'Query', comments: { __typename?: 'CommentConnection', nodes: Array<{ __typename?: 'Comment', id: string, description?: string | null, rating: number, createdAt: any, user: { __typename?: 'User', fullName: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }> } };
 
 export type CommentsTotalCountQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7001,6 +7005,7 @@ export const CommentFragmentDoc = gql`
   media {
     ...Media
   }
+  createdAt
 }
     ${MediaFragmentDoc}`;
 export const CountryFragmentDoc = gql`
@@ -7909,8 +7914,8 @@ export type ColorsTotalCountQueryHookResult = ReturnType<typeof useColorsTotalCo
 export type ColorsTotalCountLazyQueryHookResult = ReturnType<typeof useColorsTotalCountLazyQuery>;
 export type ColorsTotalCountQueryResult = Apollo.QueryResult<ColorsTotalCountQuery, ColorsTotalCountQueryVariables>;
 export const CommentsDocument = gql`
-    query Comments {
-  comments {
+    query Comments($filter: CommentFilter!) {
+  comments(filter: $filter) {
     nodes {
       ...Comment
     }
@@ -7930,10 +7935,11 @@ export const CommentsDocument = gql`
  * @example
  * const { data, loading, error } = useCommentsQuery({
  *   variables: {
+ *      filter: // value for 'filter'
  *   },
  * });
  */
-export function useCommentsQuery(baseOptions?: Apollo.QueryHookOptions<CommentsQuery, CommentsQueryVariables>) {
+export function useCommentsQuery(baseOptions: Apollo.QueryHookOptions<CommentsQuery, CommentsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<CommentsQuery, CommentsQueryVariables>(CommentsDocument, options);
       }

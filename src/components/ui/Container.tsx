@@ -3,7 +3,7 @@
 import { Container as MuiContainer, ContainerProps as MuiContainerProps } from "@mui/material";
 import { FC } from "react";
 
-interface ContainerProps extends MuiContainerProps {}
+export interface ContainerProps extends MuiContainerProps {}
 
 const Container: FC<ContainerProps> = ({ children, sx, ...props }) => {
   return (

@@ -1,10 +1,11 @@
 "use client";
 
 import AddToCart from "@/components/common/AddToCartButton";
-import ModifyWishlistButton from "@/components/common/ModifyWishlistButton";
 import CheckboxGroup from "@/components/common/CheckboxGroup";
 import ColorCheckboxGroup from "@/components/common/ColorCheckboxGroup";
+import ModifyWishlistButton from "@/components/common/ModifyWishlistButton";
 import Price from "@/components/common/Price";
+import ProductRating from "@/components/common/ProductDetails/ProductRating";
 import { Box, Icons, Text } from "@/components/ui";
 import { ProductFragment } from "@/lib/graphql/schema.generated";
 import { FC, useEffect, useState } from "react";
@@ -53,9 +54,10 @@ const Details: FC<DetailsProps> = ({ product, t }) => {
           {t("component.label.stock")}: {product.productVariants[variant].stock}</Text>
       </Box>
       <Box display={"flex"} gap={2}>
-        <AddToCart productVariantId={product.productVariants[variant].id} disabled={product.productVariants[variant].stock === 0}/>
-        <ModifyWishlistButton productId={product.id}/>
+        <AddToCart productVariantId={product.productVariants[variant].id} disabled={product.productVariants[variant].stock === 0} />
+        <ModifyWishlistButton productId={product.id} />
       </Box>
+      <ProductRating productId={product.id} />
     </Box>
   );
 };

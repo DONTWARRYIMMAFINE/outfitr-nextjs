@@ -3,7 +3,7 @@
 import { Menu as MuiMenu, MenuProps as MuiMenuProps } from "@mui/material";
 import { FC } from "react";
 
-interface MenuProps extends MuiMenuProps {}
+export interface MenuProps extends MuiMenuProps {}
 
 const Menu: FC<MenuProps> = ({ sx, transformOrigin, children, ...props }) => {
   return (

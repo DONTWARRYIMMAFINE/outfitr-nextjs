@@ -1,8 +1,7 @@
 "use client";
 
 import Select, { SelectOption, SelectProps } from "@/components/common/Select";
-import { Text } from "@/components/ui";
-import Error from "@/components/ui/Error";
+import { Text, Error } from "@/components/ui";
 import { UserAddressFragment, useUserAddressesQuery } from "@/lib/graphql/schema.generated";
 import { Skeleton } from "@mui/material";
 import { map } from "lodash";

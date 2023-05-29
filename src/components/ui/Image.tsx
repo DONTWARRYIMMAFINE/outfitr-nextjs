@@ -3,7 +3,7 @@
 import MuiImage, { ImageProps as MuiImageProps } from "next/image";
 import { forwardRef } from "react";
 
-interface ImageProps extends MuiImageProps {}
+export interface ImageProps extends MuiImageProps {}
 
 const Image = forwardRef<
   HTMLImageElement, ImageProps
@@ -11,6 +11,6 @@ const Image = forwardRef<
   return <MuiImage ref={ref} {...props} />;
 });
 
-Image.displayName = "Image"
+Image.displayName = "Image";
 
 export default Image;

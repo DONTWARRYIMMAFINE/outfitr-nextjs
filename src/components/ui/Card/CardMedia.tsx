@@ -1,7 +1,6 @@
 "use client";
 
 import { CardMedia as MuiCardMedia, CardMediaProps as MuiCardMediaProps } from "@mui/material";
-import { FC, forwardRef } from "react";
 
 export interface CardMediaProps extends MuiCardMediaProps<"img"> {}
 
