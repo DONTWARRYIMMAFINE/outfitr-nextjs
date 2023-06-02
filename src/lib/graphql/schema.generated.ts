@@ -49,6 +49,8 @@ export type Address = {
   building?: Maybe<Scalars['String']>;
   city: City;
   cityId: Scalars['ID'];
+  country: Country;
+  countryId: Scalars['ID'];
   createdAt: Scalars['DateTime'];
   formattedAddress: Scalars['String'];
   id: Scalars['ID'];
@@ -62,6 +64,7 @@ export type AddressAggregateGroupBy = {
   __typename?: 'AddressAggregateGroupBy';
   building?: Maybe<Scalars['String']>;
   cityId?: Maybe<Scalars['ID']>;
+  countryId?: Maybe<Scalars['ID']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   postalCode?: Maybe<Scalars['String']>;
@@ -84,6 +87,7 @@ export type AddressCountAggregate = {
   __typename?: 'AddressCountAggregate';
   building?: Maybe<Scalars['Int']>;
   cityId?: Maybe<Scalars['Int']>;
+  countryId?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
   postalCode?: Maybe<Scalars['Int']>;
@@ -96,6 +100,7 @@ export type AddressDeleteResponse = {
   __typename?: 'AddressDeleteResponse';
   building?: Maybe<Scalars['String']>;
   cityId?: Maybe<Scalars['ID']>;
+  countryId?: Maybe<Scalars['ID']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   formattedAddress?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
@@ -110,6 +115,8 @@ export type AddressFilter = {
   building?: InputMaybe<StringFieldComparison>;
   city?: InputMaybe<AddressFilterCityFilter>;
   cityId?: InputMaybe<IdFilterComparison>;
+  country?: InputMaybe<AddressFilterCountryFilter>;
+  countryId?: InputMaybe<IdFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<AddressFilter>>;
@@ -129,10 +136,21 @@ export type AddressFilterCityFilter = {
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
+export type AddressFilterCountryFilter = {
+  and?: InputMaybe<Array<AddressFilterCountryFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<AddressFilterCountryFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
 export type AddressMaxAggregate = {
   __typename?: 'AddressMaxAggregate';
   building?: Maybe<Scalars['String']>;
   cityId?: Maybe<Scalars['ID']>;
+  countryId?: Maybe<Scalars['ID']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   postalCode?: Maybe<Scalars['String']>;
@@ -145,6 +163,7 @@ export type AddressMinAggregate = {
   __typename?: 'AddressMinAggregate';
   building?: Maybe<Scalars['String']>;
   cityId?: Maybe<Scalars['ID']>;
+  countryId?: Maybe<Scalars['ID']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   postalCode?: Maybe<Scalars['String']>;
@@ -162,6 +181,7 @@ export type AddressSort = {
 export enum AddressSortFields {
   Building = 'building',
   CityId = 'cityId',
+  CountryId = 'countryId',
   CreatedAt = 'createdAt',
   Id = 'id',
   PostalCode = 'postalCode',
@@ -287,7 +307,7 @@ export enum BrandSortFields {
   UserId = 'userId'
 }
 
-export type CancelOrderInputType = {
+export type CancelPaymentIntentInput = {
   /** The id of the record to delete. */
   id: Scalars['ID'];
 };
@@ -400,6 +420,7 @@ export type CartFilterAddressFilter = {
   and?: InputMaybe<Array<CartFilterAddressFilter>>;
   building?: InputMaybe<StringFieldComparison>;
   cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<CartFilterAddressFilter>>;
@@ -477,10 +498,8 @@ export type CartItem = {
   cartId: Scalars['ID'];
   createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
-  image?: Maybe<Media>;
   price: Price;
   priceId: Scalars['ID'];
-  productTitle: Scalars['String'];
   productVariant: ProductVariant;
   productVariantId: Scalars['ID'];
   quantity: Scalars['Int'];
@@ -529,9 +548,7 @@ export type CartItemDeleteResponse = {
   cartId?: Maybe<Scalars['ID']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
-  image?: Maybe<Media>;
   priceId?: Maybe<Scalars['ID']>;
-  productTitle?: Maybe<Scalars['String']>;
   productVariantId?: Maybe<Scalars['ID']>;
   quantity?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -1189,6 +1206,22 @@ export type CommentSumAggregate = {
   rating?: Maybe<Scalars['Float']>;
 };
 
+export type ConfirmOrderPaymentInput = {
+  paymentIntentId: Scalars['String'];
+};
+
+export type ConfirmOrderPaymentInputType = {
+  /** The id of the record to update */
+  id: Scalars['ID'];
+  /** The update to apply. */
+  update: ConfirmOrderPaymentInput;
+};
+
+export type ConfirmPaymentIntentInput = {
+  /** The id of the record to delete. */
+  id: Scalars['ID'];
+};
+
 export type Country = {
   __typename?: 'Country';
   cities: Array<City>;
@@ -1298,6 +1331,7 @@ export enum CountrySortFields {
 export type CreateAddressInput = {
   building?: InputMaybe<Scalars['String']>;
   cityId: Scalars['String'];
+  countryId: Scalars['String'];
   postalCode: Scalars['String'];
   state?: InputMaybe<Scalars['String']>;
   street?: InputMaybe<Scalars['String']>;
@@ -1427,11 +1461,6 @@ export type CreateOneEmailAddressInput = {
   emailAddress: CreateEmailAddressInput;
 };
 
-export type CreateOneOrderFromCurrentUserCartInputType = {
-  /** The record to create */
-  order: CreateOrderFromCurrentUserCartInput;
-};
-
 export type CreateOneOrderInput = {
   /** The record to create */
   order: CreateOrderInput;
@@ -1505,12 +1534,6 @@ export type CreateOneUserInput = {
 export type CreateOneWarehouseInput = {
   /** The record to create */
   warehouse: CreateWarehouseInput;
-};
-
-export type CreateOrderFromCurrentUserCartInput = {
-  deliveryAddressId?: InputMaybe<Scalars['String']>;
-  deliveryMethodId?: InputMaybe<Scalars['String']>;
-  paymentMethodId?: InputMaybe<Scalars['String']>;
 };
 
 export type CreateOrderInput = {
@@ -2423,9 +2446,13 @@ export type Mutation = {
   addMediaToProduct: Product;
   addProductsToWishlist: Wishlist;
   addWarehouseItemsToWarehouse: Warehouse;
+  cancelOnePaymentIntent: PaymentIntent;
   cancelOrder: Order;
   cancelReservationForWarehouseItemsInWarehouse: Warehouse;
+  completeOrder: Order;
   confirmEmail: EmailAddressConfirmation;
+  confirmOneOrderPayment: Order;
+  confirmOnePaymentIntent: PaymentIntent;
   createManyCarts: Array<Cart>;
   createOneAddress: Address;
   createOneBrand: Brand;
@@ -2440,7 +2467,6 @@ export type Mutation = {
   createOneEmailAddress: EmailAddress;
   createOneMedia: Media;
   createOneOrder: Order;
-  createOneOrderFromCurrentUserCart: Order;
   createOnePaymentIntent: PaymentIntent;
   createOnePaymentIntentFromCart: PaymentIntent;
   createOnePaymentMethod: PaymentMethod;
@@ -2485,6 +2511,7 @@ export type Mutation = {
   emptyCart: Cart;
   login: LoginResponse;
   logout: Scalars['Boolean'];
+  placeOrderFromUserCart: Array<Order>;
   reissueAccessToken: AccessTokenResponse;
   releaseWarehouseItemsInWarehouse: Warehouse;
   removeCartItemsFromCart: Cart;
@@ -2496,6 +2523,8 @@ export type Mutation = {
   restoreOneUser: User;
   sendConfirmationEmail: EmailAddressConfirmation;
   signup: SignupResponse;
+  signupAsPartner: SignupResponse;
+  transferOrderToDelivery: Order;
   updateAvatar: User;
   updateManyCarts: UpdateManyResponse;
   updateOneAddress: Address;
@@ -2549,13 +2578,33 @@ export type MutationAddWarehouseItemsToWarehouseArgs = {
 };
 
 
+export type MutationCancelOnePaymentIntentArgs = {
+  input: CancelPaymentIntentInput;
+};
+
+
 export type MutationCancelOrderArgs = {
-  input: CancelOrderInputType;
+  input: UpdateOrderInputType;
 };
 
 
 export type MutationCancelReservationForWarehouseItemsInWarehouseArgs = {
   input: UpdateOneWarehouseInputType;
+};
+
+
+export type MutationCompleteOrderArgs = {
+  input: UpdateOrderInputType;
+};
+
+
+export type MutationConfirmOneOrderPaymentArgs = {
+  input: ConfirmOrderPaymentInputType;
+};
+
+
+export type MutationConfirmOnePaymentIntentArgs = {
+  input: ConfirmPaymentIntentInput;
 };
 
 
@@ -2626,11 +2675,6 @@ export type MutationCreateOneMediaArgs = {
 
 export type MutationCreateOneOrderArgs = {
   input: CreateOneOrderInput;
-};
-
-
-export type MutationCreateOneOrderFromCurrentUserCartArgs = {
-  input: CreateOneOrderFromCurrentUserCartInputType;
 };
 
 
@@ -2892,6 +2936,17 @@ export type MutationSignupArgs = {
 };
 
 
+export type MutationSignupAsPartnerArgs = {
+  file?: InputMaybe<Scalars['Upload']>;
+  input: SignupInput;
+};
+
+
+export type MutationTransferOrderToDeliveryArgs = {
+  input: UpdateOrderInputType;
+};
+
+
 export type MutationUpdateAvatarArgs = {
   file: Scalars['Upload'];
   input: SelectUserInput;
@@ -3083,8 +3138,10 @@ export type Order = {
   deliveryPrice: Price;
   deliveryPriceId: Scalars['ID'];
   id: Scalars['ID'];
+  orderHistories: Array<OrderHistory>;
   orderItems: Array<OrderItem>;
   paymentIntent?: Maybe<PaymentIntent>;
+  paymentIntentId?: Maybe<Scalars['ID']>;
   paymentMethod: PaymentMethod;
   paymentMethodId: Scalars['ID'];
   status: OrderStatus;
@@ -3100,6 +3157,12 @@ export type Order = {
 };
 
 
+export type OrderOrderHistoriesArgs = {
+  filter?: OrderHistoryFilter;
+  sorting?: Array<OrderHistorySort>;
+};
+
+
 export type OrderOrderItemsArgs = {
   filter?: OrderItemFilter;
   sorting?: Array<OrderItemSort>;
@@ -3112,6 +3175,7 @@ export type OrderAggregateGroupBy = {
   deliveryMethodId?: Maybe<Scalars['ID']>;
   deliveryPriceId?: Maybe<Scalars['ID']>;
   id?: Maybe<Scalars['ID']>;
+  paymentIntentId?: Maybe<Scalars['ID']>;
   paymentMethodId?: Maybe<Scalars['ID']>;
   status?: Maybe<OrderStatus>;
   subtotalPriceId?: Maybe<Scalars['ID']>;
@@ -3138,6 +3202,7 @@ export type OrderCountAggregate = {
   deliveryMethodId?: Maybe<Scalars['Int']>;
   deliveryPriceId?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
+  paymentIntentId?: Maybe<Scalars['Int']>;
   paymentMethodId?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['Int']>;
   subtotalPriceId?: Maybe<Scalars['Int']>;
@@ -3154,6 +3219,7 @@ export type OrderDeleteResponse = {
   deliveryMethodId?: Maybe<Scalars['ID']>;
   deliveryPriceId?: Maybe<Scalars['ID']>;
   id?: Maybe<Scalars['ID']>;
+  paymentIntentId?: Maybe<Scalars['ID']>;
   paymentMethodId?: Maybe<Scalars['ID']>;
   status?: Maybe<OrderStatus>;
   subtotalPriceId?: Maybe<Scalars['ID']>;
@@ -3174,8 +3240,10 @@ export type OrderFilter = {
   deliveryPriceId?: InputMaybe<IdFilterComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<OrderFilter>>;
+  orderHistories?: InputMaybe<OrderFilterOrderHistoryFilter>;
   orderItems?: InputMaybe<OrderFilterOrderItemFilter>;
   paymentIntent?: InputMaybe<OrderFilterPaymentIntentFilter>;
+  paymentIntentId?: InputMaybe<IdFilterComparison>;
   paymentMethod?: InputMaybe<OrderFilterPaymentMethodFilter>;
   paymentMethodId?: InputMaybe<IdFilterComparison>;
   status?: InputMaybe<OrderStatusFilterComparison>;
@@ -3194,6 +3262,7 @@ export type OrderFilterAddressFilter = {
   and?: InputMaybe<Array<OrderFilterAddressFilter>>;
   building?: InputMaybe<StringFieldComparison>;
   cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<OrderFilterAddressFilter>>;
@@ -3217,6 +3286,16 @@ export type OrderFilterDeliveryMethodFilter = {
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
+export type OrderFilterOrderHistoryFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilter>>;
+  orderId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<OrderStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
 export type OrderFilterOrderItemFilter = {
   and?: InputMaybe<Array<OrderFilterOrderItemFilter>>;
   createdAt?: InputMaybe<DateFieldComparison>;
@@ -3235,9 +3314,11 @@ export type OrderFilterPaymentIntentFilter = {
   clientSecret?: InputMaybe<StringFieldComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
+  intentId?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<OrderFilterPaymentIntentFilter>>;
   paymentMethodId?: InputMaybe<IdFilterComparison>;
   priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<PaymentIntentStatusFilterComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -3277,6 +3358,58 @@ export type OrderFilterUserFilter = {
   phone?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
+
+export type OrderHistory = {
+  __typename?: 'OrderHistory';
+  createdAt: Scalars['DateTime'];
+  id: Scalars['ID'];
+  orderId: Scalars['ID'];
+  status: OrderStatus;
+  updatedAt: Scalars['DateTime'];
+};
+
+export type OrderHistoryFilter = {
+  and?: InputMaybe<Array<OrderHistoryFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderHistoryFilter>>;
+  order?: InputMaybe<OrderHistoryFilterOrderFilter>;
+  orderId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<OrderStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderHistoryFilterOrderFilter = {
+  and?: InputMaybe<Array<OrderHistoryFilterOrderFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deliveryAddressId?: InputMaybe<IdFilterComparison>;
+  deliveryMethodId?: InputMaybe<IdFilterComparison>;
+  deliveryPriceId?: InputMaybe<IdFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderHistoryFilterOrderFilter>>;
+  paymentIntentId?: InputMaybe<IdFilterComparison>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<OrderStatusFilterComparison>;
+  subtotalPriceId?: InputMaybe<IdFilterComparison>;
+  taxPriceId?: InputMaybe<IdFilterComparison>;
+  totalPriceId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderHistorySort = {
+  direction: SortDirection;
+  field: OrderHistorySortFields;
+  nulls?: InputMaybe<SortNulls>;
+};
+
+export enum OrderHistorySortFields {
+  CreatedAt = 'createdAt',
+  Id = 'id',
+  OrderId = 'orderId',
+  Status = 'status',
+  UpdatedAt = 'updatedAt'
+}
 
 export type OrderItem = {
   __typename?: 'OrderItem';
@@ -3356,6 +3489,7 @@ export type OrderItemFilterOrderFilter = {
   deliveryPriceId?: InputMaybe<IdFilterComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<OrderItemFilterOrderFilter>>;
+  paymentIntentId?: InputMaybe<IdFilterComparison>;
   paymentMethodId?: InputMaybe<IdFilterComparison>;
   status?: InputMaybe<OrderStatusFilterComparison>;
   subtotalPriceId?: InputMaybe<IdFilterComparison>;
@@ -3453,6 +3587,7 @@ export type OrderMaxAggregate = {
   deliveryMethodId?: Maybe<Scalars['ID']>;
   deliveryPriceId?: Maybe<Scalars['ID']>;
   id?: Maybe<Scalars['ID']>;
+  paymentIntentId?: Maybe<Scalars['ID']>;
   paymentMethodId?: Maybe<Scalars['ID']>;
   status?: Maybe<OrderStatus>;
   subtotalPriceId?: Maybe<Scalars['ID']>;
@@ -3469,6 +3604,7 @@ export type OrderMinAggregate = {
   deliveryMethodId?: Maybe<Scalars['ID']>;
   deliveryPriceId?: Maybe<Scalars['ID']>;
   id?: Maybe<Scalars['ID']>;
+  paymentIntentId?: Maybe<Scalars['ID']>;
   paymentMethodId?: Maybe<Scalars['ID']>;
   status?: Maybe<OrderStatus>;
   subtotalPriceId?: Maybe<Scalars['ID']>;
@@ -3490,6 +3626,7 @@ export enum OrderSortFields {
   DeliveryMethodId = 'deliveryMethodId',
   DeliveryPriceId = 'deliveryPriceId',
   Id = 'id',
+  PaymentIntentId = 'paymentIntentId',
   PaymentMethodId = 'paymentMethodId',
   Status = 'status',
   SubtotalPriceId = 'subtotalPriceId',
@@ -3506,7 +3643,9 @@ export enum OrderStatus {
   InShipping = 'IN_SHIPPING',
   OnTheWayToWarehouse = 'ON_THE_WAY_TO_WAREHOUSE',
   Paid = 'PAID',
+  ReadyForShipping = 'READY_FOR_SHIPPING',
   Rejected = 'REJECTED',
+  ReservedInWarehouse = 'RESERVED_IN_WAREHOUSE',
   WaitingForPayment = 'WAITING_FOR_PAYMENT'
 }
 
@@ -3544,10 +3683,12 @@ export type PaymentIntent = {
   clientSecret: Scalars['String'];
   createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
+  intentId: Scalars['String'];
   paymentMethod: PaymentMethod;
   paymentMethodId: Scalars['ID'];
   price?: Maybe<Price>;
   priceId?: Maybe<Scalars['ID']>;
+  status: PaymentIntentStatus;
   updatedAt: Scalars['DateTime'];
 };
 
@@ -3556,8 +3697,10 @@ export type PaymentIntentAggregateGroupBy = {
   clientSecret?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
+  intentId?: Maybe<Scalars['String']>;
   paymentMethodId?: Maybe<Scalars['ID']>;
   priceId?: Maybe<Scalars['ID']>;
+  status?: Maybe<PaymentIntentStatus>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -3576,8 +3719,10 @@ export type PaymentIntentCountAggregate = {
   clientSecret?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
+  intentId?: Maybe<Scalars['Int']>;
   paymentMethodId?: Maybe<Scalars['Int']>;
   priceId?: Maybe<Scalars['Int']>;
+  status?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['Int']>;
 };
 
@@ -3586,8 +3731,10 @@ export type PaymentIntentDeleteResponse = {
   clientSecret?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
+  intentId?: Maybe<Scalars['String']>;
   paymentMethodId?: Maybe<Scalars['ID']>;
   priceId?: Maybe<Scalars['ID']>;
+  status?: Maybe<PaymentIntentStatus>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -3596,11 +3743,13 @@ export type PaymentIntentFilter = {
   clientSecret?: InputMaybe<StringFieldComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
+  intentId?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<PaymentIntentFilter>>;
   paymentMethod?: InputMaybe<PaymentIntentFilterPaymentMethodFilter>;
   paymentMethodId?: InputMaybe<IdFilterComparison>;
   price?: InputMaybe<PaymentIntentFilterPriceFilter>;
   priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<PaymentIntentStatusFilterComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -3632,8 +3781,10 @@ export type PaymentIntentMaxAggregate = {
   clientSecret?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
+  intentId?: Maybe<Scalars['String']>;
   paymentMethodId?: Maybe<Scalars['ID']>;
   priceId?: Maybe<Scalars['ID']>;
+  status?: Maybe<PaymentIntentStatus>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -3642,8 +3793,10 @@ export type PaymentIntentMinAggregate = {
   clientSecret?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
+  intentId?: Maybe<Scalars['String']>;
   paymentMethodId?: Maybe<Scalars['ID']>;
   priceId?: Maybe<Scalars['ID']>;
+  status?: Maybe<PaymentIntentStatus>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -3657,10 +3810,39 @@ export enum PaymentIntentSortFields {
   ClientSecret = 'clientSecret',
   CreatedAt = 'createdAt',
   Id = 'id',
+  IntentId = 'intentId',
   PaymentMethodId = 'paymentMethodId',
   PriceId = 'priceId',
+  Status = 'status',
   UpdatedAt = 'updatedAt'
 }
+
+export enum PaymentIntentStatus {
+  Canceled = 'CANCELED',
+  Processing = 'PROCESSING',
+  RequiresAction = 'REQUIRES_ACTION',
+  RequiresCapture = 'REQUIRES_CAPTURE',
+  RequiresConfirmation = 'REQUIRES_CONFIRMATION',
+  RequiresPaymentMethod = 'REQUIRES_PAYMENT_METHOD',
+  Succeeded = 'SUCCEEDED'
+}
+
+export type PaymentIntentStatusFilterComparison = {
+  eq?: InputMaybe<PaymentIntentStatus>;
+  gt?: InputMaybe<PaymentIntentStatus>;
+  gte?: InputMaybe<PaymentIntentStatus>;
+  iLike?: InputMaybe<PaymentIntentStatus>;
+  in?: InputMaybe<Array<PaymentIntentStatus>>;
+  is?: InputMaybe<Scalars['Boolean']>;
+  isNot?: InputMaybe<Scalars['Boolean']>;
+  like?: InputMaybe<PaymentIntentStatus>;
+  lt?: InputMaybe<PaymentIntentStatus>;
+  lte?: InputMaybe<PaymentIntentStatus>;
+  neq?: InputMaybe<PaymentIntentStatus>;
+  notILike?: InputMaybe<PaymentIntentStatus>;
+  notIn?: InputMaybe<Array<PaymentIntentStatus>>;
+  notLike?: InputMaybe<PaymentIntentStatus>;
+};
 
 export type PaymentMethod = {
   __typename?: 'PaymentMethod';
@@ -3994,6 +4176,7 @@ export type PickupPointFilterAddressFilter = {
   and?: InputMaybe<Array<PickupPointFilterAddressFilter>>;
   building?: InputMaybe<StringFieldComparison>;
   cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<PickupPointFilterAddressFilter>>;
@@ -4709,9 +4892,11 @@ export type PromotionProductFilterPaymentIntentFilter = {
   clientSecret?: InputMaybe<StringFieldComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
+  intentId?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<PromotionProductFilterPaymentIntentFilter>>;
   paymentMethodId?: InputMaybe<IdFilterComparison>;
   priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<PaymentIntentStatusFilterComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -5504,6 +5689,7 @@ export type StringFieldComparison = {
 export type UpdateAddressInput = {
   building?: InputMaybe<Scalars['String']>;
   cityId?: InputMaybe<Scalars['String']>;
+  countryId?: InputMaybe<Scalars['String']>;
   postalCode?: InputMaybe<Scalars['String']>;
   state?: InputMaybe<Scalars['String']>;
   street?: InputMaybe<Scalars['String']>;
@@ -5779,6 +5965,11 @@ export type UpdateOrderInput = {
   paymentMethodId?: InputMaybe<Scalars['String']>;
 };
 
+export type UpdateOrderInputType = {
+  /** The id of the record to delete. */
+  id: Scalars['ID'];
+};
+
 export type UpdatePaymentIntentInput = {
   clientSecret?: InputMaybe<Scalars['String']>;
   paymentMethodId?: InputMaybe<Scalars['ID']>;
@@ -5966,6 +6157,7 @@ export type UserAddressFilterAddressFilter = {
   and?: InputMaybe<Array<UserAddressFilterAddressFilter>>;
   building?: InputMaybe<StringFieldComparison>;
   cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<UserAddressFilterAddressFilter>>;
@@ -6293,6 +6485,7 @@ export type WarehouseFilterAddressFilter = {
   and?: InputMaybe<Array<WarehouseFilterAddressFilter>>;
   building?: InputMaybe<StringFieldComparison>;
   cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<WarehouseFilterAddressFilter>>;
@@ -6548,13 +6741,13 @@ export type WishlistMinAggregate = {
   userId?: Maybe<Scalars['ID']>;
 };
 
-export type AddressFragment = { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } };
+export type AddressFragment = { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } };
 
 export type BrandFragment = { __typename?: 'Brand', id: string, code: string, name: string };
 
-export type CartFragment = { __typename?: 'Cart', id: string, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> };
+export type CartFragment = { __typename?: 'Cart', id: string, paymentMethodId?: string | null, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } } }> };
 
-export type CartItemFragment = { __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null };
+export type CartItemFragment = { __typename?: 'CartItem', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } } };
 
 export type CategoryFragment = { __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null };
 
@@ -6572,6 +6765,12 @@ export type EmailAddressFragment = { __typename?: 'EmailAddress', id: string, ad
 
 export type MediaFragment = { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null };
 
+export type OrderFragment = { __typename?: 'Order', id: string, status: OrderStatus, deliveryAddress: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> };
+
+export type OrderHistoryFragment = { __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any };
+
+export type OrderItemFragment = { __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } };
+
 export type PaymentIntentFragment = { __typename?: 'PaymentIntent', id: string, clientSecret: string, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, price?: { __typename?: 'Price', id: string, amount: number, currency: Currencies } | null };
 
 export type PaymentMethodFragment = { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null };
@@ -6582,6 +6781,8 @@ export type PriceFragment = { __typename?: 'Price', id: string, amount: number, 
 
 export type ProductFragment = { __typename?: 'Product', id: string, title: string, description: string, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: string, name: string }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }> };
 
+export type ProductPartialFragment = { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> };
+
 export type ProductVariantFragment = { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } };
 
 export type RoleFragment = { __typename?: 'Role', id: string, code: Roles, name: string };
@@ -6590,7 +6791,7 @@ export type SizeFragment = { __typename?: 'Size', id: string, code: string, name
 
 export type UserFragment = { __typename?: 'User', id: string, firstName?: string | null, lastName?: string | null, fullName: string, phone?: string | null, emailAddress: { __typename?: 'EmailAddress', id: string, address: string, name?: string | null }, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> };
 
-export type UserAddressFragment = { __typename?: 'UserAddress', id: string, address: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } } };
+export type UserAddressFragment = { __typename?: 'UserAddress', id: string, address: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } };
 
 export type WishlistFragment = { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: string, name: string }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }> }> };
 
@@ -6599,7 +6800,7 @@ export type AddCartItemsToCartMutationVariables = Exact<{
 }>;
 
 
-export type AddCartItemsToCartMutation = { __typename?: 'Mutation', addCartItemsToCart: { __typename?: 'Cart', id: string, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } };
+export type AddCartItemsToCartMutation = { __typename?: 'Mutation', addCartItemsToCart: { __typename?: 'Cart', id: string, paymentMethodId?: string | null, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } } }> } };
 
 export type AddProductsToWishlistMutationVariables = Exact<{
   input: AddProductsToWishlistInputType;
@@ -6608,12 +6809,26 @@ export type AddProductsToWishlistMutationVariables = Exact<{
 
 export type AddProductsToWishlistMutation = { __typename?: 'Mutation', addProductsToWishlist: { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: string, name: string }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }> }> } };
 
+export type CancelOnePaymentIntentMutationVariables = Exact<{
+  input: CancelPaymentIntentInput;
+}>;
+
+
+export type CancelOnePaymentIntentMutation = { __typename?: 'Mutation', cancelOnePaymentIntent: { __typename?: 'PaymentIntent', id: string, clientSecret: string, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, price?: { __typename?: 'Price', id: string, amount: number, currency: Currencies } | null } };
+
+export type ConfirmOneOrderPaymentMutationVariables = Exact<{
+  input: ConfirmOrderPaymentInputType;
+}>;
+
+
+export type ConfirmOneOrderPaymentMutation = { __typename?: 'Mutation', confirmOneOrderPayment: { __typename?: 'Order', id: string } };
+
 export type CreateOneAddressMutationVariables = Exact<{
   input: CreateOneAddressInput;
 }>;
 
 
-export type CreateOneAddressMutation = { __typename?: 'Mutation', createOneAddress: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } } };
+export type CreateOneAddressMutation = { __typename?: 'Mutation', createOneAddress: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } };
 
 export type CreateOnePaymentIntentFromCartMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -6625,7 +6840,7 @@ export type CreateOneUserAddressMutationVariables = Exact<{
 }>;
 
 
-export type CreateOneUserAddressMutation = { __typename?: 'Mutation', createOneUserAddress: { __typename?: 'UserAddress', id: string, address: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } } } };
+export type CreateOneUserAddressMutation = { __typename?: 'Mutation', createOneUserAddress: { __typename?: 'UserAddress', id: string, address: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } } };
 
 export type DeleteOneUserAddressMutationVariables = Exact<{
   input: DeleteOneUserAddressInput;
@@ -6646,6 +6861,11 @@ export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type LogoutMutation = { __typename?: 'Mutation', logout: boolean };
 
+export type PlaceOrderFromUserCartMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PlaceOrderFromUserCartMutation = { __typename?: 'Mutation', placeOrderFromUserCart: Array<{ __typename?: 'Order', id: string, status: OrderStatus, deliveryAddress: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> }> };
+
 export type ReissueAccessTokenMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6656,7 +6876,7 @@ export type RemoveCartItemsFromCartMutationVariables = Exact<{
 }>;
 
 
-export type RemoveCartItemsFromCartMutation = { __typename?: 'Mutation', removeCartItemsFromCart: { __typename?: 'Cart', id: string, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } };
+export type RemoveCartItemsFromCartMutation = { __typename?: 'Mutation', removeCartItemsFromCart: { __typename?: 'Cart', id: string, paymentMethodId?: string | null, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } } }> } };
 
 export type RemoveProductsFromWishlistMutationVariables = Exact<{
   input: RemoveProductsFromWishlistInputType;
@@ -6685,7 +6905,7 @@ export type UpdateOneCartMutationVariables = Exact<{
 }>;
 
 
-export type UpdateOneCartMutation = { __typename?: 'Mutation', updateOneCart: { __typename?: 'Cart', id: string, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } };
+export type UpdateOneCartMutation = { __typename?: 'Mutation', updateOneCart: { __typename?: 'Cart', id: string, paymentMethodId?: string | null, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } } }> } };
 
 export type UpdateOneUserMutationVariables = Exact<{
   input: UpdateOneUserInput;
@@ -6699,7 +6919,7 @@ export type UpdateOneUserAddressMutationVariables = Exact<{
 }>;
 
 
-export type UpdateOneUserAddressMutation = { __typename?: 'Mutation', updateOneUserAddress: { __typename?: 'UserAddress', id: string, address: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } } } };
+export type UpdateOneUserAddressMutation = { __typename?: 'Mutation', updateOneUserAddress: { __typename?: 'UserAddress', id: string, address: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } } };
 
 export type BrandsQueryVariables = Exact<{
   filter?: InputMaybe<BrandFilter>;
@@ -6783,7 +7003,7 @@ export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: st
 export type MyCartQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyCartQuery = { __typename?: 'Query', myCart: { __typename?: 'Cart', id: string, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, productTitle: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, image?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }> } };
+export type MyCartQuery = { __typename?: 'Query', myCart: { __typename?: 'Cart', id: string, paymentMethodId?: string | null, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } } }> } };
 
 export type MyWishlistQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6796,6 +7016,15 @@ export type OneProductQueryVariables = Exact<{
 
 
 export type OneProductQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, title: string, description: string, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: string, name: string }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }> } | null };
+
+export type OrdersQueryVariables = Exact<{
+  filter?: InputMaybe<OrderFilter>;
+  paging?: InputMaybe<OffsetPaging>;
+  sorting?: InputMaybe<Array<OrderSort> | OrderSort>;
+}>;
+
+
+export type OrdersQuery = { __typename?: 'Query', orders: { __typename?: 'OrderConnection', nodes: Array<{ __typename?: 'Order', id: string, status: OrderStatus, deliveryAddress: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> }> } };
 
 export type PaymentMethodsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6833,15 +7062,8 @@ export type SizesTotalCountQuery = { __typename?: 'Query', sizes: { __typename?:
 export type UserAddressesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserAddressesQuery = { __typename?: 'Query', userAddresses: { __typename?: 'UserAddressConnection', nodes: Array<{ __typename?: 'UserAddress', id: string, address: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, formattedAddress: string, city: { __typename?: 'City', id: string, name: string } } }> } };
+export type UserAddressesQuery = { __typename?: 'Query', userAddresses: { __typename?: 'UserAddressConnection', nodes: Array<{ __typename?: 'UserAddress', id: string, address: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } }> } };
 
-export const BrandFragmentDoc = gql`
-    fragment Brand on Brand {
-  id
-  code
-  name
-}
-    `;
 export const MediaFragmentDoc = gql`
     fragment Media on Media {
   id
@@ -6870,18 +7092,33 @@ export const CityFragmentDoc = gql`
   name
 }
     `;
+export const CountryFragmentDoc = gql`
+    fragment Country on Country {
+  id
+  code
+  name
+  cities {
+    ...City
+  }
+}
+    ${CityFragmentDoc}`;
 export const AddressFragmentDoc = gql`
     fragment Address on Address {
   id
   city {
     ...City
   }
+  country {
+    ...Country
+  }
   state
   street
   building
+  postalCode
   formattedAddress
 }
-    ${CityFragmentDoc}`;
+    ${CityFragmentDoc}
+${CountryFragmentDoc}`;
 export const PriceFragmentDoc = gql`
     fragment Price on Price {
   id
@@ -6933,27 +7170,47 @@ export const ProductVariantFragmentDoc = gql`
     ${PriceFragmentDoc}
 ${ColorFragmentDoc}
 ${SizeFragmentDoc}`;
+export const BrandFragmentDoc = gql`
+    fragment Brand on Brand {
+  id
+  code
+  name
+}
+    `;
+export const ProductPartialFragmentDoc = gql`
+    fragment ProductPartial on Product {
+  id
+  title
+  brand {
+    ...Brand
+  }
+  media {
+    ...Media
+  }
+}
+    ${BrandFragmentDoc}
+${MediaFragmentDoc}`;
 export const CartItemFragmentDoc = gql`
     fragment CartItem on CartItem {
   id
   price {
     ...Price
   }
-  productTitle
   productVariant {
     ...ProductVariant
-  }
-  image {
-    ...Media
+    product {
+      ...ProductPartial
+    }
   }
   quantity
 }
     ${PriceFragmentDoc}
 ${ProductVariantFragmentDoc}
-${MediaFragmentDoc}`;
+${ProductPartialFragmentDoc}`;
 export const CartFragmentDoc = gql`
     fragment Cart on Cart {
   id
+  paymentMethodId
   paymentMethod {
     ...PaymentMethod
   }
@@ -7008,16 +7265,68 @@ export const CommentFragmentDoc = gql`
   createdAt
 }
     ${MediaFragmentDoc}`;
-export const CountryFragmentDoc = gql`
-    fragment Country on Country {
+export const OrderItemFragmentDoc = gql`
+    fragment OrderItem on OrderItem {
   id
-  code
-  name
-  cities {
-    ...City
+  productVariant {
+    ...ProductVariant
+    product {
+      ...ProductPartial
+    }
+  }
+  price {
+    ...Price
+  }
+  quantity
+}
+    ${ProductVariantFragmentDoc}
+${ProductPartialFragmentDoc}
+${PriceFragmentDoc}`;
+export const OrderHistoryFragmentDoc = gql`
+    fragment OrderHistory on OrderHistory {
+  id
+  status
+  createdAt
+}
+    `;
+export const OrderFragmentDoc = gql`
+    fragment Order on Order {
+  id
+  deliveryAddress {
+    ...Address
+  }
+  deliveryMethod {
+    ...DeliveryMethod
+  }
+  paymentMethod {
+    ...PaymentMethod
+  }
+  subtotalPrice {
+    ...Price
+  }
+  taxPrice {
+    ...Price
+  }
+  deliveryPrice {
+    ...Price
+  }
+  totalPrice {
+    ...Price
+  }
+  status
+  orderItems {
+    ...OrderItem
+  }
+  orderHistories {
+    ...OrderHistory
   }
 }
-    ${CityFragmentDoc}`;
+    ${AddressFragmentDoc}
+${DeliveryMethodFragmentDoc}
+${PaymentMethodFragmentDoc}
+${PriceFragmentDoc}
+${OrderItemFragmentDoc}
+${OrderHistoryFragmentDoc}`;
 export const PaymentIntentFragmentDoc = gql`
     fragment PaymentIntent on PaymentIntent {
   id
@@ -7183,6 +7492,72 @@ export function useAddProductsToWishlistMutation(baseOptions?: Apollo.MutationHo
 export type AddProductsToWishlistMutationHookResult = ReturnType<typeof useAddProductsToWishlistMutation>;
 export type AddProductsToWishlistMutationResult = Apollo.MutationResult<AddProductsToWishlistMutation>;
 export type AddProductsToWishlistMutationOptions = Apollo.BaseMutationOptions<AddProductsToWishlistMutation, AddProductsToWishlistMutationVariables>;
+export const CancelOnePaymentIntentDocument = gql`
+    mutation CancelOnePaymentIntent($input: CancelPaymentIntentInput!) {
+  cancelOnePaymentIntent(input: $input) {
+    ...PaymentIntent
+  }
+}
+    ${PaymentIntentFragmentDoc}`;
+export type CancelOnePaymentIntentMutationFn = Apollo.MutationFunction<CancelOnePaymentIntentMutation, CancelOnePaymentIntentMutationVariables>;
+
+/**
+ * __useCancelOnePaymentIntentMutation__
+ *
+ * To run a mutation, you first call `useCancelOnePaymentIntentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCancelOnePaymentIntentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [cancelOnePaymentIntentMutation, { data, loading, error }] = useCancelOnePaymentIntentMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCancelOnePaymentIntentMutation(baseOptions?: Apollo.MutationHookOptions<CancelOnePaymentIntentMutation, CancelOnePaymentIntentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CancelOnePaymentIntentMutation, CancelOnePaymentIntentMutationVariables>(CancelOnePaymentIntentDocument, options);
+      }
+export type CancelOnePaymentIntentMutationHookResult = ReturnType<typeof useCancelOnePaymentIntentMutation>;
+export type CancelOnePaymentIntentMutationResult = Apollo.MutationResult<CancelOnePaymentIntentMutation>;
+export type CancelOnePaymentIntentMutationOptions = Apollo.BaseMutationOptions<CancelOnePaymentIntentMutation, CancelOnePaymentIntentMutationVariables>;
+export const ConfirmOneOrderPaymentDocument = gql`
+    mutation ConfirmOneOrderPayment($input: ConfirmOrderPaymentInputType!) {
+  confirmOneOrderPayment(input: $input) {
+    id
+  }
+}
+    `;
+export type ConfirmOneOrderPaymentMutationFn = Apollo.MutationFunction<ConfirmOneOrderPaymentMutation, ConfirmOneOrderPaymentMutationVariables>;
+
+/**
+ * __useConfirmOneOrderPaymentMutation__
+ *
+ * To run a mutation, you first call `useConfirmOneOrderPaymentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useConfirmOneOrderPaymentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [confirmOneOrderPaymentMutation, { data, loading, error }] = useConfirmOneOrderPaymentMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useConfirmOneOrderPaymentMutation(baseOptions?: Apollo.MutationHookOptions<ConfirmOneOrderPaymentMutation, ConfirmOneOrderPaymentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ConfirmOneOrderPaymentMutation, ConfirmOneOrderPaymentMutationVariables>(ConfirmOneOrderPaymentDocument, options);
+      }
+export type ConfirmOneOrderPaymentMutationHookResult = ReturnType<typeof useConfirmOneOrderPaymentMutation>;
+export type ConfirmOneOrderPaymentMutationResult = Apollo.MutationResult<ConfirmOneOrderPaymentMutation>;
+export type ConfirmOneOrderPaymentMutationOptions = Apollo.BaseMutationOptions<ConfirmOneOrderPaymentMutation, ConfirmOneOrderPaymentMutationVariables>;
 export const CreateOneAddressDocument = gql`
     mutation CreateOneAddress($input: CreateOneAddressInput!) {
   createOneAddress(input: $input) {
@@ -7380,6 +7755,38 @@ export function useLogoutMutation(baseOptions?: Apollo.MutationHookOptions<Logou
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
 export type LogoutMutationResult = Apollo.MutationResult<LogoutMutation>;
 export type LogoutMutationOptions = Apollo.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
+export const PlaceOrderFromUserCartDocument = gql`
+    mutation PlaceOrderFromUserCart {
+  placeOrderFromUserCart {
+    ...Order
+  }
+}
+    ${OrderFragmentDoc}`;
+export type PlaceOrderFromUserCartMutationFn = Apollo.MutationFunction<PlaceOrderFromUserCartMutation, PlaceOrderFromUserCartMutationVariables>;
+
+/**
+ * __usePlaceOrderFromUserCartMutation__
+ *
+ * To run a mutation, you first call `usePlaceOrderFromUserCartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePlaceOrderFromUserCartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [placeOrderFromUserCartMutation, { data, loading, error }] = usePlaceOrderFromUserCartMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePlaceOrderFromUserCartMutation(baseOptions?: Apollo.MutationHookOptions<PlaceOrderFromUserCartMutation, PlaceOrderFromUserCartMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PlaceOrderFromUserCartMutation, PlaceOrderFromUserCartMutationVariables>(PlaceOrderFromUserCartDocument, options);
+      }
+export type PlaceOrderFromUserCartMutationHookResult = ReturnType<typeof usePlaceOrderFromUserCartMutation>;
+export type PlaceOrderFromUserCartMutationResult = Apollo.MutationResult<PlaceOrderFromUserCartMutation>;
+export type PlaceOrderFromUserCartMutationOptions = Apollo.BaseMutationOptions<PlaceOrderFromUserCartMutation, PlaceOrderFromUserCartMutationVariables>;
 export const ReissueAccessTokenDocument = gql`
     mutation ReissueAccessToken {
   reissueAccessToken {
@@ -8228,6 +8635,45 @@ export function useOneProductLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type OneProductQueryHookResult = ReturnType<typeof useOneProductQuery>;
 export type OneProductLazyQueryHookResult = ReturnType<typeof useOneProductLazyQuery>;
 export type OneProductQueryResult = Apollo.QueryResult<OneProductQuery, OneProductQueryVariables>;
+export const OrdersDocument = gql`
+    query Orders($filter: OrderFilter, $paging: OffsetPaging, $sorting: [OrderSort!]) {
+  orders(filter: $filter, paging: $paging, sorting: $sorting) {
+    nodes {
+      ...Order
+    }
+  }
+}
+    ${OrderFragmentDoc}`;
+
+/**
+ * __useOrdersQuery__
+ *
+ * To run a query within a React component, call `useOrdersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrdersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrdersQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      paging: // value for 'paging'
+ *      sorting: // value for 'sorting'
+ *   },
+ * });
+ */
+export function useOrdersQuery(baseOptions?: Apollo.QueryHookOptions<OrdersQuery, OrdersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<OrdersQuery, OrdersQueryVariables>(OrdersDocument, options);
+      }
+export function useOrdersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<OrdersQuery, OrdersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<OrdersQuery, OrdersQueryVariables>(OrdersDocument, options);
+        }
+export type OrdersQueryHookResult = ReturnType<typeof useOrdersQuery>;
+export type OrdersLazyQueryHookResult = ReturnType<typeof useOrdersLazyQuery>;
+export type OrdersQueryResult = Apollo.QueryResult<OrdersQuery, OrdersQueryVariables>;
 export const PaymentMethodsDocument = gql`
     query PaymentMethods {
   paymentMethods {

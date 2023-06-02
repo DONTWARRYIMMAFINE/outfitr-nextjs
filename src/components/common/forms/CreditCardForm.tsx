@@ -1,57 +1,99 @@
 "use client";
 
-import { Box, Button } from "@/components/ui";
+import { Button } from "@/components/ui";
+import { Routes } from "@/constants/routes";
 import { SELF_URL } from "@/constants/urls";
-import { TextField } from "@mui/material";
-import { CardExpiryElement, CardNumberElement, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { Formik } from "formik";
-import { FC, useState } from "react";
+import { MyCartDocument, PaymentIntentFragment, useConfirmOneOrderPaymentMutation, usePlaceOrderFromUserCartMutation } from "@/lib/graphql/schema.generated";
+import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { PaymentMethodCreateParams } from "@stripe/stripe-js/types/api/payment-methods";
+import { map } from "lodash";
+import { useSearchParams } from "next/navigation";
+import { FC, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { WithTranslation, withTranslation } from "react-i18next";
 
-interface CreditCardFormProps extends WithTranslation {}
+interface CreditCardFormProps extends WithTranslation {
+  paymentIntent: PaymentIntentFragment;
+  billingDetails: PaymentMethodCreateParams.BillingDetails;
+}
 
-const CreditCardForm: FC<CreditCardFormProps> = ({t}) => {
+const CreditCardForm: FC<CreditCardFormProps> = ({ paymentIntent, billingDetails, t, i18n }) => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [errorMessage, setErrorMessage] = useState<string>();
+  const [message, setMessage] = useState<string>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [placeOrderFromUserCartMutation, { client }] = usePlaceOrderFromUserCartMutation();
+  const [confirmOneOrderPaymentMutation] = useConfirmOneOrderPaymentMutation();
 
-  const onSubmit = async (event: any) => {
-    // We don't want to let default form submission happen here,
-    // which would refresh the page.
-    event.preventDefault();
+  const handleError = (error: any) => {
+    setIsLoading(false);
+    toast.error(error.message);
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
 
     if (!stripe || !elements) {
       // Stripe.js hasn't yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
 
-    const { error } = await stripe.confirmPayment({
-      // `Elements` instance that was used to create the Payment Element
-      elements,
-      confirmParams: {
-        return_url: `${SELF_URL}/order/123/complete`,
-      },
-    });
+    setIsLoading(true);
 
-    if (error) {
-      // This point will only be reached if there is an immediate error when
-      // confirming the payment. Show error to your customer (for example, payment
-      // details incomplete)
-      setErrorMessage(error.message);
-    } else {
-      // Your customer will be redirected to your `return_url`. For some payment
-      // methods like iDEAL, your customer will be redirected to an intermediate
-      // site first to authorize the payment, then redirected to the `return_url`.
-    }
+    await placeOrderFromUserCartMutation({
+      onCompleted: async ({ placeOrderFromUserCart: orders }) => {
+        // Trigger form validation and wallet collection
+        const { error: submitError } = await elements.submit();
+        if (submitError) {
+          handleError(submitError);
+          return;
+        }
+
+        // Confirm the PaymentIntent using the details collected by the Payment Element
+        stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            payment_method_data: {
+              billing_details: billingDetails,
+            },
+            return_url: `${SELF_URL}/${i18n.language}/${Routes.Checkout.href}?step=completeOrder&orders=${map(orders, "id")}`,
+          },
+        }).then(async ({ error }) => {
+          if (error.type === "card_error" || error.type === "validation_error") {
+            setMessage(error.message);
+          } else {
+            setMessage("An unexpected error occurred.");
+          }
+
+          await confirmOneOrderPaymentMutation({
+            variables: {
+              input: {
+                id: orders[0].id,
+                update: {
+                  paymentIntentId: paymentIntent.id,
+                },
+              },
+            },
+          });
+        });
+
+        setIsLoading(false);
+      },
+      onError: error => {
+        client.refetchQueries({ include: [MyCartDocument] });
+        handleError(error);
+      },
+      refetchQueries: _ => [MyCartDocument],
+    });
   };
 
   return (
-    <Box component={"form"} display={"flex"} flexDirection={"column"} gap={2}>
-      <PaymentElement options={{ fields: { billingDetails: "never" } }} />
-      <Button variant={"primary"} fullWidth onSubmit={onSubmit}>{t("component.button.pay")}</Button>
-    </Box>
+    <form id={"payment-form"} onSubmit={handleSubmit}>
+      <PaymentElement id={"payment-element"} options={{ fields: { billingDetails: "never" } }} />
+      <Button id={"submit"} type={"submit"} variant={"primary"} disabled={isLoading || !stripe || !elements} fullWidth>{t("component.button.pay")}</Button>
+      {message && <div id="payment-message">{message}</div>}
+    </form>
   );
 };
 

@@ -1,0 +1,5 @@
+fragment OrderHistory on OrderHistory {
+  id
+  status
+  createdAt
+}

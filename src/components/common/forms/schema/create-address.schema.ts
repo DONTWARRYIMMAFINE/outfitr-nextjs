@@ -1,6 +1,9 @@
 import { object, string } from "yup";
 
 export const CreateAddressSchema = object().shape({
+  countryId: string()
+    .uuid("Values should be a UUIDv4")
+    .required("Country identifier is required"),
   cityId: string()
     .uuid("Values should be a UUIDv4")
     .required("City identifier is required"),

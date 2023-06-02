@@ -1,13 +1,13 @@
-fragment CartItem on CartItem {
+fragment OrderItem on OrderItem {
   id
-  price {
-    ...Price
-  }
   productVariant {
     ...ProductVariant
     product {
       ...ProductPartial
     }
+  }
+  price {
+    ...Price
   }
   quantity
 }

@@ -6,7 +6,7 @@ import { CreateAddressSchema } from "@/components/common/forms/schema/create-add
 import { Box, Button, Icons, IconTextField } from "@/components/ui";
 import { CreateAddressInput } from "@/lib/graphql/schema.generated";
 import { Formik } from "formik";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
 
 export interface CreateAddressFormProps extends WithTranslation {
@@ -14,12 +14,11 @@ export interface CreateAddressFormProps extends WithTranslation {
 }
 
 const CreateAddressForm: FC<CreateAddressFormProps> = ({ onSubmit, t }) => {
-  const [country, setCountry] = useState<string>();
-
   return (
     <Formik
       initialValues={{
         postalCode: "",
+        countryId: "",
         cityId: "",
         state: "",
         street: "",
@@ -31,16 +30,23 @@ const CreateAddressForm: FC<CreateAddressFormProps> = ({ onSubmit, t }) => {
       {({ handleSubmit, isValid, values, setValues, handleChange, errors }) => (
         <Box component={"form"} display={"flex"} flexDirection={"column"} alignItems={"center"} width={"100%"} gap={4}>
           <Box display={"flex"} gap={4} width={"100%"}>
-            <CountrySelect value={country} onChange={setCountry} fullWidth />
-            {country && <CitySelect
+            <CountrySelect
+              id={"countryId"}
+              name={"countryId"}
+              value={values.countryId}
+              onChange={value => setValues({ ...values, countryId: value })}
+              error={Boolean(errors.countryId)}
+              fullWidth
+            />
+            <CitySelect
               id={"cityId"}
               name={"cityId"}
               value={values.cityId}
               onChange={value => setValues({ ...values, cityId: value })}
-              country={country}
+              country={values.countryId}
               error={Boolean(errors.cityId)}
-              fullWidth />
-            }
+              fullWidth
+            />
             <IconTextField
               id={"postalCode"}
               name={"postalCode"}

@@ -22,7 +22,7 @@ const UserAddressSelect: FC<UserAddressSelectProps> = ({ value, onChange }) => {
   });
 
   if (error) return <Error message={error.message} />;
-  if (loading || !data) return <Skeleton height={180} />;
+  if (loading || !data) return <Skeleton variant={"rectangular"} height={180} />;
 
   if (data.userAddresses.nodes.length === 0) {
     return <Text variant={"p"}>You don't have any delivery address yet</Text>;

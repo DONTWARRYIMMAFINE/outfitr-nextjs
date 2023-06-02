@@ -28,7 +28,7 @@ const ProductRating: FC<ProductRatingProps> = ({ productId, t }) => {
   });
 
   if (error) return <Error message={error.message} />;
-  if (loading || !data) return <Skeleton height={180} />;
+  if (loading || !data) return <Skeleton variant={"rectangular"} height={180} />;
 
   return (
     <Box display={"flex"} flexDirection={"column"} gap={2}>
@@ -38,7 +38,7 @@ const ProductRating: FC<ProductRatingProps> = ({ productId, t }) => {
       </Box>
       <Box>
         {[...Array(5)].map((item, i) => (
-          <RatingRow starsCount={5 - i} commentsCount={filterCommentsByRating(5 - i, data.comments.nodes).length} />
+          <RatingRow key={i} starsCount={5 - i} commentsCount={filterCommentsByRating(5 - i, data.comments.nodes).length} />
         ))}
       </Box>
     </Box>

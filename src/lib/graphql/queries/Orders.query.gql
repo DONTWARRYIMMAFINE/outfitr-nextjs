@@ -1,0 +1,7 @@
+query Orders($filter: OrderFilter, $paging: OffsetPaging, $sorting: [OrderSort!]) {
+  orders(filter: $filter, paging: $paging, sorting: $sorting) {
+    nodes {
+      ...Order
+    }
+  }
+}

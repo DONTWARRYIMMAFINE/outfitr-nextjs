@@ -3,8 +3,12 @@ fragment Address on Address {
   city {
     ...City
   }
+  country {
+    ...Country
+  }
   state
   street
   building
+  postalCode
   formattedAddress
 }

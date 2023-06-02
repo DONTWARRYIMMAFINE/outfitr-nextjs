@@ -73,7 +73,10 @@ const CartItemList: FC<CartItemListProps> = ({}) => {
       minHeight={"100%"}
       borderRadius={0.5}
       overflow={"hidden"}
-      bgcolor={"background.body"}>
+      bgcolor={"background.body"}
+      padding={3}
+      gap={3}
+    >
       {cart?.cartItems.length === 0 && (
         <Box
           display={"flex"}

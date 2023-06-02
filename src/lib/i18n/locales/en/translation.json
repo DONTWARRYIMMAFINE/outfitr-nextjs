@@ -46,6 +46,9 @@
         },
         "paymentInfo": {
           "label": "Payment Info"
+        },
+        "completeOrder": {
+          "label": "Complete Order"
         }
       }
     }
@@ -157,6 +160,7 @@
     },
     "label": {
       "priceRange": "Price range",
+      "brand": "Brand",
       "brands": "Brands",
       "color": "Color",
       "colors": "Colors",

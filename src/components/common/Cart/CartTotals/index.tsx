@@ -49,7 +49,7 @@ const CartTotals: FC<CartTotalsProps> = ({ showItems, NextButton, PreviousButton
         currency: cart?.taxPrice.currency!,
         fontSize: 18,
       }}>
-        <Text variant={"p"}>{t("component.label.tax")} ({Math.floor(cart?.taxPrice.amount! / cart?.subtotalPrice.amount! * 100)}%)</Text>
+        <Text variant={"p"}>{t("component.label.tax")} ({Math.floor(cart?.taxPrice.amount! / cart?.subtotalPrice.amount! * 100) || 0}%)</Text>
       </CartRow>
       {cart?.deliveryMethod && (
         <CartRow priceProps={{

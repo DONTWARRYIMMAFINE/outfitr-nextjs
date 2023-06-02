@@ -120,6 +120,7 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(props, ref) 
     role, // Link don"t have roles.
     scroll,
     shallow,
+    showUnderline,
     ...other
   } = props;
 
@@ -137,7 +138,7 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(props, ref) 
       return <Anchor className={className} href={href} ref={ref} {...other} />;
     }
 
-    return <StyledMuiLink className={className} href={href} ref={ref} {...other} />;
+    return <StyledMuiLink className={className} href={href} ref={ref} showUnderline={showUnderline} {...other} />;
   }
 
   const linkAs = linkAsProp || as;
@@ -161,6 +162,7 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(props, ref) 
       component={NextLinkComposed}
       className={className}
       ref={ref}
+      showUnderline={showUnderline}
       {...nextjsProps}
       {...other}
     />

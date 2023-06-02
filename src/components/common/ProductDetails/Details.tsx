@@ -30,7 +30,7 @@ const Details: FC<DetailsProps> = ({ product, t }) => {
   }, [color, size, product.productVariants]);
 
   return (
-    <Box display={"flex"} flexDirection={"column"} gap={2} padding={4} bgcolor={"background.body"} borderRadius={0.5}>
+    <Box display={"flex"} flexDirection={"column"} height={"100%"} gap={2} padding={4} bgcolor={"background.body"} borderRadius={0.5}>
       <Text variant={"h1"} component={"h2"}>{product.title}</Text>
       <Text variant={"small"} opacity={0.5}>{product.productVariants[variant].sku}</Text>
       <Price fontSize={32} amount={product.productVariants[variant].price.amount} />
@@ -48,6 +48,7 @@ const Details: FC<DetailsProps> = ({ product, t }) => {
         selectedValues={[size]}
         onClick={setSize}
       />
+      <ProductRating productId={product.id} />
       <Box display={"flex"} gap={2} marginTop={2}>
         <Icons.Stock />
         <Text variant={"p"} opacity={0.7} paragraph>
@@ -57,7 +58,6 @@ const Details: FC<DetailsProps> = ({ product, t }) => {
         <AddToCart productVariantId={product.productVariants[variant].id} disabled={product.productVariants[variant].stock === 0} />
         <ModifyWishlistButton productId={product.id} />
       </Box>
-      <ProductRating productId={product.id} />
     </Box>
   );
 };

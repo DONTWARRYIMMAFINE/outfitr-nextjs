@@ -2,9 +2,10 @@
 
 import ProductItem from "@/components/common/Catalog/ProductItem";
 import ProductPagination from "@/components/common/Catalog/ProductPagination";
-import { Box } from "@/components/ui";
+import { Box, Error } from "@/components/ui";
 import { useProductsQuery } from "@/lib/graphql/schema.generated";
 import { parseIntOrDefault } from "@/lib/utils/parser.utils";
+import { Skeleton } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { FC } from "react";
 
@@ -56,8 +57,9 @@ const ProductItemList: FC<ProductCardListProps> = ({ category }) => {
     },
   });
 
-  if (loading || !data) return <Box>Loading...</Box>;
-  if (error) return <Box>Error...</Box>;
+  if (error) return <Error message={error.message} />;
+  if (loading || !data) return <Skeleton variant={"rectangular"} height={180} />;
+
 
   return (
     <Box
@@ -77,7 +79,7 @@ const ProductItemList: FC<ProductCardListProps> = ({ category }) => {
           <ProductItem key={product.id} product={product} />
         ))}
       </Box>
-      <ProductPagination />
+        <ProductPagination />
     </Box>
   );
 };

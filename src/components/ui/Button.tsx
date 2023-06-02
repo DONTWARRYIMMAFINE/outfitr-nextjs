@@ -12,7 +12,7 @@ declare module "@mui/material/Button" {
   }
 }
 
-export interface ButtonProps extends LoadingButtonProps{
+export interface ButtonProps extends LoadingButtonProps {
   selected?: boolean;
 }
 

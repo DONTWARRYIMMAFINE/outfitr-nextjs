@@ -11,7 +11,7 @@ import { FC } from "react";
 
 interface PaymentMethodListProps {}
 
-const PaymentMethodList: FC<PaymentMethodListProps> = ({}) => {
+const PaymentMethodList: FC<PaymentMethodListProps> = () => {
   const { data, loading, error } = usePaymentMethodsQuery();
 
   if (error) return <Error />;

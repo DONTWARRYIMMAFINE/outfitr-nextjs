@@ -6,7 +6,7 @@ import { userCart } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
 import { Collapse, IconButtonProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -26,16 +26,24 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 export interface PaymentMethodItemProps extends PropsWithChildren {
   paymentMethod: PaymentMethodFragment;
-  onExpendClick?: () => void;
+  onExpand?: () => void;
+  onCollapse?: () => void;
 }
 
-const PaymentMethodItem: FC<PaymentMethodItemProps> = ({ paymentMethod, onExpendClick, children }) => {
+const PaymentMethodItem: FC<PaymentMethodItemProps> = ({ paymentMethod, onExpand, onCollapse, children }) => {
   const cart = useReactiveVar(userCart);
-  const expanded = cart?.paymentMethod?.id === paymentMethod.id;
+  const [expand, setExpand] = useState(false);
   const [updateOneCartMutation] = useUpdateOneCartMutation();
 
-  const onExpandClick = async () => {
-    if (!expanded) {
+  useEffect(() => {
+    if (cart?.paymentMethodId !== paymentMethod.id) {
+      setExpand(false);
+    }
+  }, [cart, paymentMethod]);
+
+  const onClick = async () => {
+    console.log("paymentMethod", paymentMethod);
+    if (!expand) {
       // Setting cart payment method
       await updateOneCartMutation({
         variables: {
@@ -46,15 +54,22 @@ const PaymentMethodItem: FC<PaymentMethodItemProps> = ({ paymentMethod, onExpend
             },
           },
         },
-        onCompleted: data => userCart(data.updateOneCart),
+        onCompleted: data => {
+          userCart(data.updateOneCart);
+          setExpand(true);
+        },
         onError: _ => toast.error(`An error occurred during setting ${paymentMethod.code} payment method`),
       });
 
+      console.log("onExpand", typeof onExpand);
+
       // Additional custom logic
-      if (onExpendClick) {
-        onExpendClick();
-      }
+      onExpand && onExpand();
+    } else {
+      onCollapse && onCollapse();
     }
+
+    setExpand(!expand);
   };
 
   return (<>
@@ -72,7 +87,7 @@ const PaymentMethodItem: FC<PaymentMethodItemProps> = ({ paymentMethod, onExpend
           borderColor: "text.primary",
         },
       }}
-      onClick={onExpandClick}
+      onClick={onClick}
     >
       <Box display={"flex"} flexDirection={"column"}>
         <Text variant={"p"}>{paymentMethod.name}</Text>
@@ -81,15 +96,15 @@ const PaymentMethodItem: FC<PaymentMethodItemProps> = ({ paymentMethod, onExpend
       <Box display={"flex"} gap={2}>
         <Image src={paymentMethod.media?.url!} alt={"Payment Method image"} color={"white"} width={48} height={48} />
         <ExpandMore
-          expand={expanded}
-          aria-expanded={expanded}
+          expand={expand}
+          aria-expanded={expand}
           aria-label="show more"
         >
           <Icons.ExpandMore />
         </ExpandMore>
       </Box>
     </Box>
-    <Collapse in={expanded} timeout={"auto"} unmountOnExit>
+    <Collapse in={expand} timeout={"auto"} unmountOnExit>
       <Box display={"flex"} flexDirection={"column"} gap={2}>
         {children}
       </Box>

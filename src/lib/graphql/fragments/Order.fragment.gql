@@ -1,14 +1,13 @@
-fragment Cart on Cart {
+fragment Order on Order {
   id
-  paymentMethodId
-  paymentMethod {
-    ...PaymentMethod
-  }
   deliveryAddress {
     ...Address
   }
   deliveryMethod {
     ...DeliveryMethod
+  }
+  paymentMethod {
+    ...PaymentMethod
   }
   subtotalPrice {
     ...Price
@@ -22,8 +21,11 @@ fragment Cart on Cart {
   totalPrice {
     ...Price
   }
-  quantity
-  cartItems {
-    ...CartItem
+  status
+  orderItems {
+    ...OrderItem
+  }
+  orderHistories {
+    ...OrderHistory
   }
 }

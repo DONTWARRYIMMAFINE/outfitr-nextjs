@@ -69,19 +69,19 @@ export const Routes: Record<RouteKey, RouteValue> = {
     title: "My Orders",
     i18nKey: "profile.orders",
     href: "/profile",
-    query: { tab: "orders" }
+    query: { tab: "orders" },
   },
   Addresses: {
     title: "My Addresses",
     i18nKey: "profile.addresses",
     href: "/profile",
-    query: { tab: "addresses" }
+    query: { tab: "addresses" },
   },
   Settings: {
     title: "Settings",
     i18nKey: "profile.settings",
     href: "/profile",
-    query: { tab: "settings" }
+    query: { tab: "settings" },
   },
   LogOut: {
     title: "Log Out",
@@ -117,11 +117,11 @@ export const mainRoutes: RouteValue[] = [
   Routes.Catalog,
   Routes.Contact,
   Routes.About,
-]
+];
 
 export const guestMenuRoutes: RouteValue[] = [
   Routes.LogIn,
-  Routes.SignUp
+  Routes.SignUp,
 ];
 
 export const userMenuRoutes: RouteValue[] = [

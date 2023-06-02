@@ -22,7 +22,7 @@ const CountrySelect: FC<CountrySelectProps> = ({ value, onChange, ...props }) =>
   });
 
   if (error) return <Error message={error.message} />;
-  if (loading || !data) return <Skeleton height={120} />;
+  if (loading || !data) return <Skeleton variant={"rectangular"} height={180} />;
 
   return (
     <Select

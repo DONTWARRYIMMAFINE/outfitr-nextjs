@@ -18,7 +18,7 @@ const SizesFilter: FC<SizesFilterProps> = ({ selectedValues, handleFilterChange,
   const { data, loading, error } = useSizesQuery();
 
   if (error) return <Error message={"Unable to fetch sizes"} />;
-  if (loading || !data) return <Skeleton height={120} width={"100%"} />;
+  if (loading || !data) return <Skeleton variant={"rectangular"} height={180} width={"100%"} />;
 
   return (
     <Box display={"flex"} flexDirection={"column"} gap={2}>

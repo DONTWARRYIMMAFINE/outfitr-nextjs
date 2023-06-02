@@ -1,0 +1,10 @@
+fragment ProductPartial on Product {
+  id
+  title
+  brand {
+    ...Brand
+  }
+  media {
+    ...Media
+  }
+}

@@ -1,6 +1,5 @@
 import PaymentMethodList from "@/components/common/Cart/Checkout/PaymentInfoStep/PaymentMethodList";
 import ColorList from "@/components/common/ColorList";
-import CountryListClient from "@/components/common/country/CountryListClient";
 import CountrySelect from "@/components/common/CountrySelect";
 import Logo from "@/components/common/Logo";
 import News from "@/components/common/News";
@@ -48,10 +47,8 @@ const DemoPage = ({ params }: DemoPageProps) => {
       <Button variant={"transparent"} href={"/categories"}>
         <Text variant={"button"} color={"primary"}>Link button</Text>
       </Button>
-      <CountryListClient />
       <ColorList />
       <CountrySelect />
-      <PaymentMethodList />
     </ContentContainer>
     {/* @ts-expect-error Server Component */}
     <News lng={lng} />

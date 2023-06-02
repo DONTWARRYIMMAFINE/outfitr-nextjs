@@ -17,7 +17,7 @@ const ProductDetails: FC<ProductDetailsProps> = ({ productId, lng }) => {
   const { data, loading, error } = useOneProductQuery({ variables: { productId } });
 
   if (error) return <Error message={error.message} />;
-  if (loading || !data) return <Skeleton height={180} />;
+  if (loading || !data) return <Skeleton variant={"rectangular"} height={180} />;
 
   return (
     <Grid container spacing={2}>

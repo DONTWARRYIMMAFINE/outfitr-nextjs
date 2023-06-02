@@ -11,7 +11,7 @@ import { WithTranslation, withTranslation } from "react-i18next";
 
 interface CartProps extends WithTranslation {}
 
-const Cart: FC<CartProps> = ({t}) => {
+const Cart: FC<CartProps> = ({ t }) => {
   const cart = useReactiveVar(userCart);
 
   return (
