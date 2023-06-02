@@ -1206,17 +1206,6 @@ export type CommentSumAggregate = {
   rating?: Maybe<Scalars['Float']>;
 };
 
-export type ConfirmOrderPaymentInput = {
-  paymentIntentId: Scalars['String'];
-};
-
-export type ConfirmOrderPaymentInputType = {
-  /** The id of the record to update */
-  id: Scalars['ID'];
-  /** The update to apply. */
-  update: ConfirmOrderPaymentInput;
-};
-
 export type ConfirmPaymentIntentInput = {
   /** The id of the record to delete. */
   id: Scalars['ID'];
@@ -1539,6 +1528,7 @@ export type CreateOneWarehouseInput = {
 export type CreateOrderInput = {
   deliveryAddressId: Scalars['String'];
   deliveryMethodId: Scalars['String'];
+  paymentIntentId: Scalars['String'];
   paymentMethodId: Scalars['String'];
   userId: Scalars['String'];
 };
@@ -2451,7 +2441,6 @@ export type Mutation = {
   cancelReservationForWarehouseItemsInWarehouse: Warehouse;
   completeOrder: Order;
   confirmEmail: EmailAddressConfirmation;
-  confirmOneOrderPayment: Order;
   confirmOnePaymentIntent: PaymentIntent;
   createManyCarts: Array<Cart>;
   createOneAddress: Address;
@@ -2595,11 +2584,6 @@ export type MutationCancelReservationForWarehouseItemsInWarehouseArgs = {
 
 export type MutationCompleteOrderArgs = {
   input: UpdateOrderInputType;
-};
-
-
-export type MutationConfirmOneOrderPaymentArgs = {
-  input: ConfirmOrderPaymentInputType;
 };
 
 
@@ -5962,6 +5946,7 @@ export type UpdateOneWarehouseInputType = {
 export type UpdateOrderInput = {
   deliveryAddressId?: InputMaybe<Scalars['String']>;
   deliveryMethodId?: InputMaybe<Scalars['String']>;
+  paymentIntentId?: InputMaybe<Scalars['String']>;
   paymentMethodId?: InputMaybe<Scalars['String']>;
 };
 
@@ -6816,13 +6801,6 @@ export type CancelOnePaymentIntentMutationVariables = Exact<{
 
 export type CancelOnePaymentIntentMutation = { __typename?: 'Mutation', cancelOnePaymentIntent: { __typename?: 'PaymentIntent', id: string, clientSecret: string, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, price?: { __typename?: 'Price', id: string, amount: number, currency: Currencies } | null } };
 
-export type ConfirmOneOrderPaymentMutationVariables = Exact<{
-  input: ConfirmOrderPaymentInputType;
-}>;
-
-
-export type ConfirmOneOrderPaymentMutation = { __typename?: 'Mutation', confirmOneOrderPayment: { __typename?: 'Order', id: string } };
-
 export type CreateOneAddressMutationVariables = Exact<{
   input: CreateOneAddressInput;
 }>;
@@ -6906,6 +6884,13 @@ export type UpdateOneCartMutationVariables = Exact<{
 
 
 export type UpdateOneCartMutation = { __typename?: 'Mutation', updateOneCart: { __typename?: 'Cart', id: string, paymentMethodId?: string | null, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } } }> } };
+
+export type UpdateOneOrderMutationVariables = Exact<{
+  input: UpdateOneOrderInput;
+}>;
+
+
+export type UpdateOneOrderMutation = { __typename?: 'Mutation', updateOneOrder: { __typename?: 'Order', id: string, status: OrderStatus, deliveryAddress: { __typename?: 'Address', id: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> } };
 
 export type UpdateOneUserMutationVariables = Exact<{
   input: UpdateOneUserInput;
@@ -7525,39 +7510,6 @@ export function useCancelOnePaymentIntentMutation(baseOptions?: Apollo.MutationH
 export type CancelOnePaymentIntentMutationHookResult = ReturnType<typeof useCancelOnePaymentIntentMutation>;
 export type CancelOnePaymentIntentMutationResult = Apollo.MutationResult<CancelOnePaymentIntentMutation>;
 export type CancelOnePaymentIntentMutationOptions = Apollo.BaseMutationOptions<CancelOnePaymentIntentMutation, CancelOnePaymentIntentMutationVariables>;
-export const ConfirmOneOrderPaymentDocument = gql`
-    mutation ConfirmOneOrderPayment($input: ConfirmOrderPaymentInputType!) {
-  confirmOneOrderPayment(input: $input) {
-    id
-  }
-}
-    `;
-export type ConfirmOneOrderPaymentMutationFn = Apollo.MutationFunction<ConfirmOneOrderPaymentMutation, ConfirmOneOrderPaymentMutationVariables>;
-
-/**
- * __useConfirmOneOrderPaymentMutation__
- *
- * To run a mutation, you first call `useConfirmOneOrderPaymentMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useConfirmOneOrderPaymentMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [confirmOneOrderPaymentMutation, { data, loading, error }] = useConfirmOneOrderPaymentMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useConfirmOneOrderPaymentMutation(baseOptions?: Apollo.MutationHookOptions<ConfirmOneOrderPaymentMutation, ConfirmOneOrderPaymentMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ConfirmOneOrderPaymentMutation, ConfirmOneOrderPaymentMutationVariables>(ConfirmOneOrderPaymentDocument, options);
-      }
-export type ConfirmOneOrderPaymentMutationHookResult = ReturnType<typeof useConfirmOneOrderPaymentMutation>;
-export type ConfirmOneOrderPaymentMutationResult = Apollo.MutationResult<ConfirmOneOrderPaymentMutation>;
-export type ConfirmOneOrderPaymentMutationOptions = Apollo.BaseMutationOptions<ConfirmOneOrderPaymentMutation, ConfirmOneOrderPaymentMutationVariables>;
 export const CreateOneAddressDocument = gql`
     mutation CreateOneAddress($input: CreateOneAddressInput!) {
   createOneAddress(input: $input) {
@@ -7992,6 +7944,39 @@ export function useUpdateOneCartMutation(baseOptions?: Apollo.MutationHookOption
 export type UpdateOneCartMutationHookResult = ReturnType<typeof useUpdateOneCartMutation>;
 export type UpdateOneCartMutationResult = Apollo.MutationResult<UpdateOneCartMutation>;
 export type UpdateOneCartMutationOptions = Apollo.BaseMutationOptions<UpdateOneCartMutation, UpdateOneCartMutationVariables>;
+export const UpdateOneOrderDocument = gql`
+    mutation UpdateOneOrder($input: UpdateOneOrderInput!) {
+  updateOneOrder(input: $input) {
+    ...Order
+  }
+}
+    ${OrderFragmentDoc}`;
+export type UpdateOneOrderMutationFn = Apollo.MutationFunction<UpdateOneOrderMutation, UpdateOneOrderMutationVariables>;
+
+/**
+ * __useUpdateOneOrderMutation__
+ *
+ * To run a mutation, you first call `useUpdateOneOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOneOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOneOrderMutation, { data, loading, error }] = useUpdateOneOrderMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateOneOrderMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOneOrderMutation, UpdateOneOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOneOrderMutation, UpdateOneOrderMutationVariables>(UpdateOneOrderDocument, options);
+      }
+export type UpdateOneOrderMutationHookResult = ReturnType<typeof useUpdateOneOrderMutation>;
+export type UpdateOneOrderMutationResult = Apollo.MutationResult<UpdateOneOrderMutation>;
+export type UpdateOneOrderMutationOptions = Apollo.BaseMutationOptions<UpdateOneOrderMutation, UpdateOneOrderMutationVariables>;
 export const UpdateOneUserDocument = gql`
     mutation UpdateOneUser($input: UpdateOneUserInput!) {
   updateOneUser(input: $input) {

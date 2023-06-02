@@ -1,0 +1,5 @@
+mutation UpdateOneOrder($input: UpdateOneOrderInput!) {
+  updateOneOrder(input: $input) {
+    ...Order
+  }
+}

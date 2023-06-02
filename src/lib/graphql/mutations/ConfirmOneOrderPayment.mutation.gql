@@ -1,5 +1,0 @@
-mutation ConfirmOneOrderPayment($input: ConfirmOrderPaymentInputType!) {
-  confirmOneOrderPayment(input: $input) {
-    id
-  }
-}
