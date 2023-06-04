@@ -1,5 +1,4 @@
 import CommentList from "@/components/common/ProductDetails/CommentSection/CommentList";
-import { Box } from "@/components/ui";
 import { FC } from "react";
 
 interface CommentSectionProps {
@@ -7,11 +6,7 @@ interface CommentSectionProps {
 }
 
 const CommentSection: FC<CommentSectionProps> = ({ productId }) => {
-  return (
-    <Box>
-      <CommentList productId={productId} />
-    </Box>
-  );
+  return <CommentList productId={productId} />;
 };
 
 export default CommentSection;

@@ -6,7 +6,7 @@ import { Routes } from "@/constants/routes";
 import { LOCAL_STORAGE_TOKEN } from "@/constants/token";
 import { LoginMutationVariables, useLoginMutation } from "@/lib/graphql/schema.generated";
 import { omitEmptyFields } from "@/lib/utils/form.utils";
-import { LogInSchema } from "@/components/common/forms/schema/logInSchema";
+import { LogInSchema } from "@/components/common/forms/schema/login.schema";
 import { loggedInUser } from "@/store/user.store";
 import { Formik } from "formik";
 import { useRouter } from "next/navigation";

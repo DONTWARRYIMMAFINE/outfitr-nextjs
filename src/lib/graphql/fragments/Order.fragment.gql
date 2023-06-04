@@ -28,4 +28,5 @@ fragment Order on Order {
   orderHistories {
     ...OrderHistory
   }
+  createdAt
 }

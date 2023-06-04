@@ -120,6 +120,31 @@ export const themeOptions: ThemeOptions = {
         },
       }),
     },
+    MuiButton: {
+      variants: [
+        {
+          props: { variant: "primary" },
+          style: ({ theme }) => ({
+            zIndex: 1,
+            padding: theme.spacing(1.5, 4),
+            textTransform: "none",
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.primary.contrastText,
+            ":hover": {
+              backgroundColor: theme.palette.primary.light,
+            },
+          }),
+        },
+        {
+          props: { variant: "transparent" },
+          style: ({ theme }) => ({
+            zIndex: 1,
+            padding: theme.spacing(1.5, 4),
+            textTransform: "none",
+          }),
+        }
+      ],
+    },
     MuiSwitch: {
       styleOverrides: {
         root: ({ ownerState }) => ({

@@ -1,0 +1,5 @@
+query UserAddressesTotalCount {
+  userAddresses {
+    totalCount
+  }
+}

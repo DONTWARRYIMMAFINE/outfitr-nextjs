@@ -16,7 +16,7 @@ interface ContactInfoFormProps extends WithTranslation {}
 
 const ContactInfoForm: FC<ContactInfoFormProps> = ({ t, tReady }) => {
   const user = useReactiveVar(loggedInUser);
-  const [updateOneUserMutation] = useUpdateOneUserMutation();
+  const [updateOneUserMutation, { loading }] = useUpdateOneUserMutation();
 
   const onSubmit = async (values: UpdateOneUserMutationVariables["input"]["update"]) => {
     await updateOneUserMutation({
@@ -112,7 +112,7 @@ const ContactInfoForm: FC<ContactInfoFormProps> = ({ t, tReady }) => {
               fullWidth
             />
           </Box>
-          <Button disabled={!isValid} variant={"primary"} onClick={() => handleSubmit()} fullWidth>
+          <Button variant={"primary"} disabled={!isValid} loading={loading} onClick={() => handleSubmit()} fullWidth>
             {t("component.button.save")}
           </Button>
         </Box>

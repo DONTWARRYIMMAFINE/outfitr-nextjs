@@ -1,12 +1,14 @@
+import { fallbackLng, languages } from "@/lib/i18n/settings";
 import acceptLanguage from "accept-language";
 import { NextRequest, NextResponse } from "next/server";
-import { fallbackLng, languages } from "@/lib/i18n/settings";
 
 acceptLanguage.languages(languages);
 
 export const config = {
   // Exclude all systems folders
-  matcher: ["/((?!api|_next/static|_next/image|assets|public|favicon.ico|sw.js).*)"],
+  matcher: [
+    "/((?!api|_next/static|_next/image|assets|favicon.ico|logo.png|sw.js).*)",
+  ],
 };
 
 const cookieName = "i18next";

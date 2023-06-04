@@ -1,0 +1,5 @@
+mutation CreateOneComment($input: CreateOneCommentInputType!, $files: [Upload!]) {
+  createOneComment(input: $input, files: $files) {
+    ...Comment
+  }
+}

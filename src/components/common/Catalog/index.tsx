@@ -5,10 +5,11 @@ import { Grid } from "@/components/ui";
 import { LngProps } from "@/lib/types/params.type";
 
 export interface CatalogProps extends LngProps {
-  category: string;
+  category?: string;
+  parentCategory?: string;
 }
 
-const Catalog = ({ category, lng }: CatalogProps) => {
+const Catalog = ({ category, parentCategory, lng }: CatalogProps) => {
   return (
     <Grid container spacing={3}>
       <Grid container item xs={12}>
@@ -21,7 +22,7 @@ const Catalog = ({ category, lng }: CatalogProps) => {
           <FilterPanel />
         </Grid>
         <Grid item xs={9}>
-          <ProductItemList category={category}/>
+          <ProductItemList category={category} parentCategory={parentCategory} />
         </Grid>
       </Grid>
     </Grid>

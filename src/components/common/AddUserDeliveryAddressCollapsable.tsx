@@ -1,25 +1,20 @@
 "use client";
 
+import CollapsableBox, { CollapsableBoxProps } from "@/components/common/CollapsableBox";
 import CreateAddressForm from "@/components/common/forms/CreateAddressForm";
-import { Box, Link } from "@/components/ui";
+import { Box, IconButton, Icons, Link, Text } from "@/components/ui";
 import { CreateAddressInput, useCreateOneUserAddressMutation, UserAddressesDocument } from "@/lib/graphql/schema.generated";
 import { loggedInUser } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
-import { Collapse } from "@mui/material";
-import { FC, useState } from "react";
+import { FC } from "react";
 import toast from "react-hot-toast";
 import { WithTranslation, withTranslation } from "react-i18next";
 
-interface AddUserDeliveryAddressCollapsableProps extends WithTranslation {}
+interface AddUserDeliveryAddressCollapsableProps extends Omit<CollapsableBoxProps, "Header">, WithTranslation {}
 
-const AddUserDeliveryAddressCollapsable: FC<AddUserDeliveryAddressCollapsableProps> = ({ t }) => {
-  const [expanded, setExpanded] = useState(false);
-  const [createOneUserAddressMutation] = useCreateOneUserAddressMutation();
+const AddUserDeliveryAddressCollapsable: FC<AddUserDeliveryAddressCollapsableProps> = ({ expandByDefault, t }) => {
   const user = useReactiveVar(loggedInUser);
-
-  const onExpandClick = async () => {
-    setExpanded(!expanded);
-  };
+  const [createOneUserAddressMutation] = useCreateOneUserAddressMutation();
 
   const onSubmitClick = async (values: CreateAddressInput) => {
     await createOneUserAddressMutation({
@@ -38,16 +33,19 @@ const AddUserDeliveryAddressCollapsable: FC<AddUserDeliveryAddressCollapsablePro
   };
 
   return (
-    <Box>
-      <Box paddingY={2}>
-        <Link onClick={onExpandClick} sx={{ opacity: 0.7 }}>
-          {t("component.button.addUserDeliveryAddress")}
-        </Link>
-      </Box>
-      <Collapse in={expanded} timeout={"auto"} unmountOnExit>
-        <CreateAddressForm onSubmit={onSubmitClick} />
-      </Collapse>
-    </Box>
+    <CollapsableBox
+      Header={
+        <Box display={"flex"} justifyContent={"flex-end"} alignItems={"center"} width={"100%"} paddingTop={2}>
+          <Link sx={{ opacity: 0.7 }}>
+            {t("component.button.addUserDeliveryAddress")}
+          </Link>
+        </Box>
+      }
+      expandByDefault={expandByDefault}
+      variant={"transparent"}
+    >
+      <CreateAddressForm onSubmit={onSubmitClick} />
+    </CollapsableBox>
   );
 };
 

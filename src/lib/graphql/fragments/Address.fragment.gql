@@ -1,8 +1,10 @@
 fragment Address on Address {
   id
+  cityId
   city {
     ...City
   }
+  countryId
   country {
     ...Country
   }

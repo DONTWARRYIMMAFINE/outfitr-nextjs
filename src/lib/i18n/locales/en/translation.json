@@ -20,6 +20,32 @@
     "cart": {
       "title": "Cart"
     },
+    "profile": {
+      "title": "Profile",
+      "tabs": {
+        "main": {
+          "title": "Main",
+          "label": "Main"
+        },
+        "orders": {
+          "title": "My Orders",
+          "label": "Orders"
+        },
+        "addresses": {
+          "title": "My Addresses",
+          "label": "Addresses"
+        },
+        "settings": {
+          "title": "Settings",
+          "label": "Settings"
+        },
+        "logout": {
+          "title": "Log Out",
+          "label": "Log Out",
+          "button": "Log Out"
+        }
+      }
+    },
     "checkout": {
       "title": "Checkout",
       "step": {
@@ -55,6 +81,7 @@
   },
   "component": {
     "fileUpload": {
+      "avatar": "Upload your avatar",
       "header": "[Drag to drop]",
       "leftLabel": "or",
       "buttonLabel": "click here",
@@ -133,6 +160,27 @@
           "required": "Postal code is required"
         }
       },
+      "comment": {
+        "title": {
+          "label": "Short comment title",
+          "placeholder": "Enter a short summary title",
+          "errors": {
+            "min": "Title must be at least {{min}} characters",
+            "max": "Title must be less than {{max}} characters",
+            "required": "Title is required"
+          }
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Write a summary about your usage experience",
+          "errors": {
+            "max": "Description must be less than {{max}} characters"
+          }
+        },
+        "media": {
+          "title": "Comment media"
+        }
+      },
       "state": {
         "label": "State/province/area",
         "placeholder": "Enter state",
@@ -182,6 +230,7 @@
       "addToCart": "Add To Cart",
       "checkout": "Checkout",
       "edit": "Edit",
+      "delete": "Delete",
       "save": "Save",
       "pay": "Pay",
       "reset": "Reset",
@@ -190,7 +239,9 @@
       "placeOrder": "Place an order",
       "addUserDeliveryAddress": "Add delivery address",
       "toDeliveryInfo": "To Delivery",
-      "toPaymentInfo": "To Payment"
+      "toPaymentInfo": "To Payment",
+      "createComment": "Create Comment",
+      "share": "Share"
     }
   }
 }

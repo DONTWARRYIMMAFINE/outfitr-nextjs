@@ -1,5 +1,6 @@
 "use client";
 
+import CreateCommentCollapsable from "@/components/common/ProductDetails/CreateCommentCollapsable";
 import { Error, Grid } from "@/components/ui";
 import { useCommentsQuery } from "@/lib/graphql/schema.generated";
 import { Skeleton } from "@mui/material";

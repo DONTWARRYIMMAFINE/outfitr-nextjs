@@ -1,6 +1,6 @@
 "use client";
 
-import OrderInfo from "@/components/common/Cart/Checkout/CompleteOrderStep/OrderInfo";
+import Order from "@/components/common/Order";
 import { Box, Error } from "@/components/ui";
 import { useOrdersQuery } from "@/lib/graphql/schema.generated";
 import { Skeleton } from "@mui/material";
@@ -31,7 +31,7 @@ const OrderInfoList: FC<OrderInfoListProps> = () => {
   return (
     <Box display={"flex"} flexDirection={"column"}>
       {data.orders.nodes.map(order => (
-        <OrderInfo key={order.id} order={order} />
+        <Order key={order.id} order={order} expandByDefault={true} />
       ))}
     </Box>
   );

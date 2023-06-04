@@ -1,20 +1,20 @@
 import { Box, Text } from "@/components/ui";
 import { OrderHistoryFragment } from "@/lib/graphql/schema.generated";
-import { Step, StepContent, StepLabel, Stepper } from "@mui/material";
+import { Step, StepLabel, Stepper } from "@mui/material";
 import moment from "moment";
 import { FC, useState } from "react";
 
-interface StatusStepperProps {
+interface OrderStatusStepperProps {
   orderHistories: OrderHistoryFragment[];
 }
 
-const StatusStepper: FC<StatusStepperProps> = ({ orderHistories }) => {
+const OrderStatusStepper: FC<OrderStatusStepperProps> = ({ orderHistories }) => {
   const [activeStep, setActiveStep] = useState(orderHistories.length - 1);
 
   return (
     <Box sx={{ maxWidth: 400 }}>
       <Stepper activeStep={activeStep} orientation={"vertical"}>
-        {orderHistories.map((orderHistory, index) => (
+        {orderHistories.map((orderHistory) => (
           <Step key={orderHistory.id}>
             <StepLabel>
               <Box display={"flex"} flexDirection={"column"}>
@@ -29,4 +29,4 @@ const StatusStepper: FC<StatusStepperProps> = ({ orderHistories }) => {
   );
 };
 
-export default StatusStepper;
+export default OrderStatusStepper;

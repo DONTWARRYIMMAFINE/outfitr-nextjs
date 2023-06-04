@@ -11,6 +11,7 @@ import { LngProps } from "@/lib/types/params.type";
 import { ApolloProvider } from "@apollo/client";
 import { CacheProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
+import { ConfirmProvider } from "material-ui-confirm";
 import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider as NextThemeProvider } from "next-themes";
 import { FC, ReactNode } from "react";
@@ -31,15 +32,22 @@ const PageProvider: FC<PageProviderProps> = ({ lng, children }) => {
         <ThemeProvider>
           <CssBaseline enableColorScheme />
           <Toaster />
-          <NextIntlClientProvider locale={lng}>
-            <ApolloProvider client={client}>
-              <SessionProvider>
-                <RoutesGuard protectedRoutes={[{ role: Roles.Customer, route: Routes.Cart.href }]}>
-                  {children}
-                </RoutesGuard>
-              </SessionProvider>
-            </ApolloProvider>
-          </NextIntlClientProvider>
+          <ConfirmProvider
+            defaultOptions={{
+              confirmationButtonProps: { variant: "primary" },
+              cancellationButtonProps: { variant: "transparent" },
+            }}
+          >
+            <NextIntlClientProvider locale={lng}>
+              <ApolloProvider client={client}>
+                <SessionProvider>
+                  <RoutesGuard protectedRoutes={[{ role: Roles.Customer, route: Routes.Cart.href }]}>
+                    {children}
+                  </RoutesGuard>
+                </SessionProvider>
+              </ApolloProvider>
+            </NextIntlClientProvider>
+          </ConfirmProvider>
         </ThemeProvider>
       </NextThemeProvider>
     </CacheProvider>

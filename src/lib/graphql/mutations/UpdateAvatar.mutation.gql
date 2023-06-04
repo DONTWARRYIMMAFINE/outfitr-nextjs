@@ -1,0 +1,5 @@
+mutation UpdateAvatar($file: Upload!, $input: SelectUserInput!) {
+  updateAvatar(file: $file, input: $input) {
+    ...User
+  }
+}

@@ -5,44 +5,17 @@ import ProductPagination from "@/components/common/Catalog/ProductPagination";
 import { Box, Error } from "@/components/ui";
 import { useProductsQuery } from "@/lib/graphql/schema.generated";
 import { parseIntOrDefault } from "@/lib/utils/parser.utils";
+import { ProductFilterBuilder } from "@/lib/utils/product-filter.builder";
 import { Skeleton } from "@mui/material";
 import { useSearchParams } from "next/navigation";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
 interface ProductCardListProps {
   category?: string;
+  parentCategory?: string;
 }
 
-// const prepareFilter = (
-//   searchQuery: string | null | undefined) => {
-//   return {
-//     filter: {
-//       and: [
-//         {
-//           or: [
-//             {
-//               title: {
-//                 iLike: `%${searchQuery}%`
-//               }
-//             },
-//             {
-//               description: {
-//                 iLike: `%${searchQuery}%`
-//               }
-//             }
-//           ],
-//           category: {
-//             code: {
-//               eq: category
-//             }
-//           }
-//         }
-//       ]
-//     }
-//   }
-// }
-
-const ProductItemList: FC<ProductCardListProps> = ({ category }) => {
+const ProductItemList: FC<ProductCardListProps> = ({ category, parentCategory }) => {
   const searchParams = useSearchParams();
 
   const limit = parseIntOrDefault(searchParams.get("limit"), 12);
@@ -54,12 +27,32 @@ const ProductItemList: FC<ProductCardListProps> = ({ category }) => {
         limit,
         offset,
       },
+      filter: new ProductFilterBuilder()
+        .category(category, parentCategory)
+        .build(),
     },
   });
 
+  useEffect(() => {
+    const searchQuery = searchParams.get("searchQuery") || "";
+    const price = searchParams.get("price")?.split(",") || [];
+    const brands = searchParams.get("brands")?.split(",") || [];
+    const colors = searchParams.get("colors")?.split(",") || [];
+    const sizes = searchParams.get("sizes")?.split(",") || [];
+    refetch({
+      filter: new ProductFilterBuilder()
+        .category(category, parentCategory)
+        .searchQuery(searchQuery)
+        .priceRange(parseIntOrDefault(price[0]), parseIntOrDefault(price[1]))
+        .brands(brands)
+        .colors(colors)
+        .sizes(sizes)
+        .build(),
+    });
+  }, [searchParams]);
+
   if (error) return <Error message={error.message} />;
   if (loading || !data) return <Skeleton variant={"rectangular"} height={180} />;
-
 
   return (
     <Box
@@ -79,7 +72,7 @@ const ProductItemList: FC<ProductCardListProps> = ({ category }) => {
           <ProductItem key={product.id} product={product} />
         ))}
       </Box>
-        <ProductPagination />
+      <ProductPagination />
     </Box>
   );
 };

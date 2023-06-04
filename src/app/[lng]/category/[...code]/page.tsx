@@ -19,7 +19,7 @@ const CatalogPage: FC<CatalogPageProps> = ({ params }) => {
 
   return (
     <PageContainer pageTitle={"Catalog Page"}>
-      <Catalog category={Array.isArray(code) ? code[1] : code} lng={lng} />
+      <Catalog category={Array.isArray(code) ? code[1] : code} parentCategory={code[0]} lng={lng} />
     </PageContainer>
   );
 };

@@ -5,6 +5,7 @@ import CheckboxGroup from "@/components/common/CheckboxGroup";
 import ColorCheckboxGroup from "@/components/common/ColorCheckboxGroup";
 import ModifyWishlistButton from "@/components/common/ModifyWishlistButton";
 import Price from "@/components/common/Price";
+import CreateCommentCollapsable from "@/components/common/ProductDetails/CreateCommentCollapsable";
 import ProductRating from "@/components/common/ProductDetails/ProductRating";
 import { Box, Icons, Text } from "@/components/ui";
 import { ProductFragment } from "@/lib/graphql/schema.generated";
@@ -30,7 +31,7 @@ const Details: FC<DetailsProps> = ({ product, t }) => {
   }, [color, size, product.productVariants]);
 
   return (
-    <Box display={"flex"} flexDirection={"column"} height={"100%"} gap={2} padding={4} bgcolor={"background.body"} borderRadius={0.5}>
+    <Box display={"flex"} flexDirection={"column"} gap={2} padding={4} bgcolor={"background.body"} borderRadius={0.5}>
       <Text variant={"h1"} component={"h2"}>{product.title}</Text>
       <Text variant={"small"} opacity={0.5}>{product.productVariants[variant].sku}</Text>
       <Price fontSize={32} amount={product.productVariants[variant].price.amount} />

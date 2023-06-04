@@ -4,25 +4,26 @@ import CitySelect from "@/components/common/CitySelect";
 import CountrySelect from "@/components/common/CountrySelect";
 import { CreateAddressSchema } from "@/components/common/forms/schema/create-address.schema";
 import { Box, Button, Icons, IconTextField } from "@/components/ui";
-import { CreateAddressInput } from "@/lib/graphql/schema.generated";
+import { AddressFragment, CreateAddressInput } from "@/lib/graphql/schema.generated";
 import { Formik } from "formik";
 import { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
 
 export interface CreateAddressFormProps extends WithTranslation {
+  address: AddressFragment;
   onSubmit: (values: CreateAddressInput) => Promise<void> | void;
 }
 
-const CreateAddressForm: FC<CreateAddressFormProps> = ({ onSubmit, t }) => {
+const UpdateAddressForm: FC<CreateAddressFormProps> = ({ address, onSubmit, t }) => {
   return (
     <Formik
       initialValues={{
-        postalCode: "",
-        countryId: "",
-        cityId: "",
-        state: "",
-        street: "",
-        building: "",
+        postalCode: address.postalCode,
+        countryId: address.countryId,
+        cityId: address.cityId,
+        state: address.state,
+        street: address.street,
+        building: address.building,
       }}
       validationSchema={CreateAddressSchema}
       onSubmit={onSubmit}
@@ -116,4 +117,4 @@ const CreateAddressForm: FC<CreateAddressFormProps> = ({ onSubmit, t }) => {
   );
 };
 
-export default withTranslation()(CreateAddressForm);
+export default withTranslation()(UpdateAddressForm);

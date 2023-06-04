@@ -38,6 +38,7 @@
     "intl": "^1.2.5",
     "lodash": "^4.17.21",
     "lucide-react": "^0.144.0",
+    "material-ui-confirm": "^3.0.9",
     "moment": "^2.29.4",
     "next": "^13.4.4",
     "next-intl": "^2.14.2",

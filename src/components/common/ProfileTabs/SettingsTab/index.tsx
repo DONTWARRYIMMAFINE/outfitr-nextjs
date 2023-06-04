@@ -28,15 +28,12 @@ const SettingsTab = ({ t, tReady, ...props }: SettingsTabProps) => {
 
   return (
     <TabPanel {...props}>
-      <Text variant={"h1"} component={"h2"} textAlign={"center"}>
-        {t("tabs.settings.title")}
-      </Text>
-      <Text variant={"p"} textAlign={"center"} opacity={0.7} paragraph>
-        {t("tabs.settings.description")}
+      <Text variant={"h4"} opacity={0.7} paragraph>
+        {t("page.profile.tabs.settings.title")}
       </Text>
       <ResetPasswordForm onSubmit={onSubmit} />
     </TabPanel>
   );
 };
 
-export default withTranslation("profile")(SettingsTab);
+export default withTranslation()(SettingsTab);

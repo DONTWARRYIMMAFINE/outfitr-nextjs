@@ -34,19 +34,19 @@ const ProductItem = ({ product, width = 235, t }: ProductCardProps) => {
           overflow: "hidden",
           cursor: "pointer",
           bgcolor: "background.component",
-        }}>
-        <Box style={{ position: "relative", width: "100%", height: "100%" }}>
-          <Image
-            onClick={onClick}
-            src={product.media[0]?.url}
-            alt={"Oops"}
-            style={{ objectFit: "cover" }}
-            fill
-          />
-        </Box>
+          position: "relative",
+        }}
+      >
+        <Image
+          onClick={onClick}
+          src={product.media[0]?.url}
+          alt={"Oops"}
+          style={{ objectFit: "cover" }}
+          fill
+        />
         <ModifyWishlistButton sx={{ zIndex: 100, position: "absolute", top: 0, right: 0 }} productId={product.id} />
       </CardMedia>
-      <CardContent>
+      <CardContent sx={{ mt: "auto" }}>
         <Box display={"flex"} flexDirection={"column"} gap={1}>
           <Text variant={"h4"}>{product.title}</Text>
           <PriceRange prices={map(product.productVariants, "price")} />

@@ -1,5 +1,8 @@
 "use client";
 
+import AddressesTab from "@/components/common/ProfileTabs/Addresses";
+import MainTab from "@/components/common/ProfileTabs/Main";
+import OrdersTab from "@/components/common/ProfileTabs/OrdersTab";
 import { Box, Tab, TabPanel, Tabs, Text } from "@/components/ui";
 import { tabs } from "@/constants/routes";
 import { indexOf } from "lodash";
@@ -51,16 +54,10 @@ const ProfileTabs = ({ t }: ProfileTabs) => {
         <Tab label={t("tabs.addresses.label")} {...allyProps(2)} />
         <Tab label={t("tabs.settings.label")} {...allyProps(3)} />
       </Tabs>
-      <Box display={"flex"} flexGrow={1} flexDirection={"column"}>
-        <TabPanel value={value} index={0}>
-          <Text>Main</Text>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <Text>Orders</Text>
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <Text>Addresses</Text>
-        </TabPanel>
+      <Box display={"flex"} flexDirection={"column"} width={"90%"}>
+        <MainTab value={value} index={0} />
+        <OrdersTab value={value} index={1} />
+        <AddressesTab value={value} index={2} />
         <SettingsTab value={value} index={3} />
       </Box>
     </Box>
