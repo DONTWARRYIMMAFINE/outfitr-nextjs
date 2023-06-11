@@ -15,6 +15,7 @@ const Block1: FC<Block1Props> = ({ image }) => {
   return (
     <Box position={{ md: "relative", xs: "absolute" }} width={"100%"} minHeight={"100%"} sx={{ opacity: { md: 1, xs: 0.2 } }}>
       <Image
+        priority
         src={image}
         alt={""}
         style={{ objectFit: "cover" }}
@@ -59,7 +60,7 @@ const News = async ({ lng }: NewsProps) => {
 
   return (
     <Grid2x1
-      block1={<Block1 image={"/news.jpg"} />}
+      block1={<Block1 image={"/assets/news.jpg"} />}
       block2={<Block2
         title={<Trans i18nKey={"component.news.title"} t={t} components={{ br: <br /> }} />}
         description={t("component.news.description")}

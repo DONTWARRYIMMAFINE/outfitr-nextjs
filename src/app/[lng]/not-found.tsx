@@ -50,7 +50,7 @@ interface NotFoundPageProps {}
 const NotFoundPage: FC<NotFoundPageProps> = ({}) => {
   return (
     <ContentContainer pageTitle={"Page not found"}>
-      <Grid2x1 block1={<Block1 image={"/404.png"} />} block2={<Block2 />} />
+      <Grid2x1 block1={<Block1 image={"/assets/404.png"} />} block2={<Block2 />} />
     </ContentContainer>
   );
 };

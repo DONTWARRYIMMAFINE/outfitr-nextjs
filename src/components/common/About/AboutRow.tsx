@@ -19,6 +19,7 @@ const Block1: FC<Block1Props> = ({ image }) => {
       sx={{ opacity: { md: 1, xs: 0.2 } }}
     >
       <Image
+        priority
         src={image}
         alt={""}
         style={{ objectFit: "cover" }}

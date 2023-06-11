@@ -58,7 +58,7 @@ const Welcome = async ({ lng }: WelcomeProps) => {
       >
         <Image
           priority
-          src={"/pattern2.png"}
+          src={"/assets/pattern.png"}
           alt={"Oops"}
           style={{ objectFit: "contain" }}
           fill

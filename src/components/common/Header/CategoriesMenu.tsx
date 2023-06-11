@@ -67,7 +67,7 @@ const CategoriesMenu = ({ t }: CategoriesMenuProps) => {
           >
             <Image
               priority
-              src={"/favicon.png"}
+              src={"/assets/category.png"}
               alt={"Ops..."}
               style={{ objectFit: "contain" }}
               fill
