@@ -2,10 +2,15 @@ export type RouteKey =
   | "Demo"
   | "Home"
   | "Catalog"
+  | "ProductDetails"
   | "About"
   | "Contact"
   | "SignUp"
   | "LogIn"
+  | "Partner"
+  | "Brands"
+  | "Products"
+  | "ReceivedOrders"
   | "Profile"
   | "Orders"
   | "Addresses"
@@ -13,7 +18,10 @@ export type RouteKey =
   | "LogOut"
   | "Wishlist"
   | "Cart"
-  | "Checkout";
+  | "Checkout"
+  | "ShippingAndDelivery"
+  | "TermsAndConditions"
+  | "PrivacyAndPolicy";
 
 export type RouteValue = {
   title: string;
@@ -22,7 +30,8 @@ export type RouteValue = {
   query?: any;
 }
 
-export const tabs = ["", "orders", "addresses", "settings"];
+export const profileTabs = ["", "orders", "addresses", "settings"];
+export const partnerTabs = ["brands", "products", "receivedOrders"];
 
 export const Routes: Record<RouteKey, RouteValue> = {
   Demo: {
@@ -39,6 +48,11 @@ export const Routes: Record<RouteKey, RouteValue> = {
     title: "Outfits",
     i18nKey: "catalog",
     href: "/category",
+  },
+  ProductDetails: {
+    title: "Product Details",
+    i18nKey: "productDetails",
+    href: "/product",
   },
   About: {
     title: "About",
@@ -88,6 +102,29 @@ export const Routes: Record<RouteKey, RouteValue> = {
     i18nKey: "logout",
     href: "/log-out",
   },
+  Partner: {
+    title: "Partner",
+    i18nKey: "component.route.partner",
+    href: "/partner",
+  },
+  Brands: {
+    title: "Brands",
+    i18nKey: "partner.brands",
+    href: "/partner",
+    query: { tab: "brands" },
+  },
+  Products: {
+    title: "Products",
+    i18nKey: "partner.products",
+    href: "/partner",
+    query: { tab: "products" },
+  },
+  ReceivedOrders: {
+    title: "Received Orders",
+    i18nKey: "partner.receivedOrders",
+    href: "/partner",
+    query: { tab: "receivedOrders" },
+  },
   Wishlist: {
     title: "Wishlist",
     i18nKey: "wishlist",
@@ -103,14 +140,23 @@ export const Routes: Record<RouteKey, RouteValue> = {
     i18nKey: "checkout",
     href: "/cart/checkout",
   },
+  ShippingAndDelivery: {
+    title: "Shipping & Delivery",
+    i18nKey: "",
+    href: "/",
+  },
+  TermsAndConditions: {
+    title: "Terms & Conditions",
+    i18nKey: "",
+    href: "/",
+  },
+  PrivacyAndPolicy: {
+    title: "Privacy & Policy",
+    i18nKey: "",
+    href: "/",
+  }
 };
 
-export const customerProtectedRoutes = [Routes.Wishlist.href, Routes.Cart.href, Routes.Profile.href];
-
-interface NavigationRoute {
-  title: string;
-  href: string;
-}
 
 export const mainRoutes: RouteValue[] = [
   Routes.Home,
@@ -124,10 +170,16 @@ export const guestMenuRoutes: RouteValue[] = [
   Routes.SignUp,
 ];
 
-export const userMenuRoutes: RouteValue[] = [
+export const customerMenuRoutes: RouteValue[] = [
   Routes.Profile,
   Routes.Orders,
   Routes.Addresses,
   Routes.Settings,
   Routes.LogOut,
+];
+
+export const partnerMenuRoutes: RouteValue[] = [
+  Routes.Brands,
+  Routes.Products,
+  Routes.ReceivedOrders,
 ];

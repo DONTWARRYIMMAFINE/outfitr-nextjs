@@ -1,0 +1,10 @@
+{
+  "page": {
+    "title": "Wishlist"
+  },
+  "content": {
+    "list": {
+      "empty": "Your wishlist is empty. Explore catalog first!"
+    }
+  }
+}

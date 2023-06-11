@@ -1,5 +1,6 @@
 "use client";
 
+import { I18NS } from "@/constants/I18NS";
 import toast from "react-hot-toast";
 import { WithTranslation, withTranslation } from "react-i18next";
 import { default as MuiFileUpload } from "react-mui-fileuploader";
@@ -41,4 +42,4 @@ const FileUpload = ({ children, onFilesChange, t, multiFile = true, ...props }: 
   );
 };
 
-export default withTranslation()(FileUpload);
+export default withTranslation(I18NS.Common)(FileUpload);

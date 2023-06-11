@@ -1,71 +1,35 @@
 import { Logo } from "@/components/common";
 import LanguageSelector from "@/components/common/LanguageSelector";
 import { Box, Container, Grid, Text } from "@/components/ui";
+import { I18NS } from "@/constants/I18NS";
+import { Routes, RouteValue } from "@/constants/routes";
+import { useTranslation } from "@/lib/i18n";
 import { LngProps } from "@/lib/types/params.type";
 import Copyright from "./Copyright";
-import FooterInfoColumn, { InfoColumnProps } from "./FooterInfoColumn";
+import FooterInfoColumn, { InfoLink } from "./FooterInfoColumn";
 import FooterSocialLinks from "./FooterSocialLinks";
 
-const columns: InfoColumnProps[] = [
+interface LocalizedColumn {
+  i18nKey: string;
+  links: RouteValue[];
+}
+
+const columns: LocalizedColumn[] = [
   {
-    title: "Account",
-    links: [
-      {
-        href: "/signIn",
-        name: "Sign In",
-      },
-      {
-        href: "/signUp",
-        name: "Register",
-      },
-      {
-        href: "/account",
-        name: "Account",
-      },
-    ],
+    i18nKey: "columns.account.label",
+    links: [Routes.LogIn, Routes.SignUp],
   },
   {
-    title: "Outfits",
-    links: [
-      {
-        href: "/cart",
-        name: "Shopping Cart",
-      },
-      {
-        href: "/wishList",
-        name: "Favorites",
-      },
-    ],
+    i18nKey: "columns.outfits.label",
+    links: [Routes.Cart, Routes.Wishlist, Routes.Profile],
   },
   {
-    title: "Shop",
-    links: [
-      {
-        href: "/categories",
-        name: "Outfits",
-      },
-      {
-        href: "/search",
-        name: "Search",
-      },
-    ],
+    i18nKey: "columns.shop.label",
+    links: [Routes.Catalog, Routes.Contact, Routes.About],
   },
   {
-    title: "Legal Stuff",
-    links: [
-      {
-        href: "/shippingAndDelivery",
-        name: "Shipping & Delivery",
-      },
-      {
-        href: "/termsAndConditions",
-        name: "Terms & Conditions",
-      },
-      {
-        href: "/privacyAndPolicy",
-        name: "Privacy & Policy",
-      },
-    ],
+    i18nKey: "columns.legalStuff.label",
+    links: [Routes.ShippingAndDelivery, Routes.TermsAndConditions, Routes.PrivacyAndPolicy],
   },
 ];
 
@@ -73,7 +37,9 @@ interface FooterProps extends LngProps {
   pathname?: string;
 }
 
-const Footer = ({ lng }: FooterProps) => {
+const Footer = async ({ lng }: FooterProps) => {
+  const { t } = await useTranslation(lng, I18NS.Footer);
+
   return (
     <Box component={"footer"} paddingY={4} sx={{ mt: "auto" }}>
       <Container>
@@ -97,11 +63,20 @@ const Footer = ({ lng }: FooterProps) => {
             </Grid>
             <Grid item md={6} xs={12}>
               <Grid container item xs={12}>
-                {columns.map((column, index) => (
-                  <Grid key={index} item xs={3} gap={2}>
-                    <FooterInfoColumn {...column} />
-                  </Grid>
-                ))}
+                {columns.map((column, index) => {
+                  const title = t(column.i18nKey);
+                  const links: InfoLink[] = column.links.map(link => {
+                    return {
+                      title: link.title,
+                      href: link.href,
+                    };
+                  });
+                  return (
+                    <Grid key={index} item xs={3} gap={2}>
+                      <FooterInfoColumn title={title} links={links} />
+                    </Grid>
+                  );
+                })}
               </Grid>
             </Grid>
           </Grid>

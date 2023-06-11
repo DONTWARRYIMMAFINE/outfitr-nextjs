@@ -7,6 +7,11 @@
   "login": "Log In",
   "signup": "Sign Up",
   "logout": "Log Out",
+  "partner": {
+    "brands": "Brands",
+    "products": "Products",
+    "receivedOrders": "Received Orders"
+  },
   "profile": {
     "main": "Profile",
     "orders": "My Orders",

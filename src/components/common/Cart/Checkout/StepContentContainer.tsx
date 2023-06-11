@@ -3,7 +3,7 @@ import { Grid } from "@/components/ui";
 import { GridProps } from "@mui/material";
 import { FC } from "react";
 
-export interface StepContentContainerProps extends GridProps, CartTotalsProps {
+export interface StepContentContainerProps extends GridProps, Omit<CartTotalsProps, "t" | "tReady" | "i18n"> {
   index: number;
   value: number;
   hideTotals?: boolean;

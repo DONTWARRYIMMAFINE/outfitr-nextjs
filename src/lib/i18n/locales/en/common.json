@@ -1,0 +1,33 @@
+{
+  "component": {
+    "news": {
+      "title": "Join Our<br />Newsletter",
+      "description": "Receive exclusive deals, discounts and many offers.",
+      "button": {
+        "subscribe": {
+          "label": "Subscribe"
+        }
+      }
+    },
+    "addUserDeliveryAddress": {
+      "button": {
+        "expand": {
+          "label": "Add delivery address"
+        }
+      }
+    },
+    "addToCartButton": {
+      "label": "Add To Cart",
+      "success": "Product added to cart successfully",
+      "error": "Unable to add product to cart. {{message}}"
+    },
+    "fileUpload": {
+      "avatar": "Upload your avatar",
+      "header": "[Drag to drop]",
+      "leftLabel": "or",
+      "buttonLabel": "click here",
+      "rightLabel": "to select files",
+      "buttonRemoveLabel": "Remove all"
+    }
+  }
+}

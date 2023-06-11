@@ -1,4 +1,18 @@
 {
   "languageSwitcher": "Switch from <bold>{{lng}}</bold> to: ",
-  "copyright": "All Rights Reserved"
+  "copyright": "All Rights Reserved",
+  "columns": {
+    "account": {
+      "label": "Account"
+    },
+    "outfits": {
+      "label": "Outfits"
+    },
+    "shop": {
+      "label": "Shop"
+    },
+    "legalStuff": {
+      "label": "Legal Stuff"
+    }
+  }
 }

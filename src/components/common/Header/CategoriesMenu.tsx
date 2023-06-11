@@ -1,8 +1,10 @@
 "use client";
 
 import { Box, Link, List, ListItem, Menu, Image } from "@/components/ui";
+import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
 import { useCategoryTreeQuery } from "@/lib/graphql/schema.generated";
+import { usePathname } from "next-intl/client";
 import { MouseEvent, useState } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
 import { Trans } from "react-i18next/TransWithoutContext";
@@ -10,6 +12,7 @@ import { Trans } from "react-i18next/TransWithoutContext";
 export interface CategoriesMenuProps extends WithTranslation {}
 
 const CategoriesMenu = ({ t }: CategoriesMenuProps) => {
+  const pathname = usePathname();
   const { data, loading, error } = useCategoryTreeQuery();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
@@ -22,9 +25,11 @@ const CategoriesMenu = ({ t }: CategoriesMenuProps) => {
     setAnchorEl(null);
   };
 
+  const selected = [Routes.Catalog.href, Routes.ProductDetails.href].includes("/" + pathname.split("/")[1]);
+
   return (<>
     <ListItem>
-      <Link onClick={handleClick} selected={open} showUnderline>
+      <Link onClick={handleClick} selected={selected} showUnderline>
         <Trans i18nKey={Routes.Catalog.i18nKey} t={t} />
       </Link>
     </ListItem>
@@ -73,4 +78,4 @@ const CategoriesMenu = ({ t }: CategoriesMenuProps) => {
   </>);
 };
 
-export default withTranslation("navigation")(CategoriesMenu);
+export default withTranslation(I18NS.Route)(CategoriesMenu);

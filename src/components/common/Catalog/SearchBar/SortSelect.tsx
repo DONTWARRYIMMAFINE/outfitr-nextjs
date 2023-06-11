@@ -2,41 +2,56 @@
 
 import Select, { SelectOption } from "@/components/common/Select";
 import { Icons } from "@/components/ui";
+import { I18NS } from "@/constants/I18NS";
 import { ProductSort, ProductSortFields, SortDirection } from "@/lib/graphql/schema.generated";
-import { FC, useState } from "react";
+import { FC, useMemo } from "react";
+import { WithTranslation, withTranslation } from "react-i18next";
 
-interface SortOption extends ProductSort, SelectOption {}
+interface SortOption extends ProductSort, Omit<SelectOption, "label" | "value"> {}
 
 const sortOptions: SortOption[] = [
   {
-    label: "New first",
-    value: "sort_by_created_at_asc",
-    IconComponent: Icons.Sort,
-    field: ProductSortFields.CreatedAt,
-    direction: SortDirection.Asc,
-  },
-  {
-    label: "Old first",
-    value: "sort_by_created_at_desc",
     IconComponent: Icons.Sort,
     field: ProductSortFields.CreatedAt,
     direction: SortDirection.Desc,
   },
+  {
+    IconComponent: Icons.Sort,
+    field: ProductSortFields.CreatedAt,
+    direction: SortDirection.Asc,
+  },
 ];
 
-interface SortMenuProps {}
+interface SortMenuProps extends WithTranslation {
+  field: ProductSortFields;
+  direction: SortDirection;
+  onChange: (value: ProductSort) => void;
+}
 
-const SortSelect: FC<SortMenuProps> = ({}) => {
-  const [value, setValue] = useState<string>(sortOptions[0].value);
+const SortSelect: FC<SortMenuProps> = ({ field, direction, onChange, t }) => {
+  const options = useMemo(() => {
+    return sortOptions.map(option => {
+      return {
+        ...option,
+        label: t(`content.sort.${option.field}.${option.direction.toLowerCase()}`),
+        value: JSON.stringify({
+          field: option.field,
+          direction: option.direction,
+        }),
+      } as SelectOption;
+    });
+  }, [t]);
+
+  console.log("sort", JSON.stringify({ field, direction }));
 
   return (
     <Select
-      value={value}
-      options={sortOptions}
-      onChange={setValue}
+      value={JSON.stringify({ field, direction })}
+      options={options}
+      onChange={value => onChange(JSON.parse(value))}
       fullWidth
     />
   );
 };
 
-export default SortSelect;
+export default withTranslation(I18NS.Catalog)(SortSelect);

@@ -1,5 +1,6 @@
 import { Grid2x1 } from "@/components/common/index";
 import { Box, Button, Text, TextField } from "@/components/ui";
+import { I18NS } from "@/constants/I18NS";
 import { useTranslation } from "@/lib/i18n";
 import { LngProps } from "@/lib/types/params.type";
 import Image from "next/image";
@@ -54,15 +55,15 @@ const Block2: FC<Block2Props> = ({ title, description, button }) => {
 export interface NewsProps extends LngProps {}
 
 const News = async ({ lng }: NewsProps) => {
-  const { t } = await useTranslation(lng);
+  const { t } = await useTranslation(lng, I18NS.Common);
 
   return (
     <Grid2x1
       block1={<Block1 image={"/news.jpg"} />}
       block2={<Block2
-        title={<Trans i18nKey={"news.title"} t={t} components={{ br: <br /> }} />}
-        description={t("news.description")}
-        button={{ text: t("news.button.text") }}
+        title={<Trans i18nKey={"component.news.title"} t={t} components={{ br: <br /> }} />}
+        description={t("component.news.description")}
+        button={{ text: t("component.news.button.subscribe.label") }}
       />}
     />
   );

@@ -4,23 +4,49 @@
   },
   "tabs": {
     "main": {
-      "title": "Main",
+      "title": "Profile info",
       "label": "Main",
-      "description": "TODO"
+      "description": "TODO",
+      "avatarUpdate": {
+        "success": "Avatar changed successfully",
+        "error": "Unable to change avatar. {{message}}",
+        "fileUpload": {
+          "avatar": {
+            "label": "Upload your avatar"
+          }
+        },
+        "button": {
+          "save": {
+            "label": "Save"
+          }
+        }
+      }
     },
     "orders": {
       "title": "My Orders",
       "label": "Orders",
-      "description": "TODO"
+      "description": "TODO",
+      "empty": "You don't have any orders yet"
     },
     "addresses": {
       "title": "My Addresses",
       "label": "Addresses",
-      "description": "TODO"
+      "description": "TODO",
+      "empty": "You don't have any delivery address yet",
+      "button": {
+        "edit": {
+          "label": "Edit"
+        },
+        "delete": {
+          "label": "Delete"
+        }
+      }
     },
     "settings": {
       "title": "Settings",
       "label": "Settings",
+      "success": "Password changed successfully",
+      "error": "Unable to change password. {{message}}",
       "description": "Here you can change your password"
     },
     "logout": {

@@ -3,6 +3,7 @@
 import HomeDelivery from "@/components/common/Cart/Checkout/ContactInfoStep/DeliveryOptions/HomeDelivery";
 import PickupPointDelivery from "@/components/common/Cart/Checkout/ContactInfoStep/DeliveryOptions/PickupPointDelivery/PickupPointDelivery";
 import { Box, Text } from "@/components/ui";
+import { I18NS } from "@/constants/I18NS";
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { FC, useState } from "react";
 import { withTranslation, WithTranslation } from "react-i18next";
@@ -15,7 +16,7 @@ const DeliveryOptions: FC<DeliveryOptionsProps> = ({ t }) => {
   return (
     <Box display={"flex"} flexDirection={"column"} gap={2}>
       <Text variant={"p"} opacity={0.7}>
-        {t("page.checkout.step.contactInfo.deliveryOptions.label")}
+        {t("content.steps.contactInfo.deliveryOptions.label")}
       </Text>
       <RadioGroup
         aria-labelledby={"delivery-options-buttons-group-label"}
@@ -24,8 +25,8 @@ const DeliveryOptions: FC<DeliveryOptionsProps> = ({ t }) => {
         onChange={(_, value) => setDeliveryOption(parseInt(value))}
         row
       >
-        <FormControlLabel value={0} control={<Radio />} label={t("page.checkout.step.contactInfo.deliveryOptions.homeDelivery")} />
-        <FormControlLabel value={1} control={<Radio />} label={t("page.checkout.step.contactInfo.deliveryOptions.pickupPointDelivery")} />
+        <FormControlLabel value={0} control={<Radio />} label={t("content.steps.contactInfo.deliveryOptions.homeDelivery")} />
+        <FormControlLabel value={1} control={<Radio />} label={t("content.steps.contactInfo.deliveryOptions.pickupPointDelivery")} />
       </RadioGroup>
       <Box>
         <HomeDelivery index={deliveryOption} value={0} />
@@ -35,4 +36,4 @@ const DeliveryOptions: FC<DeliveryOptionsProps> = ({ t }) => {
   );
 };
 
-export default withTranslation()(DeliveryOptions);
+export default withTranslation(I18NS.Checkout)(DeliveryOptions);

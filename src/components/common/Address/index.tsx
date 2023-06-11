@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Button, Text } from "@/components/ui";
+import { I18NS } from "@/constants/I18NS";
 import { AddressFragment } from "@/lib/graphql/schema.generated";
 import { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
@@ -30,18 +31,18 @@ const Address: FC<UserAddressProps> = ({ address, onEditClick, onDeleteClick, t 
           sx={{ color: "primary.contrastText", bgcolor: "warning.light" }}
           onClick={onEditClick}
         >
-          {t("component.button.edit")}
+          {t("tabs.addresses.button.edit.label")}
         </Button>
         <Button
           variant={"transparent"}
           sx={{ color: "primary.contrastText", bgcolor: "error.light" }}
           onClick={onDeleteClick}
         >
-          {t("component.button.delete")}
+          {t("tabs.addresses.button.delete.label")}
         </Button>
       </Box>
     </Box>
   );
 };
 
-export default withTranslation()(Address);
+export default withTranslation(I18NS.Profile)(Address);

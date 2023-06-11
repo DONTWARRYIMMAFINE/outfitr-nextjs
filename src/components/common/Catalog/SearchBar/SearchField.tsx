@@ -1,8 +1,10 @@
 import { Icons, IconTextField } from "@/components/ui";
+import { I18NS } from "@/constants/I18NS";
 import { styled } from "@mui/material/styles";
 import { FC } from "react";
+import { WithTranslation, withTranslation } from "react-i18next";
 
-interface SearchFieldProps {
+interface SearchFieldProps extends WithTranslation {
   value: string;
   onChange: (value: string) => void;
   onClick: (value: string) => void;
@@ -20,12 +22,12 @@ const SearchButton = styled(Icons.Search)(({ theme }) => ({
   },
 }));
 
-const SearchField: FC<SearchFieldProps> = ({ value, onChange, onClick }) => {
+const SearchField: FC<SearchFieldProps> = ({ value, onChange, onClick, t }) => {
   return (
     <IconTextField
       id={"searchField"}
       name={"searchField"}
-      placeholder={"Enter keywords, title or description"}
+      placeholder={t("content.search.placeholder")!}
       value={value}
       onChange={event => onChange(event.target.value)}
       variant={"outlined"}
@@ -36,4 +38,4 @@ const SearchField: FC<SearchFieldProps> = ({ value, onChange, onClick }) => {
   );
 };
 
-export default SearchField;
+export default withTranslation(I18NS.Catalog)(SearchField);

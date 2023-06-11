@@ -14,7 +14,7 @@ interface PaymentMethodListProps {}
 const PaymentMethodList: FC<PaymentMethodListProps> = () => {
   const { data, loading, error } = usePaymentMethodsQuery();
 
-  if (error) return <Error />;
+  if (error) return <Error message={error.message} />;
   if (loading || !data) return <Skeleton />;
 
   return (

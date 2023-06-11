@@ -1,0 +1,5 @@
+mutation RejectOrder($input: UpdateOrderInputType!) {
+  rejectOrder(input: $input) {
+    ...Order
+  }
+}

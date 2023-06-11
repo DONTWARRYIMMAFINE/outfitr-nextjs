@@ -5,6 +5,7 @@ import ColorsFilter from "@/components/common/Catalog/FilterPanel/ColorsFilter";
 import PriceFilter from "@/components/common/Catalog/FilterPanel/PriceFilter";
 import SizesFilter from "@/components/common/Catalog/FilterPanel/SizesFilter";
 import { Box, Button, Divider } from "@/components/ui";
+import { I18NS } from "@/constants/I18NS";
 import { isNotEmpty } from "@/lib/utils/string.utils";
 import { usePathname, useRouter } from "next-intl/client";
 import { useSearchParams } from "next/navigation";
@@ -84,10 +85,10 @@ const FilterPanel: FC<FilterPanelProps> = ({ t }) => {
       />
       <Divider light flexItem />
       <Button variant={"primary"} onClick={handleApplyFilter}>
-        {t("component.button.applyFilters")}
+        {t("content.filter.button.applyFilters.label")}
       </Button>
     </Box>
   );
 };
 
-export default withTranslation()(FilterPanel);
+export default withTranslation(I18NS.Catalog)(FilterPanel);

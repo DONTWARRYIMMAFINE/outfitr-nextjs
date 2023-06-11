@@ -4,6 +4,7 @@ import CompleteOrderStep from "@/components/common/Cart/Checkout/CompleteOrderSt
 import DeliveryInfoStep from "@/components/common/Cart/Checkout/DeliveryInfoStep";
 import PaymentInfoStep from "@/components/common/Cart/Checkout/PaymentInfoStep";
 import { Box, Button, Text } from "@/components/ui";
+import { I18NS } from "@/constants/I18NS";
 import { userCart } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
 import { Step, StepLabel, Stepper } from "@mui/material";
@@ -42,7 +43,7 @@ const CheckoutSteps = ({ t }: CheckoutStepsProps) => {
         {["contactInfo", "deliveryInfo", "paymentInfo"].map((label, index) => (
           <Step key={index}>
             <StepLabel>
-              <Text variant={"small"}>{t(`page.checkout.step.${steps[index]}.label`)}</Text>
+              <Text variant={"small"}>{t(`content.steps.${steps[index]}.label`)}</Text>
             </StepLabel>
           </Step>
         ))}
@@ -56,8 +57,9 @@ const CheckoutSteps = ({ t }: CheckoutStepsProps) => {
               variant={"primary"}
               onClick={() => onChange(1)}
               disabled={!cart?.deliveryAddress}
-              fullWidth>
-              {t("component.button.toDeliveryInfo")}
+              fullWidth
+            >
+              {t("content.steps.contactInfo.button.next.label")}
             </Button>
           }
         />
@@ -69,7 +71,7 @@ const CheckoutSteps = ({ t }: CheckoutStepsProps) => {
               variant={"transparent"}
               onClick={() => onChange(0)}
             >
-              {t("component.button.back")}
+              {t("content.steps.deliveryInfo.button.back.label")}
             </Button>
           }
           NextButton={
@@ -77,8 +79,9 @@ const CheckoutSteps = ({ t }: CheckoutStepsProps) => {
               variant={"primary"}
               onClick={() => onChange(2)}
               disabled={!cart?.deliveryMethod}
-              fullWidth>
-              {t("component.button.toPaymentInfo")}
+              fullWidth
+            >
+              {t("content.steps.deliveryInfo.button.next.label")}
             </Button>
           }
         />
@@ -91,7 +94,7 @@ const CheckoutSteps = ({ t }: CheckoutStepsProps) => {
               onClick={() => onChange(1)}
               fullWidth
             >
-              {t("component.button.back")}
+              {t("content.steps.paymentInfo.button.back.label")}
             </Button>
           }
         />
@@ -104,4 +107,4 @@ const CheckoutSteps = ({ t }: CheckoutStepsProps) => {
   );
 };
 
-export default withTranslation()(CheckoutSteps);
+export default withTranslation(I18NS.Checkout)(CheckoutSteps);

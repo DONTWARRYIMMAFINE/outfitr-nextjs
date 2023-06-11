@@ -34,6 +34,9 @@ import {
   VisibilityOutlined,
   StarBorder,
   Star,
+  LocalShippingOutlined,
+  CheckCircleOutlined,
+  CancelOutlined
 } from "@mui/icons-material";
 
 const Icons = {
@@ -70,6 +73,9 @@ const Icons = {
   Building: CabinOutlined,
   StarEmpty: StarBorder,
   StarFilled: Star,
+  Shipping: LocalShippingOutlined,
+  Complete: CheckCircleOutlined,
+  Reject: CancelOutlined
 };
 
 export default Icons;

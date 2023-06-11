@@ -2,11 +2,12 @@ import FilterPanel from "@/components/common/Catalog/FilterPanel";
 import ProductItemList from "@/components/common/Catalog/ProductItemList";
 import SearchBar from "@/components/common/Catalog/SearchBar";
 import { Grid } from "@/components/ui";
+import { Categories } from "@/lib/graphql/schema.generated";
 import { LngProps } from "@/lib/types/params.type";
 
 export interface CatalogProps extends LngProps {
-  category?: string;
-  parentCategory?: string;
+  category?: Categories;
+  parentCategory?: Categories;
 }
 
 const Catalog = ({ category, parentCategory, lng }: CatalogProps) => {

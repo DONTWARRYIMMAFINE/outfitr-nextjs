@@ -1,5 +1,7 @@
 import { Box, Button, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
+import { Routes } from "@/constants/routes";
+import { Categories } from "@/lib/graphql/schema.generated";
 import { useTranslation } from "@/lib/i18n";
 import { LngProps } from "@/lib/types/params.type";
 import Image from "next/image";
@@ -8,7 +10,7 @@ import { Trans } from "react-i18next/TransWithoutContext";
 interface WelcomeProps extends LngProps {}
 
 const Welcome = async ({ lng }: WelcomeProps) => {
-  const { t } = await useTranslation(lng, I18NS.HOME);
+  const { t } = await useTranslation(lng, I18NS.Home);
 
   return (
     <Box
@@ -36,10 +38,10 @@ const Welcome = async ({ lng }: WelcomeProps) => {
             <Trans i18nKey={"welcome.title"} t={t} components={{ br: <br /> }} />
           </Text>
           <Text variant={"h4"} paragraph>
-            <Trans i18nKey={"welcome.description"} t={t} />
+            {t("welcome.description")}
           </Text>
-          <Button variant={"primary"} href="#">
-            <Trans i18nKey={"welcome.button.text"} t={t} />
+          <Button variant={"primary"} href={`${Routes.Catalog.href}/${Categories.Women}`}>
+            {t("welcome.button.text")}
           </Button>
         </Box>
       </Box>

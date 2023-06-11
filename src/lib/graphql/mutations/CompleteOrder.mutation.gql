@@ -1,0 +1,5 @@
+mutation CompleteOrder($input: UpdateOrderInputType!) {
+  completeOrder(input: $input) {
+    ...Order
+  }
+}

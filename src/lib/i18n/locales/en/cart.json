@@ -1,0 +1,68 @@
+{
+  "page": {
+    "title": "Cart"
+  },
+  "content": {
+    "list": {
+      "empty": "Your cart is empty. <br />Explore catalog first",
+      "item": {
+        "brand": {
+          "label": "Brand"
+        },
+        "color": {
+          "label": "Color"
+        },
+        "size": {
+          "label": "Size"
+        },
+        "button": {
+          "add": {
+            "success": "Product quantity changed successfully",
+            "error": "Unable to add product to cart. {{message}}"
+          },
+          "remove": {
+            "success": "Product quantity changed successfully",
+            "error": "Unable to remove product from cart. {{message}}"
+          }
+        }
+      }
+    },
+    "cartTotals": {
+      "label": "Order items",
+      "subtotal": {
+        "label": "Subtotal"
+      },
+      "tax": {
+        "label": "VAT"
+      },
+      "delivery": {
+        "label": "Delivery"
+      },
+      "total": {
+        "label": "Total"
+      },
+      "item": {
+        "color": {
+          "label": "Color"
+        },
+        "size": {
+          "label": "Size"
+        },
+        "brand": {
+          "label": "Brand"
+        },
+        "quantity": {
+          "label": "Quantity"
+        }
+      },
+      "button": {
+        "edit": {
+          "label": "Edit"
+        },
+        "checkout": {
+          "label": "Checkout"
+        }
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { ProductFilter } from "@/lib/graphql/schema.generated";
+import { Categories, ProductFilter } from "@/lib/graphql/schema.generated";
 import { merge } from "lodash";
 
 export class ProductFilterBuilder {
@@ -6,7 +6,7 @@ export class ProductFilterBuilder {
 
   constructor() {}
 
-  public searchQuery(searchQuery: string): ProductFilterBuilder {
+  public searchQuery(searchQuery?: string | null): ProductFilterBuilder {
     if (searchQuery) {
       this.filter.and = this.filter.and?.concat({
         or: [
@@ -56,7 +56,7 @@ export class ProductFilterBuilder {
     return this;
   }
 
-  public category(category?: string, parentCategory?: string): ProductFilterBuilder {
+  public category(category?: Categories, parentCategory?: Categories): ProductFilterBuilder {
     if (category) {
       if (parentCategory) {
         this.filter = merge<ProductFilter, ProductFilter>({
@@ -97,7 +97,7 @@ export class ProductFilterBuilder {
     return this;
   }
 
-  public brands(brands: string[]): ProductFilterBuilder {
+  public brands(brands?: string[] | null): ProductFilterBuilder {
     if (brands && brands.length > 0) {
       this.filter.and = this.filter.and?.concat({
         brand: {
@@ -111,7 +111,7 @@ export class ProductFilterBuilder {
     return this;
   }
 
-  public colors(colors: string[]): ProductFilterBuilder {
+  public colors(colors?: string[] | null): ProductFilterBuilder {
     if (colors && colors.length > 0) {
       this.filter.and = this.filter.and?.concat({
         productVariants: {
@@ -127,7 +127,7 @@ export class ProductFilterBuilder {
     return this;
   }
 
-  public sizes(sizes: string[]): ProductFilterBuilder {
+  public sizes(sizes?: string[] | null): ProductFilterBuilder {
     if (sizes && sizes.length > 0) {
       this.filter.and = this.filter.and?.concat({
         productVariants: {
@@ -144,7 +144,6 @@ export class ProductFilterBuilder {
   }
 
   public build(): ProductFilter {
-    console.log("this.filter", this.filter);
     return this.filter;
   }
 }

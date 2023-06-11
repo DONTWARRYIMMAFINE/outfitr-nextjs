@@ -3,6 +3,7 @@
 import Price from "@/components/common/Price";
 import { Divider, Grid, Text } from "@/components/ui";
 import Error from "@/components/ui/Error";
+import { I18NS } from "@/constants/I18NS";
 import { useDeliveryMethodsQuery, useUpdateOneCartMutation } from "@/lib/graphql/schema.generated";
 import { splitTime } from "@/lib/utils/dateTime.utils";
 import { userCart } from "@/store/user.store";
@@ -20,8 +21,6 @@ const DeliveryMethodOptions: FC<DeliveryMethodSelectProps> = ({t}) => {
   const { data, loading, error } = useDeliveryMethodsQuery();
 
   const onChange = async (id: string) => {
-    console.log("deliveryMethodId", id);
-
     await updateOneCartMutation({
       onCompleted: data => userCart(data.updateOneCart),
       onError: error => toast.error(error.message),
@@ -49,13 +48,13 @@ const DeliveryMethodOptions: FC<DeliveryMethodSelectProps> = ({t}) => {
       >
         <Grid container>
           <Grid item xs={4}>
-            <Text variant={"p"}>{t("page.checkout.step.deliveryInfo.table.header.0")}</Text>
+            <Text variant={"p"}>{t("content.steps.deliveryInfo.table.header.0")}</Text>
           </Grid>
           <Grid display={"flex"} item xs={4} justifyContent={"center"}>
-            <Text variant={"p"}>{t("page.checkout.step.deliveryInfo.table.header.1")}</Text>
+            <Text variant={"p"}>{t("content.steps.deliveryInfo.table.header.1")}</Text>
           </Grid>
           <Grid display={"flex"} item xs={4} justifyContent={"flex-end"}>
-            <Text variant={"p"}>{t("page.checkout.step.deliveryInfo.table.header.2")}</Text>
+            <Text variant={"p"}>{t("content.steps.deliveryInfo.table.header.2")}</Text>
           </Grid>
         </Grid>
         <Divider/>
@@ -65,7 +64,7 @@ const DeliveryMethodOptions: FC<DeliveryMethodSelectProps> = ({t}) => {
               <FormControlLabel value={id} control={<Radio />} label={name} />
             </Grid>
             <Grid display={"flex"} item xs={4} justifyContent={"center"}>
-              <Text variant={"small"} opacity={0.7}>{avgDeliveryTimeInHours ? t("page.checkout.step.deliveryInfo.table.body.avgDeliveryTime", splitTime(avgDeliveryTimeInHours)) : "-"}</Text>
+              <Text variant={"small"} opacity={0.7}>{avgDeliveryTimeInHours ? t("content.steps.deliveryInfo.table.body.avgDeliveryTime", splitTime(avgDeliveryTimeInHours)) : "-"}</Text>
             </Grid>
             <Grid display={"flex"} item xs={4} justifyContent={"flex-end"}>
               <Price amount={price.amount} currency={price.currency} />
@@ -77,4 +76,4 @@ const DeliveryMethodOptions: FC<DeliveryMethodSelectProps> = ({t}) => {
   );
 };
 
-export default withTranslation()(DeliveryMethodOptions);
+export default withTranslation(I18NS.Checkout)(DeliveryMethodOptions);

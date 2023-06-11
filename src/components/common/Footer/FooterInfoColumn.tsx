@@ -2,8 +2,8 @@ import { Box, Link, List, ListItem, Text } from "@/components/ui";
 import { FC } from "react";
 
 export interface InfoLink {
+  title: string;
   href: string;
-  name: string;
 }
 
 export interface InfoColumnProps {
@@ -18,10 +18,10 @@ const FooterInfoColumn: FC<InfoColumnProps> = ({ title, links }) => {
         <Text variant={"h4"} component={"h4"}>
           {title}
         </Text>
-        {links.map(({ href, name }, index) => (
+        {links.map(({ href, title }, index) => (
           <ListItem key={index}>
             <Link variant={"small"} href={href}>
-              {name}
+              {title}
             </Link>
           </ListItem>
         ))}

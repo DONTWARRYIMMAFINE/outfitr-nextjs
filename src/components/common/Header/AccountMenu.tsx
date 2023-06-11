@@ -1,14 +1,15 @@
 "use client";
 
-import GuestNavigation from "@/components/common/Header/GuestNavigation";
-import UserNavigation from "@/components/common/Header/UserNavigation";
+import AccountMenuNavigation from "@/components/common/Header/AccountMenuNavigation";
 import { IconButton, Icons, Menu } from "@/components/ui";
-import { guestMenuRoutes, userMenuRoutes } from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 import { loggedInUser } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
+import { usePathname } from "next-intl/client";
 import { MouseEvent, useState } from "react";
 
 const AccountMenu = () => {
+  const pathname = usePathname();
   const user = useReactiveVar((loggedInUser));
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
@@ -21,9 +22,19 @@ const AccountMenu = () => {
     setAnchorEl(null);
   };
 
+  const isActive = [
+    Routes.Partner.href,
+    Routes.Profile.href,
+    Routes.LogIn.href,
+    Routes.SignUp.href
+  ].includes(pathname);
+
   return (<>
     <IconButton onClick={handleClick}>
-      {user ? <Icons.PersonLoggedIn /> : <Icons.Person />}
+      {user ?
+        <Icons.PersonLoggedIn sx={{ color: isActive ? "primary.main" : "text.primary" }} /> :
+        <Icons.Person sx={{ color: isActive ? "primary.main" : "text.primary" }} />
+      }
     </IconButton>
     <Menu
       id={"account-menu"}
@@ -34,10 +45,7 @@ const AccountMenu = () => {
       transformOrigin={{ horizontal: "right", vertical: "top" }}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
-      {user ?
-        <UserNavigation routes={userMenuRoutes} /> :
-        <GuestNavigation routes={guestMenuRoutes} />
-      }
+      <AccountMenuNavigation />
     </Menu>
   </>);
 };

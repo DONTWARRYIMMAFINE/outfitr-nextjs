@@ -1,3 +1,4 @@
+import { I18NS } from "@/constants/I18NS";
 import CheckoutSteps from "../../../../../components/common/Cart/Checkout";
 import { PageContainer } from "@/components/ui";
 import { useTranslation } from "@/lib/i18n";
@@ -11,10 +12,11 @@ export const metadata: Metadata = {
 interface CheckoutPageProps extends LngParamsProps {}
 
 const CheckoutPage = async ({ params }: CheckoutPageProps) => {
-  const { t } = await useTranslation(params.lng);
+  const {lng} = params;
+  const { t } = await useTranslation(lng, I18NS.Checkout);
 
   return (
-    <PageContainer pageTitle={t("page.checkout.title")}>
+    <PageContainer pageTitle={t("page.title")}>
       <CheckoutSteps />
     </PageContainer>
   );

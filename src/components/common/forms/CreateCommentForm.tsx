@@ -1,21 +1,21 @@
 "use client";
 
-import { CommentSchema } from "@/components/common/forms/schema/comment.schema";
+import { CreateCommentSchema } from "@/components/common/forms/schema/create-comment.schema";
 import RatingPicker from "@/components/common/ProductDetails/RatingPicker";
 import { Box, Button, TextField } from "@/components/ui";
 import FileUpload from "@/components/ui/FileUpload";
+import { I18NS } from "@/constants/I18NS";
 import { CommentFragment, CreateCommentInput } from "@/lib/graphql/schema.generated";
 import { Formik } from "formik";
 import { FC, useState } from "react";
 import { withTranslation, WithTranslation } from "react-i18next";
 import { ExtendedFileProps } from "react-mui-fileuploader/dist/types/index.types";
 
-interface CommentFormProps extends WithTranslation {
-  comment?: CommentFragment;
+interface CreateCommentFormProps extends WithTranslation {
   onSubmit: (values: Omit<CreateCommentInput, "userId" | "productId">, files?: ExtendedFileProps[]) => void;
 }
 
-const CommentForm: FC<CommentFormProps> = ({ comment, onSubmit, t }) => {
+const CreateCommentForm: FC<CreateCommentFormProps> = ({ onSubmit, t }) => {
   const [files, setFiles] = useState<ExtendedFileProps[]>();
 
   const handleFilesChange = (files: ExtendedFileProps[]) => {
@@ -25,11 +25,11 @@ const CommentForm: FC<CommentFormProps> = ({ comment, onSubmit, t }) => {
   return (
     <Formik
       initialValues={{
-        title: comment?.title || "",
-        description: comment?.description || "",
-        rating: comment?.rating || 0,
+        title: "",
+        description: "",
+        rating: 0,
       }}
-      validationSchema={CommentSchema}
+      validationSchema={CreateCommentSchema}
       onSubmit={values => onSubmit(values, files)}
     >
       {({ handleSubmit, isValid, values, setValues, handleChange, errors }) => (
@@ -39,8 +39,8 @@ const CommentForm: FC<CommentFormProps> = ({ comment, onSubmit, t }) => {
               id={"title"}
               name={"title"}
               type={"text"}
-              label={t("component.form.comment.title.label")}
-              placeholder={t("component.form.comment.title.placeholder")!}
+              label={t("field.comment.title.label")}
+              placeholder={t("field.comment.title.placeholder")!}
               value={values.title}
               onChange={handleChange}
               error={Boolean(errors.title)}
@@ -55,8 +55,8 @@ const CommentForm: FC<CommentFormProps> = ({ comment, onSubmit, t }) => {
             id={"description"}
             name={"description"}
             type={"text"}
-            label={t("component.form.comment.description.label")}
-            placeholder={t("component.form.comment.description.placeholder")!}
+            label={t("field.comment.description.label")}
+            placeholder={t("field.comment.description.placeholder")!}
             value={values.description}
             onChange={handleChange}
             error={Boolean(errors.description)}
@@ -79,11 +79,11 @@ const CommentForm: FC<CommentFormProps> = ({ comment, onSubmit, t }) => {
           <FileUpload
             multiFile={true}
             maxUploadFiles={5}
-            title={t("component.form.comment.media.title")!}
+            title={t("field.comment.media.title")!}
             onFilesChange={handleFilesChange}
           />
           <Button variant={"primary"} disabled={!isValid} onClick={() => handleSubmit()} fullWidth>
-            {t("component.button.share")}
+            {t("createComment.button.share.label")}
           </Button>
         </Box>
       )}
@@ -91,4 +91,4 @@ const CommentForm: FC<CommentFormProps> = ({ comment, onSubmit, t }) => {
   );
 };
 
-export default withTranslation()(CommentForm);
+export default withTranslation(I18NS.Form)(CreateCommentForm);

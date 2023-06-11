@@ -4,6 +4,8 @@ import { ThemeProvider } from "@/components";
 import RoutesGuard from "@/components/RoutesGuard";
 import SessionProvider from "@/components/SessionProvider";
 import { Routes } from "@/constants/routes";
+import { createAbility } from "@/lib/casl/ability";
+import { AbilityContext } from "@/lib/casl/Can";
 import { createEmotionCache } from "@/lib/createEmotionCache";
 import { getClient } from "@/lib/graphql/apollo-client";
 import { Roles } from "@/lib/graphql/schema.generated";
@@ -23,6 +25,8 @@ export interface PageProviderProps extends LngProps {
   children: ReactNode;
 }
 
+const ability = createAbility([]);
+
 const PageProvider: FC<PageProviderProps> = ({ lng, children }) => {
   const client = getClient();
 
@@ -40,11 +44,27 @@ const PageProvider: FC<PageProviderProps> = ({ lng, children }) => {
           >
             <NextIntlClientProvider locale={lng}>
               <ApolloProvider client={client}>
-                <SessionProvider>
-                  <RoutesGuard protectedRoutes={[{ role: Roles.Customer, route: Routes.Cart.href }]}>
-                    {children}
-                  </RoutesGuard>
-                </SessionProvider>
+                <AbilityContext.Provider value={ability}>
+                  <SessionProvider>
+                    <RoutesGuard protectedRoutes={[
+                      { role: Roles.Customer, route: Routes.Wishlist.href },
+                      { role: Roles.Customer, route: Routes.Cart.href },
+                      { role: Roles.Customer, route: Routes.Profile.href },
+                      { role: Roles.Customer, route: Routes.Addresses.href },
+                      { role: Roles.Customer, route: Routes.Orders.href },
+                      { role: Roles.Customer, route: Routes.Settings.href },
+                      { role: Roles.Customer, route: Routes.LogOut.href },
+                      { role: Roles.Customer, route: Routes.Checkout.href },
+
+                      { role: Roles.Partner, route: Routes.Partner.href },
+                      { role: Roles.Partner, route: Routes.Brands.href },
+                      { role: Roles.Partner, route: Routes.Products.href },
+                      { role: Roles.Partner, route: Routes.ReceivedOrders.href },
+                    ]}>
+                      {children}
+                    </RoutesGuard>
+                  </SessionProvider>
+                </AbilityContext.Provider>
               </ApolloProvider>
             </NextIntlClientProvider>
           </ConfirmProvider>

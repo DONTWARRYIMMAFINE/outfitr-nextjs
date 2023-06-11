@@ -12,7 +12,7 @@ declare module "@mui/material/Button" {
   }
 }
 
-export interface ButtonProps extends LoadingButtonProps {
+export interface ButtonProps extends Omit<LoadingButtonProps, "color"> {
   selected?: boolean;
 }
 
@@ -48,7 +48,7 @@ const StyledButton: FC<ButtonProps> = styled(LoadingButton)<ButtonProps>(({ them
   }),
 }));
 
-const Button = ({ children, ...props }: ButtonProps) => {
+const Button: FC<ButtonProps> = ({ children, ...props }) => {
   return (
     <StyledButton {...props}>
       {children}

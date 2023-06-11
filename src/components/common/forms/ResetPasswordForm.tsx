@@ -3,6 +3,7 @@
 import { ResetPasswordSchema } from "@/components/common/forms/schema/reset-password.schema";
 import SecureIconTextField from "@/components/SecureIconTextField";
 import { Box, Button, Icons } from "@/components/ui";
+import { I18NS } from "@/constants/I18NS";
 import { Formik } from "formik";
 import { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
@@ -26,8 +27,8 @@ const ResetPasswordForm: FC<ResetPasswordFormProps> = ({ onSubmit, t }) => {
           <SecureIconTextField
             id={"password"}
             name={"password"}
-            label={t("password.label")}
-            placeholder={t("password.placeholder")!}
+            label={t("field.user.password.label")}
+            placeholder={t("field.user.password.placeholder")!}
             value={values.password}
             onChange={handleChange}
             error={touched.password && Boolean(errors.password)}
@@ -40,8 +41,8 @@ const ResetPasswordForm: FC<ResetPasswordFormProps> = ({ onSubmit, t }) => {
           <SecureIconTextField
             id={"passwordConfirmation"}
             name={"passwordConfirmation"}
-            label={t("passwordConfirmation.label")}
-            placeholder={t("passwordConfirmation.placeholder")!}
+            label={t("field.user.passwordConfirmation.label")}
+            placeholder={t("field.user.passwordConfirmation.placeholder")!}
             value={values.passwordConfirmation}
             onChange={handleChange}
             error={touched.passwordConfirmation && Boolean(errors.passwordConfirmation)}
@@ -52,7 +53,7 @@ const ResetPasswordForm: FC<ResetPasswordFormProps> = ({ onSubmit, t }) => {
             fullWidth
           />
           <Button disabled={!isValid} variant={"primary"} onClick={() => handleSubmit()}>
-            {t("button.reset")}
+            {t("resetPassword.button.reset.label")}
           </Button>
         </Box>
       )}
@@ -60,4 +61,4 @@ const ResetPasswordForm: FC<ResetPasswordFormProps> = ({ onSubmit, t }) => {
   );
 };
 
-export default withTranslation("form")(ResetPasswordForm);
+export default withTranslation(I18NS.Form)(ResetPasswordForm);

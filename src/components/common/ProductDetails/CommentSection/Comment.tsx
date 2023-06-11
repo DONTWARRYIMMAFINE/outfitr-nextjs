@@ -1,6 +1,7 @@
 import Stars from "@/components/common/ProductDetails/Stars";
 import { Box, Image, Text } from "@/components/ui";
 import { CommentFragment } from "@/lib/graphql/schema.generated";
+import { prepareBlurImage } from "@/lib/utils/image.helper";
 import moment from "moment";
 import { FC } from "react";
 
@@ -17,11 +18,18 @@ const Comment: FC<CommentProps> = ({ comment }) => {
       </Box>
       <Text variant={"p"} opacity={0.7}>{comment.description}</Text>
       <Box display={"flex"} gap={1}>
-        {comment.media.map(({ id, url, width, height }, index) => (
+        {comment.media.map(({ id, url, width, height }) => (
           <Box key={id} position={"relative"} width={80} height={125} borderRadius={0.25} overflow={"hidden"}>
             <Image
-              src={url} alt={"Ops..."}
-              style={{ objectFit: "contain" }}
+              src={url}
+              blurDataURL={prepareBlurImage(
+                url,
+                Math.floor(width! / 10),
+                Math.floor(height! / 10),
+              )}
+              placeholder={url ? "blur" : undefined}
+              alt={"Ops..."}
+              style={{ objectFit: "cover" }}
               fill
             />
           </Box>

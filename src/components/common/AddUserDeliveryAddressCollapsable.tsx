@@ -3,6 +3,7 @@
 import CollapsableBox, { CollapsableBoxProps } from "@/components/common/CollapsableBox";
 import CreateAddressForm from "@/components/common/forms/CreateAddressForm";
 import { Box, IconButton, Icons, Link, Text } from "@/components/ui";
+import { I18NS } from "@/constants/I18NS";
 import { CreateAddressInput, useCreateOneUserAddressMutation, UserAddressesDocument } from "@/lib/graphql/schema.generated";
 import { loggedInUser } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
@@ -37,7 +38,7 @@ const AddUserDeliveryAddressCollapsable: FC<AddUserDeliveryAddressCollapsablePro
       Header={
         <Box display={"flex"} justifyContent={"flex-end"} alignItems={"center"} width={"100%"} paddingTop={2}>
           <Link sx={{ opacity: 0.7 }}>
-            {t("component.button.addUserDeliveryAddress")}
+            {t("component.addUserDeliveryAddress.button.expand.label")}
           </Link>
         </Box>
       }
@@ -49,4 +50,4 @@ const AddUserDeliveryAddressCollapsable: FC<AddUserDeliveryAddressCollapsablePro
   );
 };
 
-export default withTranslation()(AddUserDeliveryAddressCollapsable);
+export default withTranslation(I18NS.Common)(AddUserDeliveryAddressCollapsable);

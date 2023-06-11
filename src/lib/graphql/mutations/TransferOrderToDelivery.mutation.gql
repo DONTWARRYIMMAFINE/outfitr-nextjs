@@ -1,0 +1,5 @@
+mutation TransferOrderToDelivery($input: UpdateOrderInputType!) {
+  transferOrderToDelivery(input: $input) {
+    ...Order
+  }
+}

@@ -3,6 +3,7 @@
 import CartTotalsItem from "@/components/common/Cart/CartTotals/CartTotalsItem";
 import CartRow from "@/components/common/Cart/CartTotals/CartRow";
 import { Box, Divider, Link, Text } from "@/components/ui";
+import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
 import { CartItemFragment } from "@/lib/graphql/schema.generated";
 import { userCart } from "@/store/user.store";
@@ -23,9 +24,9 @@ const CartTotals: FC<CartTotalsProps> = ({ showItems, NextButton, PreviousButton
     <Box display={"flex"} flexDirection={"column"} bgcolor={"background.body"} borderRadius={0.5} padding={4} gap={1}>
       {showItems && (<>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} width={"100%"}>
-          <Text variant={"p"}>{t("component.label.orderItems")}</Text>
+          <Text variant={"p"}>{t("content.cartTotals.label")}</Text>
           <Link href={Routes.Cart.href} sx={{ opacity: 0.7 }} noWrap>
-            {t("component.button.edit")}
+            {t("content.cartTotals.button.edit.label")}
           </Link>
         </Box>
         <Divider flexItem sx={{ borderStyle: "dashed" }} />
@@ -42,14 +43,14 @@ const CartTotals: FC<CartTotalsProps> = ({ showItems, NextButton, PreviousButton
         currency: cart?.subtotalPrice.currency!,
         fontSize: 18,
       }}>
-        <Text variant={"p"}>{t("component.label.subtotal")}</Text>
+        <Text variant={"p"}>{t("content.cartTotals.subtotal.label")}</Text>
       </CartRow>
       <CartRow priceProps={{
         amount: cart?.taxPrice.amount!,
         currency: cart?.taxPrice.currency!,
         fontSize: 18,
       }}>
-        <Text variant={"p"}>{t("component.label.tax")} ({Math.floor(cart?.taxPrice.amount! / cart?.subtotalPrice.amount! * 100) || 0}%)</Text>
+        <Text variant={"p"}>{t("content.cartTotals.tax.label")} ({Math.floor(cart?.taxPrice.amount! / cart?.subtotalPrice.amount! * 100) || 0}%)</Text>
       </CartRow>
       {cart?.deliveryMethod && (
         <CartRow priceProps={{
@@ -57,7 +58,7 @@ const CartTotals: FC<CartTotalsProps> = ({ showItems, NextButton, PreviousButton
           currency: cart?.deliveryMethod?.price.currency!,
           fontSize: 18,
         }}>
-          <Text variant={"p"}>{t("component.label.delivery")} ({cart?.deliveryMethod.name})</Text>
+          <Text variant={"p"}>{t("content.cartTotals.delivery.label")} ({cart?.deliveryMethod.name})</Text>
         </CartRow>
       )}
       <Divider flexItem sx={{ borderStyle: "dashed" }} />
@@ -66,7 +67,7 @@ const CartTotals: FC<CartTotalsProps> = ({ showItems, NextButton, PreviousButton
         currency: cart?.totalPrice.currency!,
         fontSize: 18,
       }}>
-        <Text variant={"p"}>{t("component.label.total")}</Text>
+        <Text variant={"p"}>{t("content.cartTotals.total.label")}</Text>
       </CartRow>
       <Divider flexItem sx={{ borderStyle: "dashed" }} />
       <Box display={"flex"} justifyContent={"space-between"} gap={2}>
@@ -77,4 +78,4 @@ const CartTotals: FC<CartTotalsProps> = ({ showItems, NextButton, PreviousButton
   );
 };
 
-export default withTranslation()(CartTotals);
+export default withTranslation(I18NS.Cart)(CartTotals);

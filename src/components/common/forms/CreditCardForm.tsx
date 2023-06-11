@@ -1,14 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui";
+import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
 import { SELF_URL } from "@/constants/urls";
-import {
-  MyCartDocument,
-  PaymentIntentFragment,
-  usePlaceOrderFromUserCartMutation,
-  useUpdateOneOrderMutation,
-} from "@/lib/graphql/schema.generated";
+import { MyCartDocument, PaymentIntentFragment, usePlaceOrderFromUserCartMutation, useUpdateOneOrderMutation } from "@/lib/graphql/schema.generated";
 import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { PaymentMethodCreateParams } from "@stripe/stripe-js/types/api/payment-methods";
 import { map } from "lodash";
@@ -53,11 +49,11 @@ const CreditCardForm: FC<CreditCardFormProps> = ({ paymentIntent, billingDetails
               input: {
                 id: order.id,
                 update: {
-                  paymentIntentId: paymentIntent.id
-                }
-              }
-            }
-          })
+                  paymentIntentId: paymentIntent.id,
+                },
+              },
+            },
+          });
         }
 
         // Trigger form validation and wallet collection
@@ -80,6 +76,7 @@ const CreditCardForm: FC<CreditCardFormProps> = ({ paymentIntent, billingDetails
 
         // This code part executes only if error happened
         if (error.type === "card_error" || error.type === "validation_error") {
+          toast.error(t("content.steps.paymentInfo.paymentMethod.card.error", { message: error.message }));
           setMessage(error.message);
         } else {
           setMessage("An unexpected error occurred.");
@@ -98,10 +95,12 @@ const CreditCardForm: FC<CreditCardFormProps> = ({ paymentIntent, billingDetails
   return (
     <form id={"payment-form"} onSubmit={handleSubmit}>
       <PaymentElement id={"payment-element"} options={{ fields: { billingDetails: "never" } }} />
-      <Button id={"submit"} type={"submit"} variant={"primary"} disabled={isLoading || !stripe || !elements} fullWidth>{t("component.button.pay")}</Button>
+      <Button id={"submit"} type={"submit"} variant={"primary"} disabled={isLoading || !stripe || !elements} fullWidth>
+        {t("content.steps.paymentInfo.paymentMethod.card.button.pay.label")}
+      </Button>
       {message && <div id="payment-message">{message}</div>}
     </form>
   );
 };
 
-export default withTranslation()(CreditCardForm);
+export default withTranslation(I18NS.Checkout)(CreditCardForm);

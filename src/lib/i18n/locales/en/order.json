@@ -1,0 +1,61 @@
+{
+  "header": {
+    "order": {
+      "label": "Order"
+    },
+    "status": {
+      "label": "Status"
+    }
+  },
+  "content": {
+    "items": {
+      "label": "Order items",
+      "color": {
+        "label": "Color"
+      },
+      "size": {
+        "label": "Size"
+      },
+      "brand": {
+        "label": "Brand"
+      },
+      "quantity": {
+        "label": "Quantity"
+      }
+    },
+    "info": {
+      "label": "Order info",
+      "subtotal": {
+        "label": "Subtotal"
+      },
+      "tax": {
+        "label": "VAT"
+      },
+      "delivery": {
+        "label": "Delivery"
+      },
+      "total": {
+        "label": "Total"
+      }
+    },
+    "changeStatus": {
+      "label": "Change status",
+      "success": "Order status updated successfully",
+      "error": "An error occurred during order status update. {{message}}",
+      "button": {
+        "transferToDelivery": {
+          "label": "To delivery"
+        },
+        "complete": {
+          "label": "Complete"
+        },
+        "cancel": {
+          "label": "Cancel"
+        },
+        "reject": {
+          "label": "Reject"
+        }
+      }
+    }
+  }
+}

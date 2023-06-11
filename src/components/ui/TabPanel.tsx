@@ -16,7 +16,7 @@ const TabPanel = ({ index, value, children, ...props }: TabPanelProps) => {
       display={"flex"}
       flexDirection={"column"}
       justifyContent={"center"}
-      gap={2}
+      gap={4}
       paddingX={16}
       {...props}
     >

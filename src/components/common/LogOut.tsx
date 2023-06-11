@@ -1,10 +1,11 @@
 "use client";
 
 import { Link } from "@/components/ui";
+import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
 import { LOCAL_STORAGE_TOKEN } from "@/constants/token";
 import { useLogoutMutation } from "@/lib/graphql/schema.generated";
-import { loggedInUser } from "@/store/user.store";
+import { loggedInUser, userCart, userWishlist } from "@/store/user.store";
 import { WithTranslation, withTranslation } from "react-i18next";
 
 interface LogOutProps extends WithTranslation {}
@@ -29,4 +30,4 @@ const LogOut = ({ t }: LogOutProps) => {
   );
 };
 
-export default withTranslation("navigation")(LogOut);
+export default withTranslation(I18NS.Route)(LogOut);

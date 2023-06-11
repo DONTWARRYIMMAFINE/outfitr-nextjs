@@ -1,0 +1,5 @@
+mutation UpdateOneBrand($input: UpdateOneBrandInput!) {
+  updateOneBrand(input: $input) {
+    ...Brand
+  }
+}

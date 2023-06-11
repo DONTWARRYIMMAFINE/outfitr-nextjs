@@ -6,6 +6,11 @@
   "login": "Войти",
   "signup": "Зарегистрироваться",
   "logout": "Выйти",
+  "partner": {
+    "brands": "Бренды",
+    "products": "Товары",
+    "receivedOrders": "Полученные заказы"
+  },
   "profile": {
     "main": "Профиль",
     "orders": "Мои Заказы",

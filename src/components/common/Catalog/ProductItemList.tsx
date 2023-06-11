@@ -3,16 +3,17 @@
 import ProductItem from "@/components/common/Catalog/ProductItem";
 import ProductPagination from "@/components/common/Catalog/ProductPagination";
 import { Box, Error } from "@/components/ui";
-import { useProductsQuery } from "@/lib/graphql/schema.generated";
+import { Categories, ProductSortFields, SortDirection, useProductsQuery } from "@/lib/graphql/schema.generated";
 import { parseIntOrDefault } from "@/lib/utils/parser.utils";
 import { ProductFilterBuilder } from "@/lib/utils/product-filter.builder";
+import { ProductSortBuilder } from "@/lib/utils/product-sort.builder";
 import { Skeleton } from "@mui/material";
 import { useSearchParams } from "next/navigation";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 
 interface ProductCardListProps {
-  category?: string;
-  parentCategory?: string;
+  category?: Categories;
+  parentCategory?: Categories;
 }
 
 const ProductItemList: FC<ProductCardListProps> = ({ category, parentCategory }) => {
@@ -20,6 +21,14 @@ const ProductItemList: FC<ProductCardListProps> = ({ category, parentCategory })
 
   const limit = parseIntOrDefault(searchParams.get("limit"), 12);
   const offset = parseIntOrDefault(searchParams.get("offset"));
+
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("searchQuery"));
+  const [price, setPrice] = useState(searchParams.get("price")?.split(","));
+  const [brands, setBrands] = useState(searchParams.get("brands")?.split(","));
+  const [colors, setColors] = useState(searchParams.get("colors")?.split(","));
+  const [sizes, setSizes] = useState(searchParams.get("sizes")?.split(","));
+  const [field, setField] = useState(searchParams.get("field"));
+  const [direction, setDirection] = useState(searchParams.get("direction"));
 
   const { data, loading, error, refetch } = useProductsQuery({
     variables: {
@@ -29,27 +38,41 @@ const ProductItemList: FC<ProductCardListProps> = ({ category, parentCategory })
       },
       filter: new ProductFilterBuilder()
         .category(category, parentCategory)
-        .build(),
-    },
-  });
-
-  useEffect(() => {
-    const searchQuery = searchParams.get("searchQuery") || "";
-    const price = searchParams.get("price")?.split(",") || [];
-    const brands = searchParams.get("brands")?.split(",") || [];
-    const colors = searchParams.get("colors")?.split(",") || [];
-    const sizes = searchParams.get("sizes")?.split(",") || [];
-    refetch({
-      filter: new ProductFilterBuilder()
-        .category(category, parentCategory)
         .searchQuery(searchQuery)
-        .priceRange(parseIntOrDefault(price[0]), parseIntOrDefault(price[1]))
+        .priceRange(price && parseIntOrDefault(price[0]), price && parseIntOrDefault(price[1]))
         .brands(brands)
         .colors(colors)
         .sizes(sizes)
         .build(),
+      sorting: new ProductSortBuilder()
+        .add(field as ProductSortFields, direction as SortDirection)
+        .build()
+    },
+  });
+
+  useEffect(() => {
+    const searchQuery = searchParams.get("searchQuery");
+    const price = searchParams.get("price")?.split(",");
+    const brands = searchParams.get("brands")?.split(",");
+    const colors = searchParams.get("colors")?.split(",");
+    const sizes = searchParams.get("sizes")?.split(",");
+
+    const field = searchParams.get("field") as ProductSortFields;
+    const direction = searchParams.get("direction") as SortDirection;
+    refetch({
+      filter: new ProductFilterBuilder()
+        .category(category, parentCategory)
+        .searchQuery(searchQuery)
+        .priceRange(price && parseIntOrDefault(price[0]), price && parseIntOrDefault(price[1]))
+        .brands(brands)
+        .colors(colors)
+        .sizes(sizes)
+        .build(),
+      sorting: new ProductSortBuilder()
+        .add(field as ProductSortFields, direction as SortDirection)
+        .build()
     });
-  }, [searchParams]);
+  }, [category, parentCategory, searchParams, refetch]);
 
   if (error) return <Error message={error.message} />;
   if (loading || !data) return <Skeleton variant={"rectangular"} height={180} />;
@@ -61,6 +84,7 @@ const ProductItemList: FC<ProductCardListProps> = ({ category, parentCategory })
       minHeight={"100%"}
       justifyContent={"space-between"}
       alignItems={"center"}
+      gap={3}
     >
       <Box
         display={"flex"}

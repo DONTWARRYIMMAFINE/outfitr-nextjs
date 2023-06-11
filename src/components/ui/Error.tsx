@@ -2,7 +2,7 @@ import { Text } from "@/components/ui";
 import { FC } from "react";
 
 export interface ErrorProps {
-  message?: string;
+  message: string;
 }
 
 const Error: FC<ErrorProps> = ({ message = "Error" }) => {

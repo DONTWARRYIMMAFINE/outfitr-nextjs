@@ -3,6 +3,7 @@
 import PaymentMethodItem, { PaymentMethodItemProps } from "@/components/common/Cart/Checkout/PaymentInfoStep/PaymentMethodItem";
 import CreditCardForm from "@/components/common/forms/CreditCardForm";
 import Error from "@/components/ui/Error";
+import { I18NS } from "@/constants/I18NS";
 import { STRIPE_PUBLIC_KEY } from "@/constants/urls";
 import { PaymentIntentFragment, useCancelOnePaymentIntentMutation, useCreateOnePaymentIntentFromCartMutation } from "@/lib/graphql/schema.generated";
 import { loggedInUser, userCart } from "@/store/user.store";
@@ -96,4 +97,4 @@ const CardPaymentMethodItem: FC<CardPaymentMethodItemProps> = ({ paymentMethod, 
   );
 };
 
-export default withTranslation()(CardPaymentMethodItem);
+export default withTranslation(I18NS.Checkout)(CardPaymentMethodItem);

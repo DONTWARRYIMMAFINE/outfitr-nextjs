@@ -1,0 +1,5 @@
+mutation CreateOneBrand($input: CreateOneBrandInput!) {
+  createOneBrand(input: $input) {
+    ...Brand
+  }
+}

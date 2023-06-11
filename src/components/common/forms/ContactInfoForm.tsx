@@ -2,6 +2,7 @@
 
 import { ContactInfoSchema } from "@/components/common/forms/schema/contact-info.schema";
 import { Box, Button, Icons, IconTextField } from "@/components/ui";
+import { I18NS } from "@/constants/I18NS";
 import { UpdateOneUserMutationVariables, useUpdateOneUserMutation } from "@/lib/graphql/schema.generated";
 import { omitEmptyFields } from "@/lib/utils/form.utils";
 import { loggedInUser } from "@/store/user.store";
@@ -14,7 +15,7 @@ import { withTranslation, WithTranslation } from "react-i18next";
 
 interface ContactInfoFormProps extends WithTranslation {}
 
-const ContactInfoForm: FC<ContactInfoFormProps> = ({ t, tReady }) => {
+const ContactInfoForm: FC<ContactInfoFormProps> = ({ t }) => {
   const user = useReactiveVar(loggedInUser);
   const [updateOneUserMutation, { loading }] = useUpdateOneUserMutation();
 
@@ -28,9 +29,9 @@ const ContactInfoForm: FC<ContactInfoFormProps> = ({ t, tReady }) => {
       },
       onCompleted: ({ updateOneUser }) => {
         loggedInUser(updateOneUser);
-        toast.success(`Contact info updated`);
+        toast.success(t("contactInfo.success"));
       },
-      onError: error => toast.error(error.message),
+      onError: error => toast.error(t("contactInfo.error", { message: error.message })),
     });
   };
 
@@ -52,8 +53,8 @@ const ContactInfoForm: FC<ContactInfoFormProps> = ({ t, tReady }) => {
               id={"firstName"}
               name={"firstName"}
               type={"text"}
-              label={t("component.form.firstName.label")}
-              placeholder={t("component.form.firstName.placeholder")!}
+              label={t("field.user.firstName.label")}
+              placeholder={t("field.user.firstName.placeholder")!}
               value={values.firstName}
               onChange={handleChange}
               error={Boolean(errors.firstName)}
@@ -67,8 +68,8 @@ const ContactInfoForm: FC<ContactInfoFormProps> = ({ t, tReady }) => {
               id={"lastName"}
               name={"lastName"}
               type={"text"}
-              label={t("component.form.lastName.label")}
-              placeholder={t("component.form.lastName.placeholder")!}
+              label={t("field.user.lastName.label")}
+              placeholder={t("field.user.lastName.placeholder")!}
               value={values.lastName}
               onChange={handleChange}
               error={Boolean(errors.lastName)}
@@ -84,8 +85,8 @@ const ContactInfoForm: FC<ContactInfoFormProps> = ({ t, tReady }) => {
               id={"email"}
               name={"email"}
               type={"email"}
-              label={t("component.form.email.label")}
-              placeholder={t("component.form.email.placeholder")!}
+              label={t("field.user.email.label")}
+              placeholder={t("field.user.email.placeholder")!}
               value={values.email}
               onChange={handleChange}
               error={Boolean(errors.email)}
@@ -100,8 +101,8 @@ const ContactInfoForm: FC<ContactInfoFormProps> = ({ t, tReady }) => {
               id={"phone"}
               name={"phone"}
               type={"tel"}
-              label={t("component.form.phone.label")}
-              placeholder={t("component.form.phone.placeholder")!}
+              label={t("field.user.phone.label")}
+              placeholder={t("field.user.phone.placeholder")!}
               value={values.phone}
               onChange={handleChange}
               error={Boolean(errors.phone)}
@@ -113,7 +114,7 @@ const ContactInfoForm: FC<ContactInfoFormProps> = ({ t, tReady }) => {
             />
           </Box>
           <Button variant={"primary"} disabled={!isValid} loading={loading} onClick={() => handleSubmit()} fullWidth>
-            {t("component.button.save")}
+            {t("contactInfo.button.submit.label")}
           </Button>
         </Box>
       )}
@@ -121,4 +122,4 @@ const ContactInfoForm: FC<ContactInfoFormProps> = ({ t, tReady }) => {
   );
 };
 
-export default withTranslation()(ContactInfoForm);
+export default withTranslation(I18NS.Form)(ContactInfoForm);

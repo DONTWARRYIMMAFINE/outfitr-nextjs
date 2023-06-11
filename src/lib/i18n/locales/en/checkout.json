@@ -1,0 +1,79 @@
+{
+  "page": {
+    "title": "Checkout"
+  },
+  "content": {
+    "steps": {
+      "contactInfo": {
+        "label": "Contact Info",
+        "deliveryOptions": {
+          "label": "Delivery Options",
+          "homeDelivery": "Home Delivery",
+          "pickupPointDelivery": "Pickup Point Delivery"
+        },
+        "button": {
+          "next": {
+            "label": "To Delivery"
+          }
+        }
+      },
+      "deliveryInfo": {
+        "label": "Delivery Info",
+        "table": {
+          "header": [
+            "Delivery Name",
+            "Delivery Time Estimation",
+            "Delivery Price"
+          ],
+          "body": {
+            "avgDeliveryTime": "{{days}} days, {{hours}} hours"
+          }
+        },
+        "button": {
+          "next": {
+            "label": "To Delivery"
+          },
+          "back": {
+            "label": "Back"
+          }
+        }
+      },
+      "paymentInfo": {
+        "label": "Payment Info",
+        "paymentMethod": {
+          "cash": {
+            "success": "Order placed successfully",
+            "error": "Unable to place order. {{message}}",
+            "button": {
+              "placeOrder": {
+                "label": "Place order"
+              }
+            }
+          },
+          "card": {
+            "success": "Order placed successfully",
+            "error": "Unable to place order. {{message}}",
+            "button": {
+              "pay": {
+                "label": "Pay"
+              }
+            }
+          }
+        },
+        "button": {
+          "back": {
+            "label": "Back"
+          }
+        }
+      },
+      "completeOrder": {
+        "label": "Thank you for your order! You can find the order details below"
+      }
+    },
+    "button": {
+      "checkout": {
+        "label": "Checkout"
+      }
+    }
+  }
+}

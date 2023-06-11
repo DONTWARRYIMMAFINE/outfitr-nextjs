@@ -1,0 +1,32 @@
+{
+  "page": {
+    "title": "Product Details"
+  },
+  "content": {
+    "description": {
+      "label": "Description"
+    },
+    "colors": {
+      "label": "Colors"
+    },
+    "sizes": {
+      "label": "Sizes"
+    },
+    "productRating": {
+      "label": "Product Rating",
+      "empty": "No ratings"
+    },
+    "stock": {
+      "label": "Currently in stock"
+    },
+    "createComment": {
+      "title": "Already ordered this item?",
+      "description": "Share your opinion us",
+      "button": {
+        "expand": {
+          "label": "Create comment"
+        }
+      }
+    }
+  }
+}

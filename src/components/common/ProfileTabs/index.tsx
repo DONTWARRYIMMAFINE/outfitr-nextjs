@@ -3,8 +3,8 @@
 import AddressesTab from "@/components/common/ProfileTabs/Addresses";
 import MainTab from "@/components/common/ProfileTabs/Main";
 import OrdersTab from "@/components/common/ProfileTabs/OrdersTab";
-import { Box, Tab, TabPanel, Tabs, Text } from "@/components/ui";
-import { tabs } from "@/constants/routes";
+import { Box, Tab, Tabs } from "@/components/ui";
+import { profileTabs } from "@/constants/routes";
 import { indexOf } from "lodash";
 import { usePathname, useRouter } from "next-intl/client";
 import { notFound, useSearchParams } from "next/navigation";
@@ -25,7 +25,7 @@ const ProfileTabs = ({ t }: ProfileTabs) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const value = indexOf(tabs, searchParams.get("tab") || "");
+  const value = indexOf(profileTabs, searchParams.get("tab") || "");
 
   // Throw 404 error
   if (value === -1) {
@@ -35,7 +35,7 @@ const ProfileTabs = ({ t }: ProfileTabs) => {
 
   const handleChange = async (event: SyntheticEvent, newValue: number) => {
     const params = new URLSearchParams(searchParams);
-    params.set("tab", tabs[newValue]);
+    params.set("tab", profileTabs[newValue]);
     router.replace(`${pathname}?${params.toString()}`);
   };
 

@@ -2,6 +2,8 @@
 
 import { Button, Icons } from "@/components/ui";
 import { ButtonProps } from "@/components/ui/Button";
+import { I18NS } from "@/constants/I18NS";
+import { Routes } from "@/constants/routes";
 import { useAddCartItemsToCartMutation } from "@/lib/graphql/schema.generated";
 import { userCart } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
@@ -39,12 +41,12 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({ productVariantId, disabled,
         },
         onCompleted: data => {
           userCart(data.addCartItemsToCart);
-          toast.success("Added to cart");
+          toast.success(t("component.addToCartButton.success"));
         },
-        onError: _ => toast.error("Ops...unable to add product to cart"),
+        onError: error => toast.error(t("component.addToCartButton.error", { message: error.message })),
       });
     } else {
-      router.push("/log-in");
+      router.push(Routes.LogIn.href);
     }
   };
 
@@ -56,9 +58,9 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({ productVariantId, disabled,
       onClick={() => onClick()}
       {...props}
     >
-      {t("component.button.addToCart")}
+      {t("component.addToCartButton.label")}
     </Button>
   );
 };
 
-export default withTranslation()(AddToCartButton);
+export default withTranslation(I18NS.Common)(AddToCartButton);

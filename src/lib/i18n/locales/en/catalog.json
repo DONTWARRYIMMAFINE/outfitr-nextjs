@@ -4,16 +4,48 @@
   },
   "content": {
     "search": {
-
+      "placeholder": "Enter keywords, title or description"
     },
     "filter": {
-
+      "priceRange": {
+        "label": "Price range"
+      },
+      "brands": {
+        "label": "Brands",
+        "error": "Unable to fetch brands. {{message}}"
+      },
+      "colors": {
+        "label": "Colors",
+        "error": "Unable to fetch colors. {{message}}"
+      },
+      "sizes": {
+        "label": "Sizes",
+        "error": "Unable to fetch sizes. {{message}}"
+      },
+      "button": {
+        "applyFilters": {
+          "label": "Apply filters"
+        }
+      }
     },
     "sort": {
-
+      "createdAt": {
+        "asc": "Old first",
+        "desc": "New first"
+      }
     },
-    "product": {
-
+    "productCard": {
+      "colors": {
+        "label": "Colors"
+      },
+      "sizes": {
+        "label": "Sizes"
+      },
+      "button": {
+        "showDetails": {
+          "label": "Show details"
+        }
+      }
     }
   }
 }

@@ -1,8 +1,7 @@
 import { BackgroundText, Grid2x1 } from "@/components/common";
 import { Box, Button, Text } from "@/components/ui";
 import Image from "next/image";
-import { FC, ReactElement } from "react";
-import { Trans } from "react-i18next/TransWithoutContext";
+import { FC } from "react";
 
 interface Block1Props {
   image: string;
@@ -55,7 +54,7 @@ const Block2: FC<Block2Props> = ({ title, description, button }) => {
       <Text variant={"h4"} textAlign={"center"} opacity={0.7} paragraph>
         {description}
       </Text>
-      <Button variant={"transparent"} color={"primary"} href={button.href}>
+      <Button variant={"transparent"} href={button.href} sx={{ color: "primary.main" }}>
         {button.text}
       </Button>
     </Box>

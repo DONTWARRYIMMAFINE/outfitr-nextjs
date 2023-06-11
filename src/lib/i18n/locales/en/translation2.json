@@ -20,6 +20,23 @@
     "cart": {
       "title": "Cart"
     },
+    "partner": {
+      "title": "Partner",
+      "tabs": {
+        "brands": {
+          "title": "Your brands",
+          "label": "Brands"
+        },
+        "products": {
+          "title": "Your products",
+          "label": "Products"
+        },
+        "receivedOrders": {
+          "title": "Received orders",
+          "label": "Received orders"
+        }
+      }
+    },
     "profile": {
       "title": "Profile",
       "tabs": {
@@ -181,6 +198,16 @@
           "title": "Comment media"
         }
       },
+      "brand": {
+        "code": {
+          "label": "An unique code",
+          "placeholder": "Enter an unique code"
+        },
+        "name": {
+          "label": "Name",
+          "placeholder": "Enter name"
+        }
+      },
       "state": {
         "label": "State/province/area",
         "placeholder": "Enter state",
@@ -206,6 +233,11 @@
         }
       }
     },
+    "modal": {
+      "editBrand": {
+        "title": "Edit brand info"
+      }
+    },
     "label": {
       "priceRange": "Price range",
       "brand": "Brand",
@@ -222,13 +254,22 @@
       "orderItems": "Order items",
       "description": "Description",
       "stock": "Currently in stock",
-      "emptyWishlist": "Your wishlist is empty. Explore catalog first!"
+      "emptyWishlist": "Your wishlist is empty. Explore catalog first!",
+      "partner": {
+        "noBrands": "You don't have any brands yet",
+        "noProducts": "You don't have any products yet",
+        "noOrders": "You didn't receive any order yet"
+      },
+      "order": {
+        "changeStatus": "Change order status"
+      }
     },
     "button": {
       "applyFilters": "Apply filters",
       "showDetails": "Show Details",
       "addToCart": "Add To Cart",
       "checkout": "Checkout",
+      "create": "Create",
       "edit": "Edit",
       "delete": "Delete",
       "save": "Save",
@@ -236,12 +277,19 @@
       "reset": "Reset",
       "back": "Back",
       "next": "Next",
+      "createBrand": "Create brand",
       "placeOrder": "Place an order",
       "addUserDeliveryAddress": "Add delivery address",
       "toDeliveryInfo": "To Delivery",
       "toPaymentInfo": "To Payment",
       "createComment": "Create Comment",
-      "share": "Share"
+      "share": "Share",
+      "order": {
+        "transferToDelivery": "To delivery",
+        "complete": "Complete",
+        "reject": "Reject",
+        "cancel": "Cancel"
+      }
     }
   }
 }

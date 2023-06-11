@@ -26,10 +26,14 @@ export type AccessTokenResponse = {
 
 export enum Actions {
   Aggregate = 'AGGREGATE',
+  Cancel = 'CANCEL',
+  Complete = 'COMPLETE',
   Create = 'CREATE',
   Delete = 'DELETE',
   Manage = 'MANAGE',
   Read = 'READ',
+  Reject = 'REJECT',
+  TransferToDelivery = 'TRANSFER_TO_DELIVERY',
   Update = 'UPDATE'
 }
 
@@ -490,10 +494,45 @@ export type CartUpdateFilter = {
   userId?: InputMaybe<IdFilterComparison>;
 };
 
+export enum Categories {
+  Blazers = 'BLAZERS',
+  Coats = 'COATS',
+  Dresses = 'DRESSES',
+  Hoodies = 'HOODIES',
+  Jeans = 'JEANS',
+  Men = 'MEN',
+  Pants = 'PANTS',
+  Root = 'ROOT',
+  Shirts = 'SHIRTS',
+  Shorts = 'SHORTS',
+  Skirts = 'SKIRTS',
+  Sleepwear = 'SLEEPWEAR',
+  Swimwear = 'SWIMWEAR',
+  Tops = 'TOPS',
+  Women = 'WOMEN'
+}
+
+export type CategoriesFilterComparison = {
+  eq?: InputMaybe<Categories>;
+  gt?: InputMaybe<Categories>;
+  gte?: InputMaybe<Categories>;
+  iLike?: InputMaybe<Categories>;
+  in?: InputMaybe<Array<Categories>>;
+  is?: InputMaybe<Scalars['Boolean']>;
+  isNot?: InputMaybe<Scalars['Boolean']>;
+  like?: InputMaybe<Categories>;
+  lt?: InputMaybe<Categories>;
+  lte?: InputMaybe<Categories>;
+  neq?: InputMaybe<Categories>;
+  notILike?: InputMaybe<Categories>;
+  notIn?: InputMaybe<Array<Categories>>;
+  notLike?: InputMaybe<Categories>;
+};
+
 export type Category = {
   __typename?: 'Category';
   children?: Maybe<Array<Category>>;
-  code: Scalars['String'];
+  code: Categories;
   createdAt: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
@@ -521,7 +560,7 @@ export type CategoryConnection = {
 
 export type CategoryDeleteResponse = {
   __typename?: 'CategoryDeleteResponse';
-  code?: Maybe<Scalars['String']>;
+  code?: Maybe<Categories>;
   createdAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
@@ -533,7 +572,7 @@ export type CategoryDeleteResponse = {
 export type CategoryFilter = {
   and?: InputMaybe<Array<CategoryFilter>>;
   children?: InputMaybe<CategoryFilterCategoryFilter>;
-  code?: InputMaybe<StringFieldComparison>;
+  code?: InputMaybe<CategoriesFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
@@ -546,7 +585,7 @@ export type CategoryFilter = {
 
 export type CategoryFilterCategoryFilter = {
   and?: InputMaybe<Array<CategoryFilterCategoryFilter>>;
-  code?: InputMaybe<StringFieldComparison>;
+  code?: InputMaybe<CategoriesFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
@@ -1865,6 +1904,7 @@ export type Mutation = {
   logout: Scalars['Boolean'];
   placeOrderFromUserCart: Array<Order>;
   reissueAccessToken: AccessTokenResponse;
+  rejectOrder: Order;
   releaseWarehouseItemsInWarehouse: Warehouse;
   removeCartItemsFromCart: Cart;
   removeMediaFromProduct: Product;
@@ -2238,6 +2278,11 @@ export type MutationLoginArgs = {
 };
 
 
+export type MutationRejectOrderArgs = {
+  input: UpdateOrderInputType;
+};
+
+
 export type MutationReleaseWarehouseItemsInWarehouseArgs = {
   input: UpdateOneWarehouseInputType;
 };
@@ -2575,7 +2620,9 @@ export type OrderFilter = {
 export type OrderFilterAddressFilter = {
   and?: InputMaybe<Array<OrderFilterAddressFilter>>;
   building?: InputMaybe<StringFieldComparison>;
+  city?: InputMaybe<OrderFilterAddressFilterCityFilter>;
   cityId?: InputMaybe<IdFilterComparison>;
+  country?: InputMaybe<OrderFilterAddressFilterCountryFilter>;
   countryId?: InputMaybe<IdFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
@@ -2583,6 +2630,92 @@ export type OrderFilterAddressFilter = {
   postalCode?: InputMaybe<StringFieldComparison>;
   state?: InputMaybe<StringFieldComparison>;
   street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterAddressFilterCityFilter = {
+  and?: InputMaybe<Array<OrderFilterAddressFilterCityFilter>>;
+  country?: InputMaybe<OrderFilterAddressFilterCityFilterCountryFilter>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterAddressFilterCityFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterAddressFilterCityFilterCountryFilter = {
+  and?: InputMaybe<Array<OrderFilterAddressFilterCityFilterCountryFilter>>;
+  cities?: InputMaybe<OrderFilterAddressFilterCityFilterCountryFilterCityFilter>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterAddressFilterCityFilterCountryFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterAddressFilterCityFilterCountryFilterCityFilter = {
+  and?: InputMaybe<Array<OrderFilterAddressFilterCityFilterCountryFilterCityFilter>>;
+  country?: InputMaybe<OrderFilterAddressFilterCityFilterCountryFilterCityFilterCountryFilter>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterAddressFilterCityFilterCountryFilterCityFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterAddressFilterCityFilterCountryFilterCityFilterCountryFilter = {
+  and?: InputMaybe<Array<OrderFilterAddressFilterCityFilterCountryFilterCityFilterCountryFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterAddressFilterCityFilterCountryFilterCityFilterCountryFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterAddressFilterCountryFilter = {
+  and?: InputMaybe<Array<OrderFilterAddressFilterCountryFilter>>;
+  cities?: InputMaybe<OrderFilterAddressFilterCountryFilterCityFilter>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterAddressFilterCountryFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterAddressFilterCountryFilterCityFilter = {
+  and?: InputMaybe<Array<OrderFilterAddressFilterCountryFilterCityFilter>>;
+  country?: InputMaybe<OrderFilterAddressFilterCountryFilterCityFilterCountryFilter>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterAddressFilterCountryFilterCityFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterAddressFilterCountryFilterCityFilterCountryFilter = {
+  and?: InputMaybe<Array<OrderFilterAddressFilterCountryFilterCityFilterCountryFilter>>;
+  cities?: InputMaybe<OrderFilterAddressFilterCountryFilterCityFilterCountryFilterCityFilter>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterAddressFilterCountryFilterCityFilterCountryFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterAddressFilterCountryFilterCityFilterCountryFilterCityFilter = {
+  and?: InputMaybe<Array<OrderFilterAddressFilterCountryFilterCityFilterCountryFilterCityFilter>>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterAddressFilterCountryFilterCityFilterCountryFilterCityFilter>>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -2594,9 +2727,20 @@ export type OrderFilterDeliveryMethodFilter = {
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<OrderFilterDeliveryMethodFilter>>;
+  price?: InputMaybe<OrderFilterDeliveryMethodFilterPriceFilter>;
   priceId?: InputMaybe<IdFilterComparison>;
   status?: InputMaybe<DeliveryMethodStatusFilterComparison>;
   type?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterDeliveryMethodFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterDeliveryMethodFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterDeliveryMethodFilterPriceFilter>>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -2605,8 +2749,884 @@ export type OrderFilterOrderHistoryFilter = {
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<OrderFilterOrderHistoryFilter>>;
+  order?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilter>;
   orderId?: InputMaybe<IdFilterComparison>;
   status?: InputMaybe<OrderStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deliveryAddress?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterAddressFilter>;
+  deliveryAddressId?: InputMaybe<IdFilterComparison>;
+  deliveryMethod?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterDeliveryMethodFilter>;
+  deliveryMethodId?: InputMaybe<IdFilterComparison>;
+  deliveryPrice?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterPriceFilter>;
+  deliveryPriceId?: InputMaybe<IdFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilter>>;
+  orderHistories?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilter>;
+  orderItems?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilter>;
+  paymentIntent?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilter>;
+  paymentIntentId?: InputMaybe<IdFilterComparison>;
+  paymentMethod?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterPaymentMethodFilter>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<OrderStatusFilterComparison>;
+  subtotalPrice?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterPriceFilter>;
+  subtotalPriceId?: InputMaybe<IdFilterComparison>;
+  taxPrice?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterPriceFilter>;
+  taxPriceId?: InputMaybe<IdFilterComparison>;
+  totalPrice?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterPriceFilter>;
+  totalPriceId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  city?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterAddressFilterCityFilter>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  country?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterAddressFilterCountryFilter>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterAddressFilterCityFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterAddressFilterCityFilter>>;
+  country?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterAddressFilterCityFilterCountryFilter>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterAddressFilterCityFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterAddressFilterCityFilterCountryFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterAddressFilterCityFilterCountryFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterAddressFilterCityFilterCountryFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterAddressFilterCountryFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterAddressFilterCountryFilter>>;
+  cities?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterAddressFilterCountryFilterCityFilter>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterAddressFilterCountryFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterAddressFilterCountryFilterCityFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterAddressFilterCountryFilterCityFilter>>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterAddressFilterCountryFilterCityFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterDeliveryMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterDeliveryMethodFilter>>;
+  avgDeliveryTimeInHours?: InputMaybe<IntFieldComparison>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterDeliveryMethodFilter>>;
+  price?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterDeliveryMethodFilterPriceFilter>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<DeliveryMethodStatusFilterComparison>;
+  type?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterDeliveryMethodFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterDeliveryMethodFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterDeliveryMethodFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilter>>;
+  order?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilter>;
+  orderId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<OrderStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deliveryAddress?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterAddressFilter>;
+  deliveryAddressId?: InputMaybe<IdFilterComparison>;
+  deliveryMethod?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterDeliveryMethodFilter>;
+  deliveryMethodId?: InputMaybe<IdFilterComparison>;
+  deliveryPrice?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterPriceFilter>;
+  deliveryPriceId?: InputMaybe<IdFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilter>>;
+  orderHistories?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilter>;
+  orderItems?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterOrderItemFilter>;
+  paymentIntent?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilter>;
+  paymentIntentId?: InputMaybe<IdFilterComparison>;
+  paymentMethod?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterPaymentMethodFilter>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<OrderStatusFilterComparison>;
+  subtotalPrice?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterPriceFilter>;
+  subtotalPriceId?: InputMaybe<IdFilterComparison>;
+  taxPrice?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterPriceFilter>;
+  taxPriceId?: InputMaybe<IdFilterComparison>;
+  totalPrice?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterPriceFilter>;
+  totalPriceId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterDeliveryMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterDeliveryMethodFilter>>;
+  avgDeliveryTimeInHours?: InputMaybe<IntFieldComparison>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterDeliveryMethodFilter>>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<DeliveryMethodStatusFilterComparison>;
+  type?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilter>>;
+  orderId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<OrderStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterOrderItemFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterOrderItemFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterOrderItemFilter>>;
+  orderId?: InputMaybe<IdFilterComparison>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  productVariantId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<IntFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  warehouseId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilter>>;
+  clientSecret?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  intentId?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilter>>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<PaymentIntentStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterPaymentMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterPaymentMethodFilter>>;
+  code?: InputMaybe<PaymentMethodsFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  online?: InputMaybe<BooleanFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterPaymentMethodFilter>>;
+  status?: InputMaybe<PaymentMethodStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilterOrderFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilter>>;
+  order?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilter>;
+  orderId?: InputMaybe<IdFilterComparison>;
+  price?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterPriceFilter>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  productVariant?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilter>;
+  productVariantId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<IntFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  warehouse?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterWarehouseFilter>;
+  warehouseId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deliveryAddress?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterAddressFilter>;
+  deliveryAddressId?: InputMaybe<IdFilterComparison>;
+  deliveryMethod?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterDeliveryMethodFilter>;
+  deliveryMethodId?: InputMaybe<IdFilterComparison>;
+  deliveryPrice?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterPriceFilter>;
+  deliveryPriceId?: InputMaybe<IdFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilter>>;
+  orderHistories?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterOrderHistoryFilter>;
+  orderItems?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterOrderItemFilter>;
+  paymentIntent?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterPaymentIntentFilter>;
+  paymentIntentId?: InputMaybe<IdFilterComparison>;
+  paymentMethod?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterPaymentMethodFilter>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<OrderStatusFilterComparison>;
+  subtotalPrice?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterPriceFilter>;
+  subtotalPriceId?: InputMaybe<IdFilterComparison>;
+  taxPrice?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterPriceFilter>;
+  taxPriceId?: InputMaybe<IdFilterComparison>;
+  totalPrice?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterPriceFilter>;
+  totalPriceId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterDeliveryMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterDeliveryMethodFilter>>;
+  avgDeliveryTimeInHours?: InputMaybe<IntFieldComparison>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterDeliveryMethodFilter>>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<DeliveryMethodStatusFilterComparison>;
+  type?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterOrderHistoryFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterOrderHistoryFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterOrderHistoryFilter>>;
+  orderId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<OrderStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterOrderItemFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterOrderItemFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterOrderItemFilter>>;
+  orderId?: InputMaybe<IdFilterComparison>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  productVariantId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<IntFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  warehouseId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterPaymentIntentFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterPaymentIntentFilter>>;
+  clientSecret?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  intentId?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterPaymentIntentFilter>>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<PaymentIntentStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterPaymentMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterPaymentMethodFilter>>;
+  code?: InputMaybe<PaymentMethodsFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  online?: InputMaybe<BooleanFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterPaymentMethodFilter>>;
+  status?: InputMaybe<PaymentMethodStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterOrderFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilter>>;
+  color?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilterColorFilter>;
+  colorId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilter>>;
+  price?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilterPriceFilter>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  product?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilterProductFilter>;
+  productId?: InputMaybe<IdFilterComparison>;
+  size?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilterSizeFilter>;
+  sizeId?: InputMaybe<IdFilterComparison>;
+  sku?: InputMaybe<IdFilterComparison>;
+  stock?: InputMaybe<NumberFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilterColorFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilterColorFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  hex?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilterColorFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilterProductFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilterProductFilter>>;
+  brandId?: InputMaybe<IdFilterComparison>;
+  categoryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilterProductFilter>>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilterSizeFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilterSizeFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilterSizeFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterWarehouseFilter = {
+  address?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterWarehouseFilterAddressFilter>;
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterWarehouseFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterWarehouseFilter>>;
+  status?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  warehouseItems?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilter>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterWarehouseFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterWarehouseFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterWarehouseFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilter>>;
+  available?: InputMaybe<IntFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilter>>;
+  productVariantId?: InputMaybe<IdFilterComparison>;
+  reserved?: InputMaybe<IntFieldComparison>;
+  stock?: InputMaybe<IntFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  warehouseId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilter>>;
+  clientSecret?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  intentId?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilter>>;
+  paymentMethod?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilterPaymentMethodFilter>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  price?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilterPriceFilter>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<PaymentIntentStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilterPaymentMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilterPaymentMethodFilter>>;
+  code?: InputMaybe<PaymentMethodsFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  media?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilterPaymentMethodFilterMediaFilter>;
+  name?: InputMaybe<StringFieldComparison>;
+  online?: InputMaybe<BooleanFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilterPaymentMethodFilter>>;
+  status?: InputMaybe<PaymentMethodStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilterPaymentMethodFilterMediaFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilterPaymentMethodFilterMediaFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  filename?: InputMaybe<StringFieldComparison>;
+  format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilterPaymentMethodFilterMediaFilter>>;
+  publicId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterPaymentMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterPaymentMethodFilter>>;
+  code?: InputMaybe<PaymentMethodsFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  media?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterPaymentMethodFilterMediaFilter>;
+  name?: InputMaybe<StringFieldComparison>;
+  online?: InputMaybe<BooleanFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterPaymentMethodFilter>>;
+  status?: InputMaybe<PaymentMethodStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterPaymentMethodFilterMediaFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterPaymentMethodFilterMediaFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  filename?: InputMaybe<StringFieldComparison>;
+  format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterPaymentMethodFilterMediaFilter>>;
+  publicId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilter>>;
+  avatar?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterMediaFilter>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  brands?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterBrandFilter>;
+  cart?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilter>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddress?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterEmailAddressFilter>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  roles?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterRoleFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userAddresses?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterUserAddressFilter>;
+  wishlist?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterWishlistFilter>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterUserFilterBrandFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterBrandFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterBrandFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterBrandFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterUserFilterBrandFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterBrandFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterBrandFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilter>>;
+  cartItems?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterCartItemFilter>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deliveryAddress?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterAddressFilter>;
+  deliveryAddressId?: InputMaybe<IdFilterComparison>;
+  deliveryMethod?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterDeliveryMethodFilter>;
+  deliveryMethodId?: InputMaybe<IdFilterComparison>;
+  deliveryPrice?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterPriceFilter>;
+  deliveryPriceId?: InputMaybe<IdFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilter>>;
+  paymentMethod?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterPaymentMethodFilter>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<NumberFieldComparison>;
+  subtotalPrice?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterPriceFilter>;
+  subtotalPriceId?: InputMaybe<IdFilterComparison>;
+  taxPrice?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterPriceFilter>;
+  taxPriceId?: InputMaybe<IdFilterComparison>;
+  totalPrice?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterPriceFilter>;
+  totalPriceId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterCartItemFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterCartItemFilter>>;
+  cartId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterCartItemFilter>>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  productVariantId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<IntFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterDeliveryMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterDeliveryMethodFilter>>;
+  avgDeliveryTimeInHours?: InputMaybe<IntFieldComparison>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterDeliveryMethodFilter>>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<DeliveryMethodStatusFilterComparison>;
+  type?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterPaymentMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterPaymentMethodFilter>>;
+  code?: InputMaybe<PaymentMethodsFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  online?: InputMaybe<BooleanFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterPaymentMethodFilter>>;
+  status?: InputMaybe<PaymentMethodStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterCartFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterUserFilterEmailAddressFilter = {
+  address?: InputMaybe<StringFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterEmailAddressFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterEmailAddressFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  verified?: InputMaybe<BooleanFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterUserFilterMediaFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterMediaFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  filename?: InputMaybe<StringFieldComparison>;
+  format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterMediaFilter>>;
+  publicId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterUserFilterRoleFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterRoleFilter>>;
+  code?: InputMaybe<RolesFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterRoleFilter>>;
+  permissions?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterRoleFilterPermissionFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterUserFilterRoleFilterPermissionFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterRoleFilterPermissionFilter>>;
+  conditions?: InputMaybe<JsonFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterRoleFilterPermissionFilter>>;
+  subject?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterUserFilterUserAddressFilter = {
+  address?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterUserAddressFilterAddressFilter>;
+  addressId?: InputMaybe<IdFilterComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterUserAddressFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterUserAddressFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterUserAddressFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterUserFilterUserAddressFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterUserAddressFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterUserAddressFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterUserFilterUserAddressFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterUserAddressFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterUserAddressFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterUserFilterWishlistFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterWishlistFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterWishlistFilter>>;
+  products?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterWishlistFilterProductFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterOrderHistoryFilterOrderFilterUserFilterWishlistFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterUserFilterWishlistFilterProductFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterWishlistFilterProductFilter>>;
+  brandId?: InputMaybe<IdFilterComparison>;
+  categoryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterWishlistFilterProductFilter>>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderHistoryFilterOrderFilterUserFilterWishlistFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterWishlistFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterUserFilterWishlistFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -2615,12 +3635,1281 @@ export type OrderFilterOrderItemFilter = {
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<OrderFilterOrderItemFilter>>;
+  order?: InputMaybe<OrderFilterOrderItemFilterOrderFilter>;
+  orderId?: InputMaybe<IdFilterComparison>;
+  price?: InputMaybe<OrderFilterOrderItemFilterPriceFilter>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  productVariant?: InputMaybe<OrderFilterOrderItemFilterProductVariantFilter>;
+  productVariantId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<IntFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  warehouse?: InputMaybe<OrderFilterOrderItemFilterWarehouseFilter>;
+  warehouseId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deliveryAddress?: InputMaybe<OrderFilterOrderItemFilterOrderFilterAddressFilter>;
+  deliveryAddressId?: InputMaybe<IdFilterComparison>;
+  deliveryMethod?: InputMaybe<OrderFilterOrderItemFilterOrderFilterDeliveryMethodFilter>;
+  deliveryMethodId?: InputMaybe<IdFilterComparison>;
+  deliveryPrice?: InputMaybe<OrderFilterOrderItemFilterOrderFilterPriceFilter>;
+  deliveryPriceId?: InputMaybe<IdFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilter>>;
+  orderHistories?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilter>;
+  orderItems?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilter>;
+  paymentIntent?: InputMaybe<OrderFilterOrderItemFilterOrderFilterPaymentIntentFilter>;
+  paymentIntentId?: InputMaybe<IdFilterComparison>;
+  paymentMethod?: InputMaybe<OrderFilterOrderItemFilterOrderFilterPaymentMethodFilter>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<OrderStatusFilterComparison>;
+  subtotalPrice?: InputMaybe<OrderFilterOrderItemFilterOrderFilterPriceFilter>;
+  subtotalPriceId?: InputMaybe<IdFilterComparison>;
+  taxPrice?: InputMaybe<OrderFilterOrderItemFilterOrderFilterPriceFilter>;
+  taxPriceId?: InputMaybe<IdFilterComparison>;
+  totalPrice?: InputMaybe<OrderFilterOrderItemFilterOrderFilterPriceFilter>;
+  totalPriceId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  city?: InputMaybe<OrderFilterOrderItemFilterOrderFilterAddressFilterCityFilter>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  country?: InputMaybe<OrderFilterOrderItemFilterOrderFilterAddressFilterCountryFilter>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterAddressFilterCityFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterAddressFilterCityFilter>>;
+  country?: InputMaybe<OrderFilterOrderItemFilterOrderFilterAddressFilterCityFilterCountryFilter>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterAddressFilterCityFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterAddressFilterCityFilterCountryFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterAddressFilterCityFilterCountryFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterAddressFilterCityFilterCountryFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterAddressFilterCountryFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterAddressFilterCountryFilter>>;
+  cities?: InputMaybe<OrderFilterOrderItemFilterOrderFilterAddressFilterCountryFilterCityFilter>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterAddressFilterCountryFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterAddressFilterCountryFilterCityFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterAddressFilterCountryFilterCityFilter>>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterAddressFilterCountryFilterCityFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterDeliveryMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterDeliveryMethodFilter>>;
+  avgDeliveryTimeInHours?: InputMaybe<IntFieldComparison>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterDeliveryMethodFilter>>;
+  price?: InputMaybe<OrderFilterOrderItemFilterOrderFilterDeliveryMethodFilterPriceFilter>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<DeliveryMethodStatusFilterComparison>;
+  type?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterDeliveryMethodFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterDeliveryMethodFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterDeliveryMethodFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderHistoryFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilter>>;
+  order?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilter>;
+  orderId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<OrderStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deliveryAddress?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterAddressFilter>;
+  deliveryAddressId?: InputMaybe<IdFilterComparison>;
+  deliveryMethod?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterDeliveryMethodFilter>;
+  deliveryMethodId?: InputMaybe<IdFilterComparison>;
+  deliveryPrice?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterPriceFilter>;
+  deliveryPriceId?: InputMaybe<IdFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilter>>;
+  orderHistories?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilter>;
+  orderItems?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterOrderItemFilter>;
+  paymentIntent?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilter>;
+  paymentIntentId?: InputMaybe<IdFilterComparison>;
+  paymentMethod?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterPaymentMethodFilter>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<OrderStatusFilterComparison>;
+  subtotalPrice?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterPriceFilter>;
+  subtotalPriceId?: InputMaybe<IdFilterComparison>;
+  taxPrice?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterPriceFilter>;
+  taxPriceId?: InputMaybe<IdFilterComparison>;
+  totalPrice?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterPriceFilter>;
+  totalPriceId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterDeliveryMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterDeliveryMethodFilter>>;
+  avgDeliveryTimeInHours?: InputMaybe<IntFieldComparison>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterDeliveryMethodFilter>>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<DeliveryMethodStatusFilterComparison>;
+  type?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterOrderHistoryFilter>>;
+  orderId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<OrderStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterOrderItemFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterOrderItemFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterOrderItemFilter>>;
   orderId?: InputMaybe<IdFilterComparison>;
   priceId?: InputMaybe<IdFilterComparison>;
   productVariantId?: InputMaybe<IdFilterComparison>;
   quantity?: InputMaybe<IntFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
   warehouseId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilter>>;
+  clientSecret?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  intentId?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterPaymentIntentFilter>>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<PaymentIntentStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterPaymentMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterPaymentMethodFilter>>;
+  code?: InputMaybe<PaymentMethodsFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  online?: InputMaybe<BooleanFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterPaymentMethodFilter>>;
+  status?: InputMaybe<PaymentMethodStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderHistoryFilterOrderFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderItemFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilter>>;
+  order?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilter>;
+  orderId?: InputMaybe<IdFilterComparison>;
+  price?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterPriceFilter>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  productVariant?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilter>;
+  productVariantId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<IntFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  warehouse?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterWarehouseFilter>;
+  warehouseId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deliveryAddress?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterAddressFilter>;
+  deliveryAddressId?: InputMaybe<IdFilterComparison>;
+  deliveryMethod?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterDeliveryMethodFilter>;
+  deliveryMethodId?: InputMaybe<IdFilterComparison>;
+  deliveryPrice?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterPriceFilter>;
+  deliveryPriceId?: InputMaybe<IdFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilter>>;
+  orderHistories?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterOrderHistoryFilter>;
+  orderItems?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterOrderItemFilter>;
+  paymentIntent?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterPaymentIntentFilter>;
+  paymentIntentId?: InputMaybe<IdFilterComparison>;
+  paymentMethod?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterPaymentMethodFilter>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<OrderStatusFilterComparison>;
+  subtotalPrice?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterPriceFilter>;
+  subtotalPriceId?: InputMaybe<IdFilterComparison>;
+  taxPrice?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterPriceFilter>;
+  taxPriceId?: InputMaybe<IdFilterComparison>;
+  totalPrice?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterPriceFilter>;
+  totalPriceId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterDeliveryMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterDeliveryMethodFilter>>;
+  avgDeliveryTimeInHours?: InputMaybe<IntFieldComparison>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterDeliveryMethodFilter>>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<DeliveryMethodStatusFilterComparison>;
+  type?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterOrderHistoryFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterOrderHistoryFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterOrderHistoryFilter>>;
+  orderId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<OrderStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterOrderItemFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterOrderItemFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterOrderItemFilter>>;
+  orderId?: InputMaybe<IdFilterComparison>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  productVariantId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<IntFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  warehouseId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterPaymentIntentFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterPaymentIntentFilter>>;
+  clientSecret?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  intentId?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterPaymentIntentFilter>>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<PaymentIntentStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterPaymentMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterPaymentMethodFilter>>;
+  code?: InputMaybe<PaymentMethodsFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  online?: InputMaybe<BooleanFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterPaymentMethodFilter>>;
+  status?: InputMaybe<PaymentMethodStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterOrderFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilter>>;
+  color?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilterColorFilter>;
+  colorId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilter>>;
+  price?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilterPriceFilter>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  product?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilterProductFilter>;
+  productId?: InputMaybe<IdFilterComparison>;
+  size?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilterSizeFilter>;
+  sizeId?: InputMaybe<IdFilterComparison>;
+  sku?: InputMaybe<IdFilterComparison>;
+  stock?: InputMaybe<NumberFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilterColorFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilterColorFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  hex?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilterColorFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilterProductFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilterProductFilter>>;
+  brandId?: InputMaybe<IdFilterComparison>;
+  categoryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilterProductFilter>>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilterSizeFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilterSizeFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilterSizeFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterWarehouseFilter = {
+  address?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterWarehouseFilterAddressFilter>;
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterWarehouseFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterWarehouseFilter>>;
+  status?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  warehouseItems?: InputMaybe<OrderFilterOrderItemFilterOrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilter>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterWarehouseFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterWarehouseFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterWarehouseFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilter>>;
+  available?: InputMaybe<IntFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilter>>;
+  productVariantId?: InputMaybe<IdFilterComparison>;
+  reserved?: InputMaybe<IntFieldComparison>;
+  stock?: InputMaybe<IntFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  warehouseId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterPaymentIntentFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterPaymentIntentFilter>>;
+  clientSecret?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  intentId?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterPaymentIntentFilter>>;
+  paymentMethod?: InputMaybe<OrderFilterOrderItemFilterOrderFilterPaymentIntentFilterPaymentMethodFilter>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  price?: InputMaybe<OrderFilterOrderItemFilterOrderFilterPaymentIntentFilterPriceFilter>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<PaymentIntentStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterPaymentIntentFilterPaymentMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterPaymentIntentFilterPaymentMethodFilter>>;
+  code?: InputMaybe<PaymentMethodsFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  media?: InputMaybe<OrderFilterOrderItemFilterOrderFilterPaymentIntentFilterPaymentMethodFilterMediaFilter>;
+  name?: InputMaybe<StringFieldComparison>;
+  online?: InputMaybe<BooleanFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterPaymentIntentFilterPaymentMethodFilter>>;
+  status?: InputMaybe<PaymentMethodStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterPaymentIntentFilterPaymentMethodFilterMediaFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterPaymentIntentFilterPaymentMethodFilterMediaFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  filename?: InputMaybe<StringFieldComparison>;
+  format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterPaymentIntentFilterPaymentMethodFilterMediaFilter>>;
+  publicId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterPaymentIntentFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterPaymentIntentFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterPaymentIntentFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterPaymentMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterPaymentMethodFilter>>;
+  code?: InputMaybe<PaymentMethodsFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  media?: InputMaybe<OrderFilterOrderItemFilterOrderFilterPaymentMethodFilterMediaFilter>;
+  name?: InputMaybe<StringFieldComparison>;
+  online?: InputMaybe<BooleanFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterPaymentMethodFilter>>;
+  status?: InputMaybe<PaymentMethodStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterPaymentMethodFilterMediaFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterPaymentMethodFilterMediaFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  filename?: InputMaybe<StringFieldComparison>;
+  format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterPaymentMethodFilterMediaFilter>>;
+  publicId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilter>>;
+  avatar?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterMediaFilter>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  brands?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterBrandFilter>;
+  cart?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilter>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddress?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterEmailAddressFilter>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  roles?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterRoleFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userAddresses?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterUserAddressFilter>;
+  wishlist?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterWishlistFilter>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterUserFilterBrandFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterBrandFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterBrandFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterBrandFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterUserFilterBrandFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterBrandFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterBrandFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterUserFilterCartFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilter>>;
+  cartItems?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterCartItemFilter>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deliveryAddress?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterAddressFilter>;
+  deliveryAddressId?: InputMaybe<IdFilterComparison>;
+  deliveryMethod?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterDeliveryMethodFilter>;
+  deliveryMethodId?: InputMaybe<IdFilterComparison>;
+  deliveryPrice?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterPriceFilter>;
+  deliveryPriceId?: InputMaybe<IdFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilter>>;
+  paymentMethod?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterPaymentMethodFilter>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<NumberFieldComparison>;
+  subtotalPrice?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterPriceFilter>;
+  subtotalPriceId?: InputMaybe<IdFilterComparison>;
+  taxPrice?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterPriceFilter>;
+  taxPriceId?: InputMaybe<IdFilterComparison>;
+  totalPrice?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterPriceFilter>;
+  totalPriceId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterCartItemFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterCartItemFilter>>;
+  cartId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterCartItemFilter>>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  productVariantId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<IntFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterDeliveryMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterDeliveryMethodFilter>>;
+  avgDeliveryTimeInHours?: InputMaybe<IntFieldComparison>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterDeliveryMethodFilter>>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<DeliveryMethodStatusFilterComparison>;
+  type?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterPaymentMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterPaymentMethodFilter>>;
+  code?: InputMaybe<PaymentMethodsFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  online?: InputMaybe<BooleanFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterPaymentMethodFilter>>;
+  status?: InputMaybe<PaymentMethodStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterCartFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterUserFilterEmailAddressFilter = {
+  address?: InputMaybe<StringFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterEmailAddressFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterEmailAddressFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  verified?: InputMaybe<BooleanFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterUserFilterMediaFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterMediaFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  filename?: InputMaybe<StringFieldComparison>;
+  format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterMediaFilter>>;
+  publicId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterUserFilterRoleFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterRoleFilter>>;
+  code?: InputMaybe<RolesFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterRoleFilter>>;
+  permissions?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterRoleFilterPermissionFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterUserFilterRoleFilterPermissionFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterRoleFilterPermissionFilter>>;
+  conditions?: InputMaybe<JsonFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterRoleFilterPermissionFilter>>;
+  subject?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterUserFilterUserAddressFilter = {
+  address?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterUserAddressFilterAddressFilter>;
+  addressId?: InputMaybe<IdFilterComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterUserAddressFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterUserAddressFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterUserAddressFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterUserFilterUserAddressFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterUserAddressFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterUserAddressFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterUserFilterUserAddressFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterUserAddressFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterUserAddressFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterUserFilterWishlistFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterWishlistFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterWishlistFilter>>;
+  products?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterWishlistFilterProductFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterOrderItemFilterOrderFilterUserFilterWishlistFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterUserFilterWishlistFilterProductFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterWishlistFilterProductFilter>>;
+  brandId?: InputMaybe<IdFilterComparison>;
+  categoryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterWishlistFilterProductFilter>>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterOrderFilterUserFilterWishlistFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterWishlistFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterUserFilterWishlistFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterProductVariantFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilter>>;
+  color?: InputMaybe<OrderFilterOrderItemFilterProductVariantFilterColorFilter>;
+  colorId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilter>>;
+  price?: InputMaybe<OrderFilterOrderItemFilterProductVariantFilterPriceFilter>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  product?: InputMaybe<OrderFilterOrderItemFilterProductVariantFilterProductFilter>;
+  productId?: InputMaybe<IdFilterComparison>;
+  size?: InputMaybe<OrderFilterOrderItemFilterProductVariantFilterSizeFilter>;
+  sizeId?: InputMaybe<IdFilterComparison>;
+  sku?: InputMaybe<IdFilterComparison>;
+  stock?: InputMaybe<NumberFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterProductVariantFilterColorFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterColorFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  hex?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterColorFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterProductVariantFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterProductVariantFilterProductFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilter>>;
+  brand?: InputMaybe<OrderFilterOrderItemFilterProductVariantFilterProductFilterBrandFilter>;
+  brandId?: InputMaybe<IdFilterComparison>;
+  category?: InputMaybe<OrderFilterOrderItemFilterProductVariantFilterProductFilterCategoryFilter>;
+  categoryId?: InputMaybe<IdFilterComparison>;
+  comments?: InputMaybe<OrderFilterOrderItemFilterProductVariantFilterProductFilterCommentFilter>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilter>>;
+  productVariants?: InputMaybe<OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilter>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterProductVariantFilterProductFilterBrandFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterBrandFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterBrandFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterOrderItemFilterProductVariantFilterProductFilterBrandFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderItemFilterProductVariantFilterProductFilterBrandFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterBrandFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterBrandFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterProductVariantFilterProductFilterCategoryFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterCategoryFilter>>;
+  children?: InputMaybe<OrderFilterOrderItemFilterProductVariantFilterProductFilterCategoryFilterCategoryFilter>;
+  code?: InputMaybe<CategoriesFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterCategoryFilter>>;
+  parent?: InputMaybe<OrderFilterOrderItemFilterProductVariantFilterProductFilterCategoryFilterCategoryFilter>;
+  parentId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterProductVariantFilterProductFilterCategoryFilterCategoryFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterCategoryFilterCategoryFilter>>;
+  code?: InputMaybe<CategoriesFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterCategoryFilterCategoryFilter>>;
+  parentId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterProductVariantFilterProductFilterCommentFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterCommentFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  media?: InputMaybe<OrderFilterOrderItemFilterProductVariantFilterProductFilterCommentFilterMediaFilter>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterCommentFilter>>;
+  product?: InputMaybe<OrderFilterOrderItemFilterProductVariantFilterProductFilterCommentFilterProductFilter>;
+  productId?: InputMaybe<IdFilterComparison>;
+  rating?: InputMaybe<FloatFieldComparison>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterOrderItemFilterProductVariantFilterProductFilterCommentFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderItemFilterProductVariantFilterProductFilterCommentFilterMediaFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterCommentFilterMediaFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  filename?: InputMaybe<StringFieldComparison>;
+  format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterCommentFilterMediaFilter>>;
+  publicId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterProductVariantFilterProductFilterCommentFilterProductFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterCommentFilterProductFilter>>;
+  brandId?: InputMaybe<IdFilterComparison>;
+  categoryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterCommentFilterProductFilter>>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterProductVariantFilterProductFilterCommentFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterCommentFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterCommentFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilter>>;
+  color?: InputMaybe<OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilterColorFilter>;
+  colorId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilter>>;
+  price?: InputMaybe<OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilterPriceFilter>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  product?: InputMaybe<OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilterProductFilter>;
+  productId?: InputMaybe<IdFilterComparison>;
+  size?: InputMaybe<OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilterSizeFilter>;
+  sizeId?: InputMaybe<IdFilterComparison>;
+  sku?: InputMaybe<IdFilterComparison>;
+  stock?: InputMaybe<NumberFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilterColorFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilterColorFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  hex?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilterColorFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilterProductFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilterProductFilter>>;
+  brandId?: InputMaybe<IdFilterComparison>;
+  categoryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilterProductFilter>>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilterSizeFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilterSizeFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilterSizeFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterProductVariantFilterSizeFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterSizeFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterSizeFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterWarehouseFilter = {
+  address?: InputMaybe<OrderFilterOrderItemFilterWarehouseFilterAddressFilter>;
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilter>>;
+  status?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  warehouseItems?: InputMaybe<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilter>;
+};
+
+export type OrderFilterOrderItemFilterWarehouseFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  city?: InputMaybe<OrderFilterOrderItemFilterWarehouseFilterAddressFilterCityFilter>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  country?: InputMaybe<OrderFilterOrderItemFilterWarehouseFilterAddressFilterCountryFilter>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterWarehouseFilterAddressFilterCityFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterAddressFilterCityFilter>>;
+  country?: InputMaybe<OrderFilterOrderItemFilterWarehouseFilterAddressFilterCityFilterCountryFilter>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterAddressFilterCityFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterWarehouseFilterAddressFilterCityFilterCountryFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterAddressFilterCityFilterCountryFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterAddressFilterCityFilterCountryFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterWarehouseFilterAddressFilterCountryFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterAddressFilterCountryFilter>>;
+  cities?: InputMaybe<OrderFilterOrderItemFilterWarehouseFilterAddressFilterCountryFilterCityFilter>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterAddressFilterCountryFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterWarehouseFilterAddressFilterCountryFilterCityFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterAddressFilterCountryFilterCityFilter>>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterAddressFilterCountryFilterCityFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilter>>;
+  available?: InputMaybe<IntFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilter>>;
+  productVariant?: InputMaybe<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilter>;
+  productVariantId?: InputMaybe<IdFilterComparison>;
+  reserved?: InputMaybe<IntFieldComparison>;
+  stock?: InputMaybe<IntFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  warehouseId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilter>>;
+  color?: InputMaybe<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilterColorFilter>;
+  colorId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilter>>;
+  price?: InputMaybe<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilterPriceFilter>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  product?: InputMaybe<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilterProductFilter>;
+  productId?: InputMaybe<IdFilterComparison>;
+  size?: InputMaybe<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilterSizeFilter>;
+  sizeId?: InputMaybe<IdFilterComparison>;
+  sku?: InputMaybe<IdFilterComparison>;
+  stock?: InputMaybe<NumberFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilterColorFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilterColorFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  hex?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilterColorFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilterProductFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilterProductFilter>>;
+  brandId?: InputMaybe<IdFilterComparison>;
+  categoryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilterProductFilter>>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilterSizeFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilterSizeFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilterSizeFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type OrderFilterPaymentIntentFilter = {
@@ -2630,9 +4919,49 @@ export type OrderFilterPaymentIntentFilter = {
   id?: InputMaybe<IdFilterComparison>;
   intentId?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<OrderFilterPaymentIntentFilter>>;
+  paymentMethod?: InputMaybe<OrderFilterPaymentIntentFilterPaymentMethodFilter>;
   paymentMethodId?: InputMaybe<IdFilterComparison>;
+  price?: InputMaybe<OrderFilterPaymentIntentFilterPriceFilter>;
   priceId?: InputMaybe<IdFilterComparison>;
   status?: InputMaybe<PaymentIntentStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterPaymentIntentFilterPaymentMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterPaymentIntentFilterPaymentMethodFilter>>;
+  code?: InputMaybe<PaymentMethodsFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  media?: InputMaybe<OrderFilterPaymentIntentFilterPaymentMethodFilterMediaFilter>;
+  name?: InputMaybe<StringFieldComparison>;
+  online?: InputMaybe<BooleanFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterPaymentIntentFilterPaymentMethodFilter>>;
+  status?: InputMaybe<PaymentMethodStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterPaymentIntentFilterPaymentMethodFilterMediaFilter = {
+  and?: InputMaybe<Array<OrderFilterPaymentIntentFilterPaymentMethodFilterMediaFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  filename?: InputMaybe<StringFieldComparison>;
+  format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterPaymentIntentFilterPaymentMethodFilterMediaFilter>>;
+  publicId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
+};
+
+export type OrderFilterPaymentIntentFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterPaymentIntentFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterPaymentIntentFilterPriceFilter>>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -2642,11 +4971,26 @@ export type OrderFilterPaymentMethodFilter = {
   createdAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
+  media?: InputMaybe<OrderFilterPaymentMethodFilterMediaFilter>;
   name?: InputMaybe<StringFieldComparison>;
   online?: InputMaybe<BooleanFieldComparison>;
   or?: InputMaybe<Array<OrderFilterPaymentMethodFilter>>;
   status?: InputMaybe<PaymentMethodStatusFilterComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterPaymentMethodFilterMediaFilter = {
+  and?: InputMaybe<Array<OrderFilterPaymentMethodFilterMediaFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  filename?: InputMaybe<StringFieldComparison>;
+  format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterPaymentMethodFilterMediaFilter>>;
+  publicId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
 };
 
 export type OrderFilterPriceFilter = {
@@ -2661,6 +5005,72 @@ export type OrderFilterPriceFilter = {
 
 export type OrderFilterUserFilter = {
   and?: InputMaybe<Array<OrderFilterUserFilter>>;
+  avatar?: InputMaybe<OrderFilterUserFilterMediaFilter>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  brands?: InputMaybe<OrderFilterUserFilterBrandFilter>;
+  cart?: InputMaybe<OrderFilterUserFilterCartFilter>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddress?: InputMaybe<OrderFilterUserFilterEmailAddressFilter>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  roles?: InputMaybe<OrderFilterUserFilterRoleFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userAddresses?: InputMaybe<OrderFilterUserFilterUserAddressFilter>;
+  wishlist?: InputMaybe<OrderFilterUserFilterWishlistFilter>;
+};
+
+export type OrderFilterUserFilterBrandFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterBrandFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilter>>;
+  avatar?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterMediaFilter>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  brands?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterBrandFilter>;
+  cart?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterCartFilter>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddress?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterEmailAddressFilter>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  roles?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterRoleFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userAddresses?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterUserAddressFilter>;
+  wishlist?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterWishlistFilter>;
+};
+
+export type OrderFilterUserFilterBrandFilterUserFilterBrandFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterBrandFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterBrandFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterBrandFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterBrandFilterUserFilterBrandFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterBrandFilterUserFilter>>;
   avatarId?: InputMaybe<IdFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   deletedAt?: InputMaybe<DateFieldComparison>;
@@ -2668,7 +5078,1596 @@ export type OrderFilterUserFilter = {
   firstName?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   lastName?: InputMaybe<StringFieldComparison>;
-  or?: InputMaybe<Array<OrderFilterUserFilter>>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterBrandFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterBrandFilterUserFilterCartFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterCartFilter>>;
+  cartItems?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterCartFilterCartItemFilter>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deliveryAddress?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterCartFilterAddressFilter>;
+  deliveryAddressId?: InputMaybe<IdFilterComparison>;
+  deliveryMethod?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterCartFilterDeliveryMethodFilter>;
+  deliveryMethodId?: InputMaybe<IdFilterComparison>;
+  deliveryPrice?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterCartFilterPriceFilter>;
+  deliveryPriceId?: InputMaybe<IdFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterCartFilter>>;
+  paymentMethod?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterCartFilterPaymentMethodFilter>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<NumberFieldComparison>;
+  subtotalPrice?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterCartFilterPriceFilter>;
+  subtotalPriceId?: InputMaybe<IdFilterComparison>;
+  taxPrice?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterCartFilterPriceFilter>;
+  taxPriceId?: InputMaybe<IdFilterComparison>;
+  totalPrice?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterCartFilterPriceFilter>;
+  totalPriceId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterCartFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterBrandFilterUserFilterCartFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterCartFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterCartFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterBrandFilterUserFilterCartFilterCartItemFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterCartFilterCartItemFilter>>;
+  cartId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterCartFilterCartItemFilter>>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  productVariantId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<IntFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterBrandFilterUserFilterCartFilterDeliveryMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterCartFilterDeliveryMethodFilter>>;
+  avgDeliveryTimeInHours?: InputMaybe<IntFieldComparison>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterCartFilterDeliveryMethodFilter>>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<DeliveryMethodStatusFilterComparison>;
+  type?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterBrandFilterUserFilterCartFilterPaymentMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterCartFilterPaymentMethodFilter>>;
+  code?: InputMaybe<PaymentMethodsFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  online?: InputMaybe<BooleanFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterCartFilterPaymentMethodFilter>>;
+  status?: InputMaybe<PaymentMethodStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterBrandFilterUserFilterCartFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterCartFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterCartFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterBrandFilterUserFilterCartFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterCartFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterCartFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterBrandFilterUserFilterEmailAddressFilter = {
+  address?: InputMaybe<StringFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterEmailAddressFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterEmailAddressFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  verified?: InputMaybe<BooleanFieldComparison>;
+};
+
+export type OrderFilterUserFilterBrandFilterUserFilterMediaFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterMediaFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  filename?: InputMaybe<StringFieldComparison>;
+  format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterMediaFilter>>;
+  publicId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
+};
+
+export type OrderFilterUserFilterBrandFilterUserFilterRoleFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterRoleFilter>>;
+  code?: InputMaybe<RolesFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterRoleFilter>>;
+  permissions?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterRoleFilterPermissionFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterBrandFilterUserFilterRoleFilterPermissionFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterRoleFilterPermissionFilter>>;
+  conditions?: InputMaybe<JsonFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterRoleFilterPermissionFilter>>;
+  subject?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterBrandFilterUserFilterUserAddressFilter = {
+  address?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterUserAddressFilterAddressFilter>;
+  addressId?: InputMaybe<IdFilterComparison>;
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterUserAddressFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterUserAddressFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterUserAddressFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterBrandFilterUserFilterUserAddressFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterUserAddressFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterUserAddressFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterBrandFilterUserFilterUserAddressFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterUserAddressFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterUserAddressFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterBrandFilterUserFilterWishlistFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterWishlistFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterWishlistFilter>>;
+  products?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterWishlistFilterProductFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterBrandFilterUserFilterWishlistFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterBrandFilterUserFilterWishlistFilterProductFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterWishlistFilterProductFilter>>;
+  brandId?: InputMaybe<IdFilterComparison>;
+  categoryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterWishlistFilterProductFilter>>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterBrandFilterUserFilterWishlistFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterWishlistFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterBrandFilterUserFilterWishlistFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilter>>;
+  cartItems?: InputMaybe<OrderFilterUserFilterCartFilterCartItemFilter>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deliveryAddress?: InputMaybe<OrderFilterUserFilterCartFilterAddressFilter>;
+  deliveryAddressId?: InputMaybe<IdFilterComparison>;
+  deliveryMethod?: InputMaybe<OrderFilterUserFilterCartFilterDeliveryMethodFilter>;
+  deliveryMethodId?: InputMaybe<IdFilterComparison>;
+  deliveryPrice?: InputMaybe<OrderFilterUserFilterCartFilterPriceFilter>;
+  deliveryPriceId?: InputMaybe<IdFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilter>>;
+  paymentMethod?: InputMaybe<OrderFilterUserFilterCartFilterPaymentMethodFilter>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<NumberFieldComparison>;
+  subtotalPrice?: InputMaybe<OrderFilterUserFilterCartFilterPriceFilter>;
+  subtotalPriceId?: InputMaybe<IdFilterComparison>;
+  taxPrice?: InputMaybe<OrderFilterUserFilterCartFilterPriceFilter>;
+  taxPriceId?: InputMaybe<IdFilterComparison>;
+  totalPrice?: InputMaybe<OrderFilterUserFilterCartFilterPriceFilter>;
+  totalPriceId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterCartFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  city?: InputMaybe<OrderFilterUserFilterCartFilterAddressFilterCityFilter>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  country?: InputMaybe<OrderFilterUserFilterCartFilterAddressFilterCountryFilter>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterAddressFilterCityFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterAddressFilterCityFilter>>;
+  country?: InputMaybe<OrderFilterUserFilterCartFilterAddressFilterCityFilterCountryFilter>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterAddressFilterCityFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterAddressFilterCityFilterCountryFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterAddressFilterCityFilterCountryFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterAddressFilterCityFilterCountryFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterAddressFilterCountryFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterAddressFilterCountryFilter>>;
+  cities?: InputMaybe<OrderFilterUserFilterCartFilterAddressFilterCountryFilterCityFilter>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterAddressFilterCountryFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterAddressFilterCountryFilterCityFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterAddressFilterCountryFilterCityFilter>>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterAddressFilterCountryFilterCityFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterCartItemFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterCartItemFilter>>;
+  cartId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterCartItemFilter>>;
+  price?: InputMaybe<OrderFilterUserFilterCartFilterCartItemFilterPriceFilter>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  productVariant?: InputMaybe<OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilter>;
+  productVariantId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<IntFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterCartItemFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterCartItemFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterCartItemFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilter>>;
+  color?: InputMaybe<OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterColorFilter>;
+  colorId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilter>>;
+  price?: InputMaybe<OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterPriceFilter>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  product?: InputMaybe<OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterProductFilter>;
+  productId?: InputMaybe<IdFilterComparison>;
+  size?: InputMaybe<OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterSizeFilter>;
+  sizeId?: InputMaybe<IdFilterComparison>;
+  sku?: InputMaybe<IdFilterComparison>;
+  stock?: InputMaybe<NumberFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterColorFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterColorFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  hex?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterColorFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterProductFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterProductFilter>>;
+  brandId?: InputMaybe<IdFilterComparison>;
+  categoryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterProductFilter>>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterSizeFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterSizeFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterSizeFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterDeliveryMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterDeliveryMethodFilter>>;
+  avgDeliveryTimeInHours?: InputMaybe<IntFieldComparison>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterDeliveryMethodFilter>>;
+  price?: InputMaybe<OrderFilterUserFilterCartFilterDeliveryMethodFilterPriceFilter>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<DeliveryMethodStatusFilterComparison>;
+  type?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterDeliveryMethodFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterDeliveryMethodFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterDeliveryMethodFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterPaymentMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterPaymentMethodFilter>>;
+  code?: InputMaybe<PaymentMethodsFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  media?: InputMaybe<OrderFilterUserFilterCartFilterPaymentMethodFilterMediaFilter>;
+  name?: InputMaybe<StringFieldComparison>;
+  online?: InputMaybe<BooleanFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterPaymentMethodFilter>>;
+  status?: InputMaybe<PaymentMethodStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterPaymentMethodFilterMediaFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterPaymentMethodFilterMediaFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  filename?: InputMaybe<StringFieldComparison>;
+  format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterPaymentMethodFilterMediaFilter>>;
+  publicId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilter>>;
+  avatar?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterMediaFilter>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  brands?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterBrandFilter>;
+  cart?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterCartFilter>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddress?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterEmailAddressFilter>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  roles?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterRoleFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userAddresses?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterUserAddressFilter>;
+  wishlist?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterWishlistFilter>;
+};
+
+export type OrderFilterUserFilterCartFilterUserFilterBrandFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterBrandFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterBrandFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterBrandFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterUserFilterBrandFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterBrandFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterBrandFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterUserFilterCartFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterCartFilter>>;
+  cartItems?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterCartFilterCartItemFilter>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deliveryAddress?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterCartFilterAddressFilter>;
+  deliveryAddressId?: InputMaybe<IdFilterComparison>;
+  deliveryMethod?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterCartFilterDeliveryMethodFilter>;
+  deliveryMethodId?: InputMaybe<IdFilterComparison>;
+  deliveryPrice?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterCartFilterPriceFilter>;
+  deliveryPriceId?: InputMaybe<IdFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterCartFilter>>;
+  paymentMethod?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterCartFilterPaymentMethodFilter>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<NumberFieldComparison>;
+  subtotalPrice?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterCartFilterPriceFilter>;
+  subtotalPriceId?: InputMaybe<IdFilterComparison>;
+  taxPrice?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterCartFilterPriceFilter>;
+  taxPriceId?: InputMaybe<IdFilterComparison>;
+  totalPrice?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterCartFilterPriceFilter>;
+  totalPriceId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterCartFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterUserFilterCartFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterCartFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterCartFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterUserFilterCartFilterCartItemFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterCartFilterCartItemFilter>>;
+  cartId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterCartFilterCartItemFilter>>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  productVariantId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<IntFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterUserFilterCartFilterDeliveryMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterCartFilterDeliveryMethodFilter>>;
+  avgDeliveryTimeInHours?: InputMaybe<IntFieldComparison>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterCartFilterDeliveryMethodFilter>>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<DeliveryMethodStatusFilterComparison>;
+  type?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterUserFilterCartFilterPaymentMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterCartFilterPaymentMethodFilter>>;
+  code?: InputMaybe<PaymentMethodsFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  online?: InputMaybe<BooleanFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterCartFilterPaymentMethodFilter>>;
+  status?: InputMaybe<PaymentMethodStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterUserFilterCartFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterCartFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterCartFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterUserFilterCartFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterCartFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterCartFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterUserFilterEmailAddressFilter = {
+  address?: InputMaybe<StringFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterEmailAddressFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterEmailAddressFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  verified?: InputMaybe<BooleanFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterUserFilterMediaFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterMediaFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  filename?: InputMaybe<StringFieldComparison>;
+  format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterMediaFilter>>;
+  publicId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterUserFilterRoleFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterRoleFilter>>;
+  code?: InputMaybe<RolesFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterRoleFilter>>;
+  permissions?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterRoleFilterPermissionFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterUserFilterRoleFilterPermissionFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterRoleFilterPermissionFilter>>;
+  conditions?: InputMaybe<JsonFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterRoleFilterPermissionFilter>>;
+  subject?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterUserFilterUserAddressFilter = {
+  address?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterUserAddressFilterAddressFilter>;
+  addressId?: InputMaybe<IdFilterComparison>;
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterUserAddressFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterUserAddressFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterUserAddressFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterUserFilterUserAddressFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterUserAddressFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterUserAddressFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterUserFilterUserAddressFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterUserAddressFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterUserAddressFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterUserFilterWishlistFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterWishlistFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterWishlistFilter>>;
+  products?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterWishlistFilterProductFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterCartFilterUserFilterWishlistFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterUserFilterWishlistFilterProductFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterWishlistFilterProductFilter>>;
+  brandId?: InputMaybe<IdFilterComparison>;
+  categoryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterWishlistFilterProductFilter>>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterCartFilterUserFilterWishlistFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterWishlistFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterCartFilterUserFilterWishlistFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterEmailAddressFilter = {
+  address?: InputMaybe<StringFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterUserFilterEmailAddressFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterEmailAddressFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  verified?: InputMaybe<BooleanFieldComparison>;
+};
+
+export type OrderFilterUserFilterMediaFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterMediaFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  filename?: InputMaybe<StringFieldComparison>;
+  format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterMediaFilter>>;
+  publicId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
+};
+
+export type OrderFilterUserFilterRoleFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterRoleFilter>>;
+  code?: InputMaybe<RolesFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterRoleFilter>>;
+  permissions?: InputMaybe<OrderFilterUserFilterRoleFilterPermissionFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterRoleFilterPermissionFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterRoleFilterPermissionFilter>>;
+  conditions?: InputMaybe<JsonFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterRoleFilterPermissionFilter>>;
+  subject?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilter = {
+  address?: InputMaybe<OrderFilterUserFilterUserAddressFilterAddressFilter>;
+  addressId?: InputMaybe<IdFilterComparison>;
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  city?: InputMaybe<OrderFilterUserFilterUserAddressFilterAddressFilterCityFilter>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  country?: InputMaybe<OrderFilterUserFilterUserAddressFilterAddressFilterCountryFilter>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterAddressFilterCityFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterAddressFilterCityFilter>>;
+  country?: InputMaybe<OrderFilterUserFilterUserAddressFilterAddressFilterCityFilterCountryFilter>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterAddressFilterCityFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterAddressFilterCityFilterCountryFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterAddressFilterCityFilterCountryFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterAddressFilterCityFilterCountryFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterAddressFilterCountryFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterAddressFilterCountryFilter>>;
+  cities?: InputMaybe<OrderFilterUserFilterUserAddressFilterAddressFilterCountryFilterCityFilter>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterAddressFilterCountryFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterAddressFilterCountryFilterCityFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterAddressFilterCountryFilterCityFilter>>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterAddressFilterCountryFilterCityFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilter>>;
+  avatar?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterMediaFilter>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  brands?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterBrandFilter>;
+  cart?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterCartFilter>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddress?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterEmailAddressFilter>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  roles?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterRoleFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userAddresses?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterUserAddressFilter>;
+  wishlist?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterWishlistFilter>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterUserFilterBrandFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterBrandFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterBrandFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterBrandFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterUserFilterBrandFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterBrandFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterBrandFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterUserFilterCartFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterCartFilter>>;
+  cartItems?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterCartItemFilter>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deliveryAddress?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterAddressFilter>;
+  deliveryAddressId?: InputMaybe<IdFilterComparison>;
+  deliveryMethod?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterDeliveryMethodFilter>;
+  deliveryMethodId?: InputMaybe<IdFilterComparison>;
+  deliveryPrice?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterPriceFilter>;
+  deliveryPriceId?: InputMaybe<IdFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterCartFilter>>;
+  paymentMethod?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterPaymentMethodFilter>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<NumberFieldComparison>;
+  subtotalPrice?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterPriceFilter>;
+  subtotalPriceId?: InputMaybe<IdFilterComparison>;
+  taxPrice?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterPriceFilter>;
+  taxPriceId?: InputMaybe<IdFilterComparison>;
+  totalPrice?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterPriceFilter>;
+  totalPriceId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterUserFilterCartFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterUserFilterCartFilterCartItemFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterCartItemFilter>>;
+  cartId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterCartItemFilter>>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  productVariantId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<IntFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterUserFilterCartFilterDeliveryMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterDeliveryMethodFilter>>;
+  avgDeliveryTimeInHours?: InputMaybe<IntFieldComparison>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterDeliveryMethodFilter>>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<DeliveryMethodStatusFilterComparison>;
+  type?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterUserFilterCartFilterPaymentMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterPaymentMethodFilter>>;
+  code?: InputMaybe<PaymentMethodsFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  online?: InputMaybe<BooleanFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterPaymentMethodFilter>>;
+  status?: InputMaybe<PaymentMethodStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterUserFilterCartFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterUserFilterCartFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterCartFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterUserFilterEmailAddressFilter = {
+  address?: InputMaybe<StringFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterEmailAddressFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterEmailAddressFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  verified?: InputMaybe<BooleanFieldComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterUserFilterMediaFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterMediaFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  filename?: InputMaybe<StringFieldComparison>;
+  format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterMediaFilter>>;
+  publicId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterUserFilterRoleFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterRoleFilter>>;
+  code?: InputMaybe<RolesFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterRoleFilter>>;
+  permissions?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterRoleFilterPermissionFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterUserFilterRoleFilterPermissionFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterRoleFilterPermissionFilter>>;
+  conditions?: InputMaybe<JsonFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterRoleFilterPermissionFilter>>;
+  subject?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterUserFilterUserAddressFilter = {
+  address?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterUserAddressFilterAddressFilter>;
+  addressId?: InputMaybe<IdFilterComparison>;
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterUserAddressFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterUserAddressFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterUserAddressFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterUserFilterUserAddressFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterUserAddressFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterUserAddressFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterUserFilterUserAddressFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterUserAddressFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterUserAddressFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterUserFilterWishlistFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterWishlistFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterWishlistFilter>>;
+  products?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterWishlistFilterProductFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterUserAddressFilterUserFilterWishlistFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterUserFilterWishlistFilterProductFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterWishlistFilterProductFilter>>;
+  brandId?: InputMaybe<IdFilterComparison>;
+  categoryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterWishlistFilterProductFilter>>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterUserAddressFilterUserFilterWishlistFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterWishlistFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterUserAddressFilterUserFilterWishlistFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilter>>;
+  products?: InputMaybe<OrderFilterUserFilterWishlistFilterProductFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterProductFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilter>>;
+  brand?: InputMaybe<OrderFilterUserFilterWishlistFilterProductFilterBrandFilter>;
+  brandId?: InputMaybe<IdFilterComparison>;
+  category?: InputMaybe<OrderFilterUserFilterWishlistFilterProductFilterCategoryFilter>;
+  categoryId?: InputMaybe<IdFilterComparison>;
+  comments?: InputMaybe<OrderFilterUserFilterWishlistFilterProductFilterCommentFilter>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilter>>;
+  productVariants?: InputMaybe<OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilter>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterProductFilterBrandFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterBrandFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterBrandFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterWishlistFilterProductFilterBrandFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterProductFilterBrandFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterBrandFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterBrandFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterProductFilterCategoryFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterCategoryFilter>>;
+  children?: InputMaybe<OrderFilterUserFilterWishlistFilterProductFilterCategoryFilterCategoryFilter>;
+  code?: InputMaybe<CategoriesFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterCategoryFilter>>;
+  parent?: InputMaybe<OrderFilterUserFilterWishlistFilterProductFilterCategoryFilterCategoryFilter>;
+  parentId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterProductFilterCategoryFilterCategoryFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterCategoryFilterCategoryFilter>>;
+  code?: InputMaybe<CategoriesFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterCategoryFilterCategoryFilter>>;
+  parentId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterProductFilterCommentFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterCommentFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  media?: InputMaybe<OrderFilterUserFilterWishlistFilterProductFilterCommentFilterMediaFilter>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterCommentFilter>>;
+  product?: InputMaybe<OrderFilterUserFilterWishlistFilterProductFilterCommentFilterProductFilter>;
+  productId?: InputMaybe<IdFilterComparison>;
+  rating?: InputMaybe<FloatFieldComparison>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterWishlistFilterProductFilterCommentFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterProductFilterCommentFilterMediaFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterCommentFilterMediaFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  filename?: InputMaybe<StringFieldComparison>;
+  format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterCommentFilterMediaFilter>>;
+  publicId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterProductFilterCommentFilterProductFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterCommentFilterProductFilter>>;
+  brandId?: InputMaybe<IdFilterComparison>;
+  categoryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterCommentFilterProductFilter>>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterProductFilterCommentFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterCommentFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterCommentFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilter>>;
+  color?: InputMaybe<OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilterColorFilter>;
+  colorId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilter>>;
+  price?: InputMaybe<OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilterPriceFilter>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  product?: InputMaybe<OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilterProductFilter>;
+  productId?: InputMaybe<IdFilterComparison>;
+  size?: InputMaybe<OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilterSizeFilter>;
+  sizeId?: InputMaybe<IdFilterComparison>;
+  sku?: InputMaybe<IdFilterComparison>;
+  stock?: InputMaybe<NumberFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilterColorFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilterColorFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  hex?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilterColorFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilterProductFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilterProductFilter>>;
+  brandId?: InputMaybe<IdFilterComparison>;
+  categoryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilterProductFilter>>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilterSizeFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilterSizeFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilterSizeFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilter>>;
+  avatar?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterMediaFilter>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  brands?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterBrandFilter>;
+  cart?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterCartFilter>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddress?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterEmailAddressFilter>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  roles?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterRoleFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userAddresses?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterUserAddressFilter>;
+  wishlist?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterWishlistFilter>;
+};
+
+export type OrderFilterUserFilterWishlistFilterUserFilterBrandFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterBrandFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterBrandFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterBrandFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterUserFilterBrandFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterBrandFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterBrandFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterUserFilterCartFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterCartFilter>>;
+  cartItems?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterCartFilterCartItemFilter>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deliveryAddress?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterCartFilterAddressFilter>;
+  deliveryAddressId?: InputMaybe<IdFilterComparison>;
+  deliveryMethod?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterCartFilterDeliveryMethodFilter>;
+  deliveryMethodId?: InputMaybe<IdFilterComparison>;
+  deliveryPrice?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterCartFilterPriceFilter>;
+  deliveryPriceId?: InputMaybe<IdFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterCartFilter>>;
+  paymentMethod?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterCartFilterPaymentMethodFilter>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<NumberFieldComparison>;
+  subtotalPrice?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterCartFilterPriceFilter>;
+  subtotalPriceId?: InputMaybe<IdFilterComparison>;
+  taxPrice?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterCartFilterPriceFilter>;
+  taxPriceId?: InputMaybe<IdFilterComparison>;
+  totalPrice?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterCartFilterPriceFilter>;
+  totalPriceId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterCartFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterUserFilterCartFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterCartFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterCartFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterUserFilterCartFilterCartItemFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterCartFilterCartItemFilter>>;
+  cartId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterCartFilterCartItemFilter>>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  productVariantId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<IntFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterUserFilterCartFilterDeliveryMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterCartFilterDeliveryMethodFilter>>;
+  avgDeliveryTimeInHours?: InputMaybe<IntFieldComparison>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterCartFilterDeliveryMethodFilter>>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  status?: InputMaybe<DeliveryMethodStatusFilterComparison>;
+  type?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterUserFilterCartFilterPaymentMethodFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterCartFilterPaymentMethodFilter>>;
+  code?: InputMaybe<PaymentMethodsFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  online?: InputMaybe<BooleanFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterCartFilterPaymentMethodFilter>>;
+  status?: InputMaybe<PaymentMethodStatusFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterUserFilterCartFilterPriceFilter = {
+  amount?: InputMaybe<NumberFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterCartFilterPriceFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  currency?: InputMaybe<CurrenciesFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterCartFilterPriceFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterUserFilterCartFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterCartFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterCartFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterUserFilterEmailAddressFilter = {
+  address?: InputMaybe<StringFieldComparison>;
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterEmailAddressFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterEmailAddressFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  verified?: InputMaybe<BooleanFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterUserFilterMediaFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterMediaFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  filename?: InputMaybe<StringFieldComparison>;
+  format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterMediaFilter>>;
+  publicId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterUserFilterRoleFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterRoleFilter>>;
+  code?: InputMaybe<RolesFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterRoleFilter>>;
+  permissions?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterRoleFilterPermissionFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterUserFilterRoleFilterPermissionFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterRoleFilterPermissionFilter>>;
+  conditions?: InputMaybe<JsonFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterRoleFilterPermissionFilter>>;
+  subject?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterUserFilterUserAddressFilter = {
+  address?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterUserAddressFilterAddressFilter>;
+  addressId?: InputMaybe<IdFilterComparison>;
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterUserAddressFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterUserAddressFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterUserAddressFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterUserFilterUserAddressFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterUserAddressFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterUserAddressFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterUserFilterUserAddressFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterUserAddressFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterUserAddressFilterUserFilter>>;
+  phone?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterUserFilterWishlistFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterWishlistFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterWishlistFilter>>;
+  products?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterWishlistFilterProductFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<OrderFilterUserFilterWishlistFilterUserFilterWishlistFilterUserFilter>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterUserFilterWishlistFilterProductFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterWishlistFilterProductFilter>>;
+  brandId?: InputMaybe<IdFilterComparison>;
+  categoryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterWishlistFilterProductFilter>>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterUserFilterWishlistFilterUserFilterWishlistFilterUserFilter = {
+  and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterWishlistFilterUserFilter>>;
+  avatarId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddressId?: InputMaybe<IdFilterComparison>;
+  firstName?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  lastName?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterUserFilterWishlistFilterUserFilter>>;
   phone?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
@@ -2994,6 +6993,7 @@ export enum PaymentIntentSortFields {
 export enum PaymentIntentStatus {
   Canceled = 'CANCELED',
   Processing = 'PROCESSING',
+  Refunded = 'REFUNDED',
   RequiresAction = 'REQUIRES_ACTION',
   RequiresCapture = 'REQUIRES_CAPTURE',
   RequiresConfirmation = 'REQUIRES_CONFIRMATION',
@@ -3418,22 +7418,111 @@ export type ProductFilterBrandFilter = {
 
 export type ProductFilterBrandFilterUserFilter = {
   and?: InputMaybe<Array<ProductFilterBrandFilterUserFilter>>;
+  avatar?: InputMaybe<ProductFilterBrandFilterUserFilterMediaFilter>;
   avatarId?: InputMaybe<IdFilterComparison>;
+  brands?: InputMaybe<ProductFilterBrandFilterUserFilterBrandFilter>;
+  cart?: InputMaybe<ProductFilterBrandFilterUserFilterCartFilter>;
   createdAt?: InputMaybe<DateFieldComparison>;
   deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddress?: InputMaybe<ProductFilterBrandFilterUserFilterEmailAddressFilter>;
   emailAddressId?: InputMaybe<IdFilterComparison>;
   firstName?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   lastName?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<ProductFilterBrandFilterUserFilter>>;
   phone?: InputMaybe<StringFieldComparison>;
+  roles?: InputMaybe<ProductFilterBrandFilterUserFilterRoleFilter>;
   updatedAt?: InputMaybe<DateFieldComparison>;
+  userAddresses?: InputMaybe<ProductFilterBrandFilterUserFilterUserAddressFilter>;
+  wishlist?: InputMaybe<ProductFilterBrandFilterUserFilterWishlistFilter>;
+};
+
+export type ProductFilterBrandFilterUserFilterBrandFilter = {
+  and?: InputMaybe<Array<ProductFilterBrandFilterUserFilterBrandFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<ProductFilterBrandFilterUserFilterBrandFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type ProductFilterBrandFilterUserFilterCartFilter = {
+  and?: InputMaybe<Array<ProductFilterBrandFilterUserFilterCartFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deliveryAddressId?: InputMaybe<IdFilterComparison>;
+  deliveryMethodId?: InputMaybe<IdFilterComparison>;
+  deliveryPriceId?: InputMaybe<IdFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<ProductFilterBrandFilterUserFilterCartFilter>>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<NumberFieldComparison>;
+  subtotalPriceId?: InputMaybe<IdFilterComparison>;
+  taxPriceId?: InputMaybe<IdFilterComparison>;
+  totalPriceId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type ProductFilterBrandFilterUserFilterEmailAddressFilter = {
+  address?: InputMaybe<StringFieldComparison>;
+  and?: InputMaybe<Array<ProductFilterBrandFilterUserFilterEmailAddressFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<ProductFilterBrandFilterUserFilterEmailAddressFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  verified?: InputMaybe<BooleanFieldComparison>;
+};
+
+export type ProductFilterBrandFilterUserFilterMediaFilter = {
+  and?: InputMaybe<Array<ProductFilterBrandFilterUserFilterMediaFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  filename?: InputMaybe<StringFieldComparison>;
+  format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<ProductFilterBrandFilterUserFilterMediaFilter>>;
+  publicId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
+};
+
+export type ProductFilterBrandFilterUserFilterRoleFilter = {
+  and?: InputMaybe<Array<ProductFilterBrandFilterUserFilterRoleFilter>>;
+  code?: InputMaybe<RolesFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<ProductFilterBrandFilterUserFilterRoleFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type ProductFilterBrandFilterUserFilterUserAddressFilter = {
+  addressId?: InputMaybe<IdFilterComparison>;
+  and?: InputMaybe<Array<ProductFilterBrandFilterUserFilterUserAddressFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<ProductFilterBrandFilterUserFilterUserAddressFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type ProductFilterBrandFilterUserFilterWishlistFilter = {
+  and?: InputMaybe<Array<ProductFilterBrandFilterUserFilterWishlistFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<ProductFilterBrandFilterUserFilterWishlistFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userId?: InputMaybe<IdFilterComparison>;
 };
 
 export type ProductFilterCategoryFilter = {
   and?: InputMaybe<Array<ProductFilterCategoryFilter>>;
   children?: InputMaybe<ProductFilterCategoryFilterCategoryFilter>;
-  code?: InputMaybe<StringFieldComparison>;
+  code?: InputMaybe<CategoriesFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
@@ -3446,12 +7535,26 @@ export type ProductFilterCategoryFilter = {
 
 export type ProductFilterCategoryFilterCategoryFilter = {
   and?: InputMaybe<Array<ProductFilterCategoryFilterCategoryFilter>>;
-  code?: InputMaybe<StringFieldComparison>;
+  children?: InputMaybe<ProductFilterCategoryFilterCategoryFilterCategoryFilter>;
+  code?: InputMaybe<CategoriesFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<ProductFilterCategoryFilterCategoryFilter>>;
+  parent?: InputMaybe<ProductFilterCategoryFilterCategoryFilterCategoryFilter>;
+  parentId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type ProductFilterCategoryFilterCategoryFilterCategoryFilter = {
+  and?: InputMaybe<Array<ProductFilterCategoryFilterCategoryFilterCategoryFilter>>;
+  code?: InputMaybe<CategoriesFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<ProductFilterCategoryFilterCategoryFilterCategoryFilter>>;
   parentId?: InputMaybe<IdFilterComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
@@ -3488,28 +7591,171 @@ export type ProductFilterCommentFilterMediaFilter = {
 
 export type ProductFilterCommentFilterProductFilter = {
   and?: InputMaybe<Array<ProductFilterCommentFilterProductFilter>>;
+  brand?: InputMaybe<ProductFilterCommentFilterProductFilterBrandFilter>;
   brandId?: InputMaybe<IdFilterComparison>;
+  category?: InputMaybe<ProductFilterCommentFilterProductFilterCategoryFilter>;
   categoryId?: InputMaybe<IdFilterComparison>;
+  comments?: InputMaybe<ProductFilterCommentFilterProductFilterCommentFilter>;
   createdAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<ProductFilterCommentFilterProductFilter>>;
+  productVariants?: InputMaybe<ProductFilterCommentFilterProductFilterProductVariantFilter>;
   title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type ProductFilterCommentFilterProductFilterBrandFilter = {
+  and?: InputMaybe<Array<ProductFilterCommentFilterProductFilterBrandFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<ProductFilterCommentFilterProductFilterBrandFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type ProductFilterCommentFilterProductFilterCategoryFilter = {
+  and?: InputMaybe<Array<ProductFilterCommentFilterProductFilterCategoryFilter>>;
+  code?: InputMaybe<CategoriesFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<ProductFilterCommentFilterProductFilterCategoryFilter>>;
+  parentId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type ProductFilterCommentFilterProductFilterCommentFilter = {
+  and?: InputMaybe<Array<ProductFilterCommentFilterProductFilterCommentFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<ProductFilterCommentFilterProductFilterCommentFilter>>;
+  productId?: InputMaybe<IdFilterComparison>;
+  rating?: InputMaybe<FloatFieldComparison>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type ProductFilterCommentFilterProductFilterProductVariantFilter = {
+  and?: InputMaybe<Array<ProductFilterCommentFilterProductFilterProductVariantFilter>>;
+  colorId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<ProductFilterCommentFilterProductFilterProductVariantFilter>>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  productId?: InputMaybe<IdFilterComparison>;
+  sizeId?: InputMaybe<IdFilterComparison>;
+  sku?: InputMaybe<IdFilterComparison>;
+  stock?: InputMaybe<NumberFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type ProductFilterCommentFilterUserFilter = {
   and?: InputMaybe<Array<ProductFilterCommentFilterUserFilter>>;
+  avatar?: InputMaybe<ProductFilterCommentFilterUserFilterMediaFilter>;
   avatarId?: InputMaybe<IdFilterComparison>;
+  brands?: InputMaybe<ProductFilterCommentFilterUserFilterBrandFilter>;
+  cart?: InputMaybe<ProductFilterCommentFilterUserFilterCartFilter>;
   createdAt?: InputMaybe<DateFieldComparison>;
   deletedAt?: InputMaybe<DateFieldComparison>;
+  emailAddress?: InputMaybe<ProductFilterCommentFilterUserFilterEmailAddressFilter>;
   emailAddressId?: InputMaybe<IdFilterComparison>;
   firstName?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   lastName?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<ProductFilterCommentFilterUserFilter>>;
   phone?: InputMaybe<StringFieldComparison>;
+  roles?: InputMaybe<ProductFilterCommentFilterUserFilterRoleFilter>;
   updatedAt?: InputMaybe<DateFieldComparison>;
+  userAddresses?: InputMaybe<ProductFilterCommentFilterUserFilterUserAddressFilter>;
+  wishlist?: InputMaybe<ProductFilterCommentFilterUserFilterWishlistFilter>;
+};
+
+export type ProductFilterCommentFilterUserFilterBrandFilter = {
+  and?: InputMaybe<Array<ProductFilterCommentFilterUserFilterBrandFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<ProductFilterCommentFilterUserFilterBrandFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type ProductFilterCommentFilterUserFilterCartFilter = {
+  and?: InputMaybe<Array<ProductFilterCommentFilterUserFilterCartFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deliveryAddressId?: InputMaybe<IdFilterComparison>;
+  deliveryMethodId?: InputMaybe<IdFilterComparison>;
+  deliveryPriceId?: InputMaybe<IdFilterComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<ProductFilterCommentFilterUserFilterCartFilter>>;
+  paymentMethodId?: InputMaybe<IdFilterComparison>;
+  quantity?: InputMaybe<NumberFieldComparison>;
+  subtotalPriceId?: InputMaybe<IdFilterComparison>;
+  taxPriceId?: InputMaybe<IdFilterComparison>;
+  totalPriceId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type ProductFilterCommentFilterUserFilterEmailAddressFilter = {
+  address?: InputMaybe<StringFieldComparison>;
+  and?: InputMaybe<Array<ProductFilterCommentFilterUserFilterEmailAddressFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<ProductFilterCommentFilterUserFilterEmailAddressFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  verified?: InputMaybe<BooleanFieldComparison>;
+};
+
+export type ProductFilterCommentFilterUserFilterMediaFilter = {
+  and?: InputMaybe<Array<ProductFilterCommentFilterUserFilterMediaFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  filename?: InputMaybe<StringFieldComparison>;
+  format?: InputMaybe<MediaTypeFilterComparison>;
+  height?: InputMaybe<NumberFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<ProductFilterCommentFilterUserFilterMediaFilter>>;
+  publicId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  url?: InputMaybe<StringFieldComparison>;
+  width?: InputMaybe<NumberFieldComparison>;
+};
+
+export type ProductFilterCommentFilterUserFilterRoleFilter = {
+  and?: InputMaybe<Array<ProductFilterCommentFilterUserFilterRoleFilter>>;
+  code?: InputMaybe<RolesFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<ProductFilterCommentFilterUserFilterRoleFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type ProductFilterCommentFilterUserFilterUserAddressFilter = {
+  addressId?: InputMaybe<IdFilterComparison>;
+  and?: InputMaybe<Array<ProductFilterCommentFilterUserFilterUserAddressFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<ProductFilterCommentFilterUserFilterUserAddressFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type ProductFilterCommentFilterUserFilterWishlistFilter = {
+  and?: InputMaybe<Array<ProductFilterCommentFilterUserFilterWishlistFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<ProductFilterCommentFilterUserFilterWishlistFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userId?: InputMaybe<IdFilterComparison>;
 };
 
 export type ProductFilterProductVariantFilter = {
@@ -3553,13 +7799,67 @@ export type ProductFilterProductVariantFilterPriceFilter = {
 
 export type ProductFilterProductVariantFilterProductFilter = {
   and?: InputMaybe<Array<ProductFilterProductVariantFilterProductFilter>>;
+  brand?: InputMaybe<ProductFilterProductVariantFilterProductFilterBrandFilter>;
   brandId?: InputMaybe<IdFilterComparison>;
+  category?: InputMaybe<ProductFilterProductVariantFilterProductFilterCategoryFilter>;
   categoryId?: InputMaybe<IdFilterComparison>;
+  comments?: InputMaybe<ProductFilterProductVariantFilterProductFilterCommentFilter>;
   createdAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<ProductFilterProductVariantFilterProductFilter>>;
+  productVariants?: InputMaybe<ProductFilterProductVariantFilterProductFilterProductVariantFilter>;
   title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type ProductFilterProductVariantFilterProductFilterBrandFilter = {
+  and?: InputMaybe<Array<ProductFilterProductVariantFilterProductFilterBrandFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<ProductFilterProductVariantFilterProductFilterBrandFilter>>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type ProductFilterProductVariantFilterProductFilterCategoryFilter = {
+  and?: InputMaybe<Array<ProductFilterProductVariantFilterProductFilterCategoryFilter>>;
+  code?: InputMaybe<CategoriesFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<ProductFilterProductVariantFilterProductFilterCategoryFilter>>;
+  parentId?: InputMaybe<IdFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type ProductFilterProductVariantFilterProductFilterCommentFilter = {
+  and?: InputMaybe<Array<ProductFilterProductVariantFilterProductFilterCommentFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<ProductFilterProductVariantFilterProductFilterCommentFilter>>;
+  productId?: InputMaybe<IdFilterComparison>;
+  rating?: InputMaybe<FloatFieldComparison>;
+  title?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  userId?: InputMaybe<IdFilterComparison>;
+};
+
+export type ProductFilterProductVariantFilterProductFilterProductVariantFilter = {
+  and?: InputMaybe<Array<ProductFilterProductVariantFilterProductFilterProductVariantFilter>>;
+  colorId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<ProductFilterProductVariantFilterProductFilterProductVariantFilter>>;
+  priceId?: InputMaybe<IdFilterComparison>;
+  productId?: InputMaybe<IdFilterComparison>;
+  sizeId?: InputMaybe<IdFilterComparison>;
+  sku?: InputMaybe<IdFilterComparison>;
+  stock?: InputMaybe<NumberFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -5391,7 +9691,7 @@ export type CartFragment = { __typename?: 'Cart', id: string, paymentMethodId?: 
 
 export type CartItemFragment = { __typename?: 'CartItem', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } } };
 
-export type CategoryFragment = { __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null };
+export type CategoryFragment = { __typename?: 'Category', id: string, code: Categories, name: string, description?: string | null, parentId?: string | null };
 
 export type CityFragment = { __typename?: 'City', id: string, name: string };
 
@@ -5458,6 +9758,20 @@ export type CancelOnePaymentIntentMutationVariables = Exact<{
 
 export type CancelOnePaymentIntentMutation = { __typename?: 'Mutation', cancelOnePaymentIntent: { __typename?: 'PaymentIntent', id: string, clientSecret: string, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, price?: { __typename?: 'Price', id: string, amount: number, currency: Currencies } | null } };
 
+export type CancelOrderMutationVariables = Exact<{
+  input: UpdateOrderInputType;
+}>;
+
+
+export type CancelOrderMutation = { __typename?: 'Mutation', cancelOrder: { __typename?: 'Order', id: string, status: OrderStatus, createdAt: any, deliveryAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> } };
+
+export type CompleteOrderMutationVariables = Exact<{
+  input: UpdateOrderInputType;
+}>;
+
+
+export type CompleteOrderMutation = { __typename?: 'Mutation', completeOrder: { __typename?: 'Order', id: string, status: OrderStatus, createdAt: any, deliveryAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> } };
+
 export type CreateOneCommentMutationVariables = Exact<{
   input: CreateOneCommentInputType;
   files?: InputMaybe<Array<Scalars['Upload']> | Scalars['Upload']>;
@@ -5473,6 +9787,13 @@ export type CreateOneAddressMutationVariables = Exact<{
 
 export type CreateOneAddressMutation = { __typename?: 'Mutation', createOneAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } };
 
+export type CreateOneBrandMutationVariables = Exact<{
+  input: CreateOneBrandInput;
+}>;
+
+
+export type CreateOneBrandMutation = { __typename?: 'Mutation', createOneBrand: { __typename?: 'Brand', id: string, code: string, name: string } };
+
 export type CreateOnePaymentIntentFromCartMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5484,6 +9805,13 @@ export type CreateOneUserAddressMutationVariables = Exact<{
 
 
 export type CreateOneUserAddressMutation = { __typename?: 'Mutation', createOneUserAddress: { __typename?: 'UserAddress', id: string, address: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } } };
+
+export type DeleteOneBrandMutationVariables = Exact<{
+  input: DeleteOneBrandInput;
+}>;
+
+
+export type DeleteOneBrandMutation = { __typename?: 'Mutation', deleteOneBrand: { __typename?: 'BrandDeleteResponse', id?: string | null } };
 
 export type DeleteOneUserAddressMutationVariables = Exact<{
   input: DeleteOneUserAddressInput;
@@ -5514,6 +9842,13 @@ export type ReissueAccessTokenMutationVariables = Exact<{ [key: string]: never; 
 
 export type ReissueAccessTokenMutation = { __typename?: 'Mutation', reissueAccessToken: { __typename?: 'AccessTokenResponse', accessToken: string } };
 
+export type RejectOrderMutationVariables = Exact<{
+  input: UpdateOrderInputType;
+}>;
+
+
+export type RejectOrderMutation = { __typename?: 'Mutation', rejectOrder: { __typename?: 'Order', id: string, status: OrderStatus, createdAt: any, deliveryAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> } };
+
 export type RemoveCartItemsFromCartMutationVariables = Exact<{
   input: UpdateOneCartInputType;
 }>;
@@ -5543,6 +9878,13 @@ export type SignupMutationVariables = Exact<{
 
 export type SignupMutation = { __typename?: 'Mutation', signup: { __typename?: 'SignupResponse', accessToken: string, refreshToken: string, user: { __typename?: 'User', id: string, firstName?: string | null, lastName?: string | null, fullName: string, phone?: string | null, emailAddress: { __typename?: 'EmailAddress', id: string, address: string, name?: string | null }, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } } };
 
+export type TransferOrderToDeliveryMutationVariables = Exact<{
+  input: UpdateOrderInputType;
+}>;
+
+
+export type TransferOrderToDeliveryMutation = { __typename?: 'Mutation', transferOrderToDelivery: { __typename?: 'Order', id: string, status: OrderStatus, createdAt: any, deliveryAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> } };
+
 export type UpdateAvatarMutationVariables = Exact<{
   file: Scalars['Upload'];
   input: SelectUserInput;
@@ -5557,6 +9899,13 @@ export type UpdateOneCommentMutationVariables = Exact<{
 
 
 export type UpdateOneCommentMutation = { __typename?: 'Mutation', updateOneComment: { __typename?: 'Comment', id: string, title: string, description?: string | null, rating: number, createdAt: any, user: { __typename?: 'User', fullName: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> } };
+
+export type UpdateOneBrandMutationVariables = Exact<{
+  input: UpdateOneBrandInput;
+}>;
+
+
+export type UpdateOneBrandMutation = { __typename?: 'Mutation', updateOneBrand: { __typename?: 'Brand', id: string, code: string, name: string } };
 
 export type UpdateOneCartMutationVariables = Exact<{
   input: UpdateOneCartInput;
@@ -5603,12 +9952,12 @@ export type BrandsTotalCountQuery = { __typename?: 'Query', brands: { __typename
 export type CategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CategoriesQuery = { __typename?: 'Query', categories: { __typename?: 'CategoryConnection', nodes: Array<{ __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null }> } };
+export type CategoriesQuery = { __typename?: 'Query', categories: { __typename?: 'CategoryConnection', nodes: Array<{ __typename?: 'Category', id: string, code: Categories, name: string, description?: string | null, parentId?: string | null }> } };
 
 export type CategoryTreeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CategoryTreeQuery = { __typename?: 'Query', categoryTree: Array<{ __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null, children?: Array<{ __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null, children?: Array<{ __typename?: 'Category', id: string, code: string, name: string, description?: string | null, parentId?: string | null }> | null }> | null }> };
+export type CategoryTreeQuery = { __typename?: 'Query', categoryTree: Array<{ __typename?: 'Category', id: string, code: Categories, name: string, description?: string | null, parentId?: string | null, children?: Array<{ __typename?: 'Category', id: string, code: Categories, name: string, description?: string | null, parentId?: string | null, children?: Array<{ __typename?: 'Category', id: string, code: Categories, name: string, description?: string | null, parentId?: string | null }> | null }> | null }> };
 
 export type CitiesQueryVariables = Exact<{
   filter: CityFilter;
@@ -6203,6 +10552,72 @@ export function useCancelOnePaymentIntentMutation(baseOptions?: Apollo.MutationH
 export type CancelOnePaymentIntentMutationHookResult = ReturnType<typeof useCancelOnePaymentIntentMutation>;
 export type CancelOnePaymentIntentMutationResult = Apollo.MutationResult<CancelOnePaymentIntentMutation>;
 export type CancelOnePaymentIntentMutationOptions = Apollo.BaseMutationOptions<CancelOnePaymentIntentMutation, CancelOnePaymentIntentMutationVariables>;
+export const CancelOrderDocument = gql`
+    mutation CancelOrder($input: UpdateOrderInputType!) {
+  cancelOrder(input: $input) {
+    ...Order
+  }
+}
+    ${OrderFragmentDoc}`;
+export type CancelOrderMutationFn = Apollo.MutationFunction<CancelOrderMutation, CancelOrderMutationVariables>;
+
+/**
+ * __useCancelOrderMutation__
+ *
+ * To run a mutation, you first call `useCancelOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCancelOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [cancelOrderMutation, { data, loading, error }] = useCancelOrderMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCancelOrderMutation(baseOptions?: Apollo.MutationHookOptions<CancelOrderMutation, CancelOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CancelOrderMutation, CancelOrderMutationVariables>(CancelOrderDocument, options);
+      }
+export type CancelOrderMutationHookResult = ReturnType<typeof useCancelOrderMutation>;
+export type CancelOrderMutationResult = Apollo.MutationResult<CancelOrderMutation>;
+export type CancelOrderMutationOptions = Apollo.BaseMutationOptions<CancelOrderMutation, CancelOrderMutationVariables>;
+export const CompleteOrderDocument = gql`
+    mutation CompleteOrder($input: UpdateOrderInputType!) {
+  completeOrder(input: $input) {
+    ...Order
+  }
+}
+    ${OrderFragmentDoc}`;
+export type CompleteOrderMutationFn = Apollo.MutationFunction<CompleteOrderMutation, CompleteOrderMutationVariables>;
+
+/**
+ * __useCompleteOrderMutation__
+ *
+ * To run a mutation, you first call `useCompleteOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCompleteOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [completeOrderMutation, { data, loading, error }] = useCompleteOrderMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCompleteOrderMutation(baseOptions?: Apollo.MutationHookOptions<CompleteOrderMutation, CompleteOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CompleteOrderMutation, CompleteOrderMutationVariables>(CompleteOrderDocument, options);
+      }
+export type CompleteOrderMutationHookResult = ReturnType<typeof useCompleteOrderMutation>;
+export type CompleteOrderMutationResult = Apollo.MutationResult<CompleteOrderMutation>;
+export type CompleteOrderMutationOptions = Apollo.BaseMutationOptions<CompleteOrderMutation, CompleteOrderMutationVariables>;
 export const CreateOneCommentDocument = gql`
     mutation CreateOneComment($input: CreateOneCommentInputType!, $files: [Upload!]) {
   createOneComment(input: $input, files: $files) {
@@ -6270,6 +10685,39 @@ export function useCreateOneAddressMutation(baseOptions?: Apollo.MutationHookOpt
 export type CreateOneAddressMutationHookResult = ReturnType<typeof useCreateOneAddressMutation>;
 export type CreateOneAddressMutationResult = Apollo.MutationResult<CreateOneAddressMutation>;
 export type CreateOneAddressMutationOptions = Apollo.BaseMutationOptions<CreateOneAddressMutation, CreateOneAddressMutationVariables>;
+export const CreateOneBrandDocument = gql`
+    mutation CreateOneBrand($input: CreateOneBrandInput!) {
+  createOneBrand(input: $input) {
+    ...Brand
+  }
+}
+    ${BrandFragmentDoc}`;
+export type CreateOneBrandMutationFn = Apollo.MutationFunction<CreateOneBrandMutation, CreateOneBrandMutationVariables>;
+
+/**
+ * __useCreateOneBrandMutation__
+ *
+ * To run a mutation, you first call `useCreateOneBrandMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOneBrandMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOneBrandMutation, { data, loading, error }] = useCreateOneBrandMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateOneBrandMutation(baseOptions?: Apollo.MutationHookOptions<CreateOneBrandMutation, CreateOneBrandMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOneBrandMutation, CreateOneBrandMutationVariables>(CreateOneBrandDocument, options);
+      }
+export type CreateOneBrandMutationHookResult = ReturnType<typeof useCreateOneBrandMutation>;
+export type CreateOneBrandMutationResult = Apollo.MutationResult<CreateOneBrandMutation>;
+export type CreateOneBrandMutationOptions = Apollo.BaseMutationOptions<CreateOneBrandMutation, CreateOneBrandMutationVariables>;
 export const CreateOnePaymentIntentFromCartDocument = gql`
     mutation CreateOnePaymentIntentFromCart {
   createOnePaymentIntentFromCart {
@@ -6335,6 +10783,39 @@ export function useCreateOneUserAddressMutation(baseOptions?: Apollo.MutationHoo
 export type CreateOneUserAddressMutationHookResult = ReturnType<typeof useCreateOneUserAddressMutation>;
 export type CreateOneUserAddressMutationResult = Apollo.MutationResult<CreateOneUserAddressMutation>;
 export type CreateOneUserAddressMutationOptions = Apollo.BaseMutationOptions<CreateOneUserAddressMutation, CreateOneUserAddressMutationVariables>;
+export const DeleteOneBrandDocument = gql`
+    mutation DeleteOneBrand($input: DeleteOneBrandInput!) {
+  deleteOneBrand(input: $input) {
+    id
+  }
+}
+    `;
+export type DeleteOneBrandMutationFn = Apollo.MutationFunction<DeleteOneBrandMutation, DeleteOneBrandMutationVariables>;
+
+/**
+ * __useDeleteOneBrandMutation__
+ *
+ * To run a mutation, you first call `useDeleteOneBrandMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteOneBrandMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteOneBrandMutation, { data, loading, error }] = useDeleteOneBrandMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDeleteOneBrandMutation(baseOptions?: Apollo.MutationHookOptions<DeleteOneBrandMutation, DeleteOneBrandMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteOneBrandMutation, DeleteOneBrandMutationVariables>(DeleteOneBrandDocument, options);
+      }
+export type DeleteOneBrandMutationHookResult = ReturnType<typeof useDeleteOneBrandMutation>;
+export type DeleteOneBrandMutationResult = Apollo.MutationResult<DeleteOneBrandMutation>;
+export type DeleteOneBrandMutationOptions = Apollo.BaseMutationOptions<DeleteOneBrandMutation, DeleteOneBrandMutationVariables>;
 export const DeleteOneUserAddressDocument = gql`
     mutation DeleteOneUserAddress($input: DeleteOneUserAddressInput!) {
   deleteOneUserAddress(input: $input) {
@@ -6498,6 +10979,39 @@ export function useReissueAccessTokenMutation(baseOptions?: Apollo.MutationHookO
 export type ReissueAccessTokenMutationHookResult = ReturnType<typeof useReissueAccessTokenMutation>;
 export type ReissueAccessTokenMutationResult = Apollo.MutationResult<ReissueAccessTokenMutation>;
 export type ReissueAccessTokenMutationOptions = Apollo.BaseMutationOptions<ReissueAccessTokenMutation, ReissueAccessTokenMutationVariables>;
+export const RejectOrderDocument = gql`
+    mutation RejectOrder($input: UpdateOrderInputType!) {
+  rejectOrder(input: $input) {
+    ...Order
+  }
+}
+    ${OrderFragmentDoc}`;
+export type RejectOrderMutationFn = Apollo.MutationFunction<RejectOrderMutation, RejectOrderMutationVariables>;
+
+/**
+ * __useRejectOrderMutation__
+ *
+ * To run a mutation, you first call `useRejectOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRejectOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [rejectOrderMutation, { data, loading, error }] = useRejectOrderMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRejectOrderMutation(baseOptions?: Apollo.MutationHookOptions<RejectOrderMutation, RejectOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RejectOrderMutation, RejectOrderMutationVariables>(RejectOrderDocument, options);
+      }
+export type RejectOrderMutationHookResult = ReturnType<typeof useRejectOrderMutation>;
+export type RejectOrderMutationResult = Apollo.MutationResult<RejectOrderMutation>;
+export type RejectOrderMutationOptions = Apollo.BaseMutationOptions<RejectOrderMutation, RejectOrderMutationVariables>;
 export const RemoveCartItemsFromCartDocument = gql`
     mutation RemoveCartItemsFromCart($input: UpdateOneCartInputType!) {
   removeCartItemsFromCart(input: $input) {
@@ -6638,6 +11152,39 @@ export function useSignupMutation(baseOptions?: Apollo.MutationHookOptions<Signu
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
 export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
+export const TransferOrderToDeliveryDocument = gql`
+    mutation TransferOrderToDelivery($input: UpdateOrderInputType!) {
+  transferOrderToDelivery(input: $input) {
+    ...Order
+  }
+}
+    ${OrderFragmentDoc}`;
+export type TransferOrderToDeliveryMutationFn = Apollo.MutationFunction<TransferOrderToDeliveryMutation, TransferOrderToDeliveryMutationVariables>;
+
+/**
+ * __useTransferOrderToDeliveryMutation__
+ *
+ * To run a mutation, you first call `useTransferOrderToDeliveryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useTransferOrderToDeliveryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [transferOrderToDeliveryMutation, { data, loading, error }] = useTransferOrderToDeliveryMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useTransferOrderToDeliveryMutation(baseOptions?: Apollo.MutationHookOptions<TransferOrderToDeliveryMutation, TransferOrderToDeliveryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<TransferOrderToDeliveryMutation, TransferOrderToDeliveryMutationVariables>(TransferOrderToDeliveryDocument, options);
+      }
+export type TransferOrderToDeliveryMutationHookResult = ReturnType<typeof useTransferOrderToDeliveryMutation>;
+export type TransferOrderToDeliveryMutationResult = Apollo.MutationResult<TransferOrderToDeliveryMutation>;
+export type TransferOrderToDeliveryMutationOptions = Apollo.BaseMutationOptions<TransferOrderToDeliveryMutation, TransferOrderToDeliveryMutationVariables>;
 export const UpdateAvatarDocument = gql`
     mutation UpdateAvatar($file: Upload!, $input: SelectUserInput!) {
   updateAvatar(file: $file, input: $input) {
@@ -6705,6 +11252,39 @@ export function useUpdateOneCommentMutation(baseOptions?: Apollo.MutationHookOpt
 export type UpdateOneCommentMutationHookResult = ReturnType<typeof useUpdateOneCommentMutation>;
 export type UpdateOneCommentMutationResult = Apollo.MutationResult<UpdateOneCommentMutation>;
 export type UpdateOneCommentMutationOptions = Apollo.BaseMutationOptions<UpdateOneCommentMutation, UpdateOneCommentMutationVariables>;
+export const UpdateOneBrandDocument = gql`
+    mutation UpdateOneBrand($input: UpdateOneBrandInput!) {
+  updateOneBrand(input: $input) {
+    ...Brand
+  }
+}
+    ${BrandFragmentDoc}`;
+export type UpdateOneBrandMutationFn = Apollo.MutationFunction<UpdateOneBrandMutation, UpdateOneBrandMutationVariables>;
+
+/**
+ * __useUpdateOneBrandMutation__
+ *
+ * To run a mutation, you first call `useUpdateOneBrandMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOneBrandMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOneBrandMutation, { data, loading, error }] = useUpdateOneBrandMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateOneBrandMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOneBrandMutation, UpdateOneBrandMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOneBrandMutation, UpdateOneBrandMutationVariables>(UpdateOneBrandDocument, options);
+      }
+export type UpdateOneBrandMutationHookResult = ReturnType<typeof useUpdateOneBrandMutation>;
+export type UpdateOneBrandMutationResult = Apollo.MutationResult<UpdateOneBrandMutation>;
+export type UpdateOneBrandMutationOptions = Apollo.BaseMutationOptions<UpdateOneBrandMutation, UpdateOneBrandMutationVariables>;
 export const UpdateOneCartDocument = gql`
     mutation UpdateOneCart($input: UpdateOneCartInput!) {
   updateOneCart(input: $input) {

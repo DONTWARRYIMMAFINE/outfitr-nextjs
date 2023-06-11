@@ -5,7 +5,9 @@ import ModifyWishlistButton from "@/components/common/ModifyWishlistButton";
 import PriceRange from "@/components/common/PriceRange";
 import { Box, Button, Image, Text } from "@/components/ui";
 import { Card, CardActions, CardContent, CardMedia } from "@/components/ui/Card";
+import { I18NS } from "@/constants/I18NS";
 import { ProductFragment } from "@/lib/graphql/schema.generated";
+import { prepareBlurImage } from "@/lib/utils/image.helper";
 import { map } from "lodash";
 import { useRouter } from "next-intl/client";
 import { WithTranslation, withTranslation } from "react-i18next";
@@ -40,6 +42,12 @@ const ProductItem = ({ product, width = 235, t }: ProductCardProps) => {
         <Image
           onClick={onClick}
           src={product.media[0]?.url}
+          blurDataURL={prepareBlurImage(
+            product.media[0]?.url,
+            Math.floor(product.media[0]?.width! / 10),
+            Math.floor(product.media[0]?.height! / 10),
+          )}
+          placeholder={product.media[0]?.url ? "blur" : undefined}
           alt={"Oops"}
           style={{ objectFit: "cover" }}
           fill
@@ -51,7 +59,7 @@ const ProductItem = ({ product, width = 235, t }: ProductCardProps) => {
           <Text variant={"h4"}>{product.title}</Text>
           <PriceRange prices={map(product.productVariants, "price")} />
           <Text variant={"small"} opacity={0.7}>
-            {t("component.label.colors")}
+            {t("content.productCard.colors.label")}
           </Text>
           <Box display={"flex"} flexWrap={"wrap"} gap={1}>
             {product.colors.map(({ id, name, hex }) => (
@@ -69,7 +77,7 @@ const ProductItem = ({ product, width = 235, t }: ProductCardProps) => {
             ))}
           </Box>
           <Text variant={"small"} opacity={0.7}>
-            {t("component.label.sizes")}
+            {t("content.productCard.sizes.label")}
           </Text>
           <Box display={"flex"} flexWrap={"wrap"} gap={1}>
             {product.sizes.map(({ id, name }) => (
@@ -85,11 +93,11 @@ const ProductItem = ({ product, width = 235, t }: ProductCardProps) => {
           onClick={onClick}
           fullWidth
         >
-          {t("component.button.showDetails")}
+          {t("content.productCard.button.showDetails.label")}
         </Button>
       </CardActions>
     </Card>
   );
 };
 
-export default withTranslation()(ProductItem);
+export default withTranslation(I18NS.Catalog)(ProductItem);

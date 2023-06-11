@@ -15,7 +15,7 @@ interface PageProps extends LngParamsProps {}
 
 const AboutPage = async ({ params }: PageProps) => {
   const { lng } = params;
-  const { t } = await useTranslation(lng, I18NS.ABOUT);
+  const { t } = await useTranslation(lng, I18NS.About);
 
   return (<>
     <ContentContainer

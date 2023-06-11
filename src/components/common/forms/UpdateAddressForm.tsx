@@ -4,6 +4,7 @@ import CitySelect from "@/components/common/CitySelect";
 import CountrySelect from "@/components/common/CountrySelect";
 import { CreateAddressSchema } from "@/components/common/forms/schema/create-address.schema";
 import { Box, Button, Icons, IconTextField } from "@/components/ui";
+import { I18NS } from "@/constants/I18NS";
 import { AddressFragment, CreateAddressInput } from "@/lib/graphql/schema.generated";
 import { Formik } from "formik";
 import { FC } from "react";
@@ -52,8 +53,8 @@ const UpdateAddressForm: FC<CreateAddressFormProps> = ({ address, onSubmit, t })
               id={"postalCode"}
               name={"postalCode"}
               type={"text"}
-              label={t("component.form.postalCode.label")}
-              placeholder={t("component.form.postalCode.placeholder")!}
+              label={t("field.address.postalCode.label")}
+              placeholder={t("field.address.postalCode.placeholder")!}
               value={values.postalCode}
               onChange={handleChange}
               error={Boolean(errors.postalCode)}
@@ -69,8 +70,8 @@ const UpdateAddressForm: FC<CreateAddressFormProps> = ({ address, onSubmit, t })
               id={"state"}
               name={"state"}
               type={"text"}
-              label={t("component.form.state.label")}
-              placeholder={t("component.form.state.placeholder")!}
+              label={t("field.address.state.label")}
+              placeholder={t("field.address.state.placeholder")!}
               value={values.state}
               onChange={handleChange}
               error={Boolean(errors.state)}
@@ -83,8 +84,8 @@ const UpdateAddressForm: FC<CreateAddressFormProps> = ({ address, onSubmit, t })
               id={"street"}
               name={"street"}
               type={"text"}
-              label={t("component.form.street.label")}
-              placeholder={t("component.form.street.placeholder")!}
+              label={t("field.address.street.label")}
+              placeholder={t("field.address.street.placeholder")!}
               value={values.street}
               onChange={handleChange}
               error={Boolean(errors.street)}
@@ -97,8 +98,8 @@ const UpdateAddressForm: FC<CreateAddressFormProps> = ({ address, onSubmit, t })
               id={"building"}
               name={"building"}
               type={"text"}
-              label={t("component.form.building.label")}
-              placeholder={t("component.form.building.placeholder")!}
+              label={t("field.address.building.label")}
+              placeholder={t("field.address.building.placeholder")!}
               value={values.building}
               onChange={handleChange}
               error={Boolean(errors.building)}
@@ -109,7 +110,7 @@ const UpdateAddressForm: FC<CreateAddressFormProps> = ({ address, onSubmit, t })
             />
           </Box>
           <Button disabled={!isValid} variant={"primary"} onClick={() => handleSubmit()} fullWidth>
-            {t("component.button.save")}
+            {t("updateAddress.button.submit.label")}
           </Button>
         </Box>
       )}
@@ -117,4 +118,4 @@ const UpdateAddressForm: FC<CreateAddressFormProps> = ({ address, onSubmit, t })
   );
 };
 
-export default withTranslation()(UpdateAddressForm);
+export default withTranslation(I18NS.Form)(UpdateAddressForm);

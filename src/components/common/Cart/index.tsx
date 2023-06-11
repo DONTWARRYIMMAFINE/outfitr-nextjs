@@ -3,6 +3,7 @@
 import CartItemList from "@/components/common/Cart/CartItemList";
 import CartTotals from "@/components/common/Cart/CartTotals";
 import { Button, Grid } from "@/components/ui";
+import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
 import { userCart } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
@@ -28,7 +29,7 @@ const Cart: FC<CartProps> = ({ t }) => {
               disabled={cart?.cartItems?.length === 0}
               fullWidth
             >
-              {t("component.button.checkout")}
+              {t("content.cartTotals.button.checkout.label")}
             </Button>
           }
         />
@@ -37,4 +38,4 @@ const Cart: FC<CartProps> = ({ t }) => {
   );
 };
 
-export default withTranslation()(Cart);
+export default withTranslation(I18NS.Cart)(Cart);

@@ -39,7 +39,7 @@ const Block2: FC = () => {
         Please click on the link below for more information.</Text>
       <Box display={"flex"} justifyContent={{ md: "flex-start", xs: "center" }} gap={1}>
         <Button variant={"primary"} href={"/"}>Go Home</Button>
-        <Button variant={"transparent"} color={"primary"} href={"/contact"}>Contact Us</Button>
+        <Button variant={"transparent"} href={"/contact"} sx={{ color: "primary.main"}}>Contact Us</Button>
       </Box>
     </Box>
   );

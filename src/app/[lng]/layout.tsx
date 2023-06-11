@@ -22,6 +22,7 @@ const RootLayout = ({ params, children }: RootLayoutProps) => {
       <main>
         {children}
       </main>
+      {/* @ts-expect-error Server Component */}
       <Footer lng={lng} />
     </Providers>
     </body>

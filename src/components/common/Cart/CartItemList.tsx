@@ -2,15 +2,18 @@
 
 import CartItem from "@/components/common/Cart/CartItem";
 import { Box, Text } from "@/components/ui";
+import { I18NS } from "@/constants/I18NS";
 import { useAddCartItemsToCartMutation, useRemoveCartItemsFromCartMutation } from "@/lib/graphql/schema.generated";
 import { userCart } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
 import { FC } from "react";
 import toast from "react-hot-toast";
+import { WithTranslation, withTranslation } from "react-i18next";
+import { Trans } from "react-i18next/TransWithoutContext";
 
-interface CartItemListProps {}
+interface CartItemListProps extends WithTranslation {}
 
-const CartItemList: FC<CartItemListProps> = ({}) => {
+const CartItemList: FC<CartItemListProps> = ({ t }) => {
   const cart = useReactiveVar(userCart);
 
   const [addCartItemsToCartMutation] = useAddCartItemsToCartMutation();
@@ -33,9 +36,9 @@ const CartItemList: FC<CartItemListProps> = ({}) => {
       },
       onCompleted: data => {
         userCart(data.addCartItemsToCart);
-        toast.success("Added to cart");
+        toast.success(t("content.button.add.success"));
       },
-      onError: _ => toast.error("Ops...unable to add product to cart"),
+      onError: error => toast.error(t("content.button.add.error", { message: error.message })),
     });
   };
 
@@ -60,9 +63,9 @@ const CartItemList: FC<CartItemListProps> = ({}) => {
       },
       onCompleted: data => {
         userCart(data.removeCartItemsFromCart);
-        toast.success("Removed from cart");
+        toast.success(t("content.button.remove.success"));
       },
-      onError: _ => toast.error("Ops...unable to remove product from cart"),
+      onError: error => toast.error(t("content.button.remove.error", { message: error.message })),
     });
   };
 
@@ -84,8 +87,8 @@ const CartItemList: FC<CartItemListProps> = ({}) => {
           justifyContent={"center"}
           alignItems={"center"}
         >
-          <Text variant={"h1"} textAlign={"center"}>
-            Your cart is empty. <br />Explore catalog first
+          <Text variant={"h2"} textAlign={"center"} lineHeight={1.5}>
+            <Trans i18nKey={"content.list.empty"} t={t} components={{ br: <br /> }} />
           </Text>
         </Box>
       )}
@@ -96,4 +99,4 @@ const CartItemList: FC<CartItemListProps> = ({}) => {
   );
 };
 
-export default CartItemList;
+export default withTranslation(I18NS.Cart)(CartItemList);

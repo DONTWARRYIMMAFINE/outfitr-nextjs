@@ -1,13 +1,13 @@
 "use client";
 
 import ColorCheckboxGroup from "@/components/common/ColorCheckboxGroup";
-import { Text } from "@/components/ui";
+import { Box, Text } from "@/components/ui";
 import Error from "@/components/ui/Error";
+import { I18NS } from "@/constants/I18NS";
 import { useColorsQuery } from "@/lib/graphql/schema.generated";
 import { Skeleton } from "@mui/material";
 import { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
-import Box from "../../../ui/Box";
 
 interface ColorsFilterProps extends WithTranslation {
   selectedValues: string[];
@@ -17,12 +17,12 @@ interface ColorsFilterProps extends WithTranslation {
 const ColorsFilter: FC<ColorsFilterProps> = ({ selectedValues, handleFilterChange, t }) => {
   const { data, loading, error } = useColorsQuery();
 
-  if (error) return <Error message={"Unable to fetch colors"} />;
+  if (error) return <Error message={t("content.filter.colors.error", { message: error.message })!} />;
   if (loading || !data) return <Skeleton variant={"rectangular"} height={180} width={"100%"} />;
 
   return (
     <Box display={"flex"} flexDirection={"column"} gap={2}>
-      <Text variant={"p"}>{t("component.label.colors")}</Text>
+      <Text variant={"p"}>{t("content.filter.colors.label")}</Text>
       <ColorCheckboxGroup
         options={data.colors.nodes}
         selectedValues={selectedValues}
@@ -32,4 +32,4 @@ const ColorsFilter: FC<ColorsFilterProps> = ({ selectedValues, handleFilterChang
   );
 };
 
-export default withTranslation()(ColorsFilter);
+export default withTranslation(I18NS.Catalog)(ColorsFilter);

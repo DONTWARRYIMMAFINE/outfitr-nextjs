@@ -2,6 +2,7 @@
 
 import { Avatar, Box, Button } from "@/components/ui";
 import FileUpload from "@/components/ui/FileUpload";
+import { I18NS } from "@/constants/I18NS";
 import { useUpdateAvatarMutation } from "@/lib/graphql/schema.generated";
 import { loggedInUser } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
@@ -25,9 +26,9 @@ const AvatarUpdate: FC<AvatarUpdateProps> = ({ t }) => {
     await updateAvatarMutation({
       onCompleted: ({ updateAvatar: user }) => {
         loggedInUser(user);
-        toast.success("Avatar changed successfully");
+        toast.success(t("tabs.main.avatarUpdate.success"));
       },
-      onError: _ => toast.error("Unable to change avatar"),
+      onError: error => toast.error(t("tabs.main.avatarUpdate.success", { message: error.message })),
       variables: {
         input: {
           id: user?.id!,
@@ -44,13 +45,15 @@ const AvatarUpdate: FC<AvatarUpdateProps> = ({ t }) => {
         <FileUpload
           multiFile={false}
           maxUploadFiles={1}
-          title={t("component.fileUpload.avatar")!}
+          title={t("tabs.main.avatarUpdate.fileUpload.avatar.label")!}
           onFilesChange={handleFilesChange}
         />
       </Box>
-      <Button variant={"primary"} onClick={onSaveClick} loading={loading}>{t("component.button.save")}</Button>
+      <Button variant={"primary"} onClick={onSaveClick} loading={loading}>
+        {t("tabs.main.avatarUpdate.button.save.label")}
+      </Button>
     </Box>
   );
 };
 
-export default withTranslation()(AvatarUpdate);
+export default withTranslation(I18NS.Profile)(AvatarUpdate);

@@ -1,0 +1,24 @@
+{
+  "page": {
+    "title": "Partner"
+  },
+  "tabs": {
+    "brands": {
+      "title": "Your Brands",
+      "label": "Brands",
+      "list": {
+        "empty": "You don't have any brands yet"
+      }
+    },
+    "products": {
+      "title": "Your Products",
+      "label": "Products",
+      "empty": "You don't have any products yet"
+    },
+    "receivedOrders": {
+      "title": "Received Orders",
+      "label": "Received Orders",
+      "empty": "You didn't receive any orders yet"
+    }
+  }
+}

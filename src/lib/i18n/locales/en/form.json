@@ -1,22 +1,205 @@
 {
-  "password": {
-    "label": "Password",
-    "placeholder": "Enter your password",
-    "errors": {
-      "min": "Password must be at least {{min}} characters",
-      "max": "Password must be less than {{max}} characters",
-      "required": "Password is required"
+  "field": {
+    "address": {
+      "country": {
+        "label": "Country",
+        "placeholder": "Choose country from list"
+      },
+      "city": {
+        "label": "City",
+        "placeholder": "Choose city from list",
+        "errors": {
+          "uuid": "Values should be a UUIDv4",
+          "required": "City identifier is required"
+        }
+      },
+      "postalCode": {
+        "label": "Postal Code",
+        "placeholder": "Enter postal code",
+        "errors": {
+          "matches": "Enter a valid postal code",
+          "required": "Postal code is required"
+        }
+      },
+      "state": {
+        "label": "State/province/area",
+        "placeholder": "Enter state",
+        "errors": {
+          "min": "State must be at least {{min}} characters",
+          "max": "State must be less than {{max}} characters"
+        }
+      },
+      "street": {
+        "label": "Street",
+        "placeholder": "Enter street",
+        "errors": {
+          "min": "Street must be at least {{min}} characters",
+          "max": "Street must be less than {{max}} characters"
+        }
+      },
+      "building": {
+        "label": "Building Number",
+        "placeholder": "Enter building number",
+        "errors": {
+          "min": "Building must be at least {{min}} characters",
+          "max": "Building must be less than {{max}} characters"
+        }
+      }
+    },
+    "comment": {
+      "title": {
+        "label": "Short comment title",
+        "placeholder": "Enter a short summary title",
+        "errors": {
+          "min": "Title must be at least {{min}} characters",
+          "max": "Title must be less than {{max}} characters",
+          "required": "Title is required"
+        }
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Write a summary about your usage experience",
+        "errors": {
+          "max": "Description must be less than {{max}} characters"
+        }
+      },
+      "media": {
+        "title": "Comment media"
+      }
+    },
+    "brand": {
+      "code": {
+        "label": "Code",
+        "placeholder": "Enter an unique code"
+      },
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter name"
+      }
+    },
+    "user": {
+      "firstName": {
+        "label": "First Name",
+        "placeholder": "Enter your First Name",
+        "errors": {
+          "min": "First Name must be at least {{min}} characters",
+          "max": "First Name must be less than {{max}} characters",
+          "required": "First Name is required"
+        }
+      },
+      "lastName": {
+        "label": "Last Name",
+        "placeholder": "Enter your Last Name",
+        "errors": {
+          "min": "Last Name must be at least {{min}} characters",
+          "max": "Last Name must be less than {{max}} characters",
+          "required": "Last Name is required"
+        }
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your Email",
+        "errors": {
+          "email": "Please enter a valid email",
+          "required": "Email is required"
+        }
+      },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "Enter your Phone",
+        "errors": {
+          "matches": "Please enter a valid phone",
+          "required": "Phone is required"
+        }
+      },
+      "avatar": {
+        "title": "Avatar"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password",
+        "errors": {
+          "min": "Password must be at least {{min}} characters",
+          "max": "Password must be less than {{max}} characters",
+          "required": "Password is required"
+        }
+      },
+      "passwordConfirmation": {
+        "label": "Password Confirmation",
+        "placeholder": "Repeat your password",
+        "errors": {
+          "oneOf": "Passwords do not match",
+          "required": "Confirm password is required"
+        }
+      }
     }
   },
-  "passwordConfirmation": {
-    "label": "Password Confirmation",
-    "placeholder": "Repeat your password",
-    "errors": {
-      "oneOf": "Passwords do not match",
-      "required": "Confirm password is required"
+  "resetPassword": {
+    "button": {
+      "reset": {
+        "label": "Reset"
+      }
     }
   },
-  "button": {
-    "reset": "Reset"
+  "createComment": {
+    "button": {
+      "share": {
+        "label": "Share"
+      }
+    }
+  },
+  "createBrand": {
+    "button": {
+      "submit": {
+        "label": "Create"
+      }
+    }
+  },
+  "contactInfo": {
+    "success": "Contact info updated",
+    "error": "Unable to update contact info. {{message}}",
+    "button": {
+      "submit": {
+        "label": "Save"
+      }
+    }
+  },
+  "createAddress": {
+    "success": "Address added successfully",
+    "error": "Unable to add address. {{message}}",
+    "button": {
+      "submit": {
+        "label": "Save"
+      }
+    }
+  },
+  "updateAddress": {
+    "success": "Address updated successfully",
+    "error": "Unable to update address. {{message}}",
+    "button": {
+      "submit": {
+        "label": "Update"
+      }
+    }
+  },
+  "login": {
+    "button": {
+      "submit": {
+        "label": "Log In"
+      },
+      "signup": {
+        "label": "Sign Up"
+      }
+    }
+  },
+  "signup": {
+    "button": {
+      "submit": {
+        "label": "Sign Up"
+      },
+      "login": {
+        "label": "Log In"
+      }
+    }
   }
 }

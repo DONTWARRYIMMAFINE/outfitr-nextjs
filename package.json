@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.14",
+    "@casl/ability": "^6.5.0",
+    "@casl/react": "^3.1.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.16",

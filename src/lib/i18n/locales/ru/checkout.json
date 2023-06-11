@@ -1,0 +1,15 @@
+{
+  "page": {
+    "title": "Checkout"
+  },
+  "content": {
+    "steps": {
+
+    },
+    "button": {
+      "checkout": {
+        "label": "Checkout"
+      }
+    }
+  }
+}
