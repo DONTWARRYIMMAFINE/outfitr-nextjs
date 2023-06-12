@@ -1,19 +1,51 @@
 {
   "page": {
-    "title": "Catalog"
+    "title": "Каталог"
   },
   "content": {
     "search": {
-
+      "placeholder": "Введите ключевые слова, название или описание товара"
     },
     "filter": {
-
+      "priceRange": {
+        "label": "Ценовой диапазон"
+      },
+      "brands": {
+        "label": "Бренды",
+        "error": "Не удалось загрузить информацию о брендах. {{message}}"
+      },
+      "colors": {
+        "label": "Цвета",
+        "error": "Не удалось загрузить информацию о цветах. {{message}}"
+      },
+      "sizes": {
+        "label": "Размеры",
+        "error": "Не удалось загрузить инрофмацию о размерах. {{message}}"
+      },
+      "button": {
+        "applyFilters": {
+          "label": "Применить фильтры"
+        }
+      }
     },
     "sort": {
-
+      "createdAt": {
+        "asc": "Сперва старые",
+        "desc": "Сперва новые"
+      }
     },
-    "product": {
-
+    "productCard": {
+      "colors": {
+        "label": "Цвета"
+      },
+      "sizes": {
+        "label": "Размеры"
+      },
+      "button": {
+        "showDetails": {
+          "label": "Подробнее"
+        }
+      }
     }
   }
 }

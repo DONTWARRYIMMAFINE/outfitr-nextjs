@@ -1,5 +1,32 @@
 {
   "page": {
-    "title": ""
+    "title": "Информация о товаре"
+  },
+  "content": {
+    "description": {
+      "label": "Описание"
+    },
+    "colors": {
+      "label": "Цвета"
+    },
+    "sizes": {
+      "label": "Размеры"
+    },
+    "productRating": {
+      "label": "Рейтинг товара",
+      "empty": "Нет оценок"
+    },
+    "stock": {
+      "label": "Доступно"
+    },
+    "createComment": {
+      "title": "Уже приобрели такой товар?",
+      "description": "Поделитесь своим мнением",
+      "button": {
+        "expand": {
+          "label": "Оставить комментарий"
+        }
+      }
+    }
   }
 }

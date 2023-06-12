@@ -1,4 +1,18 @@
 {
   "languageSwitcher": "Сменить язык с <bold>{{lng}}</bold> на: ",
-  "copyright": "Все Права Защищены"
+  "copyright": "Все Права Защищены",
+  "columns": {
+    "account": {
+      "label": "Аккаунт"
+    },
+    "outfits": {
+      "label": "Каталог"
+    },
+    "shop": {
+      "label": "Покупки"
+    },
+    "legalStuff": {
+      "label": "Материалы"
+    }
+  }
 }

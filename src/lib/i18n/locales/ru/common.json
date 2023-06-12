@@ -1,0 +1,33 @@
+{
+  "component": {
+    "news": {
+      "title": "Присоединяйся к нам<br />Новостная рассылка",
+      "description": "Получите эксклюзивные предложения, скидки и новости",
+      "button": {
+        "subscribe": {
+          "label": "Подписаться"
+        }
+      }
+    },
+    "addUserDeliveryAddress": {
+      "button": {
+        "expand": {
+          "label": "Добавить адрес доставки"
+        }
+      }
+    },
+    "addToCartButton": {
+      "label": "В корзину",
+      "success": "Товар добавлен в корзину",
+      "error": "Не удалось добавить товар в корзину. {{message}}"
+    },
+    "fileUpload": {
+      "avatar": "Загрузите изображение",
+      "header": "[Перетащите]",
+      "leftLabel": "или",
+      "buttonLabel": "нажмите здесь",
+      "rightLabel": "чтобы выбрать файлы",
+      "buttonRemoveLabel": "Удалить все"
+    }
+  }
+}

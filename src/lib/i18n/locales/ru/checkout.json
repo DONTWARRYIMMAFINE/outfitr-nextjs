@@ -1,14 +1,73 @@
 {
   "page": {
-    "title": "Checkout"
+    "title": "Оформление заказа"
   },
   "content": {
     "steps": {
-
-    },
-    "button": {
-      "checkout": {
-        "label": "Checkout"
+      "contactInfo": {
+        "label": "Контактная информация",
+        "deliveryOptions": {
+          "label": "Варианты доставки",
+          "homeDelivery": "Доставка на дом",
+          "pickupPointDelivery": "Доставка до пункта самовывоза"
+        },
+        "button": {
+          "next": {
+            "label": "К доставке"
+          }
+        }
+      },
+      "deliveryInfo": {
+        "label": "Информация о доставке",
+        "table": {
+          "header": [
+            "Название",
+            "Примерное время доставки",
+            "Стоимость"
+          ],
+          "body": {
+            "avgDeliveryTime": "{{days}} дней, {{hours}} часов"
+          }
+        },
+        "button": {
+          "next": {
+            "label": "К оплате"
+          },
+          "back": {
+            "label": "Назад"
+          }
+        }
+      },
+      "paymentInfo": {
+        "label": "Информация об оплате",
+        "paymentMethod": {
+          "cash": {
+            "success": "Заказ размещен успешно",
+            "error": "Не удалось создать заказ. {{message}}",
+            "button": {
+              "placeOrder": {
+                "label": "Офромить заказ"
+              }
+            }
+          },
+          "card": {
+            "success": "Заказ размещен успешно",
+            "error": "Не удалось создать заказ. {{message}}",
+            "button": {
+              "pay": {
+                "label": "Оплатить"
+              }
+            }
+          }
+        },
+        "button": {
+          "back": {
+            "label": "Назад"
+          }
+        }
+      },
+      "completeOrder": {
+        "label": "Спасибо, что выбрали нас! Информацию о Вашем заказе указана ниже"
       }
     }
   }

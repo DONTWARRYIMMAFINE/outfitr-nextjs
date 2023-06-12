@@ -1,10 +1,10 @@
 {
   "page": {
-    "title": "Wishlist"
+    "title": "Избранные товары"
   },
   "content": {
     "list": {
-      "empty": "Your wishlist is empty. Explore catalog first!"
+      "empty": "Ваш список избранных товаров пуст <br />Исследуйте каталог"
     }
   }
 }

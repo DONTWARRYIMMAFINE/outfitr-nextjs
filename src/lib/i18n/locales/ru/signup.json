@@ -5,42 +5,7 @@
   "content": {
     "title": "Добро пожаловать",
     "description": "Расскажите нам немного о себе",
-    "form": {
-      "email": {
-        "label": "Электронная почта",
-        "placeholder": "Введите адрес электронной почты"
-      },
-      "phone": {
-        "label": "Номер телефона",
-        "placeholder": "Введите номер телефона"
-      },
-      "firstName": {
-        "label": "Имя",
-        "placeholder": "Введите Ваше имя"
-      },
-      "lastName": {
-        "label": "Фамилия",
-        "placeholder": "Введите Вашу фамилию"
-      },
-      "avatar": {
-        "title": "Загрузите изображение профиля"
-      },
-      "password": {
-        "label": "Пароль",
-        "placeholder": "Придумайте пароль"
-      },
-      "passwordConfirmation": {
-        "label": "Подтвреждение пароля",
-        "placeholder": "Введите пароль еще раз"
-      },
-      "button": {
-        "signup": {
-          "text": "Зарегистрироваться"
-        },
-        "login": {
-          "text": "Уже есть аккаунт"
-        }
-      }
-    }
+    "success": "Добро пожаловать, {{user}}",
+    "error": "Не удалось создать аккаунт. {{message}}"
   }
 }

@@ -6,28 +6,55 @@
     "main": {
       "title": "Основная",
       "label": "Основная",
-      "description": "TODO"
+      "description": "TODO",
+      "avatarUpdate": {
+        "success": "Изображение изменено успешно",
+        "error": "Не удалось обновить изображение. {{message}}",
+        "fileUpload": {
+          "avatar": {
+            "label": "Загрузить изображение"
+          }
+        },
+        "button": {
+          "save": {
+            "label": "Сохранить"
+          }
+        }
+      }
     },
     "orders": {
-      "title": "Мои Заказы",
+      "title": "Мои заказы",
       "label": "Заказы",
-      "description": "TODO"
+      "description": "TODO",
+      "empty": "Вы пока не сделали ни одного заказа"
     },
     "addresses": {
-      "title": "Мои Адреса",
+      "title": "Мои адреса",
       "label": "Адреса",
-      "description": "TODO"
+      "description": "TODO",
+      "empty": "Вы пока не указали ни одного адреса для доставки",
+      "button": {
+        "edit": {
+          "label": "Изменить"
+        },
+        "delete": {
+          "label": "Удалить"
+        }
+      }
     },
     "settings": {
       "title": "Настройки",
       "label": "Настройки",
-      "description": "Here you can change your password"
+      "success": "Пароль изменен успешно",
+      "error": "Не удалось измениь пароль. {{message}}",
+      "description": "Здесь вы можете измнеить пароль от Вашей учетной записи"
     },
     "logout": {
-      "title": "Выход",
-      "label": "Выход",
+      "title": "Выйти",
+      "label": "Выйти",
       "description": "TODO",
       "button": "Выйти"
     }
   }
 }
+

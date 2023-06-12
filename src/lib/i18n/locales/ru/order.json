@@ -1,7 +1,61 @@
 {
+  "header": {
+    "order": {
+      "label": "Заказ"
+    },
+    "status": {
+      "label": "Статус"
+    }
+  },
   "content": {
     "items": {
-
+      "label": "Список товаров",
+      "color": {
+        "label": "Цвет"
+      },
+      "size": {
+        "label": "Размер"
+      },
+      "brand": {
+        "label": "Бренд"
+      },
+      "quantity": {
+        "label": "Количество"
+      }
+    },
+    "info": {
+      "label": "Информация о заказе",
+      "subtotal": {
+        "label": "Итого (без налога)"
+      },
+      "tax": {
+        "label": "Налог"
+      },
+      "delivery": {
+        "label": "Доставка"
+      },
+      "total": {
+        "label": "Итого"
+      }
+    },
+    "changeStatus": {
+      "label": "Изменить статус",
+      "success": "Статус заказа изменен",
+      "error": "Не удалось изменить статус заказа. {{message}}",
+      "button": {
+        "transferToDelivery": {
+          "label": "В пути"
+        },
+        "complete": {
+          "label": "Завершить"
+        },
+        "cancel": {
+          "label": "Отменить"
+        },
+        "reject": {
+          "label": "Отказать"
+        }
+      }
     }
   }
 }

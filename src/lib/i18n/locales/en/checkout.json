@@ -69,11 +69,6 @@
       "completeOrder": {
         "label": "Thank you for your order! You can find the order details below"
       }
-    },
-    "button": {
-      "checkout": {
-        "label": "Checkout"
-      }
     }
   }
 }
