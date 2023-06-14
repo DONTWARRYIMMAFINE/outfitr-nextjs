@@ -1,0 +1,9 @@
+fragment Warehouse on Warehouse {
+    id
+    code
+    name
+    status
+    warehouseItems {
+        ...WarehouseItem
+    }
+}

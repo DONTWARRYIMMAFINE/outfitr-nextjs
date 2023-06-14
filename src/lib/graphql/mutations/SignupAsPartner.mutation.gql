@@ -1,0 +1,9 @@
+mutation SignupAsPartner($input: SignupInput!, $file: Upload) {
+  signupAsPartner(input: $input, file: $file) {
+    accessToken
+    refreshToken
+    user {
+      ...User
+    }
+  }
+}

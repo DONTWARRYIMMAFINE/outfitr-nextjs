@@ -509,6 +509,7 @@ export enum Categories {
   Sleepwear = 'SLEEPWEAR',
   Swimwear = 'SWIMWEAR',
   Tops = 'TOPS',
+  TShirt = 'T_SHIRT',
   Women = 'WOMEN'
 }
 
@@ -1914,6 +1915,7 @@ export type Mutation = {
   resetPassword: User;
   restoreOneUser: User;
   sendConfirmationEmail: EmailAddressConfirmation;
+  setWarehouseItemsInWarehouse: Warehouse;
   signup: SignupResponse;
   signupAsPartner: SignupResponse;
   transferOrderToDelivery: Order;
@@ -2320,6 +2322,11 @@ export type MutationResetPasswordArgs = {
 
 export type MutationRestoreOneUserArgs = {
   input: Scalars['ID'];
+};
+
+
+export type MutationSetWarehouseItemsInWarehouseArgs = {
+  input: UpdateOneWarehouseInputType;
 };
 
 
@@ -3218,7 +3225,7 @@ export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVarian
 
 export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilterSizeFilter = {
   and?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilterSizeFilter>>;
-  code?: InputMaybe<StringFieldComparison>;
+  code?: InputMaybe<SizesFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
@@ -4110,7 +4117,7 @@ export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFi
 
 export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilterSizeFilter = {
   and?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilterSizeFilter>>;
-  code?: InputMaybe<StringFieldComparison>;
+  code?: InputMaybe<SizesFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
@@ -4748,7 +4755,7 @@ export type OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVa
 
 export type OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilterSizeFilter = {
   and?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilterSizeFilter>>;
-  code?: InputMaybe<StringFieldComparison>;
+  code?: InputMaybe<SizesFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
@@ -4758,7 +4765,7 @@ export type OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVa
 
 export type OrderFilterOrderItemFilterProductVariantFilterSizeFilter = {
   and?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterSizeFilter>>;
-  code?: InputMaybe<StringFieldComparison>;
+  code?: InputMaybe<SizesFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
@@ -4848,6 +4855,7 @@ export type OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilter = {
   reserved?: InputMaybe<IntFieldComparison>;
   stock?: InputMaybe<IntFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
+  warehouse?: InputMaybe<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterWarehouseFilter>;
   warehouseId?: InputMaybe<IdFilterComparison>;
 };
 
@@ -4904,12 +4912,52 @@ export type OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductV
 
 export type OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilterSizeFilter = {
   and?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilterSizeFilter>>;
-  code?: InputMaybe<StringFieldComparison>;
+  code?: InputMaybe<SizesFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilterSizeFilter>>;
   updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterWarehouseFilter = {
+  address?: InputMaybe<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterWarehouseFilterAddressFilter>;
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterWarehouseFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterWarehouseFilter>>;
+  status?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  warehouseItems?: InputMaybe<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterWarehouseFilterWarehouseItemFilter>;
+};
+
+export type OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterWarehouseFilterAddressFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterWarehouseFilterAddressFilter>>;
+  building?: InputMaybe<StringFieldComparison>;
+  cityId?: InputMaybe<IdFilterComparison>;
+  countryId?: InputMaybe<IdFilterComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterWarehouseFilterAddressFilter>>;
+  postalCode?: InputMaybe<StringFieldComparison>;
+  state?: InputMaybe<StringFieldComparison>;
+  street?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterWarehouseFilterWarehouseItemFilter = {
+  and?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterWarehouseFilterWarehouseItemFilter>>;
+  available?: InputMaybe<IntFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterWarehouseFilterWarehouseItemFilter>>;
+  productVariantId?: InputMaybe<IdFilterComparison>;
+  reserved?: InputMaybe<IntFieldComparison>;
+  stock?: InputMaybe<IntFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  warehouseId?: InputMaybe<IdFilterComparison>;
 };
 
 export type OrderFilterPaymentIntentFilter = {
@@ -5470,7 +5518,7 @@ export type OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterPro
 
 export type OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterSizeFilter = {
   and?: InputMaybe<Array<OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterSizeFilter>>;
-  code?: InputMaybe<StringFieldComparison>;
+  code?: InputMaybe<SizesFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
@@ -6391,7 +6439,7 @@ export type OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilter
 
 export type OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilterSizeFilter = {
   and?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilterSizeFilter>>;
-  code?: InputMaybe<StringFieldComparison>;
+  code?: InputMaybe<SizesFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
@@ -7335,14 +7383,12 @@ export type Product = {
   brandId: Scalars['ID'];
   category: Category;
   categoryId: Scalars['ID'];
-  colors: Array<Color>;
   comments: Array<Comment>;
   createdAt: Scalars['DateTime'];
   description: Scalars['String'];
   id: Scalars['ID'];
   media: Array<Media>;
   productVariants: Array<ProductVariant>;
-  sizes: Array<Size>;
   title: Scalars['String'];
   updatedAt: Scalars['DateTime'];
 };
@@ -7379,11 +7425,9 @@ export type ProductDeleteResponse = {
   __typename?: 'ProductDeleteResponse';
   brandId?: Maybe<Scalars['ID']>;
   categoryId?: Maybe<Scalars['ID']>;
-  colors?: Maybe<Array<Color>>;
   createdAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
-  sizes?: Maybe<Array<Size>>;
   title?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
@@ -7865,7 +7909,7 @@ export type ProductFilterProductVariantFilterProductFilterProductVariantFilter =
 
 export type ProductFilterProductVariantFilterSizeFilter = {
   and?: InputMaybe<Array<ProductFilterProductVariantFilterSizeFilter>>;
-  code?: InputMaybe<StringFieldComparison>;
+  code?: InputMaybe<SizesFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
@@ -7988,7 +8032,7 @@ export type ProductVariantFilterProductFilter = {
 
 export type ProductVariantFilterSizeFilter = {
   and?: InputMaybe<Array<ProductVariantFilterSizeFilter>>;
-  code?: InputMaybe<StringFieldComparison>;
+  code?: InputMaybe<SizesFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
@@ -8269,6 +8313,7 @@ export type Query = {
   userAddresses: UserAddressConnection;
   users: UserConnection;
   warehouse: Warehouse;
+  warehouseItem: WarehouseItem;
   warehouses: WarehouseConnection;
 };
 
@@ -8597,10 +8642,20 @@ export type QueryWarehouseArgs = {
 };
 
 
+export type QueryWarehouseItemArgs = {
+  input: ReadWarehouseItemInput;
+};
+
+
 export type QueryWarehousesArgs = {
   filter?: WarehouseFilter;
   paging?: OffsetPaging;
   sorting?: Array<WarehouseSort>;
+};
+
+export type ReadWarehouseItemInput = {
+  productVariantId: Scalars['ID'];
+  warehouseId: Scalars['ID'];
 };
 
 export type RemoveMediaInputType = {
@@ -8761,7 +8816,7 @@ export type SignupResponse = {
 
 export type Size = {
   __typename?: 'Size';
-  code: Scalars['String'];
+  code: Sizes;
   createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   name: Scalars['String'];
@@ -8780,7 +8835,7 @@ export type SizeConnection = {
 
 export type SizeDeleteResponse = {
   __typename?: 'SizeDeleteResponse';
-  code?: Maybe<Scalars['String']>;
+  code?: Maybe<Sizes>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
@@ -8789,7 +8844,7 @@ export type SizeDeleteResponse = {
 
 export type SizeFilter = {
   and?: InputMaybe<Array<SizeFilter>>;
-  code?: InputMaybe<StringFieldComparison>;
+  code?: InputMaybe<SizesFilterComparison>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
@@ -8816,8 +8871,28 @@ export enum Sizes {
   M = 'M',
   S = 'S',
   Xl = 'XL',
-  Xs = 'XS'
+  Xs = 'XS',
+  Xxl = 'XXL',
+  Xxs = 'XXS',
+  Xxxl = 'XXXL'
 }
+
+export type SizesFilterComparison = {
+  eq?: InputMaybe<Sizes>;
+  gt?: InputMaybe<Sizes>;
+  gte?: InputMaybe<Sizes>;
+  iLike?: InputMaybe<Sizes>;
+  in?: InputMaybe<Array<Sizes>>;
+  is?: InputMaybe<Scalars['Boolean']>;
+  isNot?: InputMaybe<Scalars['Boolean']>;
+  like?: InputMaybe<Sizes>;
+  lt?: InputMaybe<Sizes>;
+  lte?: InputMaybe<Sizes>;
+  neq?: InputMaybe<Sizes>;
+  notILike?: InputMaybe<Sizes>;
+  notIn?: InputMaybe<Array<Sizes>>;
+  notLike?: InputMaybe<Sizes>;
+};
 
 /** Sort Directions */
 export enum SortDirection {
@@ -9578,6 +9653,7 @@ export type WarehouseItem = {
   reserved: Scalars['Int'];
   stock: Scalars['Int'];
   updatedAt: Scalars['DateTime'];
+  warehouse: Warehouse;
   warehouseId: Scalars['ID'];
 };
 
@@ -9600,6 +9676,7 @@ export type WarehouseItemFilter = {
   reserved?: InputMaybe<IntFieldComparison>;
   stock?: InputMaybe<IntFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
+  warehouse?: InputMaybe<WarehouseItemFilterWarehouseFilter>;
   warehouseId?: InputMaybe<IdFilterComparison>;
 };
 
@@ -9614,6 +9691,17 @@ export type WarehouseItemFilterProductVariantFilter = {
   sizeId?: InputMaybe<IdFilterComparison>;
   sku?: InputMaybe<IdFilterComparison>;
   stock?: InputMaybe<NumberFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type WarehouseItemFilterWarehouseFilter = {
+  and?: InputMaybe<Array<WarehouseItemFilterWarehouseFilter>>;
+  code?: InputMaybe<StringFieldComparison>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<IdFilterComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<WarehouseItemFilterWarehouseFilter>>;
+  status?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -9687,9 +9775,9 @@ export type AddressFragment = { __typename?: 'Address', id: string, cityId: stri
 
 export type BrandFragment = { __typename?: 'Brand', id: string, code: string, name: string };
 
-export type CartFragment = { __typename?: 'Cart', id: string, paymentMethodId?: string | null, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } } }> };
+export type CartFragment = { __typename?: 'Cart', id: string, paymentMethodId?: string | null, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } } }> };
 
-export type CartItemFragment = { __typename?: 'CartItem', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } } };
+export type CartItemFragment = { __typename?: 'CartItem', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } } };
 
 export type CategoryFragment = { __typename?: 'Category', id: string, code: Categories, name: string, description?: string | null, parentId?: string | null };
 
@@ -9707,11 +9795,11 @@ export type EmailAddressFragment = { __typename?: 'EmailAddress', id: string, ad
 
 export type MediaFragment = { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null };
 
-export type OrderFragment = { __typename?: 'Order', id: string, status: OrderStatus, createdAt: any, deliveryAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> };
+export type OrderFragment = { __typename?: 'Order', id: string, status: OrderStatus, createdAt: any, deliveryAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> };
 
 export type OrderHistoryFragment = { __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any };
 
-export type OrderItemFragment = { __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } };
+export type OrderItemFragment = { __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } };
 
 export type PaymentIntentFragment = { __typename?: 'PaymentIntent', id: string, clientSecret: string, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, price?: { __typename?: 'Price', id: string, amount: number, currency: Currencies } | null };
 
@@ -9721,35 +9809,39 @@ export type PermissionFragment = { __typename?: 'Permission', id: string, action
 
 export type PriceFragment = { __typename?: 'Price', id: string, amount: number, currency: Currencies };
 
-export type ProductFragment = { __typename?: 'Product', id: string, title: string, description: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: string, name: string }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }> };
+export type ProductFragment = { __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }> };
 
 export type ProductPartialFragment = { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> };
 
-export type ProductVariantFragment = { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } };
+export type ProductVariantFragment = { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } };
 
 export type RoleFragment = { __typename?: 'Role', id: string, code: Roles, name: string };
 
-export type SizeFragment = { __typename?: 'Size', id: string, code: string, name: string };
+export type SizeFragment = { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any };
 
 export type UserFragment = { __typename?: 'User', id: string, firstName?: string | null, lastName?: string | null, fullName: string, phone?: string | null, emailAddress: { __typename?: 'EmailAddress', id: string, address: string, name?: string | null }, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> };
 
 export type UserAddressFragment = { __typename?: 'UserAddress', id: string, address: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } };
 
-export type WishlistFragment = { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: string, name: string }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }> }> };
+export type WarehouseFragment = { __typename?: 'Warehouse', id: string, code: string, name: string, status: string, warehouseItems: Array<{ __typename?: 'WarehouseItem', id: string, stock: number, reserved: number, available: number, warehouseId: string, productVariantId: string, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } } }> };
+
+export type WarehouseItemFragment = { __typename?: 'WarehouseItem', id: string, stock: number, reserved: number, available: number, warehouseId: string, productVariantId: string, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } } };
+
+export type WishlistFragment = { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }> }> };
 
 export type AddCartItemsToCartMutationVariables = Exact<{
   input: UpdateOneCartInputType;
 }>;
 
 
-export type AddCartItemsToCartMutation = { __typename?: 'Mutation', addCartItemsToCart: { __typename?: 'Cart', id: string, paymentMethodId?: string | null, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } } }> } };
+export type AddCartItemsToCartMutation = { __typename?: 'Mutation', addCartItemsToCart: { __typename?: 'Cart', id: string, paymentMethodId?: string | null, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } } }> } };
 
 export type AddProductsToWishlistMutationVariables = Exact<{
   input: AddProductsToWishlistInputType;
 }>;
 
 
-export type AddProductsToWishlistMutation = { __typename?: 'Mutation', addProductsToWishlist: { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: string, name: string }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }> }> } };
+export type AddProductsToWishlistMutation = { __typename?: 'Mutation', addProductsToWishlist: { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }> }> } };
 
 export type CancelOnePaymentIntentMutationVariables = Exact<{
   input: CancelPaymentIntentInput;
@@ -9763,14 +9855,14 @@ export type CancelOrderMutationVariables = Exact<{
 }>;
 
 
-export type CancelOrderMutation = { __typename?: 'Mutation', cancelOrder: { __typename?: 'Order', id: string, status: OrderStatus, createdAt: any, deliveryAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> } };
+export type CancelOrderMutation = { __typename?: 'Mutation', cancelOrder: { __typename?: 'Order', id: string, status: OrderStatus, createdAt: any, deliveryAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> } };
 
 export type CompleteOrderMutationVariables = Exact<{
   input: UpdateOrderInputType;
 }>;
 
 
-export type CompleteOrderMutation = { __typename?: 'Mutation', completeOrder: { __typename?: 'Order', id: string, status: OrderStatus, createdAt: any, deliveryAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> } };
+export type CompleteOrderMutation = { __typename?: 'Mutation', completeOrder: { __typename?: 'Order', id: string, status: OrderStatus, createdAt: any, deliveryAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> } };
 
 export type CreateOneCommentMutationVariables = Exact<{
   input: CreateOneCommentInputType;
@@ -9799,6 +9891,14 @@ export type CreateOnePaymentIntentFromCartMutationVariables = Exact<{ [key: stri
 
 export type CreateOnePaymentIntentFromCartMutation = { __typename?: 'Mutation', createOnePaymentIntentFromCart: { __typename?: 'PaymentIntent', id: string, clientSecret: string, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, price?: { __typename?: 'Price', id: string, amount: number, currency: Currencies } | null } };
 
+export type CreateOneProductMutationVariables = Exact<{
+  input: CreateOneProductInputType;
+  files?: InputMaybe<Array<Scalars['Upload']> | Scalars['Upload']>;
+}>;
+
+
+export type CreateOneProductMutation = { __typename?: 'Mutation', createOneProduct: { __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }> } };
+
 export type CreateOneUserAddressMutationVariables = Exact<{
   input: CreateOneUserAddressInput;
 }>;
@@ -9812,6 +9912,20 @@ export type DeleteOneBrandMutationVariables = Exact<{
 
 
 export type DeleteOneBrandMutation = { __typename?: 'Mutation', deleteOneBrand: { __typename?: 'BrandDeleteResponse', id?: string | null } };
+
+export type DeleteOneProductMutationVariables = Exact<{
+  input: DeleteOneProductInput;
+}>;
+
+
+export type DeleteOneProductMutation = { __typename?: 'Mutation', deleteOneProduct: { __typename?: 'ProductDeleteResponse', id?: string | null } };
+
+export type DeleteOneProductVariantMutationVariables = Exact<{
+  input: DeleteOneProductVariantInput;
+}>;
+
+
+export type DeleteOneProductVariantMutation = { __typename?: 'Mutation', deleteOneProductVariant: { __typename?: 'ProductVariantDeleteResponse', id?: string | null, sku?: string | null } };
 
 export type DeleteOneUserAddressMutationVariables = Exact<{
   input: DeleteOneUserAddressInput;
@@ -9835,7 +9949,7 @@ export type LogoutMutation = { __typename?: 'Mutation', logout: boolean };
 export type PlaceOrderFromUserCartMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PlaceOrderFromUserCartMutation = { __typename?: 'Mutation', placeOrderFromUserCart: Array<{ __typename?: 'Order', id: string, status: OrderStatus, createdAt: any, deliveryAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> }> };
+export type PlaceOrderFromUserCartMutation = { __typename?: 'Mutation', placeOrderFromUserCart: Array<{ __typename?: 'Order', id: string, status: OrderStatus, createdAt: any, deliveryAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> }> };
 
 export type ReissueAccessTokenMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -9847,21 +9961,21 @@ export type RejectOrderMutationVariables = Exact<{
 }>;
 
 
-export type RejectOrderMutation = { __typename?: 'Mutation', rejectOrder: { __typename?: 'Order', id: string, status: OrderStatus, createdAt: any, deliveryAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> } };
+export type RejectOrderMutation = { __typename?: 'Mutation', rejectOrder: { __typename?: 'Order', id: string, status: OrderStatus, createdAt: any, deliveryAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> } };
 
 export type RemoveCartItemsFromCartMutationVariables = Exact<{
   input: UpdateOneCartInputType;
 }>;
 
 
-export type RemoveCartItemsFromCartMutation = { __typename?: 'Mutation', removeCartItemsFromCart: { __typename?: 'Cart', id: string, paymentMethodId?: string | null, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } } }> } };
+export type RemoveCartItemsFromCartMutation = { __typename?: 'Mutation', removeCartItemsFromCart: { __typename?: 'Cart', id: string, paymentMethodId?: string | null, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } } }> } };
 
 export type RemoveProductsFromWishlistMutationVariables = Exact<{
   input: RemoveProductsFromWishlistInputType;
 }>;
 
 
-export type RemoveProductsFromWishlistMutation = { __typename?: 'Mutation', removeProductsFromWishlist: { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: string, name: string }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }> }> } };
+export type RemoveProductsFromWishlistMutation = { __typename?: 'Mutation', removeProductsFromWishlist: { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }> }> } };
 
 export type ResetPasswordMutationVariables = Exact<{
   input: ResetPasswordInputType;
@@ -9869,6 +9983,13 @@ export type ResetPasswordMutationVariables = Exact<{
 
 
 export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: { __typename?: 'User', id: string, firstName?: string | null, lastName?: string | null, fullName: string, phone?: string | null, emailAddress: { __typename?: 'EmailAddress', id: string, address: string, name?: string | null }, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } };
+
+export type SetWarehouseItemsInWarehouseMutationVariables = Exact<{
+  input: UpdateOneWarehouseInputType;
+}>;
+
+
+export type SetWarehouseItemsInWarehouseMutation = { __typename?: 'Mutation', setWarehouseItemsInWarehouse: { __typename?: 'Warehouse', id: string, code: string, name: string, status: string, warehouseItems: Array<{ __typename?: 'WarehouseItem', id: string, stock: number, reserved: number, available: number, warehouseId: string, productVariantId: string, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } } }> } };
 
 export type SignupMutationVariables = Exact<{
   input: SignupInput;
@@ -9878,12 +9999,20 @@ export type SignupMutationVariables = Exact<{
 
 export type SignupMutation = { __typename?: 'Mutation', signup: { __typename?: 'SignupResponse', accessToken: string, refreshToken: string, user: { __typename?: 'User', id: string, firstName?: string | null, lastName?: string | null, fullName: string, phone?: string | null, emailAddress: { __typename?: 'EmailAddress', id: string, address: string, name?: string | null }, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } } };
 
+export type SignupAsPartnerMutationVariables = Exact<{
+  input: SignupInput;
+  file?: InputMaybe<Scalars['Upload']>;
+}>;
+
+
+export type SignupAsPartnerMutation = { __typename?: 'Mutation', signupAsPartner: { __typename?: 'SignupResponse', accessToken: string, refreshToken: string, user: { __typename?: 'User', id: string, firstName?: string | null, lastName?: string | null, fullName: string, phone?: string | null, emailAddress: { __typename?: 'EmailAddress', id: string, address: string, name?: string | null }, avatar?: { __typename?: 'Media', url: string } | null, roles: Array<{ __typename?: 'Role', id: string, code: Roles, name: string }>, permissions: Array<{ __typename?: 'Permission', id: string, action: Actions, subject: string, conditions?: any | null }> } } };
+
 export type TransferOrderToDeliveryMutationVariables = Exact<{
   input: UpdateOrderInputType;
 }>;
 
 
-export type TransferOrderToDeliveryMutation = { __typename?: 'Mutation', transferOrderToDelivery: { __typename?: 'Order', id: string, status: OrderStatus, createdAt: any, deliveryAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> } };
+export type TransferOrderToDeliveryMutation = { __typename?: 'Mutation', transferOrderToDelivery: { __typename?: 'Order', id: string, status: OrderStatus, createdAt: any, deliveryAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> } };
 
 export type UpdateAvatarMutationVariables = Exact<{
   file: Scalars['Upload'];
@@ -9912,14 +10041,14 @@ export type UpdateOneCartMutationVariables = Exact<{
 }>;
 
 
-export type UpdateOneCartMutation = { __typename?: 'Mutation', updateOneCart: { __typename?: 'Cart', id: string, paymentMethodId?: string | null, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } } }> } };
+export type UpdateOneCartMutation = { __typename?: 'Mutation', updateOneCart: { __typename?: 'Cart', id: string, paymentMethodId?: string | null, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } } }> } };
 
 export type UpdateOneOrderMutationVariables = Exact<{
   input: UpdateOneOrderInput;
 }>;
 
 
-export type UpdateOneOrderMutation = { __typename?: 'Mutation', updateOneOrder: { __typename?: 'Order', id: string, status: OrderStatus, createdAt: any, deliveryAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> } };
+export type UpdateOneOrderMutation = { __typename?: 'Mutation', updateOneOrder: { __typename?: 'Order', id: string, status: OrderStatus, createdAt: any, deliveryAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> } };
 
 export type UpdateOneUserMutationVariables = Exact<{
   input: UpdateOneUserInput;
@@ -10017,19 +10146,19 @@ export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: st
 export type MyCartQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyCartQuery = { __typename?: 'Query', myCart: { __typename?: 'Cart', id: string, paymentMethodId?: string | null, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } } }> } };
+export type MyCartQuery = { __typename?: 'Query', myCart: { __typename?: 'Cart', id: string, paymentMethodId?: string | null, quantity: number, paymentMethod?: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null } | null, deliveryAddress?: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } } | null, deliveryMethod?: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } } | null, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, cartItems: Array<{ __typename?: 'CartItem', id: string, quantity: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } } }> } };
 
 export type MyWishlistQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyWishlistQuery = { __typename?: 'Query', myWishlist: { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: string, name: string }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }> }> } };
+export type MyWishlistQuery = { __typename?: 'Query', myWishlist: { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }> }> } };
 
 export type OneProductQueryVariables = Exact<{
   productId: Scalars['ID'];
 }>;
 
 
-export type OneProductQuery = { __typename?: 'Query', product: { __typename?: 'Product', id: string, title: string, description: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: string, name: string }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }> } };
+export type OneProductQuery = { __typename?: 'Query', product: { __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }> } };
 
 export type OrdersQueryVariables = Exact<{
   filter?: InputMaybe<OrderFilter>;
@@ -10038,7 +10167,7 @@ export type OrdersQueryVariables = Exact<{
 }>;
 
 
-export type OrdersQuery = { __typename?: 'Query', orders: { __typename?: 'OrderConnection', nodes: Array<{ __typename?: 'Order', id: string, status: OrderStatus, createdAt: any, deliveryAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> }> } };
+export type OrdersQuery = { __typename?: 'Query', orders: { __typename?: 'OrderConnection', nodes: Array<{ __typename?: 'Order', id: string, status: OrderStatus, createdAt: any, deliveryAddress: { __typename?: 'Address', id: string, cityId: string, countryId: string, state?: string | null, street?: string | null, building?: string | null, postalCode: string, formattedAddress: string, city: { __typename?: 'City', id: string, name: string }, country: { __typename?: 'Country', id: string, code: string, name: string, cities: Array<{ __typename?: 'City', id: string, name: string }> } }, deliveryMethod: { __typename?: 'DeliveryMethod', id: string, code: string, name: string, avgDeliveryTimeInHours?: number | null, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }, paymentMethod: { __typename?: 'PaymentMethod', id: string, code: PaymentMethods, name: string, description?: string | null, online: boolean, media?: { __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null } | null }, subtotalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, taxPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, deliveryPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, totalPrice: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, orderItems: Array<{ __typename?: 'OrderItem', id: string, quantity: number, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, product: { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies } }>, orderHistories: Array<{ __typename?: 'OrderHistory', id: string, status: OrderStatus, createdAt: any }> }> } };
 
 export type PaymentMethodsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -10052,7 +10181,7 @@ export type ProductsQueryVariables = Exact<{
 }>;
 
 
-export type ProductsQuery = { __typename?: 'Query', products: { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', id: string, title: string, description: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: string, name: string }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: string, name: string } }> }> } };
+export type ProductsQuery = { __typename?: 'Query', products: { __typename?: 'ProductConnection', totalCount: number, nodes: Array<{ __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }> }> } };
 
 export type ProductsTotalCountQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -10066,7 +10195,7 @@ export type SizesQueryVariables = Exact<{
 }>;
 
 
-export type SizesQuery = { __typename?: 'Query', sizes: { __typename?: 'SizeConnection', nodes: Array<{ __typename?: 'Size', id: string, code: string, name: string }> } };
+export type SizesQuery = { __typename?: 'Query', sizes: { __typename?: 'SizeConnection', nodes: Array<{ __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any }> } };
 
 export type SizesTotalCountQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -10082,6 +10211,22 @@ export type UserAddressesTotalCountQueryVariables = Exact<{ [key: string]: never
 
 
 export type UserAddressesTotalCountQuery = { __typename?: 'Query', userAddresses: { __typename?: 'UserAddressConnection', totalCount: number } };
+
+export type WarehouseItemQueryVariables = Exact<{
+  input: ReadWarehouseItemInput;
+}>;
+
+
+export type WarehouseItemQuery = { __typename?: 'Query', warehouseItem: { __typename?: 'WarehouseItem', id: string, stock: number, reserved: number, available: number, warehouseId: string, productVariantId: string, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } } } };
+
+export type WarehousesQueryVariables = Exact<{
+  filter?: InputMaybe<WarehouseFilter>;
+  sorting?: InputMaybe<Array<WarehouseSort> | WarehouseSort>;
+  paging?: InputMaybe<OffsetPaging>;
+}>;
+
+
+export type WarehousesQuery = { __typename?: 'Query', warehouses: { __typename?: 'WarehouseConnection', nodes: Array<{ __typename?: 'Warehouse', id: string, code: string, name: string, status: string, warehouseItems: Array<{ __typename?: 'WarehouseItem', id: string, stock: number, reserved: number, available: number, warehouseId: string, productVariantId: string, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } } }> }> } };
 
 export const MediaFragmentDoc = gql`
     fragment Media on Media {
@@ -10171,6 +10316,7 @@ export const SizeFragmentDoc = gql`
   id
   code
   name
+  createdAt
 }
     `;
 export const ProductVariantFragmentDoc = gql`
@@ -10416,6 +10562,30 @@ export const UserAddressFragmentDoc = gql`
   }
 }
     ${AddressFragmentDoc}`;
+export const WarehouseItemFragmentDoc = gql`
+    fragment WarehouseItem on WarehouseItem {
+  id
+  stock
+  reserved
+  available
+  warehouseId
+  productVariantId
+  productVariant {
+    ...ProductVariant
+  }
+}
+    ${ProductVariantFragmentDoc}`;
+export const WarehouseFragmentDoc = gql`
+    fragment Warehouse on Warehouse {
+  id
+  code
+  name
+  status
+  warehouseItems {
+    ...WarehouseItem
+  }
+}
+    ${WarehouseItemFragmentDoc}`;
 export const ProductFragmentDoc = gql`
     fragment Product on Product {
   id
@@ -10427,20 +10597,13 @@ export const ProductFragmentDoc = gql`
   media {
     ...Media
   }
-  colors {
-    ...Color
-  }
-  sizes {
-    ...Size
-  }
   productVariants {
     ...ProductVariant
   }
+  createdAt
 }
     ${BrandFragmentDoc}
 ${MediaFragmentDoc}
-${ColorFragmentDoc}
-${SizeFragmentDoc}
 ${ProductVariantFragmentDoc}`;
 export const WishlistFragmentDoc = gql`
     fragment Wishlist on Wishlist {
@@ -10750,6 +10913,40 @@ export function useCreateOnePaymentIntentFromCartMutation(baseOptions?: Apollo.M
 export type CreateOnePaymentIntentFromCartMutationHookResult = ReturnType<typeof useCreateOnePaymentIntentFromCartMutation>;
 export type CreateOnePaymentIntentFromCartMutationResult = Apollo.MutationResult<CreateOnePaymentIntentFromCartMutation>;
 export type CreateOnePaymentIntentFromCartMutationOptions = Apollo.BaseMutationOptions<CreateOnePaymentIntentFromCartMutation, CreateOnePaymentIntentFromCartMutationVariables>;
+export const CreateOneProductDocument = gql`
+    mutation CreateOneProduct($input: CreateOneProductInputType!, $files: [Upload!]) {
+  createOneProduct(input: $input, files: $files) {
+    ...Product
+  }
+}
+    ${ProductFragmentDoc}`;
+export type CreateOneProductMutationFn = Apollo.MutationFunction<CreateOneProductMutation, CreateOneProductMutationVariables>;
+
+/**
+ * __useCreateOneProductMutation__
+ *
+ * To run a mutation, you first call `useCreateOneProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOneProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOneProductMutation, { data, loading, error }] = useCreateOneProductMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *      files: // value for 'files'
+ *   },
+ * });
+ */
+export function useCreateOneProductMutation(baseOptions?: Apollo.MutationHookOptions<CreateOneProductMutation, CreateOneProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOneProductMutation, CreateOneProductMutationVariables>(CreateOneProductDocument, options);
+      }
+export type CreateOneProductMutationHookResult = ReturnType<typeof useCreateOneProductMutation>;
+export type CreateOneProductMutationResult = Apollo.MutationResult<CreateOneProductMutation>;
+export type CreateOneProductMutationOptions = Apollo.BaseMutationOptions<CreateOneProductMutation, CreateOneProductMutationVariables>;
 export const CreateOneUserAddressDocument = gql`
     mutation CreateOneUserAddress($input: CreateOneUserAddressInput!) {
   createOneUserAddress(input: $input) {
@@ -10816,6 +11013,73 @@ export function useDeleteOneBrandMutation(baseOptions?: Apollo.MutationHookOptio
 export type DeleteOneBrandMutationHookResult = ReturnType<typeof useDeleteOneBrandMutation>;
 export type DeleteOneBrandMutationResult = Apollo.MutationResult<DeleteOneBrandMutation>;
 export type DeleteOneBrandMutationOptions = Apollo.BaseMutationOptions<DeleteOneBrandMutation, DeleteOneBrandMutationVariables>;
+export const DeleteOneProductDocument = gql`
+    mutation DeleteOneProduct($input: DeleteOneProductInput!) {
+  deleteOneProduct(input: $input) {
+    id
+  }
+}
+    `;
+export type DeleteOneProductMutationFn = Apollo.MutationFunction<DeleteOneProductMutation, DeleteOneProductMutationVariables>;
+
+/**
+ * __useDeleteOneProductMutation__
+ *
+ * To run a mutation, you first call `useDeleteOneProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteOneProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteOneProductMutation, { data, loading, error }] = useDeleteOneProductMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDeleteOneProductMutation(baseOptions?: Apollo.MutationHookOptions<DeleteOneProductMutation, DeleteOneProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteOneProductMutation, DeleteOneProductMutationVariables>(DeleteOneProductDocument, options);
+      }
+export type DeleteOneProductMutationHookResult = ReturnType<typeof useDeleteOneProductMutation>;
+export type DeleteOneProductMutationResult = Apollo.MutationResult<DeleteOneProductMutation>;
+export type DeleteOneProductMutationOptions = Apollo.BaseMutationOptions<DeleteOneProductMutation, DeleteOneProductMutationVariables>;
+export const DeleteOneProductVariantDocument = gql`
+    mutation DeleteOneProductVariant($input: DeleteOneProductVariantInput!) {
+  deleteOneProductVariant(input: $input) {
+    id
+    sku
+  }
+}
+    `;
+export type DeleteOneProductVariantMutationFn = Apollo.MutationFunction<DeleteOneProductVariantMutation, DeleteOneProductVariantMutationVariables>;
+
+/**
+ * __useDeleteOneProductVariantMutation__
+ *
+ * To run a mutation, you first call `useDeleteOneProductVariantMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteOneProductVariantMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteOneProductVariantMutation, { data, loading, error }] = useDeleteOneProductVariantMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDeleteOneProductVariantMutation(baseOptions?: Apollo.MutationHookOptions<DeleteOneProductVariantMutation, DeleteOneProductVariantMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteOneProductVariantMutation, DeleteOneProductVariantMutationVariables>(DeleteOneProductVariantDocument, options);
+      }
+export type DeleteOneProductVariantMutationHookResult = ReturnType<typeof useDeleteOneProductVariantMutation>;
+export type DeleteOneProductVariantMutationResult = Apollo.MutationResult<DeleteOneProductVariantMutation>;
+export type DeleteOneProductVariantMutationOptions = Apollo.BaseMutationOptions<DeleteOneProductVariantMutation, DeleteOneProductVariantMutationVariables>;
 export const DeleteOneUserAddressDocument = gql`
     mutation DeleteOneUserAddress($input: DeleteOneUserAddressInput!) {
   deleteOneUserAddress(input: $input) {
@@ -11114,6 +11378,39 @@ export function useResetPasswordMutation(baseOptions?: Apollo.MutationHookOption
 export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
 export type ResetPasswordMutationResult = Apollo.MutationResult<ResetPasswordMutation>;
 export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
+export const SetWarehouseItemsInWarehouseDocument = gql`
+    mutation SetWarehouseItemsInWarehouse($input: UpdateOneWarehouseInputType!) {
+  setWarehouseItemsInWarehouse(input: $input) {
+    ...Warehouse
+  }
+}
+    ${WarehouseFragmentDoc}`;
+export type SetWarehouseItemsInWarehouseMutationFn = Apollo.MutationFunction<SetWarehouseItemsInWarehouseMutation, SetWarehouseItemsInWarehouseMutationVariables>;
+
+/**
+ * __useSetWarehouseItemsInWarehouseMutation__
+ *
+ * To run a mutation, you first call `useSetWarehouseItemsInWarehouseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetWarehouseItemsInWarehouseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setWarehouseItemsInWarehouseMutation, { data, loading, error }] = useSetWarehouseItemsInWarehouseMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSetWarehouseItemsInWarehouseMutation(baseOptions?: Apollo.MutationHookOptions<SetWarehouseItemsInWarehouseMutation, SetWarehouseItemsInWarehouseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetWarehouseItemsInWarehouseMutation, SetWarehouseItemsInWarehouseMutationVariables>(SetWarehouseItemsInWarehouseDocument, options);
+      }
+export type SetWarehouseItemsInWarehouseMutationHookResult = ReturnType<typeof useSetWarehouseItemsInWarehouseMutation>;
+export type SetWarehouseItemsInWarehouseMutationResult = Apollo.MutationResult<SetWarehouseItemsInWarehouseMutation>;
+export type SetWarehouseItemsInWarehouseMutationOptions = Apollo.BaseMutationOptions<SetWarehouseItemsInWarehouseMutation, SetWarehouseItemsInWarehouseMutationVariables>;
 export const SignupDocument = gql`
     mutation Signup($input: SignupInput!, $file: Upload) {
   signup(input: $input, file: $file) {
@@ -11152,6 +11449,44 @@ export function useSignupMutation(baseOptions?: Apollo.MutationHookOptions<Signu
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
 export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
+export const SignupAsPartnerDocument = gql`
+    mutation SignupAsPartner($input: SignupInput!, $file: Upload) {
+  signupAsPartner(input: $input, file: $file) {
+    accessToken
+    refreshToken
+    user {
+      ...User
+    }
+  }
+}
+    ${UserFragmentDoc}`;
+export type SignupAsPartnerMutationFn = Apollo.MutationFunction<SignupAsPartnerMutation, SignupAsPartnerMutationVariables>;
+
+/**
+ * __useSignupAsPartnerMutation__
+ *
+ * To run a mutation, you first call `useSignupAsPartnerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignupAsPartnerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [signupAsPartnerMutation, { data, loading, error }] = useSignupAsPartnerMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *      file: // value for 'file'
+ *   },
+ * });
+ */
+export function useSignupAsPartnerMutation(baseOptions?: Apollo.MutationHookOptions<SignupAsPartnerMutation, SignupAsPartnerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SignupAsPartnerMutation, SignupAsPartnerMutationVariables>(SignupAsPartnerDocument, options);
+      }
+export type SignupAsPartnerMutationHookResult = ReturnType<typeof useSignupAsPartnerMutation>;
+export type SignupAsPartnerMutationResult = Apollo.MutationResult<SignupAsPartnerMutation>;
+export type SignupAsPartnerMutationOptions = Apollo.BaseMutationOptions<SignupAsPartnerMutation, SignupAsPartnerMutationVariables>;
 export const TransferOrderToDeliveryDocument = gql`
     mutation TransferOrderToDelivery($input: UpdateOrderInputType!) {
   transferOrderToDelivery(input: $input) {
@@ -11607,14 +11942,11 @@ export const ColorsDocument = gql`
     query Colors($filter: ColorFilter, $paging: OffsetPaging, $sorting: [ColorSort!]) {
   colors(filter: $filter, paging: $paging, sorting: $sorting) {
     nodes {
-      id
-      code
-      name
-      hex
+      ...Color
     }
   }
 }
-    `;
+    ${ColorFragmentDoc}`;
 
 /**
  * __useColorsQuery__
@@ -12075,6 +12407,7 @@ export const ProductsDocument = gql`
     nodes {
       ...Product
     }
+    totalCount
   }
 }
     ${ProductFragmentDoc}`;
@@ -12285,3 +12618,77 @@ export function useUserAddressesTotalCountLazyQuery(baseOptions?: Apollo.LazyQue
 export type UserAddressesTotalCountQueryHookResult = ReturnType<typeof useUserAddressesTotalCountQuery>;
 export type UserAddressesTotalCountLazyQueryHookResult = ReturnType<typeof useUserAddressesTotalCountLazyQuery>;
 export type UserAddressesTotalCountQueryResult = Apollo.QueryResult<UserAddressesTotalCountQuery, UserAddressesTotalCountQueryVariables>;
+export const WarehouseItemDocument = gql`
+    query WarehouseItem($input: ReadWarehouseItemInput!) {
+  warehouseItem(input: $input) {
+    ...WarehouseItem
+  }
+}
+    ${WarehouseItemFragmentDoc}`;
+
+/**
+ * __useWarehouseItemQuery__
+ *
+ * To run a query within a React component, call `useWarehouseItemQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWarehouseItemQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWarehouseItemQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useWarehouseItemQuery(baseOptions: Apollo.QueryHookOptions<WarehouseItemQuery, WarehouseItemQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<WarehouseItemQuery, WarehouseItemQueryVariables>(WarehouseItemDocument, options);
+      }
+export function useWarehouseItemLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<WarehouseItemQuery, WarehouseItemQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<WarehouseItemQuery, WarehouseItemQueryVariables>(WarehouseItemDocument, options);
+        }
+export type WarehouseItemQueryHookResult = ReturnType<typeof useWarehouseItemQuery>;
+export type WarehouseItemLazyQueryHookResult = ReturnType<typeof useWarehouseItemLazyQuery>;
+export type WarehouseItemQueryResult = Apollo.QueryResult<WarehouseItemQuery, WarehouseItemQueryVariables>;
+export const WarehousesDocument = gql`
+    query Warehouses($filter: WarehouseFilter, $sorting: [WarehouseSort!], $paging: OffsetPaging) {
+  warehouses(filter: $filter, paging: $paging, sorting: $sorting) {
+    nodes {
+      ...Warehouse
+    }
+  }
+}
+    ${WarehouseFragmentDoc}`;
+
+/**
+ * __useWarehousesQuery__
+ *
+ * To run a query within a React component, call `useWarehousesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWarehousesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWarehousesQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      sorting: // value for 'sorting'
+ *      paging: // value for 'paging'
+ *   },
+ * });
+ */
+export function useWarehousesQuery(baseOptions?: Apollo.QueryHookOptions<WarehousesQuery, WarehousesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<WarehousesQuery, WarehousesQueryVariables>(WarehousesDocument, options);
+      }
+export function useWarehousesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<WarehousesQuery, WarehousesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<WarehousesQuery, WarehousesQueryVariables>(WarehousesDocument, options);
+        }
+export type WarehousesQueryHookResult = ReturnType<typeof useWarehousesQuery>;
+export type WarehousesLazyQueryHookResult = ReturnType<typeof useWarehousesLazyQuery>;
+export type WarehousesQueryResult = Apollo.QueryResult<WarehousesQuery, WarehousesQueryVariables>;

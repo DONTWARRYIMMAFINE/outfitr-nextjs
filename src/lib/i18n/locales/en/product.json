@@ -1,0 +1,73 @@
+{
+  "header": {
+    "title": {
+      "label": "Title"
+    },
+    "brand": {
+      "label": "Brand"
+    }
+  },
+  "content": {
+    "title": {
+      "label": "Title"
+    },
+    "description": {
+      "label": "Description"
+    },
+    "images": {
+      "label": "Images"
+    },
+    "variants": {
+      "label": "Variants"
+    },
+    "modal": {
+      "changeStock": {
+        "success": "Product quantity changed successfully",
+        "error": "Unable to change product quantity",
+        "title": "Change product quantity"
+      }
+    },
+    "productActions": {
+      "label": "Product Actions",
+      "button": {
+        "promote": {
+          "label": "Promote"
+        },
+        "delete": {
+          "success": "Product deleted",
+          "error": "Unable to delete product. {{message}}",
+          "label": "Delete"
+        }
+      }
+    },
+    "variant": {
+      "sku": {
+        "label": "SKU"
+      },
+      "color": {
+        "label": "Color"
+      },
+      "size": {
+        "label": "Size"
+      },
+      "stock": {
+        "label": "Stock"
+      },
+      "button": {
+        "edit": {
+          "success": "Product variant [{{sku}}] updated successfully",
+          "error": "Unable to update product variant [{{sku}}]. {{message}}",
+          "label": "Edit"
+        },
+        "delete": {
+          "success": "Product variant [{{sku}}] deleted successfully",
+          "error": "Unable to delete product variant [{{sku}}]. {{message}}",
+          "label": "Delete"
+        },
+        "changeStock": {
+          "label": "Change Stock"
+        }
+      }
+    }
+  }
+}

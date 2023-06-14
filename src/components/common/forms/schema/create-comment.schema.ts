@@ -11,5 +11,5 @@ export const CreateCommentSchema = object().shape({
     .integer("Rating must be an integer value")
     .min(1, ({ min }) => `Rating must be more than ${min}`)
     .max(5, ({ max }) => `Rating must be less than ${max}`)
-    .required("Password is required"),
+    .required("Rating is required"),
 });

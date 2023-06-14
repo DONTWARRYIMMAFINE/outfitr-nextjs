@@ -77,6 +77,48 @@
         "placeholder": "Enter name"
       }
     },
+    "warehouseItem": {
+      "stock": {
+        "label": "Stock",
+        "placeholder": "Enter Stock"
+      },
+      "reserved": {
+        "label": "Reserved",
+        "placeholder": "Enter Reserved"
+      },
+      "available": {
+        "label": "Available",
+        "placeholder": "Enter Available"
+      }
+    },
+    "product": {
+      "title": {
+        "label": "Title",
+        "placeholder": "Enter product title"
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Enter product description"
+      },
+      "media": {
+        "title": "Product media"
+      },
+      "variant": {
+        "list": {
+          "label": "Variants amount"
+        },
+        "price": {
+          "amount": {
+            "label": "Amount",
+            "placeholder": "Enter product variants price amount"
+          },
+          "currency": {
+            "label": "Currency",
+            "placeholder": "Enter product variants price currency"
+          }
+        }
+      }
+    },
     "user": {
       "firstName": {
         "label": "First Name",
@@ -115,6 +157,9 @@
       "avatar": {
         "title": "Avatar"
       },
+      "asPartner": {
+        "label": "As Partner"
+      },
       "password": {
         "label": "Password",
         "placeholder": "Enter your password",
@@ -131,6 +176,13 @@
           "oneOf": "Passwords do not match",
           "required": "Confirm password is required"
         }
+      }
+    }
+  },
+  "changeStock": {
+    "button": {
+      "submit": {
+        "label": "Change"
       }
     }
   },
@@ -152,6 +204,27 @@
     "button": {
       "submit": {
         "label": "Create"
+      }
+    }
+  },
+  "updateBrand": {
+    "button": {
+      "submit": {
+        "label": "Update"
+      }
+    }
+  },
+  "createProduct": {
+    "button": {
+      "submit": {
+        "label": "Create"
+      }
+    }
+  },
+  "createProductVariant": {
+    "button": {
+      "submit": {
+        "label": "Add"
       }
     }
   },

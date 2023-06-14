@@ -8,13 +8,8 @@ fragment Product on Product {
   media {
     ...Media
   }
-  colors {
-    ...Color
-  }
-  sizes {
-    ...Size
-  }
   productVariants {
     ...ProductVariant
   }
+  createdAt
 }

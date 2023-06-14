@@ -4,7 +4,7 @@ import { Button } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
 import { SELF_URL } from "@/constants/urls";
-import { MyCartDocument, PaymentIntentFragment, usePlaceOrderFromUserCartMutation, useUpdateOneOrderMutation } from "@/lib/graphql/schema.generated";
+import { MyCartDocument, PaymentIntentFragment, usePlaceOrderFromUserCartMutation, useRejectOrderMutation, useUpdateOneOrderMutation } from "@/lib/graphql/schema.generated";
 import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { PaymentMethodCreateParams } from "@stripe/stripe-js/types/api/payment-methods";
 import { map } from "lodash";
@@ -24,6 +24,7 @@ const CreditCardForm: FC<CreditCardFormProps> = ({ paymentIntent, billingDetails
   const [message, setMessage] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
   const [placeOrderFromUserCartMutation, { client }] = usePlaceOrderFromUserCartMutation();
+  const [rejectOrderMutation] = useRejectOrderMutation();
   const [updateOneOrderMutation] = useUpdateOneOrderMutation();
 
   const handleError = (error: any) => {
@@ -80,6 +81,17 @@ const CreditCardForm: FC<CreditCardFormProps> = ({ paymentIntent, billingDetails
           setMessage(error.message);
         } else {
           setMessage("An unexpected error occurred.");
+        }
+
+        // Reject order if error happened
+        for (const order of orders) {
+          await rejectOrderMutation({
+            variables: {
+              input: {
+                id: order.id
+              }
+            }
+          })
         }
 
         setIsLoading(false);

@@ -1,7 +1,6 @@
 import { Box, Button, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
-import { Categories } from "@/lib/graphql/schema.generated";
 import { useTranslation } from "@/lib/i18n";
 import { LngProps } from "@/lib/types/params.type";
 import Image from "next/image";
@@ -40,7 +39,7 @@ const Welcome = async ({ lng }: WelcomeProps) => {
           <Text variant={"h4"} paragraph>
             {t("welcome.description")}
           </Text>
-          <Button variant={"primary"} href={`${Routes.Catalog.href}/${Categories.Women}`}>
+          <Button variant={"primary"} href={Routes.Catalog.href}>
             {t("welcome.button.text")}
           </Button>
         </Box>

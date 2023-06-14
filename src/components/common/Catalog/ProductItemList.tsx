@@ -1,13 +1,12 @@
 "use client";
 
 import ProductItem from "@/components/common/Catalog/ProductItem";
-import ProductPagination from "@/components/common/Catalog/ProductPagination";
 import { Box, Error } from "@/components/ui";
-import { Categories, ProductSortFields, SortDirection, useProductsQuery } from "@/lib/graphql/schema.generated";
+import { Categories, ProductSortFields, Sizes, SortDirection, useProductsQuery } from "@/lib/graphql/schema.generated";
 import { parseIntOrDefault } from "@/lib/utils/parser.utils";
 import { ProductFilterBuilder } from "@/lib/utils/product-filter.builder";
 import { ProductSortBuilder } from "@/lib/utils/product-sort.builder";
-import { Skeleton } from "@mui/material";
+import { Pagination, Skeleton } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { FC, useEffect, useState } from "react";
 
@@ -19,18 +18,20 @@ interface ProductCardListProps {
 const ProductItemList: FC<ProductCardListProps> = ({ category, parentCategory }) => {
   const searchParams = useSearchParams();
 
-  const limit = parseIntOrDefault(searchParams.get("limit"), 12);
-  const offset = parseIntOrDefault(searchParams.get("offset"));
+  const [limit, setLimit] = useState<number>(12);
+  const [offset, setOffset] = useState<number>(0);
+  const [pageCount, setPageCount] = useState<number>(0);
 
   const [searchQuery, setSearchQuery] = useState(searchParams.get("searchQuery"));
   const [price, setPrice] = useState(searchParams.get("price")?.split(","));
   const [brands, setBrands] = useState(searchParams.get("brands")?.split(","));
   const [colors, setColors] = useState(searchParams.get("colors")?.split(","));
-  const [sizes, setSizes] = useState(searchParams.get("sizes")?.split(","));
+  const [sizes, setSizes] = useState(searchParams.get("sizes")?.split(",") as Sizes[]);
   const [field, setField] = useState(searchParams.get("field"));
   const [direction, setDirection] = useState(searchParams.get("direction"));
 
   const { data, loading, error, refetch } = useProductsQuery({
+    onCompleted: ({ products }) => setPageCount(Math.ceil(products.totalCount / limit)),
     variables: {
       paging: {
         limit,
@@ -46,7 +47,7 @@ const ProductItemList: FC<ProductCardListProps> = ({ category, parentCategory })
         .build(),
       sorting: new ProductSortBuilder()
         .add(field as ProductSortFields, direction as SortDirection)
-        .build()
+        .build(),
     },
   });
 
@@ -55,7 +56,7 @@ const ProductItemList: FC<ProductCardListProps> = ({ category, parentCategory })
     const price = searchParams.get("price")?.split(",");
     const brands = searchParams.get("brands")?.split(",");
     const colors = searchParams.get("colors")?.split(",");
-    const sizes = searchParams.get("sizes")?.split(",");
+    const sizes = searchParams.get("sizes")?.split(",") as Sizes[];
 
     const field = searchParams.get("field") as ProductSortFields;
     const direction = searchParams.get("direction") as SortDirection;
@@ -70,7 +71,7 @@ const ProductItemList: FC<ProductCardListProps> = ({ category, parentCategory })
         .build(),
       sorting: new ProductSortBuilder()
         .add(field as ProductSortFields, direction as SortDirection)
-        .build()
+        .build(),
     });
   }, [category, parentCategory, searchParams, refetch]);
 
@@ -96,7 +97,16 @@ const ProductItemList: FC<ProductCardListProps> = ({ category, parentCategory })
           <ProductItem key={product.id} product={product} />
         ))}
       </Box>
-      <ProductPagination />
+      <Pagination
+        count={pageCount}
+        page={offset / limit + 1}
+        onChange={(e, page) => setOffset((page - 1) * limit)}
+        size={"large"}
+        variant={"outlined"}
+        color={"primary"}
+        showFirstButton
+        showLastButton
+      />
     </Box>
   );
 };

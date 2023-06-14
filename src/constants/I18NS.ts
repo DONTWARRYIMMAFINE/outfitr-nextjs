@@ -14,6 +14,7 @@ export enum I18NS {
   Cart = "cart",
   Checkout = "checkout",
   Order = "order",
+  Product = "product",
   Partner = "partner",
   Profile = "profile",
 }

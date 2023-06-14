@@ -36,7 +36,7 @@ import {
   Star,
   LocalShippingOutlined,
   CheckCircleOutlined,
-  CancelOutlined
+  CancelOutlined, TrendingUpOutlined,
 } from "@mui/icons-material";
 
 const Icons = {
@@ -75,7 +75,8 @@ const Icons = {
   StarFilled: Star,
   Shipping: LocalShippingOutlined,
   Complete: CheckCircleOutlined,
-  Reject: CancelOutlined
+  Reject: CancelOutlined,
+  Promote: TrendingUpOutlined
 };
 
 export default Icons;

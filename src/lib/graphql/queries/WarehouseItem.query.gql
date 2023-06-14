@@ -1,0 +1,5 @@
+query WarehouseItem($input: ReadWarehouseItemInput!) {
+  warehouseItem(input: $input) {
+    ...WarehouseItem
+  }
+}

@@ -1,7 +1,9 @@
 "use client";
 
+import { UpdateBrandSchema } from "@/components/common/forms/schema/update-brand.schema";
 import { Box, Button, TextField } from "@/components/ui";
-import { BrandFragment, UpdateOneBrandInput } from "@/lib/graphql/schema.generated";
+import { I18NS } from "@/constants/I18NS";
+import { BrandFragment, UpdateBrandInput } from "@/lib/graphql/schema.generated";
 import { Formik } from "formik";
 import { omit } from "lodash";
 import { FC } from "react";
@@ -9,7 +11,7 @@ import { withTranslation, WithTranslation } from "react-i18next";
 
 interface UpdateBrandFormProps extends WithTranslation {
   brand: BrandFragment;
-  onSubmit: (values: UpdateOneBrandInput["update"]) => void;
+  onSubmit: (values: UpdateBrandInput) => void;
 }
 
 const UpdateBrandForm: FC<UpdateBrandFormProps> = ({ brand, onSubmit, t }) => {
@@ -19,7 +21,7 @@ const UpdateBrandForm: FC<UpdateBrandFormProps> = ({ brand, onSubmit, t }) => {
         code: brand.code,
         name: brand.name,
       }}
-      validationSchema={UpdateBrandForm}
+      validationSchema={UpdateBrandSchema}
       onSubmit={values => onSubmit(omit(values, "code"))}
     >
       {({ handleSubmit, isValid, values, handleChange, errors }) => (
@@ -29,8 +31,8 @@ const UpdateBrandForm: FC<UpdateBrandFormProps> = ({ brand, onSubmit, t }) => {
               id={"code"}
               name={"code"}
               type={"text"}
-              label={t("component.form.brand.code.label")}
-              placeholder={t("component.form.brand.code.placeholder")!}
+              label={t("field.brand.code.label")}
+              placeholder={t("field.brand.code.placeholder")!}
               value={values.code}
               error={Boolean(errors.code)}
               helperText={errors.code}
@@ -43,8 +45,8 @@ const UpdateBrandForm: FC<UpdateBrandFormProps> = ({ brand, onSubmit, t }) => {
               id={"name"}
               name={"name"}
               type={"text"}
-              label={t("component.form.brand.name.label")}
-              placeholder={t("component.form.brand.name.placeholder")!}
+              label={t("field.brand.name.label")}
+              placeholder={t("field.brand.name.placeholder")!}
               value={values.name}
               onChange={handleChange}
               error={Boolean(errors.name)}
@@ -55,7 +57,7 @@ const UpdateBrandForm: FC<UpdateBrandFormProps> = ({ brand, onSubmit, t }) => {
             />
           </Box>
           <Button variant={"primary"} disabled={!isValid} onClick={() => handleSubmit()} fullWidth>
-            {t("component.button.save")}
+            {t("updateBrand.button.submit.label")}
           </Button>
         </Box>
       )}
@@ -63,4 +65,4 @@ const UpdateBrandForm: FC<UpdateBrandFormProps> = ({ brand, onSubmit, t }) => {
   );
 };
 
-export default withTranslation()(UpdateBrandForm);
+export default withTranslation(I18NS.Form)(UpdateBrandForm);

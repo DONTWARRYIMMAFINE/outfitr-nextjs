@@ -1,0 +1,5 @@
+mutation DeleteOneProduct($input: DeleteOneProductInput!) {
+  deleteOneProduct(input: $input) {
+    id
+  }
+}

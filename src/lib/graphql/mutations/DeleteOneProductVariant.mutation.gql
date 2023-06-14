@@ -1,0 +1,6 @@
+mutation DeleteOneProductVariant($input: DeleteOneProductVariantInput!) {
+    deleteOneProductVariant(input: $input) {
+        id
+        sku
+    }
+}

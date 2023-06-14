@@ -33,11 +33,18 @@
       "label": "Addresses",
       "description": "TODO",
       "empty": "You don't have any delivery address yet",
+      "modal": {
+        "title": "Edit address"
+      },
       "button": {
         "edit": {
+          "success": "Address updated successfully",
+          "error": "Unable to update address. {{message}}",
           "label": "Edit"
         },
         "delete": {
+          "success": "Address deleted successfully",
+          "error": "Unable to delete address. {{message}}",
           "label": "Delete"
         }
       }

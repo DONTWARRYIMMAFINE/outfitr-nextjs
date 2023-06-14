@@ -11,13 +11,15 @@ interface CheckboxGroupProps {
   options: CheckboxGroupItem[];
   selectedValues?: string[];
   onClick: (value: string) => void;
+  field?: "id" | "code";
 }
 
-const CheckboxGroup: FC<CheckboxGroupProps> = ({ options, selectedValues, onClick }) => {
+const CheckboxGroup: FC<CheckboxGroupProps> = ({ options, selectedValues, onClick, field = "code" }) => {
   return (
     <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"} gap={1}>
       {options.map(({ id, code, name }) => {
-        const selected = selectedValues ? selectedValues?.indexOf(code) > -1 : false;
+        const value = field === "id" ? id : code;
+        const selected = selectedValues ? selectedValues?.indexOf(value) > -1 : false;
 
         return (
           <Button
@@ -25,7 +27,7 @@ const CheckboxGroup: FC<CheckboxGroupProps> = ({ options, selectedValues, onClic
             variant={"outlined"}
             selected={selected}
             size={"small"}
-            onClick={() => onClick(code)}
+            onClick={() => onClick(value)}
           >
             {name}
           </Button>

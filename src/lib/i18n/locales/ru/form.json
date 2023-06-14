@@ -77,6 +77,48 @@
         "placeholder": "Введите название"
       }
     },
+    "warehouseItem": {
+      "stock": {
+        "label": "В наличии",
+        "placeholder": "Введите количество в наличии"
+      },
+      "reserved": {
+        "label": "Зарезервировано",
+        "placeholder": "Зарезервированное количество"
+      },
+      "available": {
+        "label": "Доступно",
+        "placeholder": "Доступное количество"
+      }
+    },
+    "product": {
+      "title": {
+        "label": "Название",
+        "placeholder": "Введите название товара"
+      },
+      "description": {
+        "label": "Описание",
+        "placeholder": "Введите описание товара"
+      },
+      "media": {
+        "title": "Изображения товара"
+      },
+      "variant": {
+        "list": {
+          "label": "Количество вариантов товара"
+        },
+        "price": {
+          "amount": {
+            "label": "Значение",
+            "placeholder": "Введите значение стоимости товара"
+          },
+          "currency": {
+            "label": "Валюта",
+            "placeholder": "Введите валюту стоимости товара"
+          }
+        }
+      }
+    },
     "user": {
       "firstName": {
         "label": "Имя",
@@ -115,6 +157,9 @@
       "avatar": {
         "title": "Иозбражение"
       },
+      "asPartner": {
+        "label": "Стать партнером"
+      },
       "password": {
         "label": "Пароль",
         "placeholder": "Введите пароль",
@@ -131,6 +176,13 @@
           "oneOf": "Пароли не совпадают",
           "required": "Подтверждение пароля необходимо"
         }
+      }
+    }
+  },
+  "changeStock": {
+    "button": {
+      "submit": {
+        "label": "Изменить"
       }
     }
   },
@@ -152,6 +204,27 @@
     "button": {
       "submit": {
         "label": "Создать"
+      }
+    }
+  },
+  "updateBrand": {
+    "button": {
+      "submit": {
+        "label": "Обновить"
+      }
+    }
+  },
+  "createProduct": {
+    "button": {
+      "submit": {
+        "label": "Создать"
+      }
+    }
+  },
+  "createProductVariant": {
+    "button": {
+      "submit": {
+        "label": "Добавить"
       }
     }
   },

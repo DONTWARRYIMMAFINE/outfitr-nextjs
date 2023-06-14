@@ -8,12 +8,30 @@
       "label": "Brands",
       "list": {
         "empty": "You don't have any brands yet"
+      },
+      "modal": {
+        "title": "Update brand"
+      },
+      "button": {
+        "edit": {
+          "success": "Brand updated successfully",
+          "error": "Unable to update brand. {{message}}",
+          "label": "Edit"
+        },
+        "delete": {
+          "success": "Brand deleted successfully",
+          "error": "Unable to delete brand. {{message}}",
+          "label": "Delete"
+        }
       }
     },
     "products": {
       "title": "Your Products",
       "label": "Products",
-      "empty": "You don't have any products yet"
+      "zeroBrands": "You should create at least one brand",
+      "list": {
+        "empty": "You don't have any products yet"
+      }
     },
     "receivedOrders": {
       "title": "Received Orders",

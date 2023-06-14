@@ -16,6 +16,15 @@
         }
       }
     },
+    "createBrand": {
+      "success": "Бренд создан успешно",
+      "error": "Не удалось создать бренд. {{message}}",
+      "button": {
+        "expand": {
+          "label": "Создать бренд"
+        }
+      }
+    },
     "addToCartButton": {
       "label": "В корзину",
       "success": "Товар добавлен в корзину",
@@ -28,6 +37,15 @@
       "buttonLabel": "нажмите здесь",
       "rightLabel": "чтобы выбрать файлы",
       "buttonRemoveLabel": "Удалить все"
+    },
+    "createProduct": {
+      "success": "Товар создан успешно",
+      "error": "Не удалось создать продукт. {{message}}",
+      "button": {
+        "expand": {
+          "label": "Разместить товар"
+        }
+      }
     }
   }
 }

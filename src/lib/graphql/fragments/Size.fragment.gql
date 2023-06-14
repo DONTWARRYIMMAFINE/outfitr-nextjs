@@ -2,4 +2,5 @@ fragment Size on Size {
   id
   code
   name
+  createdAt
 }

@@ -16,6 +16,15 @@
         }
       }
     },
+    "createBrand": {
+      "success": "Brand created successfully",
+      "error": "Unable to create brand. {{message}}",
+      "button": {
+        "expand": {
+          "label": "Create Brand"
+        }
+      }
+    },
     "addToCartButton": {
       "label": "Add To Cart",
       "success": "Product added to cart successfully",
@@ -28,6 +37,15 @@
       "buttonLabel": "click here",
       "rightLabel": "to select files",
       "buttonRemoveLabel": "Remove all"
+    },
+    "createProduct": {
+      "success": "Product created successfully",
+      "error": "Unable to create product. {{message}}",
+      "button": {
+        "expand": {
+          "label": "Create product"
+        }
+      }
     }
   }
 }

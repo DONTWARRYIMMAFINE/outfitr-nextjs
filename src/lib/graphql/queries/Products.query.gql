@@ -3,5 +3,6 @@ query Products($filter: ProductFilter, $paging: OffsetPaging, $sorting: [Product
     nodes {
       ...Product
     }
+    totalCount
   }
 }

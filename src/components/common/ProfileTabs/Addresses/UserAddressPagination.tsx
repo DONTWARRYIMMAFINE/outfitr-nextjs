@@ -3,7 +3,7 @@
 import { Error } from "@/components/ui";
 import { useUserAddressesTotalCountQuery } from "@/lib/graphql/schema.generated";
 import { parseIntOrDefault } from "@/lib/utils/parser.utils";
-import { Pagination } from "@mui/lab";
+import { Pagination } from "@mui/material";
 import { usePathname, useRouter } from "next-intl/client";
 import { useSearchParams } from "next/navigation";
 import { FC, useState } from "react";

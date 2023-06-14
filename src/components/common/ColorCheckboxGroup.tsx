@@ -7,13 +7,15 @@ interface RoundedCheckboxGroupProps {
   options: ColorFragment[];
   selectedValues?: string[];
   onClick: (value: string) => void;
+  field?: "id" | "code";
 }
 
-const ColorCheckboxGroup: FC<RoundedCheckboxGroupProps> = ({ options, selectedValues, onClick }) => {
+const ColorCheckboxGroup: FC<RoundedCheckboxGroupProps> = ({ options, selectedValues, onClick, field = "code" }) => {
   return (
     <Box display={"flex"} flexWrap={"wrap"} gap={1}>
       {options.map(({ id, code, name, hex }) => {
-        const selected = selectedValues ? selectedValues?.indexOf(code) > -1 : false;
+        const value = field === "id" ? id : code;
+        const selected = selectedValues ? selectedValues?.indexOf(value) > -1 : false;
 
         return (
           <ColorSelectableButton
@@ -21,7 +23,7 @@ const ColorCheckboxGroup: FC<RoundedCheckboxGroupProps> = ({ options, selectedVa
             name={name}
             color={hex}
             selected={selected}
-            onClick={() => onClick(code)}
+            onClick={() => onClick(value)}
           />
         );
       })}

@@ -1,4 +1,4 @@
-import { Categories, ProductFilter } from "@/lib/graphql/schema.generated";
+import { Categories, ProductFilter, Sizes } from "@/lib/graphql/schema.generated";
 import { merge } from "lodash";
 
 export class ProductFilterBuilder {
@@ -58,40 +58,40 @@ export class ProductFilterBuilder {
 
   public category(category?: Categories, parentCategory?: Categories): ProductFilterBuilder {
     if (category) {
-      if (parentCategory) {
-        this.filter = merge<ProductFilter, ProductFilter>({
-          and: [
-            {
-              and: [
-                {
-                  category: {
-                    parent: {
-                      code: {
-                        eq: parentCategory,
-                      },
-                    },
-                    code: {
-                      eq: category,
-                    },
-                  },
-                },
-              ],
-            },
-          ],
-        }, this.filter);
-      } else {
-        this.filter = merge<ProductFilter, ProductFilter>({
-          and: [
-            {
-              category: {
-                code: {
-                  eq: category,
-                },
+      this.filter = merge<ProductFilter, ProductFilter>({
+        and: [
+          {
+            category: {
+              code: {
+                eq: category,
               },
             },
-          ],
-        }, this.filter);
-      }
+          },
+        ],
+      }, this.filter);
+    }
+
+    if (parentCategory) {
+      this.filter = merge<ProductFilter, ProductFilter>({
+        and: [
+          {
+            and: [
+              {
+                category: {
+                  parent: {
+                    code: {
+                      eq: parentCategory,
+                    },
+                  },
+                  code: {
+                    eq: category,
+                  },
+                },
+              },
+            ],
+          },
+        ],
+      }, this.filter);
     }
 
     return this;
@@ -127,7 +127,7 @@ export class ProductFilterBuilder {
     return this;
   }
 
-  public sizes(sizes?: string[] | null): ProductFilterBuilder {
+  public sizes(sizes?: Sizes[] | null): ProductFilterBuilder {
     if (sizes && sizes.length > 0) {
       this.filter.and = this.filter.and?.concat({
         productVariants: {
@@ -144,6 +144,7 @@ export class ProductFilterBuilder {
   }
 
   public build(): ProductFilter {
+    console.log("this.filter", this.filter);
     return this.filter;
   }
 }

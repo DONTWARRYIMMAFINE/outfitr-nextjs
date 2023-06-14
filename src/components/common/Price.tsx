@@ -10,7 +10,7 @@ export interface PriceProps extends TextProps, WithTranslation {
   currency?: string;
 }
 
-const Price: FC<PriceProps> = ({ amount = 0, currency = "BYN", i18n, ...props }) => {
+const Price: FC<PriceProps> = ({ amount = 0, currency = "BYN", i18n, t, tReady, ...props }) => {
   const currencyFormatter = useMemo(() => new Intl.NumberFormat(i18n.language, {
     style: "currency",
     currency,

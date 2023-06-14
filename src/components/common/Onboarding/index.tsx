@@ -2,7 +2,6 @@ import OnboardingRow from "@/components/common/Onboarding/OnboardingRow";
 import { Box } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
-import { Categories } from "@/lib/graphql/schema.generated";
 import { useTranslation } from "@/lib/i18n";
 import { LngProps } from "@/lib/types/params.type";
 
@@ -20,7 +19,7 @@ const Onboarding = async ({ lng }: OnboardingProps) => {
           advertising={t(`onboarding.${index}.advertising`)}
           title={t(`onboarding.${index}.title`)}
           description={t(`onboarding.${index}.description`)}
-          button={{ href: `${Routes.Catalog.href}/${Categories.Women}`, text: t(`onboarding.${index}.button.text`) }}
+          button={{ href: Routes.Catalog.href, text: t(`onboarding.${index}.button.text`) }}
           reversed={index % 2 !== 0}
         />
       ))}

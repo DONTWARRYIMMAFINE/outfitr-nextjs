@@ -36,9 +36,11 @@ const BrandsTab: FC<BrandsTabProps> = ({ t, tReady, ...props }) => {
       <CreateBrandCollapsable expandByDefault={data.brands.nodes.length === 0} />
       {data.brands.nodes.length === 0
         ? <Text variant={"p"}>{t("tabs.brands.list.empty")}</Text>
-        : data.brands.nodes.map(brand => (
-          <Brand key={brand.id} brand={brand} />
-        ))
+        : <>
+          {data.brands.nodes.map(brand => (
+            <Brand key={brand.id} brand={brand} />
+          ))}
+        </>
       }
     </TabPanel>
   );

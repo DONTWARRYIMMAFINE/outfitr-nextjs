@@ -6,6 +6,9 @@
     "description": {
       "label": "Description"
     },
+    "brand": {
+      "label": "Brand"
+    },
     "colors": {
       "label": "Colors"
     },

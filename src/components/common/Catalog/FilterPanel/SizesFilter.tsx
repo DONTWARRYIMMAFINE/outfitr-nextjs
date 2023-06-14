@@ -13,12 +13,13 @@ import Box from "../../../ui/Box";
 interface SizesFilterProps extends WithTranslation {
   selectedValues: string[];
   handleFilterChange: (value: string) => void;
+  field?: "id" | "code";
 }
 
-const SizesFilter: FC<SizesFilterProps> = ({ selectedValues, handleFilterChange, t }) => {
+const SizesFilter: FC<SizesFilterProps> = ({ selectedValues, handleFilterChange, field, t }) => {
   const { data, loading, error } = useSizesQuery();
 
-  if (error) return <Error message={t("content.filter.sizes.error", { message: error.message })!}/>;
+  if (error) return <Error message={t("content.filter.sizes.error", { message: error.message })!} />;
   if (loading || !data) return <Skeleton variant={"rectangular"} height={180} width={"100%"} />;
 
   return (
@@ -28,6 +29,7 @@ const SizesFilter: FC<SizesFilterProps> = ({ selectedValues, handleFilterChange,
         options={data.sizes.nodes}
         selectedValues={selectedValues}
         onClick={handleFilterChange}
+        field={field}
       />
     </Box>
   );

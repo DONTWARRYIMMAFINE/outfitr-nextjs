@@ -1,0 +1,11 @@
+fragment WarehouseItem on WarehouseItem {
+    id
+    stock
+    reserved
+    available
+    warehouseId
+    productVariantId
+    productVariant {
+        ...ProductVariant
+    }
+}

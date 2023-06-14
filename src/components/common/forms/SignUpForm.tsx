@@ -8,13 +8,14 @@ import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
 import { SignupMutationVariables } from "@/lib/graphql/schema.generated";
 import { ApolloError } from "@apollo/client";
+import { Checkbox, FormControlLabel } from "@mui/material";
 import { Formik } from "formik";
-import { FC } from "react";
+import React, { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
 import { ExtendedFileProps } from "react-mui-fileuploader/dist/types/index.types";
 
 interface SignUpFormProps extends WithTranslation {
-  onSubmit: (values: SignupMutationVariables["input"]) => void;
+  onSubmit: (values: SignupMutationVariables["input"], asPartner: boolean) => void;
   onFilesChange: (files: ExtendedFileProps[]) => void;
   error?: ApolloError;
 }
@@ -29,11 +30,15 @@ const SignUpForm: FC<SignUpFormProps> = ({ onSubmit, onFilesChange, error, t }) 
         lastName: "",
         password: "",
         passwordConfirmation: "",
+        asPartner: false,
       }}
       validationSchema={SignUpSchema}
-      onSubmit={values => onSubmit(values)}
+      onSubmit={values => {
+        const { asPartner, ...input } = values;
+        onSubmit(input, asPartner);
+      }}
     >
-      {({ handleSubmit, isValid, values, handleChange, errors }) => (
+      {({ handleSubmit, isValid, values, setValues, handleChange, errors }) => (
         <Box
           display={"flex"}
           flexDirection={"column"}
@@ -105,6 +110,17 @@ const SignUpForm: FC<SignUpFormProps> = ({ onSubmit, onFilesChange, error, t }) 
             title={t("field.user.avatar.title")!}
             onFilesChange={onFilesChange}
           />
+          <Box width={"100%"}>
+            <FormControlLabel
+              label={t("field.user.asPartner.label")}
+              control={
+                <Checkbox
+                  checked={values.asPartner}
+                  onChange={e => setValues({ ...values, asPartner: e.target.checked })}
+                />
+              }
+            />
+          </Box>
           <SecureIconTextField
             id={"password"}
             name={"password"}

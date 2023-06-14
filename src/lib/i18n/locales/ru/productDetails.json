@@ -6,6 +6,9 @@
     "description": {
       "label": "Описание"
     },
+    "brand": {
+      "label": "Бренд"
+    },
     "colors": {
       "label": "Цвета"
     },

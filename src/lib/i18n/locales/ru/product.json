@@ -1,0 +1,73 @@
+{
+  "header": {
+    "title": {
+      "label": "Название"
+    },
+    "brand": {
+      "label": "Бренд"
+    }
+  },
+  "content": {
+    "title": {
+      "label": "Название"
+    },
+    "description": {
+      "label": "Описание"
+    },
+    "images": {
+      "label": "Изображения"
+    },
+    "variants": {
+      "label": "Варианты"
+    },
+    "modal": {
+      "changeStock": {
+        "success": "Количество товаров на складе изменено",
+        "error": "Не удалось изменить количество товара на складе. {{message}}",
+        "title": "Измнеить количество товаров на складе"
+      }
+    },
+    "productActions": {
+      "label": "Действия",
+      "button": {
+        "promote": {
+          "label": "Продвинуть"
+        },
+        "delete": {
+          "success": "Товар удален",
+          "error": "Не удалось обновить товар. {{message}}",
+          "label": "Удалить"
+        }
+      }
+    },
+    "variant": {
+      "sku": {
+        "label": "Артикул"
+      },
+      "color": {
+        "label": "Цвет"
+      },
+      "size": {
+        "label": "Размер"
+      },
+      "stock": {
+        "label": "На складе"
+      },
+      "button": {
+        "edit": {
+          "success": "Вариант товара [{{sku}}] обновлен",
+          "error": "Не удалось обновить вариант товара [{{sku}}]. {{message}}",
+          "label": "Изменить"
+        },
+        "delete": {
+          "success": "Вариант товара [{{sku}}] удален",
+          "error": "Не удалось обновить вариант товара [{{sku}}]. {{message}}",
+          "label": "Удалить"
+        },
+        "changeStock": {
+          "label": "Склад"
+        }
+      }
+    }
+  }
+}

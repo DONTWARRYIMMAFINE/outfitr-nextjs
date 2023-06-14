@@ -12,9 +12,10 @@ import { WithTranslation, withTranslation } from "react-i18next";
 interface ColorsFilterProps extends WithTranslation {
   selectedValues: string[];
   handleFilterChange: (value: string) => void;
+  field?: "id" | "code";
 }
 
-const ColorsFilter: FC<ColorsFilterProps> = ({ selectedValues, handleFilterChange, t }) => {
+const ColorsFilter: FC<ColorsFilterProps> = ({ selectedValues, handleFilterChange, field, t }) => {
   const { data, loading, error } = useColorsQuery();
 
   if (error) return <Error message={t("content.filter.colors.error", { message: error.message })!} />;
@@ -27,6 +28,7 @@ const ColorsFilter: FC<ColorsFilterProps> = ({ selectedValues, handleFilterChang
         options={data.colors.nodes}
         selectedValues={selectedValues}
         onClick={handleFilterChange}
+        field={field}
       />
     </Box>
   );

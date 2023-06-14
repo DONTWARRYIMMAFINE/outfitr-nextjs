@@ -1,0 +1,5 @@
+mutation SetWarehouseItemsInWarehouse($input: UpdateOneWarehouseInputType!) {
+  setWarehouseItemsInWarehouse(input: $input) {
+    ...Warehouse
+  }
+}

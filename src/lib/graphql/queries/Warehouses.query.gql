@@ -1,0 +1,7 @@
+query Warehouses($filter: WarehouseFilter, $sorting: [WarehouseSort!], $paging: OffsetPaging) {
+  warehouses(filter: $filter, paging: $paging, sorting: $sorting) {
+    nodes {
+      ...Warehouse
+    }
+  }
+}

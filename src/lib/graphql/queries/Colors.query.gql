@@ -1,10 +1,7 @@
 query Colors($filter: ColorFilter, $paging: OffsetPaging, $sorting: [ColorSort!]) {
   colors(filter: $filter, paging: $paging, sorting: $sorting) {
     nodes {
-      id
-      code
-      name
-      hex
+      ...Color
     }
   }
 }
