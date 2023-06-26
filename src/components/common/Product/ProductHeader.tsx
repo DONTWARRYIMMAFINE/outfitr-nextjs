@@ -1,5 +1,6 @@
-import Price from "@/components/common/Price";
-import PriceRange from "@/components/common/PriceRange";
+"use client";
+
+import { PriceRange } from "@/components/common";
 import { Box, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { ProductFragment } from "@/lib/graphql/schema.generated";

@@ -1,12 +1,12 @@
 "use client";
 
-import CategoriesMenu from "@/components/common/Header/CategoriesMenu";
 import { Box, Link, List, ListItem } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { mainRoutes, Routes } from "@/constants/routes";
 import { usePathname } from "next-intl/client";
 import { WithTranslation, withTranslation } from "react-i18next";
 import { Trans } from "react-i18next/TransWithoutContext";
+import CategoriesMenu from "./CategoriesMenu";
 
 export interface HeaderRoutesProps extends WithTranslation {
   direction?: "column" | "row";

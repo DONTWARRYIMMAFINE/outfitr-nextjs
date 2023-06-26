@@ -1,13 +1,12 @@
 "use client";
 
-import CardPaymentMethodItem from "@/components/common/Cart/Checkout/PaymentInfoStep/methods/CardPaymentMethodItem";
-import CashPaymentMethodItem from "@/components/common/Cart/Checkout/PaymentInfoStep/methods/CashPaymentMethodItem";
-import PaymentMethodItem from "@/components/common/Cart/Checkout/PaymentInfoStep/PaymentMethodItem";
-import { Box } from "@/components/ui";
-import Error from "@/components/ui/Error";
+import { Box, Error } from "@/components/ui";
 import { PaymentMethods, usePaymentMethodsQuery } from "@/lib/graphql/schema.generated";
 import { Skeleton } from "@mui/material";
 import { FC } from "react";
+import CardPaymentMethodItem from "./methods/CardPaymentMethodItem";
+import CashPaymentMethodItem from "./methods/CashPaymentMethodItem";
+import PaymentMethodItem from "./PaymentMethodItem";
 
 interface PaymentMethodListProps {}
 

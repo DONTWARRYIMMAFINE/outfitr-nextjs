@@ -7,29 +7,28 @@ interface CheckboxGroupItem {
   name: string;
 }
 
-interface CheckboxGroupProps {
+export interface CheckboxGroupProps {
+  field: keyof CheckboxGroupItem;
   options: CheckboxGroupItem[];
   selectedValues?: string[];
   onClick: (value: string) => void;
-  field?: "id" | "code";
 }
 
-const CheckboxGroup: FC<CheckboxGroupProps> = ({ options, selectedValues, onClick, field = "code" }) => {
+const CheckboxGroup: FC<CheckboxGroupProps> = ({ field, options, selectedValues, onClick }) => {
   return (
     <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"} gap={1}>
-      {options.map(({ id, code, name }) => {
-        const value = field === "id" ? id : code;
-        const selected = selectedValues ? selectedValues?.indexOf(value) > -1 : false;
+      {options.map(item => {
+        const selected = selectedValues ? selectedValues?.indexOf(item[field]) > -1 : false;
 
         return (
           <Button
-            key={id}
+            key={item.id}
             variant={"outlined"}
             selected={selected}
             size={"small"}
-            onClick={() => onClick(value)}
+            onClick={() => onClick(item[field])}
           >
-            {name}
+            {item.name}
           </Button>
         );
       })}

@@ -1,11 +1,11 @@
 "use client";
 
-import AccountMenu from "@/components/common/Header/AccountMenu";
 import { Badge, Box, IconButton, Icons, List, ListItem } from "@/components/ui";
 import { Routes } from "@/constants/routes";
 import { userCart, userWishlist } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
 import { usePathname } from "next-intl/client";
+import AccountMenu from "./AccountMenu";
 
 const DesktopNavigation = () => {
   const pathname = usePathname();

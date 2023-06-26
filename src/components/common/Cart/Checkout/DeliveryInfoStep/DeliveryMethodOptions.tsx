@@ -1,8 +1,7 @@
 "use client";
 
-import Price from "@/components/common/Price";
-import { Divider, Grid, Text } from "@/components/ui";
-import Error from "@/components/ui/Error";
+import { Price } from "@/components/common";
+import { Divider, Error, Grid, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { useDeliveryMethodsQuery, useUpdateOneCartMutation } from "@/lib/graphql/schema.generated";
 import { splitTime } from "@/lib/utils/dateTime.utils";
@@ -15,7 +14,7 @@ import { withTranslation, WithTranslation } from "react-i18next";
 
 interface DeliveryMethodSelectProps extends WithTranslation {}
 
-const DeliveryMethodOptions: FC<DeliveryMethodSelectProps> = ({t}) => {
+const DeliveryMethodOptions: FC<DeliveryMethodSelectProps> = ({ t }) => {
   const cart = useReactiveVar(userCart);
   const [updateOneCartMutation] = useUpdateOneCartMutation();
   const { data, loading, error } = useDeliveryMethodsQuery();
@@ -57,14 +56,15 @@ const DeliveryMethodOptions: FC<DeliveryMethodSelectProps> = ({t}) => {
             <Text variant={"p"}>{t("content.steps.deliveryInfo.table.header.2")}</Text>
           </Grid>
         </Grid>
-        <Divider/>
+        <Divider />
         {data.deliveryMethods.nodes.map(({ id, name, price, avgDeliveryTimeInHours }) => (
           <Grid key={id} container>
             <Grid item xs={4}>
               <FormControlLabel value={id} control={<Radio />} label={name} />
             </Grid>
             <Grid display={"flex"} item xs={4} justifyContent={"center"}>
-              <Text variant={"small"} opacity={0.7}>{avgDeliveryTimeInHours ? t("content.steps.deliveryInfo.table.body.avgDeliveryTime", splitTime(avgDeliveryTimeInHours)) : "-"}</Text>
+              <Text variant={"small"}
+                    opacity={0.7}>{avgDeliveryTimeInHours ? t("content.steps.deliveryInfo.table.body.avgDeliveryTime", splitTime(avgDeliveryTimeInHours)) : "-"}</Text>
             </Grid>
             <Grid display={"flex"} item xs={4} justifyContent={"flex-end"}>
               <Price amount={price.amount} currency={price.currency} />

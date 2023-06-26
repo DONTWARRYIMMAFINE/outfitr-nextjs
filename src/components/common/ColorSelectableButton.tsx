@@ -1,4 +1,4 @@
-import RoundedSelectableButton from "@/components/common/RoundedSelectableButton";
+import { RoundedSelectableButton } from "@/components/common";
 import { Box, Text } from "@/components/ui";
 import { FC, MouseEventHandler } from "react";
 

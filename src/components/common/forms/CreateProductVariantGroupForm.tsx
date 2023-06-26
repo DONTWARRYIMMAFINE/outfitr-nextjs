@@ -1,15 +1,15 @@
 "use client";
 
+import { Select } from "@/components/common";
 import ColorsFilter from "@/components/common/Catalog/FilterPanel/ColorsFilter";
 import SizesFilter from "@/components/common/Catalog/FilterPanel/SizesFilter";
-import { CreateProductVariantSchema } from "@/components/common/forms/schema/create-product-variant.schema";
-import Select from "@/components/common/Select";
 import { Box, Button, TextField } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { CreateProductVariantInput, Currencies } from "@/lib/graphql/schema.generated";
 import { Formik } from "formik";
 import { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
+import { CreateProductVariantSchema } from "./schema";
 
 function populateProductVariants(amount: number, currency: Currencies, colorIds: string[], sizeIds: string[]): Partial<CreateProductVariantInput>[] {
   const productVariants: Partial<CreateProductVariantInput>[] = [];
@@ -80,7 +80,7 @@ const CreateProductVariantGroupForm: FC<CreateProductVariantGroupFormProps> = ({
           <ColorsFilter
             field={"id"}
             selectedValues={values.colorIds}
-            handleFilterChange={value => {
+            onClick={value => {
               const exists = values.colorIds.indexOf(value) > -1;
               setValues({
                 ...values,
@@ -93,7 +93,7 @@ const CreateProductVariantGroupForm: FC<CreateProductVariantGroupFormProps> = ({
           <SizesFilter
             field={"id"}
             selectedValues={values.sizeIds}
-            handleFilterChange={value => {
+            onClick={value => {
               const exists = values.sizeIds.indexOf(value) > -1;
               setValues({
                 ...values,

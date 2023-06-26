@@ -1,11 +1,11 @@
 "use client";
 
-import ContactInfoForm from "@/components/common/forms/ContactInfoForm";
-import AvatarUpdate from "@/components/common/ProfileTabs/Main/AvatarUpdate";
+import { ContactInfoForm } from "@/components/common/forms";
 import { Box, TabPanel, Text } from "@/components/ui";
 import { TabPanelProps } from "@/components/ui/TabPanel";
 import { I18NS } from "@/constants/I18NS";
 import { WithTranslation, withTranslation } from "react-i18next";
+import AvatarUpdate from "./AvatarUpdate";
 
 interface MainTabProps extends Omit<TabPanelProps, "children">, WithTranslation {}
 

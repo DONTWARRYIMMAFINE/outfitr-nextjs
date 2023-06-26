@@ -1,4 +1,4 @@
-import Catalog from "@/components/common/Catalog";
+import { Catalog } from "@/components/common";
 import { PageContainer } from "@/components/ui";
 import { Categories } from "@/lib/graphql/schema.generated";
 import { LngParamsProps } from "@/lib/types/params.type";
@@ -6,7 +6,7 @@ import { Metadata } from "next";
 import { FC } from "react";
 
 export const metadata: Metadata = {
-  title: "Outfitr | Catalog",
+  title: "Catalog | Outfitr",
 };
 
 type CatalogPageProps = LngParamsProps & {

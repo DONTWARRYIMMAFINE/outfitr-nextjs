@@ -1,6 +1,6 @@
 "use client";
 
-import { UpdateBrandSchema } from "@/components/common/forms/schema/update-brand.schema";
+import { UpdateBrandSchema } from "./schema";
 import { Box, Button, TextField } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { BrandFragment, UpdateBrandInput } from "@/lib/graphql/schema.generated";

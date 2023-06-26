@@ -1,9 +1,9 @@
 "use client";
 
-import Order from "@/components/common/Order";
-import { Box, Text, Error } from "@/components/ui";
+import { Order } from "@/components/common";
+import { Box, Error, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
-import { useBrandsQuery, useOrdersQuery } from "@/lib/graphql/schema.generated";
+import { useOrdersQuery } from "@/lib/graphql/schema.generated";
 import { loggedInUser } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
 import { Skeleton } from "@mui/material";
@@ -23,18 +23,18 @@ const ReceivedOrderList: FC<ReceivedOrderListProps> = ({ t }) => {
             product: {
               brand: {
                 userId: {
-                  eq: user?.id
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+                  eq: user?.id,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   });
 
-  if (error) return <Error message={error.message} />
-  if (loading || !data) return <Skeleton variant={"rectangular"} height={180} />
+  if (error) return <Error message={error.message} />;
+  if (loading || !data) return <Skeleton variant={"rectangular"} height={180} />;
 
   return (
     <Box display={"flex"} flexDirection={"column"} gap={4}>

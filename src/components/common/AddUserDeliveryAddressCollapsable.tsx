@@ -1,8 +1,8 @@
 "use client";
 
-import CollapsableBox, { CollapsableBoxProps } from "@/components/common/CollapsableBox";
-import CreateAddressForm from "@/components/common/forms/CreateAddressForm";
-import { Box, IconButton, Icons, Link, Text } from "@/components/ui";
+import { CollapsableBox, CollapsableBoxProps } from "@/components/common";
+import { CreateAddressForm } from "@/components/common/forms";
+import { Box, Link } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { CreateAddressInput, useCreateOneUserAddressMutation, UserAddressesDocument } from "@/lib/graphql/schema.generated";
 import { loggedInUser } from "@/store/user.store";

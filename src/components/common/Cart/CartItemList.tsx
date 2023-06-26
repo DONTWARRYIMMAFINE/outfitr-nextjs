@@ -1,6 +1,5 @@
 "use client";
 
-import CartItem from "@/components/common/Cart/CartItem";
 import { Box, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { useAddCartItemsToCartMutation, useRemoveCartItemsFromCartMutation } from "@/lib/graphql/schema.generated";
@@ -10,6 +9,7 @@ import { FC } from "react";
 import toast from "react-hot-toast";
 import { WithTranslation, withTranslation } from "react-i18next";
 import { Trans } from "react-i18next/TransWithoutContext";
+import CartItem from "./CartItem";
 
 interface CartItemListProps extends WithTranslation {}
 
@@ -36,9 +36,9 @@ const CartItemList: FC<CartItemListProps> = ({ t }) => {
       },
       onCompleted: data => {
         userCart(data.addCartItemsToCart);
-        toast.success(t("content.button.add.success"));
+        toast.success(t("content.list.item.button.add.success"));
       },
-      onError: error => toast.error(t("content.button.add.error", { message: error.message })),
+      onError: error => toast.error(t("content.list.item.button.add.error", { message: error.message })),
     });
   };
 
@@ -63,9 +63,9 @@ const CartItemList: FC<CartItemListProps> = ({ t }) => {
       },
       onCompleted: data => {
         userCart(data.removeCartItemsFromCart);
-        toast.success(t("content.button.remove.success"));
+        toast.success(t("content.list.item.button.remove.success"));
       },
-      onError: error => toast.error(t("content.button.remove.error", { message: error.message })),
+      onError: error => toast.error(t("content.list.item.button.remove.error", { message: error.message })),
     });
   };
 

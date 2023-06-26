@@ -1,11 +1,11 @@
-import ProfileTabs from "@/components/common/ProfileTabs";
+import { ProfileTabs } from "@/components/common";
 import { PageContainer } from "@/components/ui";
 import { useTranslation } from "@/lib/i18n";
 import { LngParamsProps } from "@/lib/types/params.type";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Outfitr | Profile",
+  title: "Profile | Outfitr",
 };
 
 interface ProfilePageProps extends LngParamsProps {}

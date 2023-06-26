@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { FC } from "react";
 
 export const metadata: Metadata = {
-  title: "Outfitr | Contact Us",
+  title: "Contact Us | Outfitr",
 };
 
 interface PageProps {}

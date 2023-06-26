@@ -1,27 +1,14 @@
 "use client";
 
-import { Dot } from "@/components/common";
-import ModifyWishlistButton from "@/components/common/ModifyWishlistButton";
-import PriceRange from "@/components/common/PriceRange";
+import { Dot, ModifyWishlistButton, PriceRange } from "@/components/common";
 import { Box, Button, Image, Text } from "@/components/ui";
 import { Card, CardActions, CardContent, CardMedia } from "@/components/ui/Card";
 import { I18NS } from "@/constants/I18NS";
-import { ProductFragment, Sizes } from "@/lib/graphql/schema.generated";
+import { ProductFragment } from "@/lib/graphql/schema.generated";
 import { prepareBlurImage } from "@/lib/utils/image.helper";
-import { map, sortBy, uniqBy } from "lodash";
+import { map } from "lodash";
 import { useRouter } from "next-intl/client";
 import { WithTranslation, withTranslation } from "react-i18next";
-
-const sizeOrder = {
-  [Sizes.Xxs]: 1,
-  [Sizes.Xs]: 2,
-  [Sizes.S]: 3,
-  [Sizes.M]: 4,
-  [Sizes.L]: 5,
-  [Sizes.Xl]: 6,
-  [Sizes.Xxl]: 7,
-  [Sizes.Xxxl]: 8,
-} as const;
 
 export interface ProductCardProps extends WithTranslation {
   product: ProductFragment;
@@ -34,9 +21,6 @@ const ProductItem = ({ product, width = 235, t }: ProductCardProps) => {
     // Redirect to PDP
     router.push(`/product/${product?.id}`);
   };
-
-  const colors = uniqBy(map(product.productVariants, "color"), "id");
-  const sizes = uniqBy(map(product.productVariants, "size"), "id").sort((a, b) => sizeOrder[a.code] - sizeOrder[b.code])
 
   return (
     <Card sx={{ position: "relative", bgcolor: "background.body", maxWidth: width }}>
@@ -64,7 +48,7 @@ const ProductItem = ({ product, width = 235, t }: ProductCardProps) => {
           style={{ objectFit: "cover" }}
           fill
         />
-        <Box zIndex={100} position={"absolute"} top={0} left={0} padding={1} bgcolor={"background.textField"} borderRadius={0.5} sx={{opacity: 0.7}}>
+        <Box zIndex={100} position={"absolute"} top={0} left={0} padding={1} bgcolor={"background.textField"} borderRadius={0.5} sx={{ opacity: 0.7 }}>
           <Text variant={"small"} color={"primary"}>{product.brand.name}</Text>
         </Box>
         <ModifyWishlistButton sx={{ zIndex: 100, position: "absolute", top: 0, right: 0 }} productId={product.id} />
@@ -77,7 +61,7 @@ const ProductItem = ({ product, width = 235, t }: ProductCardProps) => {
             {t("content.productCard.colors.label")}
           </Text>
           <Box display={"flex"} flexWrap={"wrap"} gap={1}>
-            {colors.map(({ id, name, hex }) => (
+            {product.colors.map(({ id, name, hex }) => (
               <Box
                 key={id}
                 display={"flex"}
@@ -95,7 +79,7 @@ const ProductItem = ({ product, width = 235, t }: ProductCardProps) => {
             {t("content.productCard.sizes.label")}
           </Text>
           <Box display={"flex"} flexWrap={"wrap"} gap={1}>
-            {sizes.map(({ id, name }) => (
+            {product.sizes.map(({ id, name }) => (
               <Text key={id} variant={"tiny"}>{name}</Text>
             ))}
           </Box>

@@ -1,6 +1,6 @@
 "use client";
 
-import Product from "@/components/common/Product";
+import { Product } from "@/components/common";
 import { Box, Error, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { useProductsQuery } from "@/lib/graphql/schema.generated";

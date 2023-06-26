@@ -1,9 +1,5 @@
 "use client";
 
-import BrandsFilter from "@/components/common/Catalog/FilterPanel/BrandsFilter";
-import ColorsFilter from "@/components/common/Catalog/FilterPanel/ColorsFilter";
-import PriceFilter from "@/components/common/Catalog/FilterPanel/PriceFilter";
-import SizesFilter from "@/components/common/Catalog/FilterPanel/SizesFilter";
 import { Box, Button, Divider } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { isNotEmpty } from "@/lib/utils/string.utils";
@@ -11,6 +7,10 @@ import { usePathname, useRouter } from "next-intl/client";
 import { useSearchParams } from "next/navigation";
 import { FC, useState } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
+import BrandsFilter from "./BrandsFilter";
+import ColorsFilter from "./ColorsFilter";
+import PriceFilter from "./PriceFilter";
+import SizesFilter from "./SizesFilter";
 
 export interface FilterPanelProps extends WithTranslation {}
 
@@ -70,18 +70,21 @@ const FilterPanel: FC<FilterPanelProps> = ({ t }) => {
       />
       <Divider light flexItem />
       <BrandsFilter
+        field={"code"}
         selectedValues={selectedBrands}
-        handleFilterChange={value => handleFilterChange(value, selectedBrands, setSelectedBrands)}
+        onClick={value => handleFilterChange(value, selectedBrands, setSelectedBrands)}
       />
       <Divider light flexItem />
       <ColorsFilter
+        field={"code"}
         selectedValues={selectedColors}
-        handleFilterChange={value => handleFilterChange(value, selectedColors, setSelectedColors)}
+        onClick={value => handleFilterChange(value, selectedColors, setSelectedColors)}
       />
       <Divider light flexItem />
       <SizesFilter
+        field={"code"}
         selectedValues={selectedSizes}
-        handleFilterChange={value => handleFilterChange(value, selectedSizes, setSelectedSizes)}
+        onClick={value => handleFilterChange(value, selectedSizes, setSelectedSizes)}
       />
       <Divider light flexItem />
       <Button variant={"primary"} onClick={handleApplyFilter}>

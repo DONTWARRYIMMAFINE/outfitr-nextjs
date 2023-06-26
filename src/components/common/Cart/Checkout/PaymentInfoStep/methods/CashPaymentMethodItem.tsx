@@ -1,6 +1,5 @@
 "use client";
 
-import PaymentMethodItem, { PaymentMethodItemProps } from "@/components/common/Cart/Checkout/PaymentInfoStep/PaymentMethodItem";
 import { Button } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { MyCartDocument, usePlaceOrderFromUserCartMutation } from "@/lib/graphql/schema.generated";
@@ -9,6 +8,7 @@ import { usePathname, useRouter } from "next-intl/client";
 import { FC } from "react";
 import toast from "react-hot-toast";
 import { withTranslation, WithTranslation } from "react-i18next";
+import PaymentMethodItem, { PaymentMethodItemProps } from "../PaymentMethodItem";
 
 export interface CashPaymentMethodItemProps extends PaymentMethodItemProps, WithTranslation {}
 

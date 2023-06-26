@@ -1,6 +1,6 @@
 "use client";
 
-import Select, { SelectOption } from "@/components/common/Select";
+import { Select, SelectOption } from "@/components/common";
 import { Icons } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { ProductSort, ProductSortFields, SortDirection } from "@/lib/graphql/schema.generated";

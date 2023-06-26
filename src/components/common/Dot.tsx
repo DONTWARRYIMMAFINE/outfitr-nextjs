@@ -6,7 +6,7 @@ export interface DotProps {
   color: string;
 }
 
-const Dot: FC<DotProps> = ({radius = 6, color}) => {
+const Dot: FC<DotProps> = ({ radius = 6, color }) => {
   return (
     <Box
       width={radius * 2}

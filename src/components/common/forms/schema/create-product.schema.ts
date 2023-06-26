@@ -1,6 +1,6 @@
 import { object, string } from "yup";
 
-export const CreateProductSchema = object().shape({
+const CreateProductSchema = object().shape({
   brandId: string()
     .uuid("Value should be in UUIDv4 format")
     .required("Brand identifier is required"),
@@ -14,3 +14,5 @@ export const CreateProductSchema = object().shape({
   description: string()
     .max(8092, ({ max }) => `Description must be less than ${max} characters`),
 });
+
+export default CreateProductSchema;

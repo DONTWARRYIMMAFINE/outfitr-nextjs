@@ -1,5 +1,4 @@
-import { Logo } from "@/components/common";
-import LanguageSelector from "@/components/common/LanguageSelector";
+import { LanguageSelector, Logo } from "@/components/common";
 import { Box, Container, Grid, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { Routes, RouteValue } from "@/constants/routes";

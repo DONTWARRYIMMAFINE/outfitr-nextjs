@@ -1,6 +1,6 @@
 import { number, object, string } from "yup";
 
-export const CreateCommentSchema = object().shape({
+const CreateCommentSchema = object().shape({
   title: string()
     .min(2, ({ min }) => `Title must be at least ${min} characters`)
     .max(256, ({ max }) => `Title must be less than ${max} characters`)
@@ -13,3 +13,5 @@ export const CreateCommentSchema = object().shape({
     .max(5, ({ max }) => `Rating must be less than ${max}`)
     .required("Rating is required"),
 });
+
+export default CreateCommentSchema;

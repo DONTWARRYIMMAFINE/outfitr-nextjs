@@ -1,9 +1,9 @@
-import ReceivedOrdersList from "@/components/common/PartnerTabs/ReceivedOrdersTab/ReceivedOrderList";
 import { TabPanel, Text } from "@/components/ui";
 import { TabPanelProps } from "@/components/ui/TabPanel";
 import { I18NS } from "@/constants/I18NS";
 import { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
+import ReceivedOrdersList from "./ReceivedOrderList";
 
 interface ReceivedOrdersTabProps extends Omit<TabPanelProps, "children">, WithTranslation {}
 

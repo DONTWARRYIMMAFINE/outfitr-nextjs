@@ -1,9 +1,8 @@
-import { Grid2x1 } from "@/components/common/index";
-import { Box, Button, Text, TextField } from "@/components/ui";
+import { Grid2x1 } from "@/components/common";
+import { Box, Button, Image, Text, TextField } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { useTranslation } from "@/lib/i18n";
 import { LngProps } from "@/lib/types/params.type";
-import Image from "next/image";
 import { FC, ReactElement } from "react";
 import { Trans } from "react-i18next/TransWithoutContext";
 

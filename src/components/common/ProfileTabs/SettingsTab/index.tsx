@@ -1,6 +1,6 @@
 "use client";
 
-import ResetPasswordForm from "@/components/common/forms/ResetPasswordForm";
+import { ResetPasswordForm } from "@/components/common/forms";
 import { TabPanel, Text } from "@/components/ui";
 import { TabPanelProps } from "@/components/ui/TabPanel";
 import { I18NS } from "@/constants/I18NS";

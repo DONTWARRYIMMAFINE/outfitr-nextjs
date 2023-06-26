@@ -1,7 +1,7 @@
 "use client";
 
-import CollapsableBox, { CollapsableBoxProps } from "@/components/common/CollapsableBox";
-import CreateProductForm from "@/components/common/forms/CreateProductForm";
+import { CollapsableBox, CollapsableBoxProps } from "@/components/common";
+import { CreateProductForm } from "@/components/common/forms";
 import { Box, Link } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { CreateProductInput, ProductsDocument, useCreateOneProductMutation } from "@/lib/graphql/schema.generated";

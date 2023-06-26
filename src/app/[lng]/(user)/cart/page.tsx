@@ -1,5 +1,4 @@
-import { News } from "@/components/common";
-import Cart from "@/components/common/Cart";
+import { Cart, News } from "@/components/common";
 import { PageContainer } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { useTranslation } from "@/lib/i18n";
@@ -7,7 +6,7 @@ import { LngParamsProps } from "@/lib/types/params.type";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Outfitr | Cart",
+  title: "Cart | Outfitr",
 };
 
 interface CartPageProps extends LngParamsProps {}

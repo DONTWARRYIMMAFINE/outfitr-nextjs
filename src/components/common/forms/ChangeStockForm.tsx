@@ -1,13 +1,13 @@
 "use client";
 
-import { ChangeStockSchema } from "@/components/common/forms/schema/change-stock.schema";
-import WarehouseSelect from "@/components/common/WarehouseSelect";
+import { WarehouseSelect } from "@/components/common";
 import { Box, Button, Icons, IconTextField } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { ProductVariantFragment, SetWarehouseItemsInWarehouseMutationVariables, useWarehouseItemLazyQuery } from "@/lib/graphql/schema.generated";
 import { Formik } from "formik";
 import { FC } from "react";
 import { withTranslation, WithTranslation } from "react-i18next";
+import { ChangeStockSchema } from "./schema";
 
 interface ChangeStockFormProps extends WithTranslation {
   productVariant: ProductVariantFragment;

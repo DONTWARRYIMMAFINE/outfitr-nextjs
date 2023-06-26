@@ -1,6 +1,6 @@
 "use client";
 
-import { Text, Box } from "@/components/ui";
+import { Box, Text } from "@/components/ui";
 import { Slider, SliderProps } from "@mui/material";
 import { FC, useMemo } from "react";
 

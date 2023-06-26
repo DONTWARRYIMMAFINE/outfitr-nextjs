@@ -1,4 +1,4 @@
-import Price from "@/components/common/Price";
+import { Price } from "@/components/common";
 import { Box, Text, TextProps } from "@/components/ui";
 import { PriceFragment } from "@/lib/graphql/schema.generated";
 import { maxBy, minBy } from "lodash";

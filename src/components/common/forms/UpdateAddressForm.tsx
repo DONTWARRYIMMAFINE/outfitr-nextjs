@@ -1,8 +1,7 @@
 "use client";
 
-import CitySelect from "@/components/common/CitySelect";
-import CountrySelect from "@/components/common/CountrySelect";
-import { CreateAddressSchema } from "@/components/common/forms/schema/create-address.schema";
+import { CitySelect, CountrySelect } from "@/components/common";
+import { CreateAddressSchema } from "./schema";
 import { Box, Button, Icons, IconTextField } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { AddressFragment, CreateAddressInput } from "@/lib/graphql/schema.generated";

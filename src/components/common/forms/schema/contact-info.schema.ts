@@ -1,6 +1,6 @@
 import { object, string } from "yup";
 
-export const ContactInfoSchema = object().shape({
+const ContactInfoSchema = object().shape({
   phone: string()
     .matches(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/, { message: "Please enter a valid phone number" })
     .required("Phone is required"),
@@ -13,3 +13,5 @@ export const ContactInfoSchema = object().shape({
     .max(64, ({ max }) => `Last Name must be less than ${max} characters`)
     .required("Last Name is required"),
 });
+
+export default ContactInfoSchema;

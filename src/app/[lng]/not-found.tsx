@@ -1,12 +1,10 @@
 import { Grid2x1 } from "@/components/common";
-import { Box, Button, Text } from "@/components/ui";
-import ContentContainer from "@/components/ui/ContentContainer";
+import { Box, Button, PageContainer, Image, Text } from "@/components/ui";
 import { Metadata } from "next";
-import Image from "next/image";
 import { FC } from "react";
 
 export const metadata: Metadata = {
-  title: "Outfitr | Not Found",
+  title: "Not Found | Outfitr",
 };
 
 interface Block1Props {
@@ -39,7 +37,7 @@ const Block2: FC = () => {
         Please click on the link below for more information.</Text>
       <Box display={"flex"} justifyContent={{ md: "flex-start", xs: "center" }} gap={1}>
         <Button variant={"primary"} href={"/"}>Go Home</Button>
-        <Button variant={"transparent"} href={"/contact"} sx={{ color: "primary.main"}}>Contact Us</Button>
+        <Button variant={"transparent"} href={"/contact"} sx={{ color: "primary.main" }}>Contact Us</Button>
       </Box>
     </Box>
   );
@@ -49,9 +47,9 @@ interface NotFoundPageProps {}
 
 const NotFoundPage: FC<NotFoundPageProps> = ({}) => {
   return (
-    <ContentContainer pageTitle={"Page not found"}>
+    <PageContainer pageTitle={"Page not found"}>
       <Grid2x1 block1={<Block1 image={"/assets/404.png"} />} block2={<Block2 />} />
-    </ContentContainer>
+    </PageContainer>
   );
 };
 

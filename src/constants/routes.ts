@@ -86,7 +86,7 @@ export const Routes: Record<RouteKey, RouteValue> = {
     query: { tab: "orders" },
   },
   Addresses: {
-    title: "My Addresses",
+    title: "My AddressesTab",
     i18nKey: "profile.addresses",
     href: "/profile",
     query: { tab: "addresses" },

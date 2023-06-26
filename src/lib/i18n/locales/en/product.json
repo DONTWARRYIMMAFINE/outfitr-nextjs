@@ -40,6 +40,9 @@
         }
       }
     },
+    "list": {
+      "empty": "Zero products found. Check your filters"
+    },
     "variant": {
       "sku": {
         "label": "SKU"

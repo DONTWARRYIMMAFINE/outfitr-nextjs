@@ -1,13 +1,13 @@
 "use client";
 
-import AddUserDeliveryAddressCollapsable from "@/components/common/AddUserDeliveryAddressCollapsable";
-import UserAddress from "@/components/common/ProfileTabs/Addresses/UserAddress";
-import UserAddressPagination from "@/components/common/ProfileTabs/Addresses/UserAddressPagination";
+import { AddUserDeliveryAddressCollapsable } from "@/components/common";
 import { Box, Error, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { useUserAddressesQuery } from "@/lib/graphql/schema.generated";
 import { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
+import UserAddress from "./UserAddress";
+import UserAddressPagination from "./UserAddressPagination";
 
 interface UserAddressListProps extends WithTranslation {}
 

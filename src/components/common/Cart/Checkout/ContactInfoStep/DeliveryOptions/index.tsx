@@ -1,12 +1,12 @@
 "use client";
 
-import HomeDelivery from "@/components/common/Cart/Checkout/ContactInfoStep/DeliveryOptions/HomeDelivery";
-import PickupPointDelivery from "@/components/common/Cart/Checkout/ContactInfoStep/DeliveryOptions/PickupPointDelivery/PickupPointDelivery";
 import { Box, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { FC, useState } from "react";
 import { withTranslation, WithTranslation } from "react-i18next";
+import HomeDelivery from "./HomeDelivery";
+import PickupPointDelivery from "./PickupPointDelivery";
 
 interface DeliveryOptionsProps extends WithTranslation {}
 

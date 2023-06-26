@@ -1,9 +1,9 @@
-import OnboardingRow from "@/components/common/Onboarding/OnboardingRow";
 import { Box } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
 import { useTranslation } from "@/lib/i18n";
 import { LngProps } from "@/lib/types/params.type";
+import OnboardingRow from "./OnboardingRow";
 
 interface OnboardingProps extends LngProps {}
 

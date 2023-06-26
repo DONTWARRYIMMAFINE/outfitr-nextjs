@@ -1,13 +1,13 @@
 "use client";
 
-import ProductActions from "@/components/common/Product/ProductActions";
-import ProductVariant from "@/components/common/Product/ProductVariant";
 import { Box, Image, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { ProductFragment } from "@/lib/graphql/schema.generated";
 import { prepareBlurImage } from "@/lib/utils/image.helper";
 import { FC } from "react";
 import { withTranslation, WithTranslation } from "react-i18next";
+import ProductActions from "./ProductActions";
+import ProductVariant from "./ProductVariant";
 
 interface ProductContentProps extends WithTranslation {
   product: ProductFragment;

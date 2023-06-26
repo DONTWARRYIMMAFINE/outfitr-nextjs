@@ -3,12 +3,12 @@ import { Container } from "@/components/ui/index";
 import { ContainerProps } from "@mui/material";
 import { FC, PropsWithChildren } from "react";
 
-export interface ContainerContainerProps extends ContainerProps, PropsWithChildren {
+export interface PageContainerProps extends ContainerProps, PropsWithChildren {
   pageTitle?: string | null | undefined;
   disableBottomPadding?: boolean;
 }
 
-const ContentContainer: FC<ContainerContainerProps> = ({ pageTitle, disableBottomPadding, children, ...props }) => {
+const PageContainer: FC<PageContainerProps> = ({ pageTitle, disableBottomPadding, children, ...props }) => {
   return (
     <Container {...props} disableGutters>
       <Box paddingBottom={disableBottomPadding ? 0 : 8}>
@@ -33,4 +33,4 @@ const ContentContainer: FC<ContainerContainerProps> = ({ pageTitle, disableBotto
   );
 };
 
-export default ContentContainer;
+export default PageContainer;

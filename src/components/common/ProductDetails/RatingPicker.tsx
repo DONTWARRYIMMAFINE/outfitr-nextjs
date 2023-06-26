@@ -1,8 +1,8 @@
 "use client";
 
-import Star from "@/components/common/ProductDetails/Star";
 import { Box } from "@/components/ui";
 import { FC } from "react";
+import Star from "./Star";
 
 interface RatingPickerProps {
   rating: number;

@@ -1,8 +1,5 @@
 "use client";
 
-import AddressesTab from "@/components/common/ProfileTabs/Addresses";
-import MainTab from "@/components/common/ProfileTabs/Main";
-import OrdersTab from "@/components/common/ProfileTabs/OrdersTab";
 import { Box, Tab, Tabs } from "@/components/ui";
 import { profileTabs } from "@/constants/routes";
 import { indexOf } from "lodash";
@@ -10,6 +7,9 @@ import { usePathname, useRouter } from "next-intl/client";
 import { notFound, useSearchParams } from "next/navigation";
 import { SyntheticEvent } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
+import AddressesTab from "./AddressesTab";
+import MainTab from "./MainTab";
+import OrdersTab from "./OrdersTab";
 import SettingsTab from "./SettingsTab";
 
 function allyProps(index: number) {

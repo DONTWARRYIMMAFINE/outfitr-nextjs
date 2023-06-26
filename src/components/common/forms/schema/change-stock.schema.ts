@@ -1,6 +1,6 @@
 import { number, object, string } from "yup";
 
-export const ChangeStockSchema = object().shape({
+const ChangeStockSchema = object().shape({
   warehouseId: string()
     .uuid("Values should be a UUIDv4")
     .required("Warehouse identifier is required"),
@@ -13,3 +13,5 @@ export const ChangeStockSchema = object().shape({
     .max(500, ({ max }) => `Stock must be less than ${max}`)
     .required("Stock is required"),
 });
+
+export default ChangeStockSchema;

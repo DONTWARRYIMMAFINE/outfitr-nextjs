@@ -3230,6 +3230,7 @@ export type OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVarian
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<OrderFilterOrderHistoryFilterOrderFilterOrderItemFilterProductVariantFilterSizeFilter>>;
+  priority?: InputMaybe<NumberFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -4122,6 +4123,7 @@ export type OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFi
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<OrderFilterOrderItemFilterOrderFilterOrderItemFilterProductVariantFilterSizeFilter>>;
+  priority?: InputMaybe<NumberFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -4760,6 +4762,7 @@ export type OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVa
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterProductFilterProductVariantFilterSizeFilter>>;
+  priority?: InputMaybe<NumberFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -4770,6 +4773,7 @@ export type OrderFilterOrderItemFilterProductVariantFilterSizeFilter = {
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<OrderFilterOrderItemFilterProductVariantFilterSizeFilter>>;
+  priority?: InputMaybe<NumberFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -4917,6 +4921,7 @@ export type OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductV
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<OrderFilterOrderItemFilterWarehouseFilterWarehouseItemFilterProductVariantFilterSizeFilter>>;
+  priority?: InputMaybe<NumberFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -5523,6 +5528,7 @@ export type OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterSiz
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<OrderFilterUserFilterCartFilterCartItemFilterProductVariantFilterSizeFilter>>;
+  priority?: InputMaybe<NumberFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -6444,6 +6450,7 @@ export type OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilter
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<OrderFilterUserFilterWishlistFilterProductFilterProductVariantFilterSizeFilter>>;
+  priority?: InputMaybe<NumberFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -7383,12 +7390,14 @@ export type Product = {
   brandId: Scalars['ID'];
   category: Category;
   categoryId: Scalars['ID'];
+  colors: Array<Color>;
   comments: Array<Comment>;
   createdAt: Scalars['DateTime'];
   description: Scalars['String'];
   id: Scalars['ID'];
   media: Array<Media>;
   productVariants: Array<ProductVariant>;
+  sizes: Array<Size>;
   title: Scalars['String'];
   updatedAt: Scalars['DateTime'];
 };
@@ -7425,9 +7434,11 @@ export type ProductDeleteResponse = {
   __typename?: 'ProductDeleteResponse';
   brandId?: Maybe<Scalars['ID']>;
   categoryId?: Maybe<Scalars['ID']>;
+  colors?: Maybe<Array<Color>>;
   createdAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
+  sizes?: Maybe<Array<Size>>;
   title?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
@@ -7914,6 +7925,7 @@ export type ProductFilterProductVariantFilterSizeFilter = {
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<ProductFilterProductVariantFilterSizeFilter>>;
+  priority?: InputMaybe<NumberFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -8037,6 +8049,7 @@ export type ProductVariantFilterSizeFilter = {
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<ProductVariantFilterSizeFilter>>;
+  priority?: InputMaybe<NumberFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -8820,6 +8833,7 @@ export type Size = {
   createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
   name: Scalars['String'];
+  priority: Scalars['Float'];
   updatedAt: Scalars['DateTime'];
 };
 
@@ -8839,6 +8853,7 @@ export type SizeDeleteResponse = {
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
+  priority?: Maybe<Scalars['Float']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -8849,6 +8864,7 @@ export type SizeFilter = {
   id?: InputMaybe<IdFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<SizeFilter>>;
+  priority?: InputMaybe<NumberFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -8863,6 +8879,7 @@ export enum SizeSortFields {
   CreatedAt = 'createdAt',
   Id = 'id',
   Name = 'name',
+  Priority = 'priority',
   UpdatedAt = 'updatedAt'
 }
 
@@ -8870,11 +8887,11 @@ export enum Sizes {
   L = 'L',
   M = 'M',
   S = 'S',
-  Xl = 'XL',
-  Xs = 'XS',
-  Xxl = 'XXL',
-  Xxs = 'XXS',
-  Xxxl = 'XXXL'
+  Xl = 'Xl',
+  Xs = 'Xs',
+  Xxl = 'Xxl',
+  Xxs = 'Xxs',
+  Xxxl = 'Xxxl'
 }
 
 export type SizesFilterComparison = {
@@ -9809,7 +9826,7 @@ export type PermissionFragment = { __typename?: 'Permission', id: string, action
 
 export type PriceFragment = { __typename?: 'Price', id: string, amount: number, currency: Currencies };
 
-export type ProductFragment = { __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }> };
+export type ProductFragment = { __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any }> };
 
 export type ProductPartialFragment = { __typename?: 'Product', id: string, title: string, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }> };
 
@@ -9827,7 +9844,7 @@ export type WarehouseFragment = { __typename?: 'Warehouse', id: string, code: st
 
 export type WarehouseItemFragment = { __typename?: 'WarehouseItem', id: string, stock: number, reserved: number, available: number, warehouseId: string, productVariantId: string, productVariant: { __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } } };
 
-export type WishlistFragment = { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }> }> };
+export type WishlistFragment = { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any }> }> };
 
 export type AddCartItemsToCartMutationVariables = Exact<{
   input: UpdateOneCartInputType;
@@ -9841,7 +9858,7 @@ export type AddProductsToWishlistMutationVariables = Exact<{
 }>;
 
 
-export type AddProductsToWishlistMutation = { __typename?: 'Mutation', addProductsToWishlist: { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }> }> } };
+export type AddProductsToWishlistMutation = { __typename?: 'Mutation', addProductsToWishlist: { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any }> }> } };
 
 export type CancelOnePaymentIntentMutationVariables = Exact<{
   input: CancelPaymentIntentInput;
@@ -9897,7 +9914,7 @@ export type CreateOneProductMutationVariables = Exact<{
 }>;
 
 
-export type CreateOneProductMutation = { __typename?: 'Mutation', createOneProduct: { __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }> } };
+export type CreateOneProductMutation = { __typename?: 'Mutation', createOneProduct: { __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any }> } };
 
 export type CreateOneUserAddressMutationVariables = Exact<{
   input: CreateOneUserAddressInput;
@@ -9975,7 +9992,7 @@ export type RemoveProductsFromWishlistMutationVariables = Exact<{
 }>;
 
 
-export type RemoveProductsFromWishlistMutation = { __typename?: 'Mutation', removeProductsFromWishlist: { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }> }> } };
+export type RemoveProductsFromWishlistMutation = { __typename?: 'Mutation', removeProductsFromWishlist: { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any }> }> } };
 
 export type ResetPasswordMutationVariables = Exact<{
   input: ResetPasswordInputType;
@@ -10151,14 +10168,14 @@ export type MyCartQuery = { __typename?: 'Query', myCart: { __typename?: 'Cart',
 export type MyWishlistQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyWishlistQuery = { __typename?: 'Query', myWishlist: { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }> }> } };
+export type MyWishlistQuery = { __typename?: 'Query', myWishlist: { __typename?: 'Wishlist', id: string, products: Array<{ __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any }> }> } };
 
 export type OneProductQueryVariables = Exact<{
   productId: Scalars['ID'];
 }>;
 
 
-export type OneProductQuery = { __typename?: 'Query', product: { __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }> } };
+export type OneProductQuery = { __typename?: 'Query', product: { __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any }> } };
 
 export type OrdersQueryVariables = Exact<{
   filter?: InputMaybe<OrderFilter>;
@@ -10181,7 +10198,7 @@ export type ProductsQueryVariables = Exact<{
 }>;
 
 
-export type ProductsQuery = { __typename?: 'Query', products: { __typename?: 'ProductConnection', totalCount: number, nodes: Array<{ __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }> }> } };
+export type ProductsQuery = { __typename?: 'Query', products: { __typename?: 'ProductConnection', totalCount: number, nodes: Array<{ __typename?: 'Product', id: string, title: string, description: string, createdAt: any, brand: { __typename?: 'Brand', id: string, code: string, name: string }, media: Array<{ __typename?: 'Media', id: string, publicId: string, url: string, filename: string, width?: number | null, height?: number | null }>, productVariants: Array<{ __typename?: 'ProductVariant', id: string, sku: string, stock: number, price: { __typename?: 'Price', id: string, amount: number, currency: Currencies }, color: { __typename?: 'Color', id: string, code: string, name: string, hex: string }, size: { __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any } }>, colors: Array<{ __typename?: 'Color', id: string, code: string, name: string, hex: string }>, sizes: Array<{ __typename?: 'Size', id: string, code: Sizes, name: string, createdAt: any }> }> } };
 
 export type ProductsTotalCountQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -10600,11 +10617,19 @@ export const ProductFragmentDoc = gql`
   productVariants {
     ...ProductVariant
   }
+  colors {
+    ...Color
+  }
+  sizes {
+    ...Size
+  }
   createdAt
 }
     ${BrandFragmentDoc}
 ${MediaFragmentDoc}
-${ProductVariantFragmentDoc}`;
+${ProductVariantFragmentDoc}
+${ColorFragmentDoc}
+${SizeFragmentDoc}`;
 export const WishlistFragmentDoc = gql`
     fragment Wishlist on Wishlist {
   id

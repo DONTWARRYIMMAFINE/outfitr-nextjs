@@ -1,12 +1,12 @@
 "use client";
 
-import AccountMenuNavigation from "@/components/common/Header/AccountMenuNavigation";
 import { IconButton, Icons, Menu } from "@/components/ui";
 import { Routes } from "@/constants/routes";
 import { loggedInUser } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
 import { usePathname } from "next-intl/client";
 import { MouseEvent, useState } from "react";
+import AccountMenuNavigation from "./AccountMenuNavigation";
 
 const AccountMenu = () => {
   const pathname = usePathname();
@@ -26,7 +26,7 @@ const AccountMenu = () => {
     Routes.Partner.href,
     Routes.Profile.href,
     Routes.LogIn.href,
-    Routes.SignUp.href
+    Routes.SignUp.href,
   ].includes(pathname);
 
   return (<>

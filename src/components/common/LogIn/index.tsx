@@ -1,6 +1,6 @@
 "use client";
 
-import LogInForm from "@/components/common/forms/LogInForm";
+import { LogInForm } from "@/components/common/forms";
 import { Box, Link, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
@@ -20,7 +20,12 @@ const LogIn: FC<LogInProps> = ({ t }) => {
 
   const onSubmit = async (values: LoginMutationVariables["input"]) => {
     await loginMutation({
-      variables: { input: values },
+      /* TODO: encrypt password before sending
+          Crypto.createHash('sha512')
+                .update(values.password)
+                .digest('hex'),
+       */
+      variables: { input: { ...values, password: values.password } },
       onCompleted: ({ login }) => {
         const { accessToken, user } = login;
 

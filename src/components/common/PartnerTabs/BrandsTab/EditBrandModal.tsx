@@ -1,6 +1,6 @@
 "use client";
 
-import UpdateBrandForm from "@/components/common/forms/UpdateBrandForm";
+import { UpdateBrandForm } from "@/components/common/forms";
 import { Box, Container, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { BrandFragment, UpdateBrandInput } from "@/lib/graphql/schema.generated";

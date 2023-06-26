@@ -4,8 +4,7 @@ import { Box, Link } from "@/components/ui";
 import { useTranslation } from "@/lib/i18n/client";
 import { languages } from "@/lib/i18n/settings";
 import { LngProps } from "@/lib/types/params.type";
-import { join } from "lodash";
-import { usePathname, useRouter } from "next-intl/client";
+import { usePathname } from "next-intl/client";
 import { useSearchParams } from "next/navigation";
 import { Trans } from "react-i18next/TransWithoutContext";
 

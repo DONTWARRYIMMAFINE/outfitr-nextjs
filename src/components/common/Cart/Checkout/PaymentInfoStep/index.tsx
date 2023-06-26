@@ -1,10 +1,10 @@
 "use client";
 
-import PaymentMethodList from "@/components/common/Cart/Checkout/PaymentInfoStep/PaymentMethodList";
-import StepContentContainer, { StepContentContainerProps } from "@/components/common/Cart/Checkout/StepContentContainer";
 import { Box, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { WithTranslation, withTranslation } from "react-i18next";
+import StepContentContainer, { StepContentContainerProps } from "../StepContentContainer";
+import PaymentMethodList from "./PaymentMethodList";
 
 export interface PaymentInfoStepProps extends Omit<StepContentContainerProps, "children">, WithTranslation {}
 

@@ -1,9 +1,9 @@
-import FilterPanel from "@/components/common/Catalog/FilterPanel";
-import ProductItemList from "@/components/common/Catalog/ProductItemList";
-import SearchBar from "@/components/common/Catalog/SearchBar";
 import { Grid } from "@/components/ui";
 import { Categories } from "@/lib/graphql/schema.generated";
 import { LngProps } from "@/lib/types/params.type";
+import FilterPanel from "./FilterPanel";
+import ProductItemList from "./ProductItemList";
+import SearchBar from "./SearchBar";
 
 export interface CatalogProps extends LngProps {
   category?: Categories;

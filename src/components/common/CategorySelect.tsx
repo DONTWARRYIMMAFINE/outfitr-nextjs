@@ -1,6 +1,6 @@
 "use client";
 
-import Select, { SelectOption, SelectProps } from "@/components/common/Select";
+import { Select, SelectOption, SelectProps } from "@/components/common";
 import { CategoryFragment, useCategoryTreeQuery } from "@/lib/graphql/schema.generated";
 import { Skeleton } from "@mui/material";
 import { flatMap } from "lodash";

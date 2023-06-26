@@ -1,7 +1,7 @@
 "use client";
 
-import CollapsableBox, { CollapsableBoxProps } from "@/components/common/CollapsableBox";
-import CommentForm from "@/components/common/forms/CreateCommentForm";
+import { CollapsableBox, CollapsableBoxProps } from "@/components/common";
+import { CreateCommentForm } from "@/components/common/forms";
 import { Box, IconButton, Icons, Link, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import Can, { AbilityContext } from "@/lib/casl/Can";
@@ -72,7 +72,7 @@ const CreateCommentCollapsable: FC<CreateCommentCollapsableProps> = ({ productId
             </Box>
           }
         >
-          <CommentForm onSubmit={onSubmit} />
+          <CreateCommentForm onSubmit={onSubmit} />
         </CollapsableBox>
       </Box>
     </Can>

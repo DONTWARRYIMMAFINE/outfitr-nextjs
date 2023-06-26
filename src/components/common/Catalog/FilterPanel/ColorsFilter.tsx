@@ -1,21 +1,16 @@
 "use client";
 
-import ColorCheckboxGroup from "@/components/common/ColorCheckboxGroup";
-import { Box, Text } from "@/components/ui";
-import Error from "@/components/ui/Error";
+import { RoundedCheckboxGroup, RoundedCheckboxGroupProps } from "@/components/common";
+import { Box, Error, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { useColorsQuery } from "@/lib/graphql/schema.generated";
 import { Skeleton } from "@mui/material";
 import { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
 
-interface ColorsFilterProps extends WithTranslation {
-  selectedValues: string[];
-  handleFilterChange: (value: string) => void;
-  field?: "id" | "code";
-}
+interface ColorsFilterProps extends Omit<RoundedCheckboxGroupProps, "options">, WithTranslation {}
 
-const ColorsFilter: FC<ColorsFilterProps> = ({ selectedValues, handleFilterChange, field, t }) => {
+const ColorsFilter: FC<ColorsFilterProps> = ({ t, tReady, ...props }) => {
   const { data, loading, error } = useColorsQuery();
 
   if (error) return <Error message={t("content.filter.colors.error", { message: error.message })!} />;
@@ -24,12 +19,7 @@ const ColorsFilter: FC<ColorsFilterProps> = ({ selectedValues, handleFilterChang
   return (
     <Box display={"flex"} flexDirection={"column"} gap={2}>
       <Text variant={"p"}>{t("content.filter.colors.label")}</Text>
-      <ColorCheckboxGroup
-        options={data.colors.nodes}
-        selectedValues={selectedValues}
-        onClick={handleFilterChange}
-        field={field}
-      />
+      <RoundedCheckboxGroup options={data.colors.nodes} {...props} />
     </Box>
   );
 };

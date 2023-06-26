@@ -1,6 +1,6 @@
-import AboutRow, { AboutRowProps } from "./AboutRow";
 import { Box } from "@/components/ui";
 import { FC } from "react";
+import AboutRow, { AboutRowProps } from "./AboutRow";
 
 const content: AboutRowProps[] = [
   {

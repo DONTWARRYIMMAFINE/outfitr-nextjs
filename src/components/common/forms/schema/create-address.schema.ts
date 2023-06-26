@@ -1,6 +1,6 @@
 import { object, string } from "yup";
 
-export const CreateAddressSchema = object().shape({
+const CreateAddressSchema = object().shape({
   countryId: string()
     .uuid("Values should be a UUIDv4")
     .required("Country identifier is required"),
@@ -20,3 +20,5 @@ export const CreateAddressSchema = object().shape({
     .min(1, ({ min }) => `Building must be at least ${min} characters`)
     .max(12, ({ max }) => `Building must be less than ${max} characters`),
 });
+
+export default CreateAddressSchema;

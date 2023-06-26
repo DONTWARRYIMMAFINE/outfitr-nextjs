@@ -1,9 +1,6 @@
 "use client";
 
-import { SignUpSchema } from "@/components/common/forms/schema/signup.schema";
-import SecureIconTextField from "@/components/SecureIconTextField";
-import { Box, Button, Icons, IconTextField } from "@/components/ui";
-import FileUpload from "@/components/ui/FileUpload";
+import { Box, Button, FileUpload, Icons, IconTextField, SecureIconTextField } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
 import { SignupMutationVariables } from "@/lib/graphql/schema.generated";
@@ -13,6 +10,7 @@ import { Formik } from "formik";
 import React, { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
 import { ExtendedFileProps } from "react-mui-fileuploader/dist/types/index.types";
+import { SignUpSchema } from "./schema";
 
 interface SignUpFormProps extends WithTranslation {
   onSubmit: (values: SignupMutationVariables["input"], asPartner: boolean) => void;

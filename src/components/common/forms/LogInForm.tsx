@@ -1,8 +1,7 @@
 "use client";
 
-import { LogInSchema } from "@/components/common/forms/schema/login.schema";
-import SecureIconTextField from "@/components/SecureIconTextField";
 import { Box, Button, Icons, IconTextField } from "@/components/ui";
+import SecureIconTextField from "@/components/ui/SecureIconTextField";
 import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
 import { LoginMutationVariables } from "@/lib/graphql/schema.generated";
@@ -10,6 +9,7 @@ import { ApolloError } from "@apollo/client";
 import { Formik } from "formik";
 import { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
+import { LogInSchema } from "./schema";
 
 interface LogInFormProps extends WithTranslation {
   onSubmit: (values: LoginMutationVariables["input"]) => void;

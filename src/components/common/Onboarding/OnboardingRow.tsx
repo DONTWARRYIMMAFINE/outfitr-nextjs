@@ -1,6 +1,5 @@
 import { BackgroundText, Grid2x1 } from "@/components/common";
-import { Box, Button, Text } from "@/components/ui";
-import Image from "next/image";
+import { Box, Button, Image, Text } from "@/components/ui";
 import { FC } from "react";
 
 interface Block1Props {

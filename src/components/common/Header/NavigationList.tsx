@@ -1,7 +1,7 @@
 "use client";
 
-import LogOut from "@/components/common/LogOut";
-import { Divider, Link, List, ListItem } from "@/components/ui";
+import { LogOut } from "@/components/common";
+import { Link, List, ListItem } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { Routes, RouteValue } from "@/constants/routes";
 import { FC } from "react";

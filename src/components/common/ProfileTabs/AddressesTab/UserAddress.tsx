@@ -1,7 +1,6 @@
 "use client";
 
-import Address from "@/components/common/Address";
-import EditAddressModal from "@/components/common/ProfileTabs/Addresses/EditAddressModal";
+import { Address } from "@/components/common";
 import { I18NS } from "@/constants/I18NS";
 import {
   UpdateUserAddressInput,
@@ -14,6 +13,7 @@ import { useConfirm } from "material-ui-confirm";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
 import { WithTranslation, withTranslation } from "react-i18next";
+import EditAddressModal from "./EditAddressModal";
 
 interface UserAddressProps extends WithTranslation {
   userAddress: UserAddressFragment;

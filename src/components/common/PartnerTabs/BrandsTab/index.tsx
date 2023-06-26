@@ -1,7 +1,5 @@
 "use client";
 
-import Brand from "@/components/common/PartnerTabs/BrandsTab/Brand";
-import CreateBrandCollapsable from "@/components/common/PartnerTabs/BrandsTab/CreateBrandCollapsable";
 import { Error, TabPanel, TabPanelProps, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { useBrandsQuery } from "@/lib/graphql/schema.generated";
@@ -10,6 +8,8 @@ import { useReactiveVar } from "@apollo/client";
 import { Skeleton } from "@mui/material";
 import React, { FC } from "react";
 import { withTranslation, WithTranslation } from "react-i18next";
+import Brand from "./Brand";
+import CreateBrandCollapsable from "./CreateBrandCollapsable";
 
 interface BrandsTabProps extends Omit<TabPanelProps, "children">, WithTranslation {}
 

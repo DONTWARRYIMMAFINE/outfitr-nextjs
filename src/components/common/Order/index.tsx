@@ -1,8 +1,8 @@
-import CollapsableBox, { CollapsableBoxProps } from "@/components/common/CollapsableBox";
-import OrderContent from "@/components/common/Order/OrderContent";
-import OrderHeader from "@/components/common/Order/OrderHeader";
+import { CollapsableBox, CollapsableBoxProps } from "@/components/common";
 import { OrderFragment } from "@/lib/graphql/schema.generated";
 import { FC } from "react";
+import OrderContent from "./OrderContent";
+import OrderHeader from "./OrderHeader";
 
 interface OrderProps extends Omit<CollapsableBoxProps, "Header"> {
   order: OrderFragment;

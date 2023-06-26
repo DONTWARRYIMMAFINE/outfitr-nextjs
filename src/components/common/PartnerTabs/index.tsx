@@ -1,8 +1,5 @@
 "use client";
 
-import BrandsTab from "@/components/common/PartnerTabs/BrandsTab";
-import ProductsTab from "@/components/common/PartnerTabs/ProductsTab";
-import ReceivedOrdersTab from "@/components/common/PartnerTabs/ReceivedOrdersTab";
 import { Box, Tab, Tabs } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { partnerTabs } from "@/constants/routes";
@@ -11,6 +8,9 @@ import { usePathname, useRouter } from "next-intl/client";
 import { notFound, useSearchParams } from "next/navigation";
 import { FC, SyntheticEvent } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
+import BrandsTab from "./BrandsTab";
+import ProductsTab from "./ProductsTab";
+import ReceivedOrdersTab from "./ReceivedOrdersTab";
 
 interface PartnerTabsProps extends WithTranslation {}
 

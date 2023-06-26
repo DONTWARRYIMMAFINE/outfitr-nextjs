@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { FC } from "react";
 
 export const metadata: Metadata = {
-  title: "Outfitr | Forgot Password",
+  title: "Forgot Password | Outfitr",
 };
 
 interface ForgotPasswordPageProps {}

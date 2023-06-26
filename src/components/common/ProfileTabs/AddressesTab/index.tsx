@@ -1,10 +1,9 @@
 "use client";
 
-import UserAddressList from "@/components/common/ProfileTabs/Addresses/UserAddressList";
-import { TabPanel, Text } from "@/components/ui";
-import { TabPanelProps } from "@/components/ui/TabPanel";
+import { TabPanel, TabPanelProps, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { WithTranslation, withTranslation } from "react-i18next";
+import UserAddressList from "./UserAddressList";
 
 interface AddressesTabProps extends Omit<TabPanelProps, "children">, WithTranslation {}
 

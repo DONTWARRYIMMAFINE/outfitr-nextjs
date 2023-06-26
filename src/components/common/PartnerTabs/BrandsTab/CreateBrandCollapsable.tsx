@@ -1,7 +1,7 @@
 "use client";
 
-import CollapsableBox, { CollapsableBoxProps } from "@/components/common/CollapsableBox";
-import BrandForm from "@/components/common/forms/CreateBrandForm";
+import { CollapsableBox, CollapsableBoxProps } from "@/components/common";
+import { CreateBrandForm } from "@/components/common/forms";
 import { Box, Link } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { BrandsDocument, CreateBrandInput, useCreateOneBrandMutation } from "@/lib/graphql/schema.generated";
@@ -45,7 +45,7 @@ const CreateBrandCollapsable: FC<CreateBrandCollapsableProps> = ({ expandByDefau
         </Box>
       }
     >
-      <BrandForm onSubmit={values => onSubmit(values as Omit<CreateBrandInput, "userId">)} />
+      <CreateBrandForm onSubmit={values => onSubmit(values as Omit<CreateBrandInput, "userId">)} />
     </CollapsableBox>
   );
 };

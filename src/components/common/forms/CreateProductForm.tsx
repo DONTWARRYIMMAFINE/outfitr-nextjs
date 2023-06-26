@@ -1,17 +1,15 @@
 "use client";
 
-import BrandSelect from "@/components/common/BrandSelect";
-import CategorySelect from "@/components/common/CategorySelect";
-import CreateProductVariantGroup from "@/components/common/forms/CreateProductVariantGroupForm";
-import { CreateProductSchema } from "@/components/common/forms/schema/create-product.schema";
-import { Box, Button, Text, TextField } from "@/components/ui";
-import FileUpload from "@/components/ui/FileUpload";
+import { BrandSelect, CategorySelect } from "@/components/common";
+import { CreateProductVariantGroupForm } from "@/components/common/forms";
+import { Box, Button, FileUpload, Text, TextField } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { CreateProductInput, CreateProductVariantInput } from "@/lib/graphql/schema.generated";
 import { Formik } from "formik";
 import { FC, useState } from "react";
 import { withTranslation, WithTranslation } from "react-i18next";
 import { ExtendedFileProps } from "react-mui-fileuploader/dist/types/index.types";
+import { CreateProductSchema } from "./schema";
 
 interface CreateProductFormProps extends WithTranslation {
   onSubmit: (values: CreateProductInput, files?: ExtendedFileProps[]) => void;
@@ -117,7 +115,7 @@ const CreateProductForm: FC<CreateProductFormProps> = ({ onSubmit, t }) => {
             gap={4}
           >
             <Text>{t("field.product.variant.list.label")}: {values.productVariants.length}</Text>
-            <CreateProductVariantGroup
+            <CreateProductVariantGroupForm
               onSubmit={productVariants => setValues({
                 ...values,
                 productVariants: [...values.productVariants, ...productVariants],

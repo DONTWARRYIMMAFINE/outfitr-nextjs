@@ -1,12 +1,12 @@
 "use client";
 
-import { ResetPasswordSchema } from "@/components/common/forms/schema/reset-password.schema";
-import SecureIconTextField from "@/components/SecureIconTextField";
 import { Box, Button, Icons } from "@/components/ui";
+import SecureIconTextField from "@/components/ui/SecureIconTextField";
 import { I18NS } from "@/constants/I18NS";
 import { Formik } from "formik";
 import { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
+import { ResetPasswordSchema } from "./schema";
 
 export interface ResetPasswordFormProps extends WithTranslation {
   onSubmit: (values: any) => void | Promise<void>;

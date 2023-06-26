@@ -1,8 +1,7 @@
 "use client";
 
-import PaymentMethodItem, { PaymentMethodItemProps } from "@/components/common/Cart/Checkout/PaymentInfoStep/PaymentMethodItem";
-import CreditCardForm from "@/components/common/forms/CreditCardForm";
-import Error from "@/components/ui/Error";
+import { CreditCardForm } from "@/components/common/forms";
+import { Error } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { STRIPE_PUBLIC_KEY } from "@/constants/urls";
 import { PaymentIntentFragment, useCancelOnePaymentIntentMutation, useCreateOnePaymentIntentFromCartMutation } from "@/lib/graphql/schema.generated";
@@ -15,6 +14,7 @@ import { useTheme as useNextTheme } from "next-themes";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
 import { WithTranslation, withTranslation } from "react-i18next";
+import PaymentMethodItem, { PaymentMethodItemProps } from "../PaymentMethodItem";
 
 export interface CardPaymentMethodItemProps extends PaymentMethodItemProps, WithTranslation {}
 

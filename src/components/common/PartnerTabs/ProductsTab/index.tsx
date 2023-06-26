@@ -1,15 +1,14 @@
 "use client";
 
-import CreateProductCollapsable from "@/components/common/PartnerTabs/ProductsTab/CreateProductCollapsable";
-import ProductList from "@/components/common/PartnerTabs/ProductsTab/ProductList";
-import { TabPanel, Text } from "@/components/ui";
-import { TabPanelProps } from "@/components/ui/TabPanel";
+import { TabPanel, TabPanelProps, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { useBrandsQuery } from "@/lib/graphql/schema.generated";
 import { loggedInUser } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
 import { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
+import CreateProductCollapsable from "./CreateProductCollapsable";
+import ProductList from "./ProductList";
 
 interface ProductsTabProps extends Omit<TabPanelProps, "children">, WithTranslation {}
 
@@ -19,10 +18,10 @@ const ProductsTab: FC<ProductsTabProps> = ({ t, tReady, ...props }) => {
     variables: {
       filter: {
         userId: {
-          eq: user?.id
-        }
-      }
-    }
+          eq: user?.id,
+        },
+      },
+    },
   });
 
   return (

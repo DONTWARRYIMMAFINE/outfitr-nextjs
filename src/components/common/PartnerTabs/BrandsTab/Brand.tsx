@@ -1,6 +1,5 @@
 "use client";
 
-import EditBrandModal from "@/components/common/PartnerTabs/BrandsTab/EditBrandModal";
 import { Box, Button, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { BrandFragment, BrandsDocument, UpdateBrandInput, useDeleteOneBrandMutation, useUpdateOneBrandMutation } from "@/lib/graphql/schema.generated";
@@ -8,6 +7,7 @@ import { useConfirm } from "material-ui-confirm";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
 import { WithTranslation, withTranslation } from "react-i18next";
+import EditBrandModal from "./EditBrandModal";
 
 interface BrandProps extends WithTranslation {
   brand: BrandFragment;

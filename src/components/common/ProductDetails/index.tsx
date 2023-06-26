@@ -1,14 +1,14 @@
 "use client";
 
-import CommentSection from "@/components/common/ProductDetails/CommentSection";
-import CreateCommentCollapsable from "@/components/common/ProductDetails/CreateCommentCollapsable";
-import Details from "@/components/common/ProductDetails/Details";
-import ImageViewer from "@/components/common/ProductDetails/ImageViewer";
 import { Box, Error, Grid } from "@/components/ui";
 import { useOneProductQuery } from "@/lib/graphql/schema.generated";
 import { LngProps } from "@/lib/types/params.type";
 import { Skeleton } from "@mui/material";
 import { FC } from "react";
+import CommentSection from "./CommentSection";
+import CreateCommentCollapsable from "./CreateCommentCollapsable";
+import Details from "./Details";
+import ImageViewer from "./ImageViewer";
 
 interface ProductDetailsProps extends LngProps {
   productId: string;

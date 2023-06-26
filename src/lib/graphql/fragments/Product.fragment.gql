@@ -11,5 +11,11 @@ fragment Product on Product {
   productVariants {
     ...ProductVariant
   }
+  colors {
+    ...Color
+  }
+  sizes {
+    ...Size
+  }
   createdAt
 }

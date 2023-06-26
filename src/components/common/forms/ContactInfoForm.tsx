@@ -1,6 +1,5 @@
 "use client";
 
-import { ContactInfoSchema } from "@/components/common/forms/schema/contact-info.schema";
 import { Box, Button, Icons, IconTextField } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { UpdateOneUserMutationVariables, useUpdateOneUserMutation } from "@/lib/graphql/schema.generated";
@@ -12,6 +11,7 @@ import { omit } from "lodash";
 import { FC } from "react";
 import toast from "react-hot-toast";
 import { withTranslation, WithTranslation } from "react-i18next";
+import { ContactInfoSchema } from "./schema";
 
 interface ContactInfoFormProps extends WithTranslation {}
 

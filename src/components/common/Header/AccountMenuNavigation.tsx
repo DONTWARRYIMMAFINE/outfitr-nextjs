@@ -1,6 +1,5 @@
 "use client";
 
-import NavigationList from "@/components/common/Header/NavigationList";
 import { Avatar, Box, Divider, Text } from "@/components/ui";
 import { customerMenuRoutes, guestMenuRoutes, partnerMenuRoutes } from "@/constants/routes";
 import { Roles } from "@/lib/graphql/schema.generated";
@@ -8,6 +7,7 @@ import { loggedInUser } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
 import { map } from "lodash";
 import { FC } from "react";
+import NavigationList from "./NavigationList";
 
 interface AccountMenuNavigationProps {}
 

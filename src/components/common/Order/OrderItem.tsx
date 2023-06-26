@@ -1,4 +1,4 @@
-import Price from "@/components/common/Price";
+import { Price } from "@/components/common";
 import { Box, Grid, Image, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { OrderItemFragment } from "@/lib/graphql/schema.generated";

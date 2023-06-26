@@ -1,8 +1,5 @@
 "use client";
 
-import CompleteOrderStep from "@/components/common/Cart/Checkout/CompleteOrderStep";
-import DeliveryInfoStep from "@/components/common/Cart/Checkout/DeliveryInfoStep";
-import PaymentInfoStep from "@/components/common/Cart/Checkout/PaymentInfoStep";
 import { Box, Button, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { userCart } from "@/store/user.store";
@@ -12,7 +9,10 @@ import { indexOf } from "lodash";
 import { usePathname, useRouter } from "next-intl/client";
 import { notFound, useSearchParams } from "next/navigation";
 import { WithTranslation, withTranslation } from "react-i18next";
+import CompleteOrderStep from "./CompleteOrderStep";
 import ContactInfoStep from "./ContactInfoStep";
+import DeliveryInfoStep from "./DeliveryInfoStep";
+import PaymentInfoStep from "./PaymentInfoStep";
 
 export const steps = ["contactInfo", "deliveryInfo", "paymentInfo", "completeOrder"];
 

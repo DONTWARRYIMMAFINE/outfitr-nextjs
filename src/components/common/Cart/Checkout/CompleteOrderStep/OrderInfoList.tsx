@@ -1,6 +1,6 @@
 "use client";
 
-import Order from "@/components/common/Order";
+import { Order } from "@/components/common";
 import { Box, Error } from "@/components/ui";
 import { useOrdersQuery } from "@/lib/graphql/schema.generated";
 import { Skeleton } from "@mui/material";

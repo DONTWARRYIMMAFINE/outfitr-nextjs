@@ -1,6 +1,6 @@
 "use client";
 
-import Order from "@/components/common/Order";
+import { Order } from "@/components/common";
 import { Error, TabPanel, Text } from "@/components/ui";
 import { TabPanelProps } from "@/components/ui/TabPanel";
 import { I18NS } from "@/constants/I18NS";

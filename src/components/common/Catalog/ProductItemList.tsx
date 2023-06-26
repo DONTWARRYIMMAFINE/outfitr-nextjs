@@ -1,7 +1,7 @@
 "use client";
 
-import ProductItem from "@/components/common/Catalog/ProductItem";
-import { Box, Error } from "@/components/ui";
+import { Box, Error, Text } from "@/components/ui";
+import { I18NS } from "@/constants/I18NS";
 import { Categories, ProductSortFields, Sizes, SortDirection, useProductsQuery } from "@/lib/graphql/schema.generated";
 import { parseIntOrDefault } from "@/lib/utils/parser.utils";
 import { ProductFilterBuilder } from "@/lib/utils/product-filter.builder";
@@ -9,13 +9,15 @@ import { ProductSortBuilder } from "@/lib/utils/product-sort.builder";
 import { Pagination, Skeleton } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { FC, useEffect, useState } from "react";
+import { withTranslation, WithTranslation } from "react-i18next";
+import ProductItem from "./ProductItem";
 
-interface ProductCardListProps {
+interface ProductCardListProps extends WithTranslation {
   category?: Categories;
   parentCategory?: Categories;
 }
 
-const ProductItemList: FC<ProductCardListProps> = ({ category, parentCategory }) => {
+const ProductItemList: FC<ProductCardListProps> = ({ category, parentCategory, t }) => {
   const searchParams = useSearchParams();
 
   const [limit, setLimit] = useState<number>(12);
@@ -78,6 +80,8 @@ const ProductItemList: FC<ProductCardListProps> = ({ category, parentCategory })
   if (error) return <Error message={error.message} />;
   if (loading || !data) return <Skeleton variant={"rectangular"} height={180} />;
 
+  console.log("data?.products.nodes?", data?.products.nodes?.length);
+
   return (
     <Box
       display={"flex"}
@@ -87,28 +91,32 @@ const ProductItemList: FC<ProductCardListProps> = ({ category, parentCategory })
       alignItems={"center"}
       gap={3}
     >
-      <Box
-        display={"flex"}
-        flexWrap={"wrap"}
-        width={"100%"}
-        gap={3}
-      >
-        {data?.products.nodes?.map((product) => (
-          <ProductItem key={product.id} product={product} />
-        ))}
-      </Box>
-      <Pagination
-        count={pageCount}
-        page={offset / limit + 1}
-        onChange={(e, page) => setOffset((page - 1) * limit)}
-        size={"large"}
-        variant={"outlined"}
-        color={"primary"}
-        showFirstButton
-        showLastButton
-      />
+      {data?.products.nodes.length === 0 ?
+        <Text variant={"p"}>{t("content.list.empty")}</Text> : <>
+          <Box
+            display={"flex"}
+            flexWrap={"wrap"}
+            width={"100%"}
+            gap={3}
+          >
+            {data?.products.nodes?.map((product) => (
+              <ProductItem key={product.id} product={product} />
+            ))}
+          </Box>
+          <Pagination
+            count={pageCount}
+            page={offset / limit + 1}
+            onChange={(e, page) => setOffset((page - 1) * limit)}
+            size={"large"}
+            variant={"outlined"}
+            color={"primary"}
+            showFirstButton
+            showLastButton
+          />
+        </>
+      }
     </Box>
   );
 };
 
-export default ProductItemList;
+export default withTranslation(I18NS.Product)(ProductItemList);

@@ -1,15 +1,14 @@
 "use client";
 
-import { CreateCommentSchema } from "@/components/common/forms/schema/create-comment.schema";
 import RatingPicker from "@/components/common/ProductDetails/RatingPicker";
-import { Box, Button, TextField } from "@/components/ui";
-import FileUpload from "@/components/ui/FileUpload";
+import { Box, Button, FileUpload, TextField } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
-import { CommentFragment, CreateCommentInput } from "@/lib/graphql/schema.generated";
+import { CreateCommentInput } from "@/lib/graphql/schema.generated";
 import { Formik } from "formik";
 import { FC, useState } from "react";
 import { withTranslation, WithTranslation } from "react-i18next";
 import { ExtendedFileProps } from "react-mui-fileuploader/dist/types/index.types";
+import { CreateCommentSchema } from "./schema";
 
 interface CreateCommentFormProps extends WithTranslation {
   onSubmit: (values: Omit<CreateCommentInput, "userId" | "productId">, files?: ExtendedFileProps[]) => void;

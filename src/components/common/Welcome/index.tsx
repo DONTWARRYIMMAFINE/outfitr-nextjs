@@ -1,9 +1,8 @@
-import { Box, Button, Text } from "@/components/ui";
+import { Box, Button, Image, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
 import { useTranslation } from "@/lib/i18n";
 import { LngProps } from "@/lib/types/params.type";
-import Image from "next/image";
 import { Trans } from "react-i18next/TransWithoutContext";
 
 interface WelcomeProps extends LngProps {}

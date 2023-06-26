@@ -1,6 +1,5 @@
-import { Box } from "@/components/ui";
+import { Box, Icons } from "@/components/ui";
 import { FC } from "react";
-import Icons from "../../ui/Icons";
 
 export interface StarsProps {
   starsCount: number;

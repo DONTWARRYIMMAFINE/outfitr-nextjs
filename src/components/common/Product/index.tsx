@@ -1,8 +1,8 @@
-import CollapsableBox, { CollapsableBoxProps } from "@/components/common/CollapsableBox";
-import ProductContent from "@/components/common/Product/ProductContent";
-import ProductHeader from "@/components/common/Product/ProductHeader";
+import { CollapsableBox, CollapsableBoxProps } from "@/components/common";
 import { ProductFragment } from "@/lib/graphql/schema.generated";
 import { FC } from "react";
+import ProductContent from "./ProductContent";
+import ProductHeader from "./ProductHeader";
 
 interface ProductProps extends Omit<CollapsableBoxProps, "Header"> {
   product: ProductFragment;

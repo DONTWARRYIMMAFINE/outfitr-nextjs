@@ -1,4 +1,4 @@
-import Price, { PriceProps } from "@/components/common/Price";
+import { Price, PriceProps } from "@/components/common";
 import { Box } from "@/components/ui";
 import { FC, PropsWithChildren } from "react";
 

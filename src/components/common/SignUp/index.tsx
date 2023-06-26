@@ -1,11 +1,11 @@
 "use client";
 
-import SignupForm from "@/components/common/forms/SignUpForm";
+import { SignUpForm } from "@/components/common/forms";
 import { Box, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
 import { LOCAL_STORAGE_TOKEN } from "@/constants/token";
-import { SignupMutationVariables, useSignupAsPartnerMutation, useSignupMutation } from "@/lib/graphql/schema.generated";
+import { SignupMutationVariables, UserFragment, useSignupAsPartnerMutation, useSignupMutation } from "@/lib/graphql/schema.generated";
 import { omitEmptyFields } from "@/lib/utils/form.utils";
 import { loggedInUser } from "@/store/user.store";
 import { useRouter } from "next/navigation";
@@ -26,33 +26,49 @@ const SignUp: FC<SignUpProps> = ({ t }) => {
     setFile([...files][0]);
   };
 
+  const onComplete = (accessToken: string, user: UserFragment) => {
+    loggedInUser(user);
+    localStorage.setItem(LOCAL_STORAGE_TOKEN, accessToken);
+    router.push(Routes.Home.href);
+
+    toast.success(t("content.success", { user: user.fullName }));
+  };
+
   const onSubmit = async (values: SignupMutationVariables["input"], asPartner: boolean) => {
     if (asPartner) {
       await signupAsPartnerMutation({
-        variables: { input: omitEmptyFields(values) as SignupMutationVariables["input"], file },
-        onCompleted: ({ signupAsPartner }) => {
-          const { accessToken, user } = signupAsPartner;
-
-          loggedInUser(user);
-          localStorage.setItem(LOCAL_STORAGE_TOKEN, accessToken);
-          router.push(Routes.Home.href);
-
-          toast.success(t("content.success", { user: user.fullName }));
+        /* TODO: encrypt password and passwordConfirmation before sending
+            Crypto.createHash('sha512')
+                  .update(values.password)
+                  .digest('hex'),
+         */
+        variables: {
+          input: {
+            ...omitEmptyFields(values) as SignupMutationVariables["input"],
+            password: values.password,
+            passwordConfirmation: values.passwordConfirmation,
+          },
+          file,
         },
+        onCompleted: ({ signupAsPartner }) => onComplete(signupAsPartner.accessToken, signupAsPartner.user),
         onError: error => toast.error(t("content.error", { message: error.message })),
       });
     } else {
       await signupMutation({
-        variables: { input: omitEmptyFields(values) as SignupMutationVariables["input"], file },
-        onCompleted: ({ signup }) => {
-          const { accessToken, user } = signup;
-
-          loggedInUser(user);
-          localStorage.setItem(LOCAL_STORAGE_TOKEN, accessToken);
-          router.push(Routes.Home.href);
-
-          toast.success(t("content.success", { user: user.fullName }));
+        /* TODO: encrypt password and passwordConfirmation before sending
+            Crypto.createHash('sha512')
+                  .update(values.password)
+                  .digest('hex'),
+         */
+        variables: {
+          input: {
+            ...omitEmptyFields(values) as SignupMutationVariables["input"],
+            password: values.password,
+            passwordConfirmation: values.passwordConfirmation,
+          },
+          file,
         },
+        onCompleted: ({ signup }) => onComplete(signup.accessToken, signup.user),
         onError: error => toast.error(t("content.error", { message: error.message })),
       });
     }
@@ -66,7 +82,7 @@ const SignUp: FC<SignUpProps> = ({ t }) => {
       <Text variant={"p"} textAlign={"center"} opacity={0.7} paragraph>
         {t("content.description")}
       </Text>
-      <SignupForm onSubmit={onSubmit} onFilesChange={onFilesChange} error={signupError || signupAsPartnerError} />
+      <SignUpForm onSubmit={onSubmit} onFilesChange={onFilesChange} error={signupError || signupAsPartnerError} />
     </Box>
   );
 };

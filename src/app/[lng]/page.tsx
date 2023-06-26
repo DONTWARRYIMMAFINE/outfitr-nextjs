@@ -4,7 +4,7 @@ import { LngParamsProps } from "@/lib/types/params.type";
 import React from "react";
 
 export const metadata = {
-  title: "Outfitr | Homepage",
+  title: "Homepage | Outfitr",
 };
 
 interface HomePageProps extends LngParamsProps {}

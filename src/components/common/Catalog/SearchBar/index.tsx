@@ -1,13 +1,13 @@
 "use client";
 
-import SearchField from "@/components/common/Catalog/SearchBar/SearchField";
-import SortSelect from "@/components/common/Catalog/SearchBar/SortSelect";
 import { Box, Grid } from "@/components/ui";
 import { ProductSort, ProductSortFields, SortDirection } from "@/lib/graphql/schema.generated";
 import { isNotEmpty } from "@/lib/utils/string.utils";
 import { usePathname, useRouter } from "next-intl/client";
 import { useSearchParams } from "next/navigation";
 import { FC, useState } from "react";
+import SearchField from "./SearchField";
+import SortSelect from "./SortSelect";
 
 interface SearchBarProps {}
 

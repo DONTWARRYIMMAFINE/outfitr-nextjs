@@ -1,11 +1,11 @@
 "use client";
 
-import Select, { SelectOption, SelectProps } from "@/components/common/Select";
+import { Select, SelectOption, SelectProps } from "@/components/common";
+import { Error } from "@/components/ui";
 import { useWarehousesQuery, WarehouseFragment } from "@/lib/graphql/schema.generated";
 import { Skeleton } from "@mui/material";
 import { map } from "lodash";
 import { FC } from "react";
-import Error from "../ui/Error";
 
 function toSelectOption(warehouse: WarehouseFragment): SelectOption {
   return {

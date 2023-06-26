@@ -1,6 +1,6 @@
 "use client";
 
-import { Icons, IconTextField } from "@/components/ui";
+import { Icons, IconTextField } from "@/components/ui/index";
 import { IconTextFieldProps } from "@/components/ui/IconTextField";
 import { FC, useState } from "react";
 

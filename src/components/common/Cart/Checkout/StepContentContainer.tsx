@@ -1,7 +1,7 @@
-import CartTotals, { CartTotalsProps } from "@/components/common/Cart/CartTotals";
 import { Grid } from "@/components/ui";
 import { GridProps } from "@mui/material";
 import { FC } from "react";
+import CartTotals, { CartTotalsProps } from "../CartTotals";
 
 export interface StepContentContainerProps extends GridProps, Omit<CartTotalsProps, "t" | "tReady" | "i18n"> {
   index: number;

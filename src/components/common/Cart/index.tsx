@@ -1,7 +1,5 @@
 "use client";
 
-import CartItemList from "@/components/common/Cart/CartItemList";
-import CartTotals from "@/components/common/Cart/CartTotals";
 import { Button, Grid } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
@@ -9,6 +7,8 @@ import { userCart } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
 import { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
+import CartItemList from "./CartItemList";
+import CartTotals from "./CartTotals";
 
 interface CartProps extends WithTranslation {}
 

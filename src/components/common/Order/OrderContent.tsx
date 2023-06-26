@@ -1,7 +1,5 @@
 "use client";
 
-import ChangeOrderStatus from "@/components/common/Order/ChangeOrderStatus";
-import OrderInfo from "@/components/common/Order/OrderInfo";
 import { Box, Divider, Grid, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
@@ -9,6 +7,8 @@ import { OrderFragment } from "@/lib/graphql/schema.generated";
 import { usePathname } from "next-intl/client";
 import { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
+import ChangeOrderStatus from "./ChangeOrderStatus";
+import OrderInfo from "./OrderInfo";
 import OrderItem from "./OrderItem";
 import OrderStatusStepper from "./OrderStatusStepper";
 

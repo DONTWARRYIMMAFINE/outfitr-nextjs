@@ -1,6 +1,6 @@
 import { object, ref, string } from "yup";
 
-export const SignUpSchema = object().shape({
+const SignUpSchema = object().shape({
   email: string()
     .email("Please enter a valid email")
     .required("Email is required"),
@@ -22,3 +22,5 @@ export const SignUpSchema = object().shape({
     .oneOf([ref("password")], "Passwords do not match")
     .required("Confirm password is required"),
 });
+
+export default SignUpSchema;

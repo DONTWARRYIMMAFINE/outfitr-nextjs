@@ -1,12 +1,12 @@
 "use client";
 
-import { CreateBrandSchema } from "@/components/common/forms/schema/create-brand.schema";
 import { Box, Button, TextField } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { CreateOneBrandInput } from "@/lib/graphql/schema.generated";
 import { Formik } from "formik";
 import { FC } from "react";
 import { withTranslation, WithTranslation } from "react-i18next";
+import { CreateBrandSchema } from "./schema";
 
 interface CreateBrandFormProps extends WithTranslation {
   onSubmit: (values: Omit<CreateOneBrandInput["brand"], "userId">) => void;

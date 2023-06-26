@@ -1,11 +1,9 @@
-import { About, News } from "@/components/common";
-import DotSeparated from "@/components/common/DotSeparated";
-import ContentContainer from "@/components/ui/ContentContainer";
+import { About, DotSeparated, News } from "@/components/common";
+import { PageContainer } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { useTranslation } from "@/lib/i18n";
 import { LngParamsProps } from "@/lib/types/params.type";
 import { Metadata } from "next";
-import { Trans } from "react-i18next/TransWithoutContext";
 
 export const metadata: Metadata = {
   title: "Outfitr | About",
@@ -18,19 +16,19 @@ const AboutPage = async ({ params }: PageProps) => {
   const { t } = await useTranslation(lng, I18NS.About);
 
   return (<>
-    <ContentContainer
+    <PageContainer
       pageTitle={t("page.title")}
       disableBottomPadding
     >
       <About />
       <DotSeparated
-        sentences={[
+        messages={[
           t("dotSeparated.0"),
           t("dotSeparated.1"),
           t("dotSeparated.2"),
         ]}
       />
-    </ContentContainer>
+    </PageContainer>
     {/* @ts-expect-error Server Component */}
     <News lng={lng} />
   </>);

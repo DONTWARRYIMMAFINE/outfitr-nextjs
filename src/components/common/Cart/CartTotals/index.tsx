@@ -1,7 +1,5 @@
 "use client";
 
-import CartTotalsItem from "@/components/common/Cart/CartTotals/CartTotalsItem";
-import CartRow from "@/components/common/Cart/CartTotals/CartRow";
 import { Box, Divider, Link, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { Routes } from "@/constants/routes";
@@ -10,6 +8,8 @@ import { userCart } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";
 import { FC, PropsWithChildren, ReactNode } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
+import CartRow from "./CartRow";
+import CartTotalsItem from "./CartTotalsItem";
 
 export interface CartTotalsProps extends PropsWithChildren, WithTranslation {
   showItems?: boolean;

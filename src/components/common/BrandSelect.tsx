@@ -1,6 +1,6 @@
 "use client";
 
-import Select, { SelectOption, SelectProps } from "@/components/common/Select";
+import { Select, SelectOption, SelectProps } from "@/components/common";
 import { BrandFragment, useBrandsQuery } from "@/lib/graphql/schema.generated";
 import { loggedInUser } from "@/store/user.store";
 import { useReactiveVar } from "@apollo/client";

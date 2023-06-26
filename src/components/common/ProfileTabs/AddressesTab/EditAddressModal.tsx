@@ -1,11 +1,11 @@
 "use client";
 
-import UpdateAddressForm from "@/components/common/forms/UpdateAddressForm";
+import { UpdateAddressForm } from "@/components/common/forms";
 import { Box, Container, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { AddressFragment, UpdateUserAddressInput } from "@/lib/graphql/schema.generated";
 import { Modal } from "@mui/material";
-import React, { FC } from "react";
+import { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
 
 interface EditAddressModalProps extends WithTranslation {

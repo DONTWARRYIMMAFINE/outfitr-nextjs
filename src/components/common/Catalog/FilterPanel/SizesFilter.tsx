@@ -1,22 +1,16 @@
 "use client";
 
-import CheckboxGroup from "@/components/common/CheckboxGroup";
-import { Text } from "@/components/ui";
-import Error from "@/components/ui/Error";
+import { CheckboxGroup, CheckboxGroupProps } from "@/components/common";
+import { Box, Error, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { useSizesQuery } from "@/lib/graphql/schema.generated";
 import { Skeleton } from "@mui/material";
 import { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
-import Box from "../../../ui/Box";
 
-interface SizesFilterProps extends WithTranslation {
-  selectedValues: string[];
-  handleFilterChange: (value: string) => void;
-  field?: "id" | "code";
-}
+interface SizesFilterProps extends Omit<CheckboxGroupProps, "options">, WithTranslation {}
 
-const SizesFilter: FC<SizesFilterProps> = ({ selectedValues, handleFilterChange, field, t }) => {
+const SizesFilter: FC<SizesFilterProps> = ({ t, tReady, ...props }) => {
   const { data, loading, error } = useSizesQuery();
 
   if (error) return <Error message={t("content.filter.sizes.error", { message: error.message })!} />;
@@ -25,12 +19,7 @@ const SizesFilter: FC<SizesFilterProps> = ({ selectedValues, handleFilterChange,
   return (
     <Box display={"flex"} flexDirection={"column"} gap={2}>
       <Text variant={"p"}>{t("content.filter.sizes.label")}</Text>
-      <CheckboxGroup
-        options={data.sizes.nodes}
-        selectedValues={selectedValues}
-        onClick={handleFilterChange}
-        field={field}
-      />
+      <CheckboxGroup options={data.sizes.nodes} {...props} />
     </Box>
   );
 };

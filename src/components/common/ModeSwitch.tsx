@@ -1,9 +1,8 @@
 "use client";
 
-import { Switch, SwitchProps } from "@mui/material";
+import { Icons, Switch, SwitchProps } from "@/components/ui";
 import { useTheme } from "next-themes";
 import { FC } from "react";
-import Icons from "../ui/Icons";
 
 const iconStart = <Icons.LightMode sx={{ opacity: 1, color: "text.primary", bgcolor: "text.reversed", padding: 1 / 3, borderRadius: "50%" }} />;
 const iconEnd = <Icons.DarkMode sx={{ opacity: 1, color: "text.reversed", bgcolor: "text.primary", padding: 1 / 3, borderRadius: "50%" }} />;

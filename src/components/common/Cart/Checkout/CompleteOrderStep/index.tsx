@@ -1,9 +1,9 @@
-import OrderInfoList from "@/components/common/Cart/Checkout/CompleteOrderStep/OrderInfoList";
-import StepContentContainer, { StepContentContainerProps } from "@/components/common/Cart/Checkout/StepContentContainer";
 import { Box, Text } from "@/components/ui";
 import { I18NS } from "@/constants/I18NS";
 import { FC } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
+import StepContentContainer, { StepContentContainerProps } from "../StepContentContainer";
+import OrderInfoList from "./OrderInfoList";
 
 interface CompleteOrderStepProps extends Omit<StepContentContainerProps, "children">, WithTranslation {}
 

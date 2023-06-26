@@ -5,11 +5,6 @@ import { ListSubheader, Select as MuiSelect, SelectProps as MuiSelectProps } fro
 import { styled } from "@mui/material/styles";
 import { ElementType, FC } from "react";
 
-export interface GroupingSelectOption {
-  group: string;
-  options: SelectOption[];
-}
-
 export interface SelectOption {
   value: string;
   label: string;
@@ -67,7 +62,7 @@ const Select: FC<SelectProps> = (
               <ListSubheader key={value} sx={{ bgcolor: "background.textField", borderRadius: 0.5, fontSize: 16, fontWeight: 700 }}>
                 {label}
               </ListSubheader>
-            )
+            );
           }
 
           return (
